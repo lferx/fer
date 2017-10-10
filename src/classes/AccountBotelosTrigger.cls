@@ -16,4 +16,3 @@ public class AccountBotelosTrigger
         insert lstBoletos;
     }
 }
-//hola
