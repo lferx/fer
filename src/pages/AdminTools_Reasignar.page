@@ -1,0 +1,38 @@
+<apex:page controller="AdminToolsController" tabStyle="HerramientasAdmin__tab">
+    <apex:sectionHeader title="Herramientas para administradores" subtitle="Asignar propiedades en base a plaza"></apex:sectionHeader>
+    <apex:pageBlock title="Asignar un nuevo propietario para una plaza">
+        <br/>
+        Informe para analizar el nombre de las plazas y asignaciones: <a href="https://na15.salesforce.com/00Oi0000005jfgR">Asignación de plazas por usuario.</a>
+        <br/><br/>
+        <apex:form >
+            <apex:pageBlockSection title="Ingresa correo electrónico del destinatario y la plaza que deseas cambiar" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Correo electrónico" for="userEmail"/>
+                    <apex:inputText value="{!userEmail}" id="userEmail"/> 
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Plaza" for="plaza"/>
+                    <apex:inputText value="{!plaza}" id="plaza"/> 
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:commandButton action="{!asignaPropietario}" rerender="listas" value="Asignar" id="theButton" status="counterStatus"/>
+            <apex:actionStatus startText=" (Actualizando...)" id="counterStatus"/>
+            <br/><br/>
+            <apex:outputPanel id="listas">
+                <apex:pageMessages />
+                
+                <apex:pageBlockTable value="{!listaPropiedades}" var="item">
+                    <apex:column headerValue="Propiedades actualizadas" >
+                        {!item.Name}
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+                <apex:pageBlockTable value="{!listaOfertas}" var="item">
+                    <apex:column headerValue="Ofertas actualizadas" >
+                        {!item.Name}
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

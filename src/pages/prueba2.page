@@ -1,0 +1,64 @@
+<apex:page controller="prueba2" showHeader="true" sidebar="true">
+<apex:form >
+<style type="text/css">
+	.tabla{
+			border-color: red;
+	}
+	.cabeza{
+		background: orange;
+	}
+</style>
+
+
+{!s}<br/>
+{!a.Name}<br/>
+{!a.Industry}<br/>
+<apex:pageBlock title="Lista de cuenta" >
+	<apex:pageBlockTable value="{!cuenta}" var="a"  >
+		<apex:column value="{!a.Name}"/>
+		<apex:column value="{!a.Type}"/>
+		<apex:column value="{!a.Phone}"/>
+	
+	</apex:pageBlockTable>
+	<apex:pageBlockButtons >
+			<apex:commandButton value="Click" action="{!section}"/>
+	</apex:pageBlockButtons>
+</apex:pageBlock>
+
+<table border="1px" class="tabla">
+	<thead class="cabeza">
+	<tr>
+		<th>
+			Name
+		</th>
+
+		<th>
+			Type
+		</th>
+
+		<th>
+			Phone
+		</th>
+	</tr>
+	</thead>
+<apex:repeat value="{!cuenta}" var="puto">
+  <apex:actionRegion >
+	<tr>
+		<td>
+			<apex:outputText value="{!puto.Name}"/>
+		</td>
+		<td>
+			<apex:outputText value="{!puto.Type}"/>
+		</td>
+		<td>
+			<apex:outputText value="{!puto.Phone}"/>
+		</td>
+	</tr>
+	</apex:actionRegion>
+</apex:repeat>
+
+	
+</table>
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,1230 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" controller="PropiedadesController2"> 
+            
+
+    <html class="no-js" >
+    
+        <head>
+        
+       
+
+      <style>
+           
+           .magazine-viewport .page{
+           width:461px;
+           height:600px;
+           background-image: url("{!URLFOR($Resource.Elfondorevista)}");
+           <!--background-color:white;-->
+           background-repeat:no-repeat;
+           background-size:100% 100%;
+           }
+           </style>
+
+
+
+        
+            <meta charset="utf-8"/>
+            <meta name="author" content=""/>
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
+            <meta name="robots" content="index, follow" />
+            <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+            
+            <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+            <link href="{!URLFOR($Resource.magna2,'magna2/samples/magazine/css/jquery.ui.css')}" rel="stylesheet" type="text/css" media="screen" />
+            <link href="{!URLFOR($Resource.RevistaAmplia,'RevistaAmplia/samples/basic/css/basic.css')}" rel="stylesheet" type="text/css" media="screen" />
+            
+            
+            
+            <script  src="{!URLFOR($Resource.RevistaAmplia,'RevistaAmplia/extras/jquery.min.1.7.js')}"></script>
+            <script  src="{!URLFOR($Resource.RevistaAmplia,'RevistaAmplia/extras/modernizr.2.5.3.min.js')}"></script> 
+            <script  src="{!URLFOR($Resource.magna2,'magna2/extras/jquery-ui-1.8.20.custom.min.js')}"></script>
+            <script  src="{!URLFOR($Resource.magna2,'magna2/lib/hash.js')}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.magna2,'magna2/samples/magazine/js/magazine.js')}"></script>
+            
+            <title>Revimex</title>
+            
+            
+                    
+
+     
+       </head>
+      
+      <body>
+      <center>
+ <div id="canvas">
+    <div class="zoom-icon zoom-icon-in"></div>
+     <div class="magazine-viewport">
+        <div class="container">
+         <div class="magazine">
+          <div ignore="1" class="next-button"></div>
+          <img src="{!URLFOR($Resource.Origen1,'cero.png')}" width="430" height="112" alt=""/>
+          <img src="{!URLFOR($Resource.TORREON)}" width="430" height="112" alt=""/> 
+          <center>
+               <div class="viewport">
+                         <apex:dataList value="{!propiedades1}" var="propiedad" id="theList" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos1[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos1[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos1[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+             
+              <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades2}" var="propiedad" id="theList1" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos2[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos2[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos2[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+             <img src="{!URLFOR($Resource.Plazas,'CELAYA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades3}" var="propiedad" id="theList2" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos3[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos3[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos3[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+                        
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades4}" var="propiedad" id="theList3" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos4[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos4[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos4[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+            
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades5}" var="propiedad" id="theList4" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos5[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos5[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos5[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+             
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades6}" var="propiedad" id="theList5" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos6[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos6[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos6[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades7}" var="propiedad" id="theList6" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos7[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos7[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos7[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.SAN)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades8}" var="propiedad" id="theList7" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos8[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos8[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos8[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'HERMOSILLO.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades9}" var="propiedad" id="theList8" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos9[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos9[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos9[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.NL)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades10}" var="propiedad" id="theList9" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos10[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos10[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos10[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+            
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades11}" var="propiedad" id="theList10" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos11[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos11[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos11[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.DF)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades12}" var="propiedad" id="theList11" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos12[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos12[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos12[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.ED)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades13}" var="propiedad" id="theList12" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos13[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos13[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos13[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'GUADALAJARA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades14}" var="propiedad" id="theList13" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos14[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos14[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos14[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'TLAJOMULCO.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades15}" var="propiedad" id="theList14" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos15[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos15[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos15[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+            
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades16}" var="propiedad" id="theList15" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos16[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos16[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos16[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+            
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades17}" var="propiedad" id="theList16" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos17[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos17[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos17[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'VERACRUZ.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades18}" var="propiedad" id="theList17" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos18[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos18[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos18[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades19}" var="propiedad" id="theList18" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                       
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos19[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos19[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos19[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'MEXICALI.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades20}" var="propiedad" id="theList19" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos20[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos20[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos20[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'CANCUN.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades21}" var="propiedad" id="theList20" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos21[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos21[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos21[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+              <img src="{!URLFOR($Resource.LC)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades22}" var="propiedad" id="theList21" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos22[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos22[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos22[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'MORELIA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades23}" var="propiedad" id="theList22" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos23[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos23[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos23[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades24}" var="propiedad" id="theList23" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos24[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos24[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos24[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'VALLARTA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades25}" var="propiedad" id="theList24" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos25[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos25[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos25[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+            
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades26}" var="propiedad" id="theList25" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos26[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos26[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos26[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'CHIHUAHUA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades27}" var="propiedad" id="theList26" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos27[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos27[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos27[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.JUAREZ)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades28}" var="propiedad" id="theList27" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos28[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos28[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos28[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'CULIACAN.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades29}" var="propiedad" id="theList28" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos29[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos29[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos29[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.MO)}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades30}" var="propiedad" id="theList29" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos30[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos30[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos30[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades31}" var="propiedad" id="theList30" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                         
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos31[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos31[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos31[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             <img src="{!URLFOR($Resource.Plazas,'SINALOA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades32}" var="propiedad" id="theList31" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos32[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos32[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos32[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+            <img src="{!URLFOR($Resource.GOMEZ)}" width="430" height="112" alt=""/>
+            <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades33}" var="propiedad" id="theList32" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos33[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos33[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos33[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center>
+             <img src="{!URLFOR($Resource.Plazas,'TIJUANA.jpg')}" width="430" height="112" alt=""/>
+             <center>
+                       <div class="viewport">
+                         <apex:dataList value="{!propiedades34}" var="propiedad" id="theList33" styleClass="overview">
+                         <br></br>
+                         <br></br>
+                         <br></br>
+                        
+                            <div id="{!propiedad.Id}" class="suggestion">
+                                <apex:outputPanel rendered="{!IF(mapaFotos34[propiedad.Id] != '-',true,false)}">
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!mapaFotos34[propiedad.Id]}"  width="500" height="300"></apex:image>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(mapaFotos34[propiedad.Id] == '-',true,false)}">
+                                    <img src="http://imganuncios.mitula.net/comprar_apartamento_en_la_urbanizacion_los_caobos_99615583365066222.jpg" width="500" height="300" />
+                                </apex:outputPanel>
+                                <p style="color: #555">Plaza: <span style="color: #1C79A7">{!propiedad.Plaza__c} </span>
+                                
+                                <br/>Folio:  <span style="color: #1C79A7"><apex:outputText styleClass="validacomas" value="{!propiedad.FolioLlave__c}" />.</span></p>
+                            </div>
+                        </apex:dataList>
+                    </div>
+             </center> 
+             
+             <!--<img src="{!URLFOR($Resource.Origen1,'uno.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.Origen1,'dos.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.Origen1,'tres.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.Origen1,'cuatro.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen2,'cinco.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen2,'seis.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen2,'siete.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen2,'ocho.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen2,'nueve.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen3,'diex.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen3,'once.png')}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.origen3,'doce.png')}" width="430" height="112" alt=""/>-->
+             <img src="{!URLFOR($Resource.imagen1)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen_2)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen3)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen4)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen5)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen_7)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen8)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen9)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen10)}" width="430" height="112" alt=""/>
+             <img src="{!URLFOR($Resource.imagen11)}" width="430" height="112" alt=""/>
+          
+            <img src="{!URLFOR($Resource.origen3,'ult.png')}" width="430" height="112" alt=""/>
+                
+            
+            <div ignore="1" class="previous-button"></div>
+          
+          
+         </div>
+       </div>
+       <div class="bottom">
+        <div id="slider-bar" class="turnjs-slider">
+        <div id="slider"></div>
+        </div>
+       </div> 
+     </div>
+   </div> 
+
+        
+            
+
+
+
+<script type="text/javascript" src="{!URLFOR($Resource.RevistaAmplia,'RevistaAmplia/lib/turn.js')}"></script>
+
+   <script type="text/javascript">
+
+function loadApp() {
+
+    $('#canvas').fadeIn(1000);
+
+    var flipbook = $('.magazine');
+
+    
+    
+    if (flipbook.width()==0 || flipbook.height()==0) {
+        setTimeout(loadApp, 10);
+        return;
+    }
+    
+    
+
+    flipbook.turn({
+            
+            
+
+            width: 1500,
+
+            
+
+            height: 870,
+
+            
+
+            duration: 1000,
+
+            
+
+            gradients: true,
+            
+            
+
+            autoCenter: true,
+
+            
+
+            elevation: 50,
+
+            
+
+            pages: 12,
+
+            
+
+            when: {
+                turning: function(event, page, view) {
+                    
+                    var book = $(this),
+                    currentPage = book.turn('page'),
+                    pages = book.turn('pages');
+            
+                    
+
+                    Hash.go('page/' + page).update();
+
+                    
+
+                    disableControls(page);
+
+                },
+
+                turned: function(event, page, view) {
+
+                    disableControls(page);
+
+                    $(this).turn('center');
+
+                    $('#slider').slider('value', getViewNumber($(this), page));
+
+                    if (page==1) { 
+                        $(this).turn('peel', 'br');
+                    }
+
+                },
+
+                missing: function (event, pages) {
+
+                    
+
+                    for (var i = 0; i < pages.length; i++)
+                        addPage(pages[i], $(this));
+
+                }
+            }
+
+    });
+
+    
+
+    $('.magazine-viewport').zoom({
+        flipbook: $('.magazine'),
+
+        max: function() { 
+            
+            return largeMagazineWidth()/$('.magazine').width();
+
+        }, 
+
+        when: {
+            swipeLeft: function() {
+
+                $(this).zoom('flipbook').turn('next');
+
+            },
+
+            swipeRight: function() {
+                
+                $(this).zoom('flipbook').turn('previous');
+
+            },
+
+            resize: function(event, scale, page, pageElement) {
+
+                if (scale==1)
+                    loadSmallPage(page, pageElement);
+                else
+                    loadLargePage(page, pageElement);
+
+            },
+
+            zoomIn: function () {
+
+                $('#slider-bar').hide();
+                $('.made').hide();
+                $('.magazine').removeClass('animated').addClass('zoom-in');
+                $('.zoom-icon').removeClass('zoom-icon-in').addClass('zoom-icon-out');
+                
+                if (!window.escTip && !$.isTouch) {
+                    escTip = true;
+
+                    $('<div />', {'class': 'exit-message'}).
+                        html('<div>Press ESC to exit</div>').
+                            appendTo($('body')).
+                            delay(2000).
+                            animate({opacity:0}, 500, function() {
+                                $(this).remove();
+                            });
+                }
+            },
+
+            zoomOut: function () {
+
+                $('#slider-bar').fadeIn();
+                $('.exit-message').hide();
+                $('.made').fadeIn();
+                $('.zoom-icon').removeClass('zoom-icon-out').addClass('zoom-icon-in');
+
+                setTimeout(function(){
+                    $('.magazine').addClass('animated').removeClass('zoom-in');
+                    resizeViewport();
+                }, 0);
+
+            }
+        }
+    });
+
+    
+
+    if ($.isTouch)
+        $('.magazine-viewport').bind('zoom.doubleTap', zoomTo);
+    else
+        $('.magazine-viewport').bind('zoom.tap', zoomTo);
+
+
+    
+
+    $(document).keydown(function(e){
+
+        var previous = 37, next = 39, esc = 27;
+
+        switch (e.keyCode) {
+            case previous:
+
+                
+                $('.magazine').turn('previous');
+                e.preventDefault();
+
+            break;
+            case next:
+
+                
+                $('.magazine').turn('next');
+                e.preventDefault();
+
+            break;
+            case esc:
+                
+                $('.magazine-viewport').zoom('zoomOut');    
+                e.preventDefault();
+
+            break;
+        }
+    });
+
+    
+
+    Hash.on('^page\/([0-9]*)$', {
+        yep: function(path, parts) {
+            var page = parts[1];
+
+            if (page!==undefined) {
+                if ($('.magazine').turn('is'))
+                    $('.magazine').turn('page', page);
+            }
+
+        },
+        nop: function(path) {
+
+            if ($('.magazine').turn('is'))
+                $('.magazine').turn('page', 1);
+        }
+    });
+
+
+    $(window).resize(function() {
+        resizeViewport();
+    }).bind('orientationchange', function() {
+        resizeViewport();
+    });
+
+    
+
+    if ($.isTouch) {
+        $('.magazine').bind('touchstart', regionClick);
+    } else {
+        $('.magazine').click(regionClick);
+    }
+
+    
+
+    $('.next-button').bind($.mouseEvents.over, function() {
+        
+        $(this).addClass('next-button-hover');
+
+    }).bind($.mouseEvents.out, function() {
+        
+        $(this).removeClass('next-button-hover');
+
+    }).bind($.mouseEvents.down, function() {
+        
+        $(this).addClass('next-button-down');
+
+    }).bind($.mouseEvents.up, function() {
+        
+        $(this).removeClass('next-button-down');
+
+    }).click(function() {
+        
+        $('.magazine').turn('next');
+
+    });
+
+
+    
+    $('.previous-button').bind($.mouseEvents.over, function() {
+        
+        $(this).addClass('previous-button-hover');
+
+    }).bind($.mouseEvents.out, function() {
+        
+        $(this).removeClass('previous-button-hover');
+
+    }).bind($.mouseEvents.down, function() {
+        
+        $(this).addClass('previous-button-down');
+
+    }).bind($.mouseEvents.up, function() {
+        
+        $(this).removeClass('previous-button-down');
+
+    }).click(function() {
+        
+        $('.magazine').turn('previous');
+
+    });
+
+
+    
+
+    $( "#slider" ).slider({
+        min: 1,
+        max: numberOfViews(flipbook),
+
+        start: function(event, ui) {
+
+            if (!window._thumbPreview) {
+                _thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+                setPreview(ui.value);
+                _thumbPreview.appendTo($(ui.handle));
+            } else
+                setPreview(ui.value);
+
+            moveBar(false);
+
+        },
+
+        slide: function(event, ui) {
+
+            setPreview(ui.value);
+
+        },
+
+        stop: function() {
+
+            if (window._thumbPreview)
+                _thumbPreview.removeClass('show');
+            
+            $('.magazine').turn('page', Math.max(1, $(this).slider('value')*2 - 2));
+
+        }
+    });
+
+    resizeViewport();
+
+    $('.magazine').addClass('animated');
+
+}
+
+
+
+ $('.zoom-icon').bind('mouseover', function() { 
+    
+    if ($(this).hasClass('zoom-icon-in'))
+        $(this).addClass('zoom-icon-in-hover');
+
+    if ($(this).hasClass('zoom-icon-out'))
+        $(this).addClass('zoom-icon-out-hover');
+ 
+ }).bind('mouseout', function() { 
+    
+     if ($(this).hasClass('zoom-icon-in'))
+        $(this).removeClass('zoom-icon-in-hover');
+    
+    if ($(this).hasClass('zoom-icon-out'))
+        $(this).removeClass('zoom-icon-out-hover');
+
+ }).bind('click', function() {
+
+    if ($(this).hasClass('zoom-icon-in'))
+        $('.magazine-viewport').zoom('zoomIn');
+    else if ($(this).hasClass('zoom-icon-out')) 
+        $('.magazine-viewport').zoom('zoomOut');
+
+ });
+
+ $('#canvas').hide();
+
+
+
+
+yepnope({
+    
+    complete: loadApp
+});
+
+</script>
+
+</center>
+</body> 
+     
+           
+        
+        
+
+    
+   
+    
+    </html>
+
+</apex:page>

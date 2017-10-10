@@ -1,0 +1,967 @@
+<apex:page showHeader="true" sidebar="true" controller="Mapa_Controller">
+ <apex:outputPanel layout="none">
+    <apex:pageBlock >
+
+
+        <head>
+ 
+<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+<!-- <apex:includeScript value="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6AtAn4ahUlnlJ4PWdjlnzpmNP9371tPE&sensor=TRUE&libraries=place‌​s"/> -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6AtAn4ahUlnlJ4PWdjlnzpmNP9371tPE&libraries=places"></script>
+<script type="text/javascript"> 
+    var map;
+    var places;
+    var iw;
+    var markers = [];
+    var autocomplete;
+    var x = $('#x').val();
+    var y = $('#y').val();
+
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    $(document).ready(function () {
+        initialize();
+    });
+
+    function initialize() {
+        var myLatlng = new google.maps.LatLng({!plat}, {!plng});
+        var myOptions = {
+            zoom: 15,
+            scrollwheel: false,
+            center: myLatlng,
+            styles: [
+                {
+                    "featureType": "all",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#333333"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#c32f2f"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#444444"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.country",
+                    "elementType": "labels.text",
+                    "stylers": [
+                        {
+                            "color": "#5160ac"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.province",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#5160ac"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.locality",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#5160ac"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#5160ac"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#5160ac"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#f2f2f2"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        },
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.man_made",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        },
+                        {
+                            "saturation": "0"
+                        },
+                        {
+                            "lightness": "22"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.man_made",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        },
+                        {
+                            "weight": "0.01"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.natural",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#072ad5"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.natural",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "color": "#263791"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.natural.landcover",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        },
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.natural.terrain",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#33cccc"
+                        },
+                        {
+                            "lightness": "88"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 45
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+
+                {
+                    "featureType": "road.highway",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#c1d72e"
+                        }
+                    ]
+                },
+
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#cfdff4"
+                        }
+                    ]
+                },
+
+                {
+                    "featureType": "road.local",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#a1d9f5"
+                        }
+                    ]
+                },
+
+
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#46bcec"
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        },
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                }
+            ],
+
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.TOP_LEFT
+            }
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map
+        });
+        places = new google.maps.places.PlacesService(map);
+        google.maps.event.addListener(map, 'tilesloaded', tilesLoaded);
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            showSelectedPlace();
+        });
+        
+
+    }
+
+    function tilesLoaded() {
+        google.maps.event.clearListeners(map, 'tilesloaded');
+        google.maps.event.addListener(map, 'zoom_changed', search);
+        google.maps.event.addListener(map, 'dragend', search);
+        search();
+    }
+
+    function showSelectedPlace() {
+        clearResults();
+        clearMarkers();
+        var place = autocomplete.getPlace();
+        map.panTo(place.geometry.location);
+        markers[0] = new google.maps.Marker({
+            position: place.geometry.location,
+            map: map
+        });
+        iw = new google.maps.InfoWindow({
+            content: getIWContent(place)
+        });
+        iw.open(map, markers[0]);
+    }
+
+    function search() {
+        clearResults();
+        clearMarkers();
+        if($('#radius').val()>0 && $('#x').val() && $('#y').val()){
+        
+            var type;
+            for (var i = 0; i < document.controls.type.length; i++) {
+                if (document.controls.type[i].checked) {
+                    type = document.controls.type[i].value;
+                }
+            }
+
+            //autocomplete.setBounds(map.getBounds());
+            var latLng = new google.maps.LatLng($('#x').val(), $('#y').val());
+            map.panTo(latLng);
+            var search = {
+                //bounds: map.getBounds()
+                // Ponlo aqui
+                location: latLng,
+                radius: ($('#radius').val() * 1000)
+
+            };
+            
+            var marker = new google.maps.Marker({
+              position: latLng,
+              map: map
+            });
+            if (type != 'establishment') {
+                search.types = [type];
+            }
+            
+            places.nearbySearch(search, function (results, status) {
+                
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    var icons = {
+                        airport:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        convenience_store:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_SUPER.png')}"  
+                        },
+                        bank:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        fire_station:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        shopping_mall:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_SUPER.png')}"
+                        },
+                        car_dealer:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        movie_theater:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        bus_station:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        embassy:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        school:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        stadium:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        taxi_stand:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        train_station:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        gas_station:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        hospital:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        place_of_worship:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        subway_station:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        },
+                        museum:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        local_government_office:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        park:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_PARQUES.png')}"
+                        },
+                        city_hall:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        courthouse:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        restaurant:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_PARQUES.png')}"
+                        },
+                        grocery_or_supermarket:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_SUPER.png')}"
+                        },
+                        university:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_ESCUELAS.png')}"
+                        },
+                        zoo:{
+                            icon: "{!URLFOR($Resource.colonias, 'colonia/images/PIN-PROPIEDADES-WEB_HOSPITALES.png')}"
+                        }
+                    };
+                    for (var i = 0; i < results.length; i++) {
+                        markers[i] = new google.maps.Marker({
+                            position: results[i].geometry.location,
+                            animation: google.maps.Animation.DROP,
+                            //icon: "images/PIN-PROPIEDADES-WEB_HOSPITALES.png"
+                            icon: icons[type].icon
+                        });
+                        google.maps.event.addListener(markers[i], 'click', getDetails(results[i], i));
+                        setTimeout(dropMarker(i), i * 100);
+                        addResult(results[i], i);
+                    }
+                }
+            });
+        }
+    }
+
+    function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i]) {
+                markers[i].setMap(null);
+                markers[i] == null;
+            }
+        }
+    }
+
+    function dropMarker(i) {
+        return function () {
+            markers[i].setMap(map);
+        }
+    }
+
+    function addResult(result, i) {
+        var results = document.getElementById("results");
+        var tr = document.createElement('tr');
+        tr.style.backgroundColor = (i % 2 == 0 ? '#F0F0F0' : '#FFFFFF');
+        tr.onclick = function () {
+            google.maps.event.trigger(markers[i], 'click');
+        };
+
+        var iconTd = document.createElement('td');
+        var nameTd = document.createElement('td');
+        var icon = document.createElement('img');
+        icon.src = result.icon;
+        icon.setAttribute("class", "placeIcon");
+        icon.setAttribute("className", "placeIcon");
+        var name = document.createTextNode(result.name);
+        iconTd.appendChild(icon);
+        nameTd.appendChild(name);
+        tr.appendChild(iconTd);
+        tr.appendChild(nameTd);
+        results.appendChild(tr);
+    }
+
+    function clearResults() {
+        var results = document.getElementById("results");
+        while (results.childNodes[0]) {
+            results.removeChild(results.childNodes[0]);
+        }
+    }
+
+    function getDetails(result, i) {
+        return function () {
+            places.getDetails({
+                reference: result.reference
+            }, showInfoWindow(i));
+        }
+    }
+
+    function showInfoWindow(i) {
+        return function (place, status) {
+            if (iw) {
+                iw.close();
+                iw = null;
+            }
+
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                iw = new google.maps.InfoWindow({
+                    content: getIWContent(place)
+                });
+                iw.open(map, markers[i]);
+            }
+        }
+    }
+
+    function getIWContent(place) {
+        var localityShortName = place.address_components[0].short_name;
+        var localityLongName = place.address_components[1].long_name;
+
+        if (localityShortName) {
+            lsn = localityShortName + ' ';
+        }
+        if (localityLongName) {
+            lln = localityLongName;
+        }
+
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addr = place.address_components[i];
+
+            if (addr.types[0] == 'street_number') {
+                if (addr.long_name.length) {
+                    var streetnum = '<tr><td><b>Street\x20number : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputStreetnum = '<input type="hidden" name="streetnum" value="' + addr.long_name + '">';
+                } else {
+                    var streetnum = '<tr><td><b>Street\x20number : </b><td>Undefined</td></tr>';
+                    var inputStreetnum = '<input type="hidden" name="streetnum" value="">';
+                }
+            }
+
+            if (addr.types[0] == 'route') {
+                if (addr.long_name.length) {
+                    var route = '<tr><td><b>Address : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputRoute = '<input type="hidden" name="route" value="' + addr.long_name + '">';
+                } else {
+                    var route = '<tr><td><b>Address : </b><td>Undefined</td></tr>';
+                    var inputRoute = '<input type="hidden" name="route" value="">';
+                }
+            }
+
+            if (addr.types[0] == 'postal_code') {
+                if (addr.long_name.length) {
+                    var getPostalCode = '<tr><td><b>Postal\x20code : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputPostalCode = '<input type="hidden" name="zipcode" value="' + addr.long_name + '">';
+                } else {
+                    var getPostalCode = '<tr><td><b>Postal\x20code : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputPostalCode = '<input type="hidden" name="zipcode" value="">';
+                }
+            }
+
+            if (addr.types[0] == 'locality') {
+                //var getLocality = addr.long_name;
+                if (addr.long_name.length) {
+                    var getLocality = '<tr><td><b>City : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputLocality = '<input type="hidden" name="city" value="' + addr.long_name + '">';
+                } else {
+                    var getLocality = '<tr><td><b>City : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputLocality = '<input type="hidden" name="city" value="">';
+                }
+            }
+
+            if (addr.types[0] == 'administrative_area_level_1') {
+                //var getAdministrative = addr.long_name;
+                if (addr.long_name.length) {
+                    var getAdministrative = '<tr><td><b>State : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputAdministrative = '<input type="hidden" name="administrative_area_level_1" value="' + addr.long_name + '">';
+                } else {
+                    var getAdministrative = '<tr><td><b>State : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputAdministrative = '<input type="hidden" name="administrative_area_level_1" value="">';
+                }
+            }
+            if (addr.types[0] == 'country') {
+                if (addr.long_name.length) {
+                    var getCountry = '<tr><td><b>Country : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputCountry = '<input type="hidden" name="country" value="' + addr.long_name + '">';
+                } else {
+                    var getCountry = '<tr><td><b>Country : </b><td>' + addr.long_name + '</td></tr>';
+                    var inputCountry = '<input type="hidden" name="country" value="">';
+                }
+            }
+        }
+        
+        if (place.website) {
+            var getWebsite ='';
+            if(place.website.length){
+                getWebsite = '<tr><td><i class="fa fa-globe"></i></td><td><a href="' + place.website + '" target="_blank" title="' + place.website + '"> <b>Website</b></a></td></tr>';
+            }
+        } else {
+            var getWebsite = '<tr><td><i class="fa fa-globe"></i></td><td>Undefiend\x20Website</td></tr>';
+        }
+
+        if (place.international_phone_number) {
+            var getPhoneNumber ='';
+            if(place.international_phone_number.length){
+                getPhoneNumber = '<tr><td><i class="fa fa-phone"></i></td><td>' + place.international_phone_number + '</b></td></tr>';
+            }
+        } else {
+            var getPhoneNumber = '<tr><td><i class="fa fa-phone"></i></td><td>Undefiend\x20Phone\x20Number</td></tr>';
+        }
+        var getPhoto0 = '';
+        if (place.photos && place.photos.length) {
+            getPhoto0 =
+                '<tr>'+
+            '<td>Foto</td>'+
+            '<td>'+
+            '<a href="' + place.url + '">';
+            //for(var i = 0; i < place.photos.length; i++){
+                getPhoto0 += '<img src="' + place.photos[0].getUrl({maxWidth: 150,maxHeight: 200}) + '" alt="' + place.name + '" title="' + place.name + '" />';
+            //}
+            getPhoto0+=
+            '</a>'+
+            '</td>'+
+            '</tr>';
+        }
+        var rating = '';
+        if(place.rating){
+            rating = '<tr><td>Calificacion</td><td>'+place.rating+'</td></tr>';
+        }
+        
+
+        //var avn = lsn + '' + lln;
+        var content = "";
+        content += '<p><b>' + place.formatted_address + '<b></p>';
+        content += '<table class="table table-condensed">';
+        content += '<tr><td width="20%"><img class="placeIcon" src="' + place.icon + '"/></td>';
+        content += '<td width="80%"><b><a href="' + place.url + '" target="_blank">' + place.name + '</a></b></td></tr>';
+        //content += getPhoneNumber;
+        content += getWebsite;
+        //content += getPostalCode;
+        //content += getLocality;
+        //content += getAdministrative;
+        //content += getCountry;
+        content += getPhoto0;
+        content += rating;
+        content += '</table>';
+        return content;
+    }
+</script>
+ 
+<style>
+section {
+            font-family: sans-serif;
+            height: 500px;
+        }
+        /*.pbBody{
+            position: relative;
+            height: auto;
+        }*/
+
+        .divRightTop {
+            position: relative;
+            /*top: 8%;
+            left: 69%;
+            width: 30%;
+            height: 92%;*/
+            float: left;
+            width: 20%;
+        }
+
+        .divMap {
+            /*position: relative;*/
+            /*top: 8%;
+            left: 0px;
+            width: 65%;
+            height: 90%;*/
+            width: 80%;
+            height: calc(100% - 40px) !important;
+            float: left;
+
+        }
+
+        /*.divBottomMap {
+            position: relative;
+            top: 70%;
+            left: 0;
+            width: 50%;
+            height: 29%;
+            background: #fff;
+            border-radius: 2px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            z-index: 2;
+            overflow: auto;
+            cursor: pointer;
+        }*/
+
+        /*.divActivities {
+            position: absolute;
+            top: 8%;
+            left: 81%;
+            width: 18%;
+            height: 91%;
+            background: #fff;
+            border-radius: 2px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            z-index: 2;
+            overflow: auto;
+            cursor: pointer;
+        }*/
+
+        #map_canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #controls {
+            float: left;
+            width: 50%;
+            max-height: 450px;
+            overflow-y: auto;
+            /*position: relative;
+            top: 0;
+            left: 0;
+            width: 48%;
+            height: 99%;
+            background: #eee;
+            border-radius: 2px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            z-index: 2;
+            padding: 5px;
+            font-size: 12px;
+            overflow: auto;*/
+        }
+
+        #listing {
+            float: left;
+            width: 50%;
+            max-height: 450px;
+            overflow-y: auto;
+            /*position: absolute;
+            top: 0;
+            left: 48%;
+            width: 50%;
+            height: 99%;
+            background: #fff;
+            border-radius: 2px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            z-index: 2;
+            overflow: auto;
+            cursor: pointer;*/
+
+        }
+
+        .placeIcon {
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+        }
+
+        #resultsTable {
+            font-size: 10px;
+            border-collapse: collapse;
+        }
+
+        /*.helpModal {
+            position: absolute;
+            top: 8%;
+            left: 46%;
+            z-index: 999998;
+
+        }*/
+
+        #locationField {
+            /*position: absolute;
+            top: 9%;
+            left: 10%;
+            width: 35%;
+            height: 5%;
+            border-radius: 0.5%;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            font-family: Roboto;
+            background: #fff;
+            z-index: 1;*/
+            height: 15px;
+            width: 50%;
+        }
+
+        #autocomplete {
+            width: 100%;
+            border: none;
+            font-size: 12px;
+        }
+
+        .header-panel {
+            width: 100%;
+            height: 7%;
+        }
+
+        #map_type {
+            top: 80%;
+        }
+
+        #divNavTop {
+            border-radius: 2px;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+</style>
+ 
+</head>
+ 
+    <apex:form >
+        <apex:outputText value="{!colonias[index].name}"/><br/>
+        <apex:commandButton value="Anterior" action="{!previous}"/>
+        <apex:commandButton value="Siguiente" action="{!next}"/><br/>
+        <apex:outputText value="{!index+1} de {!total}"/>
+    </apex:form>
+<section style="background: #eee;" onload="initialize()">
+    
+    <!-- <input type="text" id="x" value="19.4357"/>
+    <input type="text" id="y" value="-99.1439"/> -->
+    <input type="text" id="x" value="{!plat}"/>
+    <input type="text" id="y" value="{!plng}"/>
+    <input id="radius" type="text" value="1" placeholder="radio"/>
+    <button onclick="search();">Buscar</button>
+    <div id="locationField">
+        <input id="autocomplete" type="text" value="" placeholder="Search by business name, address, .. For see near."/>
+    </div>
+    <div class="divMap">
+        <div id="map_canvas"></div>
+    </div>
+   
+    <div class="divRightTop">
+        <div id="controls">
+            <form name="controls">
+                <input type="radio" name="type" value="establishment" onclick="search()" checked="checked"/>&nbsp;All<br/>
+                <input type="radio" name="type" value="airport" onclick="search()"/>&nbsp;Aeropuerto<br/>
+                <input type="radio" name="type" value="convenience_store" onclick="search()"/>&nbsp;Abarrotes<br/>
+                <input type="radio" name="type" value="bank" onclick="search()"/>&nbsp;Banco<br/>
+                <input type="radio" name="type" value="fire_station" onclick="search()"/>&nbsp;Bomberos<br/>
+                <input type="radio" name="type" value="shopping_mall" onclick="search()"/>&nbsp;Centro comercial<br/>
+                <input type="radio" name="type" value="car_dealer" onclick="search()"/>&nbsp;Agencia vehícular<br/>
+                <input type="radio" name="type" value="movie_theater" onclick="search()"/>&nbsp;Cine<br/>
+                <input type="radio" name="type" value="bus_station" onclick="search()"/>&nbsp;Estacion autobuses<br/>
+                <input type="radio" name="type" value="embassy" onclick="search()"/>&nbsp;Embajada<br/>
+                <input type="radio" name="type" value="establishment" onclick="search()"/>&nbsp;Establecimiento<br/>
+                <input type="radio" name="type" value="school" onclick="search()"/>&nbsp;Escuela<br/>
+                <input type="radio" name="type" value="stadium" onclick="search()"/>&nbsp;Estadio<br/>
+                <input type="radio" name="type" value="taxi_stand" onclick="search()"/>&nbsp;Estación de taxis<br/>
+                <input type="radio" name="type" value="train_station" onclick="search()"/>&nbsp;Estación de trenes<br/>
+                <input type="radio" name="type" value="gas_station" onclick="search()"/>&nbsp;Gasolinera<br/>
+                <input type="radio" name="type" value="hospital" onclick="search()"/>&nbsp;Hospital<br/>
+                <input type="radio" name="type" value="place_of_worship" onclick="search()"/>&nbsp;Iglesia<br/>
+                <input type="radio" name="type" value="subway_station" onclick="search()"/>&nbsp;Metro<br/>
+                <input type="radio" name="type" value="museum" onclick="search()"/>&nbsp;Museo<br/>
+                <input type="radio" name="type" value="local_government_office" onclick="search()"/>&nbsp;Oficina gobierno<br/>
+                <input type="radio" name="type" value="park" onclick="search()"/>&nbsp;Parque<br/>
+                <input type="radio" name="type" value="city_hall" onclick="search()"/>&nbsp;Palacio municipal<br/>
+                <input type="radio" name="type" value="courthouse" onclick="search()"/>&nbsp;Palacio de justicia<br/>
+                <input type="radio" name="type" value="restaurant" onclick="search()"/>&nbsp;Restaurant<br/>
+                <input type="radio" name="type" value="grocery_or_supermarket" onclick="search()"/>&nbsp;Supermercado<br/>
+                <input type="radio" name="type" value="university" onclick="search()"/>&nbsp;Universidad<br/>
+                <input type="radio" name="type" value="zoo" onclick="search()"/>&nbsp;Zoologico<br/>
+            </form>
+        </div>
+        <div id="listing">
+            <table id="resultsTable">
+                <tbody id="results"></tbody>
+            </table>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <!-- <div class="divActivities">
+        <div class="container">
+
+        </div>
+    </div> -->
+
+<!--<script src="/bootstrap/3.3.7/dist/js/bootstrap.min.js" type="text/javascript"></script>-->
+<script src="map/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCareFlrRoDyawn7JzdSs6yvnEUWtbZMc4&signed_in=true"></script>
+
+</section>
+
+
+
+</apex:pageBlock>
+    </apex:outputPanel>
+
+	
+</apex:page>

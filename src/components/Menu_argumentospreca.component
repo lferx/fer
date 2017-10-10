@@ -1,0 +1,279 @@
+<apex:component >
+        <apex:attribute name="text2" type="String" description="El texto que se desplagara" />
+
+    <head>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+        <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+        <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+
+
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+        <style type="text/css"> 
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+
+            h1{
+              color: #0C326B;
+                font-size: 15px;
+                text-transform:uppercase;
+            }
+
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            h3{
+                font-weight: bold;
+                font-size: 11px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 18px;
+                color: #0C326B;
+            }
+            h5{
+                font-size: 10px;
+                color: #fff;
+            }
+            h6{
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                color: #fff;
+            }
+            h7{
+               font-size: 23px;
+               font-family: 'Bebas-Neue';
+            }
+
+            .msg_obj_1, .msg_obj_2, .msg_obj_3, .msg_obj_4, .msg_obj_5, .msg_obj_6{
+                    font-family: "gotham-rounded-medium";
+                    font-size: 15px;
+                    color: #5A2A7E;
+                    height: 40%;
+                    text-align: center;
+                    align-self: center;
+                    border-radius: 0px 0px 17px 17px;
+                    -moz-border-radius: 0px 0px 17px 17px;
+                    -webkit-border-radius: 0px 0px 17px 17px;
+                    border: 1px solid #4DB1E0;
+                    border-color: #5A2A7E;
+                    border-top: none;
+                    padding: 7px 15px 7px 15px;
+                    width: 100%;
+                    margin-bottom: 30px;
+                   }
+            .option{
+                    font-family: "gotham-rounded-medium";
+                    font-size: 11px;
+                    text-align: left;
+                    margin: 3px 0px 3px 0px;
+                    list-style: none;
+                   }
+            .obj_1, .obj_2, .obj_3, .obj_4, .obj_5, .obj_6{
+                font-size: 18px;
+
+padding: 5% 5% 5% 5%;
+    background: #888888;
+    color: white;
+
+    /* align-self: center; */
+    border-radius: 0px 40px 40px 40px;
+    -moz-border-radius: 0px 40px 40px 40px;
+    -webkit-border-radius: 0px 40px 40px 40px;
+    /* border: 1px solid #4DB1E0; */
+    /* border-top: none; */
+    /* border-color: #4DB1E0; */
+    /* cursor: pointer; */
+    /* min-width: 90%; */
+    margin-bottom: 30px;
+            }
+            .obj_1:hover, .obj_2:hover, .obj_3:hover, .obj_4:hover, .obj_5:hover, .obj_6:hover
+            {
+    transform: translate(7%,8%)scale(1.1);
+    background-size: 180%;
+    background-position: 60% 0%;
+    transition: all .15s ease-out;
+            }
+            .tituloObjecion2{    
+             padding: 10px;
+            }
+
+         
+        </style>
+           
+    </head>
+
+                               
+     <body> 
+
+       <div class="collection">
+              <center><p class="labelarg">Argumentos/ Objeciones</p></center> 
+    <a  class="collection-item" onclick="var $argumento = $('<span>¿Cuál es el motivo por el cual ya no está interesado? <br/>Ya compró = Seguimos a sus ordenes…<br/>Ya compró en REVIMEX= Que gusto  Seguimos a sus ordenes…<br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información</span>');
+   Materialize.toast($argumento, 600500); cierrame();">No me Interesa</a>
+    <a  class="collection-item" onclick="var $argumento = $('<span>No tengo correo = Algún familiar cercano con correo para hacerle llegar la información <br/>No nombre Completo = Es para tener los datos actualizados</span>');
+   Materialize.toast($argumento, 6500);">No Datos Adicionales</a>
+    <a  class="collection-item" onclick="var $argumento = $('<span>Entiendo la situación…  <br/>Permítame un momento para comunicarlo con el área correspondiente que le tomará datos de su caso<br/>Entiendo la situación… <br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información<br/>En este momento no se encuentra nadie de nuestra área de servicio y atención al cliente pero le proporciono un correo electrónico para que puedan asignarle un folio de seguimiento….<br/>asesoria@revimex.mx</span>');
+   Materialize.toast($argumento, 9000);">Quejas de Cliente</a>
+
+  </div>
+<!--    
+      <div class="fctn_gral">
+                
+                <table align="center">
+                       
+                       <tr>
+                           <td align="center "><h1  style="color: #0C326B;">ARGUMENTOS / OBJECIONES</h1><br/><br/></td>
+                       </tr>
+                       </table>
+
+                       <aside class="obj_1" onclick="var $argumento = $('<span>¿Cuál es el motivo por el cual ya no está interesado? <br/>Ya compró = Seguimos a sus ordenes…<br/>Ya compró en REVIMEX= Que gusto  Seguimos a sus ordenes…<br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información</span>');
+   Materialize.toast($argumento, 6500);">No me Interesa</aside> -->
+
+
+
+
+            <!--           <div class="msg_obj_1" id="msg_obj_1" hidden="true">¿Cuál es el motivo por el cual ya no está interesado?
+                          <li class="option">Ya compró = Seguimos a sus ordenes…</li>
+                          <li class="option">Ya compró en REVIMEX= Que gusto  Seguimos a sus ordenes…</li>
+                          <li class="option">Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información</li>
+                      </div>  -->
+ 
+<!--                        <aside class="obj_2" onclick="var $argumento = $('<span>No tengo correo = Algún familiar cercano con correo para hacerle llegar la información <br/>No nombre Completo = Es para tener los datos actualizados</span>');
+   Materialize.toast($argumento, 6500);">No Datos Adicionales</aside>
+ -->
+
+
+
+
+<!--                        <div class="msg_obj_2" hidden="true">
+                           <li class="option">No tengo correo = Algún familiar cercano con correo para hacerle llegar la información</li>
+                           <li class="option">No nombre Completo = Es para tener los datos actualizados</li>
+                       </div> -->
+
+<!--                        <aside class="obj_3" onclick="var $argumento = $('<span>Entiendo la situación…  <br/>Permítame un momento para comunicarlo con el área correspondiente que le tomará datos de su caso<br/>Entiendo la situación… <br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información<br/>En este momento no se encuentra nadie de nuestra área de servicio y atención al cliente pero le proporciono un correo electrónico para que puedan asignarle un folio de seguimiento….<br/>asesoria@revimex.mx</span>');
+   Materialize.toast($argumento, 9000);">Quejas de Cliente</aside> -->
+
+
+
+
+
+<!--                        <div class="msg_obj_3" hidden="true">
+                           <li class="option">Entiendo la situación…  <br/>
+                            Permítame un momento para comunicarlo con el área correspondiente
+                            que le tomará datos de su caso</li>
+                            <li class="option">Entiendo la situación…  <br/>
+                            En este momento no se encuentra nadie de nuestra área de servicio y 
+                            atención al cliente pero le proporciono un correo electrónico para que puedan asignarle un folio 
+                            de seguimiento….<br/>
+                            asesoria@revimex.mx</li>
+
+        </div> -->
+                       
+<!--                      <td colspan="4" align="center">
+
+                        <div  id="panel">   
+
+                          <apex:repeat value="{!objeciones}" var="key">
+
+                                <div class="panel panel-default">
+                                    <div class="tituloObjecion">
+                                        <h7>
+                                            <a data-toggle="collapse" data-parent="#panel" href="#{!objeciones[key].Name}" ><apex:outputText value="{!objeciones[key].Name}" rendered="true"/></a>
+                                        </h7>
+                                    </div>
+                                    <div id="{!objeciones[key].Name}" class="collapse">
+                                        <div class="mensajeObjecion"><apex:outputText escape="false" value="{!objeciones[key].Mensaje__c}" rendered="true"/></div>
+                                    </div>
+                               </div>
+                            </apex:repeat>
+                        </div>
+                    
+                     </td> -->
+             
+<!--         </div> -->
+          
+<!--                                <aside class="obj_1" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a1').show();">No me Interesa</aside>
+
+ 
+                       <aside class="obj_2" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a2').show();">No Datos Adicionales</aside>
+
+
+                       <aside class="obj_3" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a3').show();">Quejas de Cliente</aside> -->
+   </body>
+<!--    <script>
+
+        $(document).ready(function(){
+            $(".obj_1").click(function(){
+                shoowme = false;
+                $(".msg_obj_1").prop('hidden', shoowme);
+             if(shoowme == false){
+                // $(".obj_1").css("max-width", "40%");
+                //$(".menuArgumentosObservaciones").css("width", "25%");
+                $(".obj_1").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $(".obj_3").css("margin-top", "30px");
+                $('.msg_obj_2').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $(".obj_2").click(function(){
+                shoowme = false;
+                $(".msg_obj_2").prop('hidden', shoowme);
+             if(shoowme == false){
+                $(".obj_2").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $('.msg_obj_1').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $(".obj_3").click(function(){
+                shoowme = false;
+                $(".msg_obj_3").prop('hidden', shoowme);
+             if(shoowme == false){
+                $(".obj_3").css("margin-bottom", "0px");
+                $(".obj_3").css("margin-top", "30px");
+                $('.msg_obj_1').prop('hidden',true);
+                $('.msg_obj_2').prop('hidden',true);
+             }
+            });
+        });
+
+   </script> -->
+</apex:component>

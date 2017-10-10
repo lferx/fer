@@ -1,0 +1,79 @@
+<apex:page standardStylesheets="false">
+<apex:stylesheet value="{!URLFOR($Resource.estilosCT)}"/>
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui, 'js/jquery-1.8.0.min.js')}"/>
+    <div class="cb">
+	    <apex:outputText >HISTORIAL</apex:outputText>
+    </div>
+    <div class="ct_main">
+	    <apex:outputText >Nombre</apex:outputText>
+    </div>
+    <div class="roles">
+    <div class="mas-menos">
+    	<div id="m_desp1" hidden="false">
+    			<apex:image styleClass="imgmenos1" value="{!URLFOR($Resource.imgmenos)}"/>
+    		</div>
+    	<div id="m_desp2" hidden="">	
+    		<apex:image styleClass="imgmas1" value="{!URLFOR($Resource.imgmas)}"/>
+    	</div>
+   	</div>
+
+		<div class="tipo_rol"><apex:outputText >Lead</apex:outputText></div>
+		<aside id="txt_roles1" hidden="false">
+			<apex:outputText >Texto de Lead</apex:outputText>
+		</aside>
+
+		<div class="mas-menos">
+	       	<div id="m_desp3" hidden="false">
+	    			<apex:image styleClass="imgmenos2" value="{!URLFOR($Resource.imgmenos)}"/>
+	    	</div>
+	    	<div id="m_desp4" hidden="">
+	    		<apex:image styleClass="imgmas2" value="{!URLFOR($Resource.imgmas)}" />
+	    	</div>
+    	</div>
+		<div class="tipo_rol"><apex:outputText >Cliente</apex:outputText></div>
+		<aside id="txt_roles2" hidden="false">
+			<apex:outputText >Texto de Cliente</apex:outputText>
+		</aside>
+		
+    </div>
+
+<script>
+
+	$(".imgmas1").click(function(){
+		var despliega_down = false;
+		$("#txt_roles1").prop("hidden", despliega_down);
+			if (despliega_down == false) {
+			$("#m_desp2").prop("hidden", true);
+			$("#m_desp1").prop("hidden", false);
+			};
+	});
+
+	$(".imgmenos1").click(function(){
+		var despliega_down = true;
+		$("#txt_roles1").prop("hidden", despliega_down);
+			if (despliega_down == true) {
+			$("#m_desp1").prop("hidden", true);
+			$("#m_desp2").prop("hidden", false);
+			};
+	});
+
+	$(".imgmas2").click(function(){
+		var despliega_down = false;
+		$("#txt_roles2").prop("hidden", despliega_down);
+			if (despliega_down == false) {
+			$("#m_desp4").prop("hidden", true);
+			$("#m_desp3").prop("hidden", false);
+		};
+	});
+
+	$(".imgmenos2").click(function(){
+		var despliega_down = true;
+		$("#txt_roles2").prop("hidden", despliega_down);
+			if (despliega_down == true) {
+			$("#m_desp3").prop("hidden", true);
+			$("#m_desp4").prop("hidden", false);
+			};
+	});
+
+</script>
+</apex:page>

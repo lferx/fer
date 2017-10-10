@@ -1,0 +1,8 @@
+<!--
+ /**
+ * Auto Generated and Deployed by Cirrus Files
+ **/
+-->
+<apex:page standardController="Propiedad__c" tabStyle="Propiedad__c" cache="false">
+    <IGD:GDrive recordType="Propiedad__c" recordId="{!Propiedad__c.Id}"/>
+</apex:page>

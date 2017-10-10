@@ -1,0 +1,290 @@
+<apex:component >
+        <apex:attribute name="text" type="String" description="El texto que se desplagara" />
+    <head>
+
+
+        <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+        <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+
+    
+        <style type="text/css"> 
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+
+            h1{
+
+              color: #0C326B;
+    font-size: 15px;
+    text-transform: uppercase;
+            }
+
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            h3{
+                font-weight: bold;
+                font-size: 11px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 18px;
+                color: #0C326B;
+            }
+            h5{
+                font-size: 10px;
+                color: #fff;
+            }
+            h6{
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                color: #fff;
+            }
+            h7{
+               font-size: 23px;
+               font-family: 'Bebas-Neue';
+            }
+
+            .msg_obj_1, .msg_obj_2, .msg_obj_3, .msg_obj_4, .msg_obj_5, .msg_obj_6{
+                    font-family: "gotham-rounded-medium";
+                    font-size: 13px;
+                    color: #5A2A7E;
+                    height: 40%;
+                    text-align: center;
+                    align-self: center;
+                    border-radius: 0px 0px 17px 17px;
+                    -moz-border-radius: 0px 0px 17px 17px;
+                    -webkit-border-radius: 0px 0px 17px 17px;
+                    border: 1px solid #4DB1E0;
+                    border-color: #5A2A7E;
+                    border-top: none;
+                    padding: 7px 15px 7px 15px;
+                    width: 100%;
+                    margin-bottom: 30px;
+                   }
+            .option{
+                    font-family: "gotham-rounded-medium";
+                    font-size: 11px;
+                    text-align: left;
+                    margin: 3px 0px 3px 0px;
+                    list-style: none;
+                   }
+
+
+                     
+        </style>
+           
+    </head>
+                               
+    <body> 
+    
+<!--       <div class="ctn_gral">
+                
+                <table align="center">
+                       
+                       <tr>
+                           <td align="center "><h1  style="color: #0C326B;">ARGUMENTOS / OBJECIONES</h1><br/><br/></td>
+                       </tr>
+                       </table>
+                       <aside class="obj_1" onclick="var $argumento = $('<span>Sin Puntos Suficientes<br/>Tu crédito será autorizado en (Fecha Próxima) debido a que aun no cuentas con la puntuación requerida por INFONAVIT<br/>1.-Ofrecer otra forma de pago<br/>2.-En cuanto su estatus se actualice nos pondremos en contacto con usted</span>');
+   Materialize.toast($argumento, 6500);">Sin Puntos Suficientes</aside> -->
+<!--                            <aside class="obj_1" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a1').show();">Sin Puntos Suficientes</aside> -->
+<!--                                <div class="msg_obj_1" id="msg_obj_1" hidden="true">Tu crédito será autorizado en (Fecha Próxima) debido a
+                               que aun no cuentas con la puntuación requerida por INFONAVIT
+                                    <li class="option">1.-Ofrecer otra forma de pago</li>
+                                    <li class="option">2.-En cuanto su estatus se actualice nos pondremos en contacto con usted</li>
+                               </div>  -->
+<!--                         <aside class="obj_2" onclick="var $argumento = $('<span>Sin Relación Laboral<br/>¿Estás laborando actualmente?<br/>¿Hace cuanto cambiaste de trabajo?<br/>1.-Ofrecer otra forma de pago<br/>2.-Tu estatus en INFONAVIT es sin relación laboral, regálanos una llamada cuando tengas actividad laboral nuevamente</span>');
+   Materialize.toast($argumento, 6500);">Sin Relación Laboral</aside> -->
+<!--                        <aside class="obj_2" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a2').show();">Sin Relación Laboral</aside> -->
+<!--                        <div class="msg_obj_2" hidden="true">¿Estás laborando actualmente? <br/>
+                        ¿Hace cuanto cambiaste de trabajo?
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                           <li class="option">2.-Tu estatus en INFONAVIT es sin relación laboral, regálanos una llamada cuando tengas actividad laboral nuevamente</li>
+                       </div> -->
+
+<!--                        <aside class="obj_3" onclick="var $argumento = $('<span>¿Cambiaste de Trabajo hace poco?<br/>Debes ir a RH para que actualicen tus aportaciones al IMSS<br/>Entiendo la situación… <br/>1.-Ofrecer otra forma de pago<br/>2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</span>');
+   Materialize.toast($argumento, 9000);">Sin Aportaciones</aside> -->
+<!--   
+                       <aside class="obj_3" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a3').show();">Sin Aportaciones</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+<!--                        <aside class="obj_4" onclick="var $argumento = $('<span>Si el avaluo de la propiedad es mayor al precio de venta y tu credito lo cubre, te regresamos la diferencia  que resulte en efectivo</span>');
+   Materialize.toast($argumento, 9000);">Devolución</aside> -->
+<!--                        <aside class="obj_4" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a4').show();">Devoluciòn</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+<!--                        <aside class="obj_5" onclick="var $argumento = $('<span>Aplicables en el Mes</span>');
+   Materialize.toast($argumento, 9000);">Devolución</aside> -->
+<!--                        <aside class="obj_5" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a5').show();">Promociones</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+<!--                         <aside class="obj_6" onclick="var $argumento = $('<span>A partir de un paquete de  3 propiedades se mejoran aun mas los precios de venta</span>');
+   Materialize.toast($argumento, 6500);">Precios Preferenciales</aside> -->
+<!--                        <aside class="obj_6" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a6').show();">Precios Preferenciales</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+<!--                        <aside class="obj_7" onclick="var $argumento = $('<span>Es la posibilidad de incrementar el precio de venta para tu cliente hasta $15,000 y nosotros te devolvemos ese excedente</span>');
+   Materialize.toast($argumento, 9000);">Devoluciones Plus</aside> -->
+<!--                        <aside class="obj_7" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a7').show();">Devoluciones Plus</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+<!--         </div> -->
+<!--                        <aside class="obj_8" onclick="var $argumento = $('<span>Comisión 3%<br/>Comisión Normal Precio de Venta<br/>Comisión 6%<br/>Comisión Sobre Venta de Casas Desalojadas</span>');
+   Materialize.toast($argumento, 9000);">Comisión</aside> -->
+<!--                        <aside class="obj_8" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a8').show();">Comisión</aside> -->
+<!--                        <div class="msg_obj_3" hidden="true">¿Cambiaste de Trabajo hace poco?<br/>
+                         Debes ir a RH para que actualicen tus aportaciones al IMSS
+                           <li class="option">1.-Ofrecer otra forma de pago</li>
+                            <li class="option">2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</li>
+ -->
+<!--         </div> -->
+
+<!--                      <td colspan="4" align="center">
+
+                        <div  id="panel">   
+
+                          <apex:repeat value="{!objeciones}" var="key">
+
+                                <div class="panel panel-default">
+                                    <div class="tituloObjecion">
+                                        <h7>
+                                            <a data-toggle="collapse" data-parent="#panel" href="#{!objeciones[key].Name}" ><apex:outputText value="{!objeciones[key].Name}" rendered="true"/></a>
+                                        </h7>
+                                    </div>
+                                    <div id="{!objeciones[key].Name}" class="collapse">
+                                        <div class="mensajeObjecion"><apex:outputText escape="false" value="{!objeciones[key].Mensaje__c}" rendered="true"/></div>
+                                    </div>
+                               </div>
+                            </apex:repeat>
+                        </div>
+                    
+                     </td> -->
+             
+<!--         </div> -->
+          
+        
+
+
+
+       <div class="collection">
+       <center><p class="labelarg">Argumentos/ Objeciones</p></center> 
+    <a  class="collection-item" onclick="var $argumento = $('<span>Sin Puntos Suficientes<br/>Tu crédito será autorizado en (Fecha Próxima) debido a que aun no cuentas con la puntuación requerida por INFONAVIT<br/>1.-Ofrecer otra forma de pago<br/>2.-En cuanto su estatus se actualice nos pondremos en contacto con usted</span>');
+   Materialize.toast($argumento, 6500);">Sin Puntos Suficientes</a>
+      <a  class="collection-item" onclick="var $argumento = $('<span>Sin Relación Laboral<br/>¿Estás laborando actualmente?<br/>¿Hace cuanto cambiaste de trabajo?<br/>1.-Ofrecer otra forma de pago<br/>2.-Tu estatus en INFONAVIT es sin relación laboral, regálanos una llamada cuando tengas actividad laboral nuevamente</span>');
+   Materialize.toast($argumento, 6500);">Sin Relación Laboral</a>
+         <a  class="collection-item" onclick="var $argumento = $('<span>¿Cambiaste de Trabajo hace poco?<br/>Debes ir a RH para que actualicen tus aportaciones al IMSS<br/>Entiendo la situación… <br/>1.-Ofrecer otra forma de pago<br/>2.-Regálanos una llamada cuando hayas revisado la situación con tu empresa</span>');
+   Materialize.toast($argumento, 9000);">Sin Aportaciones</a>
+            <a  class="collection-item" onclick="var $argumento = $('<span>Si el avaluo de la propiedad es mayor al precio de venta y tu credito lo cubre, te regresamos la diferencia  que resulte en efectivo</span>');
+   Materialize.toast($argumento, 9000);">Devolución</a>
+               <a  class="collection-item" onclick="var $argumento = $('<span>A partir de un paquete de  3 propiedades se mejoran aun mas los precios de venta</span>');
+   Materialize.toast($argumento, 6500);">Precios Preferenciales</a>
+                  <a  class="collection-item" onclick="var $argumento = $('<span>A partir de un paquete de  3 propiedades se mejoran aun mas los precios de venta</span>');
+   Materialize.toast($argumento, 6500);">Precios Preferenciales</a>
+                     <a  class="collection-item" onclick="var $argumento = $('<span>Es la posibilidad de incrementar el precio de venta para tu cliente hasta $15,000 y nosotros te devolvemos ese excedente</span>');
+   Materialize.toast($argumento, 9000);">Devoluciones Plus</a>
+                        <a  class="collection-item" onclick="var $argumento = $('<span>Comisión 3%<br/>Comisión Normal Precio de Venta<br/>Comisión 6%<br/>Comisión Sobre Venta de Casas Desalojadas</span>');
+   Materialize.toast($argumento, 9000);">Comisión</a>
+
+<!--     <a  class="collection-item" onclick="var $argumento = $('<span>No tengo correo = Algún familiar cercano con correo para hacerle llegar la información <br/>No nombre Completo = Es para tener los datos actualizados</span>');
+   Materialize.toast($argumento, 6500);">No Datos Adicionales</a>
+    <a  class="collection-item" onclick="var $argumento = $('<span>Entiendo la situación…  <br/>Permítame un momento para comunicarlo con el área correspondiente que le tomará datos de su caso<br/>Entiendo la situación… <br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información<br/>En este momento no se encuentra nadie de nuestra área de servicio y atención al cliente pero le proporciono un correo electrónico para que puedan asignarle un folio de seguimiento….<br/>asesoria@revimex.mx</span>');
+   Materialize.toast($argumento, 9000);">Quejas de Cliente</a> -->
+
+  </div>
+
+
+
+
+ 
+   </body>
+
+<!--    <script>
+
+        $(document).ready(function(){
+            $(".obj_1").click(function(){
+                shoowme = false;
+                $(".msg_obj_1").prop('hidden', shoowme);
+             if(shoowme == false){
+                // $(".obj_1").css("max-width", "40%");
+                //$(".menuArgumentosObservaciones").css("width", "25%");
+                $(".obj_1").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $(".obj_3").css("margin-top", "30px");
+                $('.msg_obj_2').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $(".obj_2").click(function(){
+                shoowme = false;
+                $(".msg_obj_2").prop('hidden', shoowme);
+             if(shoowme == false){
+                $(".obj_2").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $('.msg_obj_1').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $(".obj_3").click(function(){
+                shoowme = false;
+                $(".msg_obj_3").prop('hidden', shoowme);
+             if(shoowme == false){
+                $(".obj_3").css("margin-bottom", "0px");
+                $(".obj_3").css("margin-top", "30px");
+                $('.msg_obj_1').prop('hidden',true);
+                $('.msg_obj_2').prop('hidden',true);
+             }
+            });
+        });
+
+   </script> -->
+</apex:component>

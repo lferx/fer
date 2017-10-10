@@ -1,0 +1,802 @@
+<apex:page controller="FichaTecnica_Controller" showHeader="false" sidebar="false">
+	<head>
+
+		<style type="text/css">
+			@font-face {
+                font-family: 'Bebas-Neue';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: 'gotham-rounded-book';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: 'gotham-rounded-medium';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            body{
+				width: 100%;
+				height: auto;
+				max-width: 1000px;
+				min-width: 200px;
+				font-size: 16px;
+				font-family: 'gotham-rounded-book';
+				text-transform: uppercase;
+			}
+
+			/**{
+				font-size: 12px;
+			}*/
+			h1,h2,h3,h4{
+				margin: auto;
+			}
+            h1, h1 span{
+                font-size: 20px;
+                /*font-size: 1.6em;*/
+                font-weight: normal;
+                color: #0C326B;
+                font-family: 'Bebas-Neue';
+                text-transform:uppercase;
+                /*font-size:3vw;*/
+                
+            }
+            h2, h2 span{
+                font-size: 16px;
+                font-weight: bold;
+                color: #0C326B;
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3, h3 span , h3 sup{
+                font-size: 10px;
+                font-weight: bold;
+                font-family: 'gotham-rounded-book';
+                color: #fff;
+                text-transform: uppercase;
+            }
+            h4, h4 span, h4 sup{
+                font-size: 11px;
+                font-family: 'gotham-rounded-book';
+                color: #000;
+                text-transform: uppercase;
+				
+            }
+			.azul{
+				background-color: #0c326b;/*azul fuerte*/
+			}
+			.naranja1{	
+				background-color: #E7AD47;/*naranja fuerte*/
+			}
+			.naranja2{
+				background-color: #FFD082;/*naranja claro*/
+			}
+			.verde{
+				background-color: #E5F38F;/*verde claro */
+			}
+			.container > div{
+				/*border: 1px solid red;*/
+			}
+			.container{
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  				grid-template-rows: auto;
+	            grid-template-areas: 
+	            "logo logo logo logo logo logo titulo titulo titulo titulo titulo titulo"
+	            "foto foto foto foto foto foto folio folio folio folio folio folio"
+	            "foto foto foto foto foto foto direccion direccion direccion direccion direccion direccion"
+	            "foto foto foto foto foto foto direccion direccion direccion direccion direccion direccion"
+	            "tecnicaPropiedad tecnicaPropiedad tecnicaPropiedad tecnicaPropiedad resumenFinanciero resumenFinanciero resumenFinanciero resumenFinanciero estatusDesalojo estatusDesalojo estatusDesalojo estatusDesalojo"
+	            "argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales";
+
+	            grid-column-gap: 3px;
+  				grid-row-gap: 5px;
+  				width: 100%;
+				height: auto;
+				border: 1px solid green;
+			}
+			.logo{
+ 				grid-area: logo;
+ 				background-color: #0c326b;/*azul fuerte*/
+ 				display: grid;
+			}
+			.titulo{
+ 				grid-area: titulo;
+ 				background-color: #E7AD47;/*naranja fuerte*/
+				display: grid;
+			}
+			.foto{
+ 				grid-area: foto;
+ 				display: grid;
+ 				grid-template-columns: 1fr;
+  				grid-template-rows: 1fr;
+			}
+			.folio{
+				grid-area: folio;
+				display: grid;
+				background-color: #FFD082;/*naranja claro*/
+			}
+			.direccion{
+ 				grid-area: direccion;
+				display: grid;
+				padding: 3%;
+				background-color: #FFD082;/*naranja claro*/
+			}
+			.tecnicaPropiedad{
+				grid-area: tecnicaPropiedad;
+				display: grid;
+			}
+			.resumenFinanciero{
+				grid-area: resumenFinanciero;
+				display: grid;
+			}
+			.estatusDesalojo{
+				grid-area: estatusDesalojo;
+				display: grid;
+			}
+			.argumentosComerciales{
+				grid-area: argumentosComerciales;
+				display: grid;
+			}
+
+			.logo,.titulo,.folio,.direction{
+				text-align: center;
+			}
+			.logo img{
+				/*position: relative;*/
+    			/*top: calc(50% - 42px);*/
+				    margin: auto;
+				    width: 61%;
+				    height: auto;
+				    min-height: 70px;
+				    min-width: 140px;
+			}
+
+			.smallContainer{
+				margin: 1px 10px 1px 10px;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  				grid-auto-rows: auto;
+	            /*grid-template-areas: 
+	            "haeder header"
+	            "folio folio folio"
+	            "foto foto foto direccion direccion direccion"
+	            "foto foto foto direccion direccion direccion"
+	            "tecnicaPropiedad tecnicaPropiedad resumenFinanciero resumenFinanciero estatusDesalojo estatusDesalojo"
+	            "argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales";*/
+	            grid-column-gap: 3px;
+  				grid-row-gap: 2px;
+  				/*text-align: center;*/
+			}
+			
+			
+			.headSmallContainer div{
+				align-self:center;
+			}
+
+			
+			.headSmallContainer{
+				grid-column:1/5;
+				grid-row: auto;
+				/*height: 40px;*/
+                /*padding: 3px;*/ 
+                border-radius: 10px; 
+                border:4px solid #4DB1E0; 
+                text-align: center; 
+                /*align-content: center;*/
+                display: flex;
+                justify-content: center;
+                padding: 3px 0 3px 0;
+			}
+
+
+			.smallContainerLx{
+				grid-column:1/2;
+			}
+			.smallContainerRx{
+				grid-column:2/5;
+			}
+			.smallContainerL{
+				grid-column: 1/3;
+			    background-color: #0C326B;
+			    /*justify-content: center;*/
+			    /*justify-items: center; */
+			    /* vertical-align: middle; */
+			    /* align-items: center; */
+			    /* align-content: center; */
+			    display: grid;
+			}
+			.smallContainerR{
+				grid-column:3/5;
+			}
+			.smallContainerR, .smallContainerRx{
+				background-color: #E5F38F;
+				
+				/*display: flex;*/
+			    /*justify-content: center;*/
+			    /*align-items: center;*/
+			}
+
+			.smallContainer2{
+				margin: 1px 10px 1px 10px;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  				grid-auto-rows: auto;
+	            /*grid-template-areas: 
+	            "haeder header"
+	            "folio folio folio"
+	            "foto foto foto direccion direccion direccion"
+	            "foto foto foto direccion direccion direccion"
+	            "tecnicaPropiedad tecnicaPropiedad resumenFinanciero resumenFinanciero estatusDesalojo estatusDesalojo"
+	            "argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales argumentosComerciales";*/
+	            grid-column-gap: 3px;
+  				grid-row-gap: 2px;
+  				text-align: center;
+			}
+			.headSmallContainer2 div{
+				/*align-self:center;*/
+			}
+
+			
+			.headSmallContainer2{
+				grid-column:1/9;
+				grid-row: auto;
+				/*height: 40px;*/
+                /*padding: 3px;*/ 
+                border-radius: 10px; 
+                border:4px solid #4DB1E0; 
+                text-align: center; 
+                /*align-content: center;*/
+                display: flex;
+                justify-content: center;
+                padding: 3px 0 3px 0;
+			}
+
+
+			.smallContainerLx2{
+				grid-column:1/2;
+			}
+			.smallContainerRx2{
+				grid-column:2/5;
+			}
+			.smallContainerL2{
+				grid-column:1/2;
+				background-color: #0C326B;
+display: grid;
+    /* justify-self: center; */
+    align-items: center;
+    justify-content: center;
+
+	
+			}
+			.smallContainerR2{
+				grid-column:2/3;
+				display: flex;
+    /* justify-self: center; */
+    align-items: center;
+    justify-content: center;
+			}
+			.smallContainerR2, .smallContainerRx2{
+				background-color: #E5F38F;
+			}
+
+
+
+
+
+
+
+			.w3-button{border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+            .w3-black{
+                background-color: rgba(201, 200, 200, 0.5);
+                /*background-color: #C9C8C8;
+                opacity: 0.5;*/
+            }
+            .w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+            .w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+
+            .w3-display-container{
+                position:relative;
+                /*max-height: 250px;*/
+            }
+            .w3-display-container:hover{
+                display:block;
+            }
+            .w3-text-white{color:#fff !important;}
+            .w3-container:after,.w3-container:before{content:"";display:table;clear:both}
+            .w3-container{padding:0.01em 16px}
+            .mySlides{
+                /*width: 100%;
+                height: 100%;
+                object-fit: cover;
+                width: 100%;
+                max-height: 400px;
+                width: 100%;*/
+			    width: 100%;
+			    height: 100%;
+			    object-fit: cover;
+			    max-height: 400px;
+            }
+            .icons{
+				width: 35px;
+                height: 35px;
+            }
+            .iconsSmall{
+            	/*width: 30%;*/
+            	width: calc(2em - 10px);
+    			height: auto;
+            }
+			.iconos{
+                /*width:25px;
+                height:25px;*/
+                width: auto;
+    			height: auto;
+
+            }
+            .stars{
+                /*width:18px;
+                height:18px;
+                padding: 0 2px;*/
+                /*float: left;*/
+                width: 18%;
+    			height: auto;
+            }
+
+		</style>
+	</head>
+	<body onload="onloader();">
+	<center>
+		<div class="container">
+			<div class="logo">
+				<apex:image value="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex2.png')}"/>
+			</div>
+			<div class="titulo">
+				<h1 style="font-size: 36px;">Ficha Técnica Comercial</h1>
+			</div>
+			<div class="foto">
+				<div class="w3-display-container w3-text-white">
+                    <apex:repeat value="{!fotos}" var="foto">
+                        <img src="{!foto.url}" class="mySlides"/>
+                    </apex:repeat>
+                    <apex:outputPanel rendered="{!IF(fotosSize > 1,true,false)}">
+                        <div class="w3-display-left w3-container"><p class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</p></div>
+                        <div class="w3-display-right w3-container"><p class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</p></div>
+                    </apex:outputPanel>
+                </div>
+			</div>
+			<div class="folio">
+				<h2 style="font-size: 23px;">
+					<apex:outputLink value="/{!objetoOferta.id}" target="_blank">
+	                    <apex:outputField value="{!objetoOferta.Name}"/>
+	                </apex:outputLink>
+                </h2>
+			</div>
+			<div class="direccion">
+				
+                    <h2>
+                        <apex:outputText value="{!direccionCompleta}"/>
+                        <apex:outputField value="{!objetoOferta.Colonia_busqueda__c}" id="folioOferta"/>, &nbsp;
+                        <apex:outputField value="{!objetoOferta.Ciudad_Tabla__c}"/>, &nbsp;
+                        <apex:outputField value="{!objetoOferta.Estado__c}"/>.
+                    </h2>
+			</div>
+			<div class="tecnicaPropiedad">
+				<div class="smallContainer">
+					<div class="headSmallContainer">
+						<div>
+							<apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/tecnica.png')}" styleClass="icons"/>
+						</div>
+						<div>
+							<h1>técnica propiedad</h1>
+						</div>
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/terreno2.png')}" styleClass="iconsSmall"/>
+					</div>
+					<div class="smallContainerRx">
+						<h4>
+							<apex:outputText value="{0,number,###,###}  m<sup>2</sup>" escape="false">
+	                            <apex:param value="{!objetoOferta.Propiedad__r.Terreno_m2__c}"/>
+	                        </apex:outputText>
+						</h4>
+						
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/construccion2.png')}" styleClass="iconsSmall"/> 
+					</div>
+					<div class="smallContainerRx">
+                        <h4>
+                            <apex:outputText value="{0,number,###,###}  m<sup>2</sup>" escape="false">
+                                <apex:param value="{!objetoOferta.Propiedad__r.Construccion_m2__c}"/>
+                            </apex:outputText>
+                        </h4>
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/habitaciones2.png')}" styleClass="iconsSmall"/>
+					</div>
+					<div class="smallContainerRx">
+						<h4>
+                            <apex:outputField value="{!objetoOferta.Propiedad__r.N_de_Habitaciones__c} "/>
+                        </h4>
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/banios2.png')}" styleClass="iconsSmall"/>
+					</div>
+					<div class="smallContainerRx">
+						<h4>
+                            <apex:outputField value="{!objetoOferta.Propiedad__r.N_de_Ba_os__c} "/>
+                        </h4>
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/patio2.png')}" styleClass="iconsSmall"/> 
+					</div>
+					<div class="smallContainerRx">
+						<h4>
+                            <apex:outputField value="{!objetoOferta.Propiedad__r.Patios__c} "/>
+                        </h4>
+					</div>
+					<div class="smallContainerLx">
+						<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/estacionamiento2.png')}" styleClass="iconsSmall"/>
+					</div>
+					<div class="smallContainerRx">
+						<h4>
+                            <apex:outputField value="{!objetoOferta.Propiedad__r.Estacionamiento__c}"/>
+                        </h4>
+					</div>
+				</div>
+			</div>
+			<div class="resumenFinanciero">
+				<div class="smallContainer">
+					<div class="headSmallContainer">
+						<div>
+							<apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/resumen.png')}" styleClass="icons"/>
+						</div>
+						<div>
+							<h1>resumen financiero</h1>
+						</div>
+					</div>
+					<div class="smallContainerL">
+						<h3>$ Referencia: </h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!objetoOferta.ValorReferencia__c}"/></apex:outputText></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>$ Original: </h3>
+					</div>
+					<div class="smallContainerR">
+                       <h4> <apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!objetoOferta.Precio_Original__c}"/></apex:outputText> </h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>$ colonia:</h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="$ {0,number,###,###}"><apex:param value="{!pcolonia}"/></apex:outputText></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>ahorro:</h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="{0,number,###} %"><apex:param value="{!IF(ahorro > 0,ahorro,0)}" /></apex:outputText></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Escrituras: </h3>
+					</div>
+					<div class="smallContainerR">
+						<h4> <apex:outputText value="{!IF(objetoOferta.Escritu__c == 'Con Escrituras','Si','No')}"/> </h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Desalojada: </h3>
+					</div>
+					<div class="smallContainerR">
+						<apex:variable value="{!objetoOferta.Estatus_de_Invasion__c}" var="inva" />
+                        <h4><apex:outputText value="{!IF(inva == '','N/A',IF(inva == 'Invadida','No','Si'))}"/></h4>
+					</div>
+				</div>
+			</div>
+			<div class="estatusDesalojo">
+				<div class="smallContainer">
+					<div class="headSmallContainer">
+						<div>
+							<apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/resumen.png')}" styleClass="icons"/>
+						</div>
+						<div>
+							<h1>Desalojo</h1>
+						</div>
+					</div>
+					<div class="smallContainerL">
+						<h3>Dias Stock: </h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="{0,number,###,###}"><apex:param value="{!objetoOferta.TiempoOferta__c}"/></apex:outputText></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Extrajudicial</h3>
+					</div>
+					<div class="smallContainerR">
+                       <h4><apex:outputText value="{!objetoDesalojo.EtapaDesalExtraJud__c}"/></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Judicial</h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="{!objetoDesalojo.EtapaDesalojoJudicial__c}"/></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Corte de suministros</h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="{!objetoDesalojo.Corte_de_Suministros__c}"/></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>vendidas</h3>
+					</div>
+					<div class="smallContainerR">
+						<h4><apex:outputText value="{!objetoOferta.Colonia_busqueda__r.Vendidas__c}"/></h4>
+					</div>
+					<div class="smallContainerL">
+						<h3>Disponibles</h3>
+					</div>
+					<div class="smallContainerR">
+                        <h4><apex:outputText value="{!objetoOferta.Colonia_busqueda__r.Propiedades_Disponibles__c}"/></h4>
+					</div>
+				</div>
+			</div>
+			<div class="argumentosComerciales">
+				<div class="smallContainer2">
+					<div class="headSmallContainer2" style="grid-column:1/9;">
+						<div>
+							<apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/argumentos.png')}" styleClass="icons"/>
+						</div>
+						<div>
+							<h1>Argumentos Comerciales</h1>
+						</div>
+					</div>
+
+					<div class="ladoizquierdo" style="display: grid; grid-column: 1/5;grid-column-gap: 3px;grid-row-gap: 3px;">
+
+						<div class="smallContainerL2" style="grid-column:1/2;">
+							<apex:image url="{!URLFOR($Resource.colonias, 'colonia/super.png')}" styleClass="iconos" />
+						</div>
+						<div class="smallContainerR2"  style="grid-column:2/3;">
+							<apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_super__c),false,true)}" layout="none">
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_super__c)>0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_super__c)>1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_super__c)>2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_super__c)>3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_super__c)>4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+
+						</div>
+						<div class="smallContainerL2" style="grid-column:3/4;">
+							<apex:image url="{!URLFOR($Resource.colonias, 'colonia/comerciales.png')}" styleClass="iconos" />
+						</div>
+						<div class="smallContainerR2" style="grid-column:4/5;">
+	                       
+	                        <apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c),false,true)}" layout="none">
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c)>0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c)>1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c)>2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c)>3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_centros_comerciales__c)>4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+
+						</div>
+
+						<div class="smallContainerL2" style="grid-column:1/2;">
+							<h3><apex:image url="{!URLFOR($Resource.colonias, 'colonia/escuela.png')}" styleClass="iconos" /></h3>
+						</div>
+						<div class="smallContainerR2" style="grid-column:2/3;">
+							
+	                        <apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c),false,true)}" layout="none">
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c)>0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c)>1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c)>2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c)>3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_escuelas__c)>4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+
+						</div>
+						<div class="smallContainerL2" style="grid-column:3/4;">
+							<apex:image url="{!URLFOR($Resource.colonias, 'colonia/parques.png')}" styleClass="iconos" />
+						</div>
+						<div class="smallContainerR2" style="grid-column:4/5;">
+							
+
+	                        <apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c),false,true)}" layout="none" styleClass="content">
+	                            <apex:image url="{!IF(VALUE(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c) > 0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(VALUE(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c) > 1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(VALUE(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c) > 2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(VALUE(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c) > 3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(VALUE(objetoOferta.Colonia_busqueda__r.Calificacion_parques__c) > 4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+	                        
+						</div>
+						
+						<div class="smallContainerL2" style="grid-column:1/2;">
+							<apex:image url="{!URLFOR($Resource.colonias, 'colonia/hospitales.png')}" styleClass="iconos" />
+						</div>
+						<div class="smallContainerR2" style="grid-column:2/3;">
+							
+	                
+	                        <apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c),false,true)}" layout="none" styleClass="content">
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c)>0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c)>1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c)>2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c)>3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_hospitales__c)>4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+	                
+	               
+						</div>
+						<div class="smallContainerL2" style="grid-column:3/4;">
+							<apex:image url="{!URLFOR($Resource.colonias, 'colonia/restaurantes.png')}" styleClass="iconos" />
+						</div>
+						<div class="smallContainerR2" style="grid-column:4/5;">
+							
+	                        <apex:outputPanel rendered="{!IF(ISBLANK(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c),false,true)}" layout="none">
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c)>0,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c)>1,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c)>2,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c)>3,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars"/>
+	                            <apex:image url="{!IF(value(objetoOferta.Colonia_busqueda__r.Calificacion_restaurantes__c)>4,URLFOR($Resource.colonias, 'colonia/star3.png'),URLFOR($Resource.colonias, 'colonia/star4.png'))}" alt="Star" styleClass="stars final"/>
+	                        </apex:outputPanel>
+						</div>
+						<div class="smallContainerL2" style="grid-column:1/2">
+							<h3>Calificacion:</h3>
+						</div>
+						<div class="smallContainerR2" style="grid-column:2/3">
+							<h4>
+								<apex:outputText value="{!IF(objetoOferta.Colonia_busqueda__r.Total_Calificacion__c > 28,'Muy Buena',IF(objetoOferta.Colonia_busqueda__r.Total_Calificacion__c > 21,'Buena',IF(objetoOferta.Colonia_busqueda__r.Total_Calificacion__c > 14,'Regular',IF(objetoOferta.Colonia_busqueda__r.Total_Calificacion__c > 7,'Mala',IF(objetoOferta.Colonia_busqueda__r.Total_Calificacion__c > 0,'Muy Mala','N/A')))))}"/>
+							</h4>
+						</div>
+						<div class="azul smallContainerL2" style="grid-column:3/4">
+							<h3>Total:</h3>
+						</div>
+						<div class="verde smallContainerR2" style="grid-column:4/5">
+							<h4>
+								<apex:outputText value="{!objetoOferta.Colonia_busqueda__r.Total_Calificacion__c}" />
+							</h4>
+						</div>
+					</div>
+
+					<div class="ladoderecho" style="grid-column: 5/9;display: grid;grid-column-gap: 3px;grid-row-gap: 3px;">
+						<div class="azul" style="grid-column:1/3;">
+							<h3>
+								pros
+							</h3>
+						</div>
+						<div class="azul" style="grid-column:3/5;">
+							<h3>
+								contras
+							</h3>
+						</div>
+
+<!--////////////////////////////////////////// PROS ///////////////////////////////////////////////////////// -->
+					<apex:variable var="prueba" value="{!1}"/>
+					<script type="text/javascript">
+							console.log('hola1: '+{!prueba});
+						</script>
+					<apex:repeat value="{!arrayPros}" var="x">
+						<apex:variable var="prueba" value="{!prueba + 1}"/>
+						<div class="verde" style="grid-column:1/3;grid-row: {!prueba}/{!prueba + 1};grid-column-gap: 3px;grid-row-gap: 3px;"> 
+							<h4>
+								<b>{!prueba - 1}.-</b> {!x}
+							</h4>
+						</div>
+						<script type="text/javascript">
+							console.log('{!x}');
+						</script>
+					</apex:repeat>
+					<script type="text/javascript">
+						console.log('hola2: '+'{!prueba - 1}');
+						var value = {!prueba};
+						//alert('value: '+value);
+						for(var i = value; i <= 4; i++){
+						//alert('i: '+i);
+							document.write('<div class="verde" style="grid-column:1/3;grid-row:'+(i+1)+'/'+(i+2)+';"></div>');
+						}
+					</script>
+<!--////////////////////////////////////////// 	CONTRAS ///////////////////////////////////////////////////// -->
+					<apex:variable var="prueba" value="{!1}"/>
+					<script type="text/javascript">
+							console.log('hola1: '+{!prueba});
+						</script>
+					<apex:repeat value="{!arrayCons}" var="x">
+						<apex:variable var="prueba" value="{!prueba + 1}"/>
+						<div class="verde" style="grid-column:3/5;grid-row: {!prueba}/{!prueba + 1};"> 
+							<b><h4>{!prueba - 1}.-</h4></b>
+							<h4>
+								{!x}
+							</h4>
+						</div>
+						<script type="text/javascript">
+							console.log('{!x}');
+						</script>
+					</apex:repeat>
+					<script type="text/javascript">
+						console.log('hola2: '+'{!prueba - 1}');
+						var value = {!prueba};
+						//alert('value: '+value);
+						for(var i = value; i <= 4; i++){
+						//alert('i: '+i);
+							document.write('<div class="verde" style="grid-column:3/5;grid-row:'+(i+1)+'/'+(i+2)+';"></div>');
+						}
+					</script>
+
+
+						<!-- <div class="verde" style="grid-column:3/5;background-color: red;">
+							<h3>
+								contra 2 sdhfb sdfuh uigsdfbgksdfhb gksdfjhg sdfjgb sdfgb sdfkj
+							</h3>
+						</div> -->
+					<!-- <apex:variable var="prueba" value="{!2}"/> -->
+						
+						<!-- <div class="verde" style="grid-column:1/3; background-color: red; grid-row: {!prueba}/{!prueba + 1}">
+							<h3>
+								pro 1 foug dofiuh gdsfoiug siug fsdfiu xfkj fxj b
+							</h3>
+						</div>
+						<div class="verde" style="grid-column:1/3; background-color: red;">
+							<h3>
+								pro 2 asdhg bsdhfbg jsdfhbgsdfj gbksdfhb gkfsdb gisdgb fudsbj
+							</h3>
+						</div>
+						<div class="verde" style="grid-column:1/3; background-color: red;">
+							<h3>
+								pro 3  sdfuhg sdfb ifdsjg bkdfshgb kdfshg biusdhbgisrugb sdfu asgb isdfu g
+							</h3>
+						</div>
+						<div class="verde" style="grid-column:1/3; background-color: red;">
+							<h3>
+								pro 4 adsg sdgasdbin zxcjbvenvvc sbdf ksd vsdvsh vhsrbvsr ibvrui bsuyrh isurh s
+							</h3>
+						</div> -->
+						
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+		</center>
+	</body>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = x.length}
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+            }
+            x[slideIndex-1].style.display = "block";  
+        }
+
+        $( document ).ready(function() {
+		    console.log( "ready!" );
+		    
+		    //alert('hola');
+		    $('h3').css({'font-size':'11px'});
+		});
+		function onloader() {
+			//alert('hola3');
+			$('h3').css({'font-size':'10px'});
+		}
+		
+    </script>
+</apex:page>

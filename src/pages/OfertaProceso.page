@@ -1,0 +1,428 @@
+<apex:page id="page" standardController="Oferta__c"  extensions="OfertaProcesoController,QuickSearch" action="{!CheckReds}" title="{!Oferta__c.Name}">
+<head>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <apex:stylesheet value="{!$Resource.progressbar}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <style>
+        .boton {
+            font-weight:lighter;
+        }
+        .promptForm {
+            display: inline-block;
+            position: relative;
+            top: 50%;
+            //left: 30%;
+            margin-top: 0px;
+            margin-left: 0px;
+            align: center;
+            text-align: center;
+        }
+        .promptForm a {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: -0.1em -0.1em -0.1em #999;
+            text-decoration: none;
+            color: #FFF;
+            padding: 7px 20px;
+            border: 1px solid;
+            display: inline-block;
+            width: 500px;
+            margin: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            opacity: 0.99;
+        }
+        
+        .promptForm a.dec {
+            border-color: rgb(196, 87, 77);
+            background: rgb(244,153,146);
+            background: -moz-linear-gradient(top, rgba(244,153,146,1) 0%, rgba(222,96,62,1) 6%, rgba(208,53,62,1) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(244,153,146,1)), color-stop(6%,rgba(222,96,62,1)), color-stop(100%,rgba(208,53,62,1)));
+            background: -webkit-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+            background: -o-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+            background: -ms-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+            background: linear-gradient(to bottom, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f49992', endColorstr='#d0353e',GradientType=0);
+        }
+        .promptForm a:hover {
+            opacity: 0.8;
+        }
+        
+        .editRow {
+            background: url('/img/icon/custom51_100/pencil16.png') no-repeat 0% 0%;
+            width: 17px;
+            height: 16px;
+            margin-right: 5px;
+            display: inline-block;
+    }
+    .hide{
+        visibility:hidden;
+    }
+    </style>
+     <script>
+     
+    
+    $(document).ready(function() {
+            $("#ventanaModal").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarPage();}
+                    });
+             $("#ventanaModalClientes").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarOferta();}
+                    });
+             $("#ventanaModalPromotores").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarOferta();}
+                    });
+            $("#ventaModalSelecciona").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarOferta();}
+                    });
+            $("#ventaModalExpediente").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarOferta();}
+                    });
+            $("#ventanaModalEditCliente").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarOferta();}
+                    });
+    });
+    
+    
+    
+    function showDialog(id){
+        $("#"+id).dialog("open");
+    }
+    
+    function closeDialog(mensaje,id){
+        if(mensaje == null || mensaje == '' || mensaje.equals('')){
+            $("#" + id).dialog("close");
+        }
+    }
+    
+    function colocaTransparencia(){
+            $("body").css("cursor", "progress");
+        }
+        
+        function retiraTransparencia(){
+            $("body").css("cursor", "default");
+        }
+    function reload() {
+        window.top.location.href = "/{!Oferta__c.Id}";
+    }
+    function verGastos(idEtapaOferta){
+        window.top.location.href = "/apex/Gastos?ido={!Oferta__c.Id}&ideo="+idEtapaOferta;
+    }
+    </script>
+</head>
+ <apex:sectionHeader title="Oferta" subtitle="{!Oferta__c.Name}"></apex:sectionHeader>
+ <!--  <chatter:feed id="chatter3" entityId="{!Oferta__c.Id}"/>
+ <chatter:follow id="chatter" entityId="{!Oferta__c.Id}"/>
+ <chatter:followers id="chatter2" entityId="{!Oferta__c.Id}"/>-->
+
+
+ <chatter:feedWithFollowers id="chatter3" entityId="{!Oferta__c.Id}"/>
+ <apex:form ><apex:detail id="formdetail" subject="{!Oferta__c.Id}" relatedList="false" title="false" inlineEdit="true" showChatter="false" rerender="formPrincipal,chatter" oncomplete="recargarOferta();" relatedListHover="true" /></apex:form>
+  <apex:relatedList list="Bitacora_Ofertas__r"/>
+<div id="contenedorPrincipal">
+    <apex:form id="formPrincipal">
+        
+        <apex:actionStatus id="stCargando" onstart="colocaTransparencia();" onstop="retiraTransparencia();"></apex:actionStatus>
+        
+        <apex:actionFunction action="{!recargarPagina}"  name="recargarOferta" rerender="mensaje,successMsg,formPrincipal,formSeleccionarGanador,divComponentePromotores,divComponenteClientes,modalExpedienteCliente" status="stCargando" immediate="true"></apex:actionFunction>
+        <apex:actionFunction action="{!recargarPagina}" name="recargarPage" oncomplete="location.reload()" rerender="mensaje,successMsg,formPrincipal,formSeleccionarGanador,divComponentePromotores,divComponenteClientes,modalExpedienteCliente" status="stCargando" immediate="true"></apex:actionFunction>
+        <apex:actionFunction action="{!crearComponente}" name="crearComponente" onComplete="showDialog('ventanaModal');" reRender="formdetail,divComponenteDinamico,entapaComponent,divComponenteDinamico2">
+            <apex:param name="uno" assignTo="{!idEtapaOferta}" value="" ></apex:param>
+            <apex:param name="dos" assignTo="{!nombreEtapa}" value="" ></apex:param>
+        </apex:actionFunction>
+        <apex:actionFunction name="muestraExpedienteCliente" onComplete="showDialog('ventaModalExpediente');" reRender="modalExpediente2,modalExpedienteCliente">
+            <apex:param name="idItem" assignTo="{!idItem}" value="" ></apex:param>
+            <apex:param name="tituloVentana" assignTo="{!nombreExpediente}" value="" ></apex:param>
+        </apex:actionFunction>
+        
+        <apex:pageMessages id="successMsg" />
+              <!--<p>  «   <apex:commandLink value="Ir a la propiedad" onclick="window.location ='/{!Oferta__c.Id}';"  reRender="formPrincipal" id="botonRegresar"/></p>
+              <apex:pageBlock title="Compra" id="boqueProcesosGenerales" mode="maindetail" >
+               
+               
+               <apex:commandbutton action="{!GeneraCDates}" value="Genera Fechas Compromiso" />
+               <apex:commandbutton action="{!ShowGantt}" value="Ver Gantt" /> -->
+               <apex:pageBlock id="blockCompra" mode="maindetail" >
+               <apex:facet name="header"><div class="pbTitle" style="width:100%"><h2 class="mainTitle">Etapas de compra</h2></div></apex:facet>
+               <apex:messages id="mensaje" ></apex:messages>
+               <apex:pageBlockTable value="{!etapasOfertaCompra}" var="p"  id="tablaPartidas">
+                        <apex:column width="60px" style="max-width:60px;text-align:center">
+                            <apex:facet name="header"><div style="text-align:center">¿Completada?</div></apex:facet>
+                            <apex:outputField value="{!p.EstatusFinal__c}"></apex:outputField>
+                        </apex:column>
+                        <apex:column style="width:130px">
+                            <apex:facet name="header"><div style="text-align:center">Etapa</div></apex:facet>
+                            <b><apex:outputText value="{!p.Etapa__r.Orden__c} - {!p.Etapa__r.Name}"/></b>
+                        </apex:column>
+                        <apex:column style="width:260px" headerValue="Proceso">
+                            <apex:facet name="header"><div style="text-align:center">Procesos</div></apex:facet>
+                            <apex:repeat var="doc" value="{!mapDocumentos[p.Etapa__c]}">
+                                <apex:image id="imagenDocumento" rendered="{!doc.documento.Iniciado__c == true}" width="15" height="15" value="{!IF(doc.documento.Cerrado__c == true, $Resource.paloma, $Resource.tache)}"/><span> </span>
+                                <apex:outputText rendered="{!doc.documento.Iniciado__c == true}" value="{!doc.documentoEtapa.NombreUsuario__c}"/><br/>
+                            </apex:repeat>
+                            <apex:outputField value="{!p.Etapa__r.Descripcion2__c}" rendered="{!LEN(p.Etapa__r.Descripcion2__c) > 1}"><br/></apex:outputField>
+                        </apex:column>
+                        <apex:column width="100px" style="width:130px;">
+                            <apex:facet name="header"><div style="text-align:center">% Avance docs obligatorios</div></apex:facet>
+                            <div style="width:100%;" class="progress-bar {!IF(p.Avance__c = 100, 'green', 'orange stripes')}">
+                                <span style="width: {!IF(p.Avance__c<=100,p.Avance__c,100)}%"></span>  
+                            </div>
+                            <div style="text-align:center">{!p.Avance__c}%</div>
+                        </apex:column>
+                        <apex:column style="width:100px;text-align:center">
+                            <apex:facet name="header"><div style="text-align:center">Estatus tiempo</div></apex:facet>
+                            <apex:outputField value="{!p.EstatusTiempo__c}"></apex:outputField>
+                        </apex:column>
+                        
+                        <apex:column style="width:180px;text-align:center">
+                            <button type="button" class="boton" onclick="crearComponente('{!p.Id}' ,'{!p.Etapa__r.Name}');" >Entregables</button>
+                            <!--<button type="button" class="boton" onclick="verGastos('{!p.Id}');" >Gastos</button>-->
+                        </apex:column>
+                        
+                </apex:pageBlockTable> 
+              </apex:pageBlock>
+              <apex:pageBlock title="Venta" mode="maindetail">
+                     <apex:pageBlockButtons location="bottom"> 
+                          
+                          <apex:commandButton value="Regresar Etapa 9" onclick="return confirm('¿Realmente desea regresar a Etapa 9 esta oferta?')" action="{!RegresaEtapa9a}" />
+                 
+                          
+                     </apex:pageBlockButtons>
+                     <apex:pageBlockSection columns="2" collapsible="false" id="seccionBotonesPromotor" >
+                        <apex:pageBlockSectionItem >
+                            <button type="button" class="{!IF(muestraBoton,'boton','hide')}" onclick="showDialog('ventanaModalPromotores');" >Seleccionar promotores</button>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockTable value="{!promotoresOferta}" var="c"  id="tablaPromotores" rendered="{!promotoresOferta.size > 0}">
+                            <apex:column headerValue="Cuenta promotor">
+                                <apex:outputField value="{!c.Cuenta__r.Name}" ></apex:outputField>
+                            </apex:column>
+                            <!-- 
+                            <apex:column headerValue="Estatus">
+                                <apex:outputField value="{!c.Estatus__c}"></apex:outputField>
+                            </apex:column>
+                            -->
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1" id="seccionTablaPromotor" >
+                     </apex:pageBlockSection>
+                     <apex:outputPanel rendered="{!promotoresOferta.size > 0}" >
+                         <apex:pageBlockSection columns="2"  collapsible="false" id="seccionBotonesVenta">
+                            <apex:pageBlockSectionItem >
+                                <button type="button" class="{!IF(muestraBoton,'boton','hide')}" onclick="showDialog('ventanaModalClientes');" >Seleccionar clientes</button>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem rendered="{!clientesOferta.size > 0}" >
+                                <button type="button" class="{!IF(muestraBoton,'boton','hide')}" onclick="showDialog('ventaModalSelecciona');" >Seleccionar cliente final</button>
+                            </apex:pageBlockSectionItem>
+                         </apex:pageBlockSection>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!clientesOferta.size > 0}" >
+                        <apex:pageBlockSection columns="1">
+                            <apex:pageBlockTable value="{!clientesOferta}" var="c"  id="tablaClientes" rendered="{!clientesOferta.size > 0}">
+                                <apex:column styleClass="actionCol">
+                                    <apex:outputPanel >
+                                         <apex:outputText StyleClass="editRow" value=""></apex:outputText>
+                                          <apex:actionSupport event="onclick" action="{!seleccionaClienteOferta}" oncomplete="showDialog('ventanaModalEditCliente');" rerender="divEditCliente">
+                                             <apex:param assignTo="{!clienteOfertaEdit.Id}" value="{!c.Id}"  name="sub" />
+                                          </apex:actionSupport>
+                                      </apex:outputPanel>
+                                </apex:column>
+                                <apex:column headerValue="Cliente">
+                                    <apex:outputField value="{!c.Contacto__r.Name}"></apex:outputField>
+                                </apex:column>
+                                <apex:column headerValue="Promotor">
+                                        <apex:outputField value="{!c.PromotorOferta__r.Cuenta__r.Name}"></apex:outputField>
+                                </apex:column>
+                                <apex:column headerValue="Estatus">
+                                    <apex:outputField value="{!c.Estatus2__c}"></apex:outputField>
+                                </apex:column>
+                                <apex:column headerValue="">
+                                    <button type="button" class="boton" onclick="muestraExpedienteCliente('{!c.Cuenta__c}','{!c.Cuenta__r.Name}');" >Expediente</button>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                    </apex:pageBlock>
+                <apex:pageBlock mode="maindetail">
+                     <apex:pageBlockTable value="{!etapasOfertaVenta}" var="p"  id="tablaPartidas">
+                        <apex:column width="60px" style="max-width:60px;text-align:center">
+                            <apex:facet name="header"><div style="text-align:center">¿Completada?</div></apex:facet>
+                            <apex:outputField value="{!p.EstatusFinal__c}"></apex:outputField>
+                        </apex:column>
+                        <apex:column style="width:130px">
+                            <apex:facet name="header"><div style="text-align:center">Etapa</div></apex:facet>
+                            <b><apex:outputText value="{!p.Etapa__r.Orden__c} - {!p.Etapa__r.Name}"/></b>
+                        </apex:column>
+                        <apex:column style="width:260px" headerValue="Proceso">
+                            <apex:facet name="header"><div style="text-align:center">Procesos</div></apex:facet>
+                            <apex:repeat var="doc" value="{!mapDocumentos[p.Etapa__c]}">
+                                <apex:image id="imagenDocumento" rendered="{!doc.documento.Iniciado__c == true}" width="15" height="15" value="{!IF(doc.documento.cerrado__c == true, $Resource.paloma, $Resource.tache)}"/><span> </span>
+                                <apex:outputText rendered="{!doc.documento.Iniciado__c == true}" value="{!doc.documentoEtapa.NombreUsuario__c}"/><br/>
+                            </apex:repeat>
+                            <apex:outputField value="{!p.Etapa__r.Descripcion2__c}" rendered="{!LEN(p.Etapa__r.Descripcion2__c) > 1}"><br/></apex:outputField>
+                        </apex:column>
+                        <apex:column width="100px" style="width:130px;">
+                            <apex:facet name="header"><div style="text-align:center">% Avance docs obligatorios</div></apex:facet>
+                            <div style="width:100%;" class="progress-bar {!IF(p.Avance__c = 100, 'green', 'orange stripes')}">
+                                <span style="width: {!p.Avance__c}%"></span>  
+                            </div>
+                            <div style="text-align:center">{!p.Avance__c}%</div>
+                        </apex:column>
+                        <apex:column style="width:100px;text-align:center">
+                            <apex:facet name="header"><div style="text-align:center">Estatus tiempo</div></apex:facet>
+                            <apex:outputField value="{!p.EstatusTiempo__c}"></apex:outputField>
+                        </apex:column>
+                        
+                        <apex:column style="width:180px;text-align:center">
+                            <button  class="boton" type="button" onclick="crearComponente('{!p.Id}' ,'{!p.Etapa__r.Name}');" >Entregables</button>
+                            <!--<button type="button" class="boton" onclick="verGastos('{!p.Id}');" >Gastos</button>-->
+                        </apex:column>
+                        
+                </apex:pageBlockTable> 
+              </apex:pageBlock>
+    </apex:form>
+    <div id="ventanaModal" title="" >
+            <apex:outputPanel id="divComponenteDinamico">
+                <!-- <apex:dynamicComponent componentValue="{!componenteGeneral}"/> -->
+                <c:etapaEntregable id="entapaComponent"   etapaVal="{!idEtapaOferta}"  zetapa="{!nombreEtapa}" propiedadVal="{!idOferta}"  rendered="{!idEtapaOferta != null}"/>
+            </apex:outputPanel>
+    </div>
+    
+    <div id="ventanaModalClientes" title="Selección de clientes" >
+        <apex:outputPanel id="divComponenteClientes">
+            <!-- <apex:dynamicComponent componentValue="{!componenteCliente}"/> -->
+            <c:Clientes2 ofertaVal="{!Oferta__c.Id}"/>
+        </apex:outputPanel>
+    </div>
+    
+    <div id="ventanaModalPromotores" title="Selección de promotores" >
+        <apex:outputPanel id="divComponentePromotores">
+            <c:Promotor ofertaVal="{!Oferta__c.Id}"/>
+        </apex:outputPanel>
+    </div>
+    
+    <div id="ventanaModalEditCliente" title="Edición de cliente" >
+        <apex:outputPanel id="divEditCliente">
+            <apex:form id="formEditCliente">
+            <apex:actionFunction action="{!editarCliente}" name="editarCliente" rerender="formEditCliente"  oncomplete="closeDialog('{!mensaje}','ventanaModalEditCliente');"/>
+            <apex:pageMessages />
+            <apex:outputPanel >
+                <apex:pageBlock > 
+                    <apex:pageBlockSection columns="1">
+                        <apex:outputField value="{!clienteOfertaEdit.Contacto__r.Name}"/>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Promotor " for="promotor"/>
+                            <apex:selectList value="{!clienteOfertaEdit.PromotorOferta__c}"  id="promotor" size="1">
+                                <apex:selectOptions value="{!promotores}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                <div style="text-align:center  !important;">
+                    <button type="button" class="boton" onclick="editarCliente()"  id="botonGanadaor">Guardar cambios</button>
+                </div>
+            </apex:outputPanel>
+            </apex:form>
+        </apex:outputPanel>
+    </div> 
+    
+    
+    <div id="ventaModalSelecciona" title ="Selecciona cliente final"> 
+        <apex:form id="formSeleccionarGanador">
+        <apex:actionFunction action="{!guardarGanador}" name="guardarGanador" rerender="formSeleccionarGanador"  oncomplete="closeDialog('{!mensaje}','ventaModalSelecciona');"/>
+        <apex:pageMessages />
+        <apex:outputPanel >
+            <apex:pageBlock > 
+                <apex:selectRadio value="{!idGanador}" layout="pageDirection">
+                    <apex:selectOptions value="{!ListaClienteOferta}"/>
+                </apex:selectRadio>
+            </apex:pageBlock>
+            <div style="text-align:center  !important;">
+                <button type="button" class="boton" onclick="if({!oferta.ClienteFinal__c != null}){if(confirm('Ya existe un cliente final ¿Desea cambiarlo?')){guardarGanador();}}else{guardarGanador()}"  id="botonGanadaor">Guardar cliente final</button>
+            </div>
+        </apex:outputPanel>
+        </apex:form>
+    </div>
+    
+    <div id="ventaModalExpediente" title ="Expediente cliente {!idItem}">
+        <apex:outputPanel id="modalExpedienteCliente">
+            <c:CargaDocumentos idPadre="{!idItem}" relacionObjeto="Cuenta__c" tipoDocumento="Expediente" titulo="{!nombreExpediente}" clienteFinal="{!oferta.ClienteFinal__c}"/> 
+        </apex:outputPanel>
+    </div>
+    
+    
+</div>
+ <apex:relatedList list="Documentos__r" rendered="{!muestraBoton}"/>
+ <apex:relatedList list="Gastos__r"/>
+  <!--<apex:relatedList list="Propiedades"/>-->
+  <apex:relatedList subject="{!Oferta__c}" list="CombinedAttachments"/>
+  <apex:relatedList list="Detalles_del_Carrito__r"/>
+    <apex:relatedList list="Rehabilitaciones1__r"/>
+    <apex:relatedList list="Autorizaciones__r"/>
+
+ 
+
+ <!--<div id="mme_rlist" class="bRelatedList" style="over-flow:auto;height:400px;">
+      <MME:EmailMessageListRelated owner="{!Oferta__c}" useFrame="false"/>
+ </div>-->
+   
+<div style="align:center;text-align:center;">
+<!--<apex:outputPanel rendered="{!OR(Oferta__c.Estatus__c != 'Pagada', $Profile.Name = 'Administrador',$User.Id == '00531000007dOl3AAE',$User.Id == '00531000007VwoAAAS')}">-->
+<apex:outputPanel rendered="{!OR(Oferta__c.Estatus__c != 'Pagada',$User.Id == '00531000007dOl3AAE',$User.Id == '00531000007VwoAAAS')}">
+    <apex:outputPanel rendered="{!Oferta__c.Etapa__c != 'Descartada' && muestraBoton}">
+        <apex:form styleClass="promptForm" >
+            <apex:actionFunction name="descartarOferta" action="{!descartarOferta}" oncomplete="reload()"/> 
+            <apex:commandLink onclick="if(confirm('¿Realmente desea descartar esta oferta?')){descartarOferta();}else{return null;}" value="Descartar oferta ✘" styleClass="dec"/>
+        </apex:form>
+    </apex:outputPanel>
+</apex:outputPanel>
+</div>
+
+            
+</apex:page>

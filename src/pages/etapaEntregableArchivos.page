@@ -1,0 +1,40 @@
+<apex:page sidebar="false" showHeader="false" controller="EtapaEntregableArchivosController" >
+ 
+ <apex:form enctype="multipart/form-data">
+ 	<apex:actionFunction name="addMore" action="{!addMore}"/>
+ 	<apex:actionFunction name="addArchivo" action="{!addArchivo}"/>
+ 	<apex:pageMessages />
+ 	<apex:pageBlock title="Adjuntar archivos" id="multipleBloqueUno">
+			<apex:repeat value="{!newAttachments}" var="newAtt">
+				<apex:pageBlockSection columns="2">
+				   <apex:pageBlockSectionItem >
+						<apex:outputLabel value="Archivo"/>						 
+						<apex:inputFile value="{!newAtt.body}" filename="{!newAtt.name}"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Descripcion"/>						 
+						<apex:inputText value="{!newAtt.Description}"/>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:repeat>
+			
+			 <div style="text-align:center !important;margin: 10px 0 10px 0;">
+				<!-- <button id="" type="button" onclick="addMore();this.disabled=true;">Agregar más</button> -->
+			</div>
+			<div style="text-align:center !important;margin: 10px 0 10px 0;">
+				<button id="" type="button" onclick="addArchivo();this.disabled=true;">Agregar archivos</button>
+			</div>
+	</apex:pageBlock>
+	
+ 	<apex:pageBlock title="Adjuntar archivos">
+		<apex:pageBlockTable value="{!listaArchivos}" var="item" rendered="{!NOT(ISNULL(listaArchivos))}" id="tablaArchivos">
+ 		  	<apex:column headerValue="Nombre">
+ 		  		<apex:outputField value="{!item.Name}"></apex:outputField>
+ 		  	</apex:column>
+ 		  	<apex:column headerValue="Descripción">
+ 		  		<apex:outputField value="{!item.Description}"></apex:outputField>
+ 		  	</apex:column>
+ 		 </apex:pageBlockTable>
+ 	</apex:pageBlock>
+ </apex:form>
+</apex:page>

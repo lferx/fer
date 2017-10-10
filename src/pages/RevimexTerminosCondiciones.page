@@ -1,0 +1,1213 @@
+<apex:page standardController="Preca_Web__c" cache="false" extensions="PrecaRegisterController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0">
+
+    <html class="no-js" lang="es">
+    
+        <head>
+        
+            <meta charset="utf-8"/>
+            <meta name="author" content=""/>
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
+            <meta name="robots" content="index, follow" />
+            <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+            
+            <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+            <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+            
+            <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+            
+            <title>Revimex</title>
+            
+            <style>
+            
+                <!--RJP Pedir modificacion en la hoja de estilos-->
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 225px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+    margin:10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.messageTable{
+    width: 100%;
+    background-color: blanchedalmond;
+}
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=datetime-local],
+input[type=password],
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+input[type=datetime-local]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #4691A4;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}   
+            </style>
+            
+        </head>
+        
+        <body>
+        
+            <header>
+                <div class="header-wrapper">
+                    
+                    <a href="http://revimex.force.com" id="header-showmenu-btn">
+                        <img src="{!URLFOR($Resource.HomeRevimex,'images/menu-vertical-btn.png')}" alt="menú"/>
+                    </a>
+                    <figure id="main-logo" class="fullwidth-picture">
+                        <a href="http://revimex.force.com"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo.png')}" alt="Revimex"/></a>
+                    </figure>
+                    <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div> <div class="font-size-40">hoy</div></div>
+                </div>
+                <div id="header-phone">
+                    <span class="phone-icon" style="margin-top: -13px;">
+                        <a href="tel:015541706600">0155 4170 6600</a>
+                        <br/>
+                        <a href="tel:015541610030">0155 4161 0030</a>
+                    </span>
+                </div>
+            </header>
+            
+        <section id="leading-content" class="clearfix" style="height: 400px;">
+            <div id="slider" style="width: 1090px;">
+                <div id="slider-mask">
+                    <div id="slides">                                    
+                        <a href="#" target="_self">
+                            <figure><img src="{!$Resource.portadaconcurso}" alt="slide 1" class="slide-picture 1"/></figure>
+                        </a>      
+                    </div>
+                </div>
+            </div>
+        </section>
+                
+        <section id="home-intro" style="text-align: justify;text-justify: inter-word; padding-top: 2em;padding-right: 10em;padding-bottom: 10em;padding-left: 10em;">
+            
+            
+            
+            
+            
+            
+            
+            <h1>REVIMEX CUMPLE TU SUEÑO</h1>
+            <h2>Permiso SEGOB 20150634PS03</h2>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>Atención Participantes:</b></p>
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+            La participación en la presente actividad promocional, constituye la aceptación sin reservas de las siguientes bases y restricciones, así como del Aviso de Privacidad para el manejo de datos personales respectivo. Lo cual implica  la consecuente aceptación de los requisitos y condiciones establecidos por la organizadora para formar parte de la misma.
+            </p> 
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>VIGENCIA:</b></p>  
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b><u>Vigencia del permiso.</u></b>Del 6 de noviembre 2015 al 30 de septiembre de 2016</p>  
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b><u>Vigencia de la promoción.</u></b>Del 6 de noviembre 2015 al 29 de septiembre de 2016</p>  
+             
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>COBERTURA GEOGRÁFICA:</b></p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+            República Mexicana a nivel nacional. 
+            </p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>PARTICIPANTES:</b></p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+            El público consumidor en general, que tenga la disposición de participar en el Sorteo y reúna todos y cada uno de los siguientes <STRONG>Requisitos:</STRONG>
+            </p>
+            
+            <ul>
+                <li>
+                Ser persona física mayor de edad y contar con una identificación oficial (IFE, pasaporte, cartilla del servicio militar liberada, cédula profesional).</li>
+                
+                <li>
+                    Tener legal residencia en la República Mexicana.
+                </li>
+                
+                <li>
+                    Cumplir con alguna de las siguientes dinámicas: 
+                </li>
+                
+                <li>
+                    Solicitar informes a través de la página de Internet www.revimex.mx de alguno de los inmuebles que vende <STRONG>REHABILITADORA DE PROPIEDADES MEXICANAS, S. DE R.L. DE C.V., </STRONG>“REVIMEX”, durante la vigencia de la promoción.
+                </li>
+                <li>
+                    Realizar la adquisición de alguno de los inmuebles que vende <STRONG>REHABILITADORA DE PROPIEDADES MEXICANAS, S. DE R.L. DE C.V.,</STRONG> “REVIMEX”, durante la vigencia de la promoción.
+                </li>
+                
+                <li>Proporcionar durante la Vigencia datos verídicos y completos de identificación y localización (nombre, domicilio, teléfono y correo electrónico), conforme le sean requeridos vía telefónica a través del número (0155) 4161 0030 o en la página de
+                 internet www.revimex.mx en la sección de registro y participación destinada al Sorteo y con el cual se generará un <STRONG>Registro Individual de Participante</STRONG> que lo identificará y distinguirá como <STRONG>“Usuario”</STRONG> de los demás participantes del Sorteo.
+                </li>
+                
+                <li>
+                <STRONG>La Cuenta</STRONG> por <STRONG>Usuario</STRONG> será individual y se generará una por cada usuario <STRONG>Participante.</STRONG> 
+                </li>
+            </ul>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>ARTÍCULOS A PROMOVER O PRODUCTOS PARTICIPANTES:</b></p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+Los inmuebles que vende <STRONG>REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V.,</STRONG> “REVIMEX” durante la vigencia de la promoción.
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b><u>PREMIOS OFRECIDOS:</u></b></p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+Se ofrecerá un premio que será el siguiente:
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+            Se ofrecerán cuatros premios de $300,000.00 (Trescientos mil pesos 00/100M.N. en cheque de caja o certificado a elección del ganador).
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>GARANTÍAS SOBRE LOS PREMIOS OFRECIDOS:</b></p> 
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                La garantía sobre el premio ofrecido la proporcionará el proveedor del mismo, de conformidad con los términos y condiciones brindados por el proveedor del mismo que en este caso es la responsable de la promoción. Dada la naturaleza del premio consistente en un Cheque de caja o certificado, el ganador del premio se deberá de sujetar a los términos y condiciones que la institución bancaría que expida dicho documento fije respecto a la naturaleza del documento que se expida.
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b> MECÁNICA: </b></p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                La participación en el presente sorteo, implicará su conocimiento y aceptación de las bases y mecánica aquí señalada.
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                Podrán participar las personas físicas que soliciten o realicen cualquiera de las siguientes dinámicas:
+            </p>
+            
+            <ul>
+                <li>
+                    Solicitar informes a través de la página de Internet www.revimex.mx de alguno de los inmuebles que vende REHABILITADORA DE PROPIEDADES MEXICANAS, S. DE R.L. DE C.V., “REVIMEX”, durante la vigencia de la promoción.
+                </li>
+           <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                Por lo anterior, el participante obtendrá 1 folio electrónico.
+           </P>
+                <li>
+                   Realizar la adquisición de alguno de los inmuebles que vende REHABILITADORA DE PROPIEDADES MEXICANAS, S. DE R.L. DE C.V., “REVIMEX”, durante la vigencia de la promoción.
+                </li>
+                
+              <p style="text-align: justify;text-justify: inter-word;color:black;" >  
+                Por lo anterior, el participante obtendrá 100  folios electrónicos. 
+              </P> 
+              
+                <li>
+                    El responsable del sorteo en una base registrará los datos de identidad y localización del participante, creando una cuenta como usuario.
+                </li>
+                
+                <li>   
+                    La asignación  de los folios Electrónicos de participación será ascendente progresiva y continua (1, 2, 3 etc.) en la base de datos. 
+                </li>
+                
+                <li>
+                    Una vez registrado como usuario cada participante, contará con un usuario  confidencial que le permitirá verificar y conocer el número de Folios Electrónicos con que cuenta para participar en las fechas del sorteo que se indica más adelante, para verificar sus datos y folios electrónicos el participante podrá comunicarse al teléfono (0155) 4161 0030, de lunes a viernes en un horario de 9:00 a 18:00 horas.
+                </li>
+                
+                <li>
+                     Cada Folio electrónico de participación, estará relacionado con elementos fundamentales de identificación personal de cada Usuario así como cada operación de solicitud de informes o compra realizada, que realice cada participante, por lo que son claramente identificables los folios electrónicos que generan y les da derecho a obtener uno de los premios ofrecidos en el sorteo.
+                </li>
+                
+                <li>
+                    Por lo cual el primer participante generará el folio electrónico de participación 00001 y este a su vez acumulará tantos folios electrónicos de participación genere conforme a las condiciones que se refieren en las presentes bases.
+                </li>
+                
+                <li>
+                    La numeración de Folios electrónicos es continua y ascendente y serán aquellos que sean considerados en el sorteo para llevar a cabo por formación de números la asignación del premio ofrecido, del precio mayor al menor hasta concluir su asignación. 
+                </li>
+                
+                <li>
+                    El participante podrá verificar sus datos de participación también llamando al teléfono (0155) 4161 0030 de lunes a viernes en un horario de 9:00 a 18:00 horas.
+                </li>
+                
+            </ul>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b> PERIODO DE ACUMULACIÓN: </b></p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                    Se realizarán 4 períodos de participación:
+            </p>
+            
+             <ul>
+                
+                <li>
+                    <b>    
+                        <STRONG>
+                            1er Período de participación:
+                        </STRONG>
+                        </b> Comprende desde las 00:00:01 horas del día 6 de noviembre de 2015 y hasta las 23:59:59 del día 5 de enero de 2016.
+                </li>
+                
+                <li>
+                    <b>
+                    <STRONG>
+                        2do Período de participación:
+                    </STRONG>
+                    </b> Comprende desde las 00:00:01 horas del día 6 de enero de 2016 y hasta las 23:59:59 del día 31 de marzo de 2016.
+                </li>
+                
+                <li>
+                    <b>
+                        <STRONG>
+                            3er Período de participación:
+                        </STRONG>
+                    </b>
+                    Comprende desde las 00:00:01 horas del día 1° de abril de 2016 y hasta las 23:59:59 del día 30 de junio de 2016.
+                </li>
+                
+                <li>
+                    <b>
+                        <STRONG>
+                            4to Período de participación:
+                        </STRONG>
+                    </b> 
+                        Comprende desde las 00:00:01 horas del día 1° de julio de 2016 y hasta las 23:59:59 del día 29 de septiembre de 2016.
+                </li>
+                
+              </ul>
+              
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                    Una vez registrado cada Usuario y asignado en su cuenta individual sus Folios Electrónicos de participación acorde a la fecha de registro y asignación de folios, estos tendrán el derecho a participar en los sorteos programados acorde el siguiente calendario: 
+            </p>
+            
+            <table style="border-collapse: collapse;margin-left: auto;margin-right: auto;">
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+                        <b>PERIODO DE PARTICIPACIÓN</b>
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+                        <b>FECHA DE SORTEO</b>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+
+                        1er Período de participación
+
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+                        6 de enero de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+
+                        2do Período de participación
+
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+                        1° de abril de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+
+                            3er Período de participación
+
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+                            1°de julio de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+
+                            4to Período de participación
+
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+                        30 de septiembre de 2016
+
+                    </td>
+                </tr>
+                
+                
+            </table>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                    La participación en cada sorteo se realizará considerando los totales de folios electrónicos acumulados participantes vigentes al final de cada período de acumulación.
+            </p>
+            
+             
+            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                    La asignación de folios electrónicos y la mecánica de concentrado, procede a favor de un cliente cuando cumple con todas las condiciones de participación señaladas y no se encuentra en alguna de las restricciones.
+            </p>
+            
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b><STRONG>BASE DE DATOS DE LOS PARTICIPANTES.</STRONG></b></p>
+            
+           <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                Los campos a generarse en la base de datos de participación se integrarán de la siguiente manera:
+            </P>
+           
+            <ul>
+                <li>
+                    <b><STRONG>Nombre del Participante.</STRONG></b>
+                    - Integrado por el Nombre del cliente con apellidos paterno y materno.
+
+                </li>
+                
+                <li>
+                    <b><STRONG>Teléfono de contacto.</STRONG></b>
+                    - Se integra del número fijo o celular que cada participante proporcione para su localización vía telefónica.
+                </li>
+                
+                <li>
+                    <b><STRONG>Domicilio.</STRONG></b>
+                     - Se integrará mediante los datos de localización proporcionados por el participante, mismos que deberán de ser verídicos.
+
+                </li>
+                
+                <li>
+                    <b><STRONG>Correo Electrónico.</STRONG></b>- 
+                    Se integrará mediante la dirección de contacto (mail) que el participante proporciona para efectos de recibir información relacionada al presente sorteo.
+                </li>
+                
+                <li>
+                        <b><STRONG>Folio (s) Electrónico número.</STRONG></b>
+                        - Mismo(s) que se generará(n) de forma progresiva conforme al registro de la compra que dan derecho a obtener un elemento de participación.
+
+                </li>
+            </ul>
+            
+               <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                   Se hace la aclaración que cada sorteo y asignación de premio, será mediante los números de los folios electrónicos.
+               </p>
+            
+               <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                   En cada sorteo se asignara el premio mediante una formación de números, dentro del total de folios que estén participando, siempre que dicha formación se encuentre dentro del rango de folios electrónicos participantes.
+               </p>
+              
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>ESPECIFICACIONES DEL SISTEMA DE FORMACIÓN DE NÚMEROS:</b></p>           
+            
+                                                             <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                            Al momento de la realización del sorteo, se formará 1  número ganador; otorgándose  el  premio ofrecido.
+            </p>
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                            El permisionario presentará 1 (una) tómbola manual y series de esferas, del 0 (cero) al 9 (nueve), formando el número de derecha a izquierda, siendo la primer esfera extraída la unidad, la segunda la decena, la tercera la centena y así sucesivamente hasta formar el número ganador en función al número de participaciones.
+            </p>
+         
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                            La lectura de los números ganadores se realizará de izquierda a derecha.
+            </p>  
+            
+    
+    
+    
+    
+    
+    
+            <p style="text-align: justify;text-justify: inter-word;color:black;"><b>FECHAS DE SORTEOS Y CONCENTRADO:</b></p>           
+            
+                                                             <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El primer sorteo se llevará a cabo el día 6 de enero de 2016 el cual se realizará a las 12:30 horas, en el domicilio ubicado en:<STRONG> Av. Santa Fe No. 505 Piso 9, Colonia Cruz Manca Santa Fe, Delegación Álvaro Obregón, C.P. 05349, México, D.F., </STRONG>en forma mecánica como se ha indicado, ante la presencia del inspector que al efecto designe  la Secretaría de Gobernación.
+            </p>
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El concentrado y/o verificación de la base de datos se realizará el mismo día del sorteo correspondiente a las 11:30 horas.
+            </p>
+         
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El segundo sorteo se llevará a cabo el día 1° de abril de 2016 el cual se realizará a las 12:30 horas, en el domicilio ubicado en: Av. Santa Fe No. 505 Piso 9, Colonia Cruz Manca Santa Fe, Delegación Álvaro Obregón, C.P. 05349, México, D.F., en forma mecánica como se ha indicado, ante la presencia del inspector que al efecto designe  la Secretaría de Gobernación.
+            </p>  
+                               
+                                                             <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El concentrado y/o verificación de la base de datos se realizará el mismo día del sorteo correspondiente a las 11:30 horas.
+
+            </p>
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El tercer sorteo se llevará a cabo el día 1° de julio de 2016 el cual se realizará a las 12:30 horas, en el domicilio ubicado en:<STRONG> Av. Santa Fe No. 505 Piso 9, Colonia Cruz Manca Santa Fe, Delegación Álvaro Obregón, C.P. 05349, México, D.F.,</STRONG> en forma mecánica como se ha indicado, ante la presencia del inspector que al efecto designe  la Secretaría de Gobernación.
+            </p>
+         
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El concentrado y/o verificación de la base de datos se realizará el mismo día del sorteo correspondiente a las 11:30 horas.
+
+            </p>            
+            
+                                                             <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El cuarto sorteo se llevará a cabo el día 30 de septiembre de 2016 el cual se realizará a las 12:30 horas, en el domicilio ubicado en: Av. Santa Fe No. 505 Piso 9, Colonia Cruz Manca Santa Fe, Delegación Álvaro Obregón, C.P. 05349, México, D.F., en forma mecánica como se ha indicado, ante la presencia del inspector que al efecto designe  la Secretaría de Gobernación.
+            </p>
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El concentrado y/o verificación de la base de datos se realizará el mismo día del sorteo correspondiente a las 11:30 horas.
+            </p>
+         
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El inspector asignado para cada sorteo, deberá de verificar una hora antes la base de datos, la cual contendrá los folios electrónicos (Folios Electrónicos) consecutivos desde el 00001 en adelante, los cuales estarán en una base de datos digital e impresa en la que se apreciará el Nombre del Participante, Teléfono, Domicilio, Correo Electrónico, Folio(s) Electrónico(s) generados. 
+            </p>            
+            
+            
+                                                             <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        De dicha base de datos el inspector asignado agregará una copia al acta y se llevará una copia en un CD.
+            </p>
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        El inspector iniciará en el sorteo la formación de números girando urna por urna de derecha a izquierda, con el fin de formar al azar los números de folios ganadores, número por número y confrontándolos con la base de datos.
+            </p>
+         
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                        La asignación será del premio de valor mayor hasta el de valor menor sucesivamente conforme a los premios de cada fecha de sorteo, hasta concluir.
+            </p>            
+            
+            
+                                                            <p style="text-align: justify;text-justify: inter-word;color:black;" >
+                    Una vez asignada la totalidad de premios se cerrará el acta correspondiente.
+            </p>             
+
+
+<p style="text-align: justify;text-justify: inter-word;color:black;"><b>La asignación del premio del sorteo se realizará de la siguiente forma:</b></p>             
+            
+            
+<table style="border-collapse: collapse;margin-left: auto;margin-right: auto;">
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;background-color:#99CCFF;">
+                        <b>Orden de formación de números</b>
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;background-color:#FFCC99;">
+                        <b>Descripción del premio </b>
+                    </td>
+                </tr>
+                 <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+                        1 siempre que dicha formación se encuentre dentro del rango de folios electrónicos participantes.
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+                        $300,000.00 (Trescientos mil pesos 00/100M.N. en cheque de caja o certificado a elección del ganador)
+                    </td>
+                </tr>
+</table>  
+
+
+<p style="text-align: justify;text-justify: inter-word;color:black;"><b>PUBLICACIÓN DE GANADORES:</b></p>                  
+            
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+Los resultados del sorteo se darán a conocer a través de dos publicaciones en los periódicos de circulación nacional El Universal y Reforma acorde a las siguientes fechas:
+</p>  
+
+
+<table style="border-collapse: collapse;margin-left: auto;margin-right: auto;">
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+                        <b>Sorteo No.</b>
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+                        <b>Periódicos donde se publicarán resultados</b>
+                    </td>
+                    <td style="border:1px solid black;padding: 10px;">
+                        <b>Fechas de publicación</b>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+1.-
+                    </td>
+                                        <td style="border:1px solid black;padding: 10px;">
+El Universal,
+Reforma
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+7 de enero de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+2.-
+                    </td>
+                                        <td style="border:1px solid black;padding: 10px;">
+El Universal,
+Reforma
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+2 de abril de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                     <td style="border:1px solid black;padding: 10px;">
+3.-
+                    </td>
+                                        <td style="border:1px solid black;padding: 10px;">
+El Universal,
+Reforma
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+2 de julio de 2016
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid black;padding: 10px;">
+4.-
+                    </td>
+                                        <td style="border:1px solid black;padding: 10px;">
+El Universal,
+Reforma
+                    </td>
+                    
+                    <td style="border:1px solid black;padding: 10px;">
+
+1 de octubre de 2016
+
+                    </td>
+                </tr>
+                
+                
+            </table>          
+            
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+    La consulta final de folios asignados de los mismos, estará disponible 24 horas antes de la celebración del sorteo.
+</p>   
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+    Los participantes podrán consultar el número de folios electrónicos asignados en su Cuenta por Usuario en el teléfono (0155) 4161 0030 en un horario de las 9:00 a las 18:00 horas de Lunes a Viernes.
+</p>    
+
+
+
+
+
+
+
+
+<p style="text-align: justify;text-justify: inter-word;color:black;"><b><u>PARA EL RECLAMO Y ENTREGA DE PREMIOS:</u></b></p>                  
+            
+<ul>
+    <li>
+        El organizador de la presente actividad se pondrá en contacto vía telefónica y por email para confirmar el día, hora y procedimiento para la entrega del premio,  y el ganador  tendrá 20 días hábiles contados a partir de la fecha del sorteo para reclamar el mismo. 
+    </li>
+    
+    <li>
+        Teléfono de asistencia para conocer bases, restricciones, forma de reclamar el premio, comunicación de acreedores e información general (0155) 4161 0030 de Lunes a Viernes de las 9:00 a las 18:00 horas.
+    </li>
+    
+</ul> 
+
+<p style="text-align: justify;text-justify: inter-word;color:black;"><b>RESTRICCIONES:</b></p>                  
+            
+<ul>
+    <li>
+           El participante ganador del premio que no acredite plenamente su personalidad con una identificación oficial como es la credencial de elector vigente o el pasaporte vigente. NO podrá redimir su premio. Teniendo como máximo 20 días hábiles después de realizado el sorteo.
+    </li>
+    
+    <li>
+          Por seguridad y garantía en la entrega del premio el mismo se entregará en cheque de caja o certificado a elección del ganador.
+    </li>
+    
+    <li>
+          El ganador deberá firmar la totalidad de los documentos que se les solicite para entregarle el premio. 
+    </li>
+    
+     <li>
+          No se generarán folios electrónicos de participación en caso de cancelación del inmueble adquirido para el cumplimiento de la condición de participación.
+    </li>
+    
+</ul>
+
+<p style="text-align: justify;text-justify: inter-word;color:black;"><b>PARTICIPANTES NULOS O INVÁLIDOS::</b></p>  
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+En caso de participación (registro en el sistema) que se encuentre en cualquiera incumplimiento al procedimiento para la obtención de los elementos de participación, éstos serán desechados y nulificados automáticamente. El permisionario se reserva el derecho de verificar la autenticidad de los registros de participación para determinar la autenticidad de los mismos. 
+</p> 
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+<b><u>Quejas derivadas de la promoción:</u></b> Las dudas, quejas y reclamaciones que surjan con motivo del Sorteo, se podrán realizar mediante el Centro de Atención Telefónica (0155) 4161 0030.
+</p> 
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+En caso de queja derivada de este sorteo podrá acudir directamente a la Dirección General de Juegos y Sorteos de la Secretaría de Gobernación, ubicada en Dinamarca No. 84, PB y Piso 5, Col. Juárez, Delegación Cuauhtémoc, C.P. 06600, México, D.F., o bien comunicarse al 52-09-88-00.
+</p> 
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+<b><u>Responsable del Sorteo:</u></b> REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V. Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349, Teléfono (0155) 4161 0030, con horario de atención de lunes a viernes de las 9:00 a las 18:00 horas.
+</p> 
+
+<p style="text-align: justify;text-justify: inter-word;color:black;" >
+La participación del público en esta promoción, implicará su conocimiento y aceptación de las bases y mecánicas aquí señaladas.
+</p> 
+
+ <h1>AVISO DE PRIVACIDAD:</h1>
+            
+            <ul>
+            
+            <li>
+            REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V.  ubicada en Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349, es responsable del tratamiento de sus datos personales. Puede contactarnos: A nuestro departamento de datos personales con atención a Anabel López Albarran Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 a la dirección Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 teléfono (0155) 4161 66 00
+
+            </li>
+            
+            <li>
+            Sus datos personales serán utilizados para proveer los servicios y productos requeridos por usted, así como para informar sobre cambios relacionados por lo adquirido por el cliente y evaluar la calidad de nuestro servicio.
+            </li>
+            
+             <li>
+            Para las finalidades señaladas en el presente aviso de privacidad, podemos recabar sus datos personales cuando usted nos lo proporcione directamente, cuando visita nuestro sitio de internet o utiliza nuestros servicios en línea, y cuando obtenemos información mediante otras fuentes que están permitidas por la ley. 
+            </li>
+            
+             <li>
+            Los datos personales que requerimos nos proporcione son Nombre, Domicilio, Teléfono, Correo Electrónico, considerado como sensible según la ley Federal de Protección de Datos Personales en Posesión de los Particulares.
+            </li>
+            
+             <li>
+            Le informamos que para cumplir con las finalidades previstas en este aviso de privacidad, estos últimos datos personales sensibles serán tratados bajo las más estrictas medidas de seguridad que garanticen su confidencialidad.
+
+            </li>
+
+
+             <li>
+             Los datos personales podrán ser tratados y utilizados por REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V.   para cumplir aquellas obligaciones que se derivan de la relación jurídica y/o comercial existente; la identificación, operación, administración y comercialización de productos o servicios contratados; ser contactado y enviar información a fin de conocer el nivel de satisfacción en relación con la adquisición de bienes y/o servicios, así como dar seguimiento a sus peticiones, sugerencias, reclamaciones y/o cualquier otra solicitud o para realizar acciones de actualizaciones técnicas de los productos y/o servicios que hubiese adquirido; ser contactado y enviar información para darle a conocer información comercial de nuestra empresa y/o de terceros, entre la que se destaca la relacionada con trivias, sorteos, promociones, concursos, información de nuevos productos, servicios, eventos, cambios en productos y/o servicios, evaluación de la calidad en los servicios, información de nuestros socios de negocios, estudios internos sobre hábitos de consumo, incluyendo cualquier acción de mercadotecnia, publicidad, estadística y de prospección comercial; ser contactado y enviar información para dar cumplimiento a requerimientos legales, mantener actualizados nuestros registros, dar seguimiento a nuestra relación comercial, si existiese, y mantener comunicación en general.
+            </li>
+            
+             <li>
+            Usted tiene derecho a acceder, rectificar y cancelar sus datos personales, así como de oponerse al tratamiento de los mismos o revocar el consentimiento que para tal fin nos haya otorgado a través de los procedimientos que hemos implementado. Para conocer dichos procedimientos, los requisitos y plazos se puede poner en contacto con nuestro departamento de datos personales con  Anabel López Albarran Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 a la dirección electrónica Anabel.lopez@ revimex.mx teléfono (0155) 4161 66 00
+
+            </li>
+            
+             <li>
+            Así mismo si usted desea dejar de recibir mensajes promocionales de nuestra parte, puede solicitarlo a través del número telefónico  (0155) 4161 0030 ext. o bien al correo revimexcumpletussuenos@revimex.mx
+
+            </li>
+            
+             <li>
+            Nos reservamos el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente aviso de privacidad, para la atención de nuevos requerimientos legales, políticas internas o nuevos requerimientos para la prestación u ofrecimiento de nuestros productos o servicios. Estas modificaciones estarán visibles al público a través de nuestra página de internet en el siguiente enlace http://www.revimex.mx/
+
+            </li>
+            
+             <li>
+            Si usted considera que su derecho de protección de datos personales ha sido lesionado por alguna conducta de nuestros empleados o de nuestras actuaciones o respuestas, presume que en el tratamiento de sus datos personales existe alguna violación a las disposiciones previstas en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, podrá interponer la queja o denuncia correspondiente ante el IFAI, para mayor información visite www.ifai.org.mx
+
+            </li>
+            
+            
+            
+            
+            </ul>
+
+
+    
+            
+            
+        </section> 
+        
+       
+        
+       
+        <footer>
+
+
+
+        <div class="main-wrapper">
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            <nav id="footer-menu">
+                <div>
+                    <a href="http://revimex.force.com">home</a>
+                    <a href="http://revimex.force.com/RevimexPrivacidad" >aviso de privacidad</a>
+                    <a href="http://revimex.force.com/RevimexTerminosCondiciones"  class="noborder-right">Permiso de SEGOB</a>
+                </div>
+            </nav>
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/Revimex.oficial" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+        </div>
+    </footer>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+        <script>
+              var parametros =  {
+                    'estado':String('Todos'),
+                    'ciudad':String('Todos'),
+                    'tipo':String('Todos')
+                };
+                ;(function(factory) {
+                    if(typeof define === 'function' && define.amd) {
+                        define(['jquery'], factory);
+                    }
+                    else if(typeof exports === 'object') {
+                        module.exports = factory(require('jquery'));
+                    }
+                    else {
+                        factory(jQuery);
+                    }
+                }
+                (function($) {
+                    var pluginName = "tinycarousel"
+                    ,   defaults   =
+                        {
+                            start: 0
+                        ,   axis: "x"
+                        ,   buttons: true
+                        ,   bullets: false
+                        ,   interval: false
+                        ,   intervalTime: 3000
+                        ,   animation: true
+                        ,   animationTime: 1000
+                        ,   infinite: true
+                        }
+                    ;
+
+                    function Plugin($container, options) {
+                        /**
+                         * The options of the carousel extend with the defaults.
+                         *
+                         * @property options
+                         * @type Object
+                         * @default defaults
+                         */
+                        this.options = $.extend({}, defaults, options);
+
+                        /**
+                         * @property _defaults
+                         * @type Object
+                         * @private
+                         * @default defaults
+                         */
+                        this._defaults = defaults;
+
+                        /**
+                         * @property _name
+                         * @type String
+                         * @private
+                         * @final
+                         * @default 'tinycarousel'
+                         */
+                        this._name = pluginName;
+
+                        var self = this
+                        ,   $viewport = $container.find(".viewport:first")
+                        ,   $overview = $container.find(".overview:first")
+                        ,   $slides = null
+                        ,   $next = $container.find(".next:first")
+                        ,   $prev = $container.find(".prev:first")
+                        ,   $bullets = $container.find(".bullet")
+
+                        ,   viewportSize = 0
+                        ,   contentStyle = {}
+                        ,   slidesVisible = 0
+                        ,   slideSize = 0
+                        ,   slideIndex = 0
+
+                        ,   isHorizontal = this.options.axis === 'x'
+                        ,   sizeLabel = isHorizontal ? "Width" : "Height"
+                        ,   posiLabel = isHorizontal ? "left" : "top"
+                        ,   intervalTimer = null
+                        ;
+
+                        /**
+                         * The index of the current slide.
+                         *
+                         * @property slideCurrent
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slideCurrent = 0;
+
+                        /**
+                         * The number of slides the carousel is currently aware of.
+                         *
+                         * @property slidesTotal
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slidesTotal = 0;
+
+                        /**
+                         * If the interval is running the value will be true.
+                         *
+                         * @property intervalActive
+                         * @type Boolean
+                         * @default false
+                         */
+                        this.intervalActive = false;
+
+                        /**
+                         * @method _initialize
+                         * @private
+                         */
+                        function _initialize() {
+                            self.update();
+                            self.move(self.slideCurrent);
+
+                            _setEvents();
+
+                            return self;
+                        }
+
+                        /**
+                         * You can use this method to add new slides on the fly. Or to let the carousel recalculate itself.
+                         *
+                         * @method update
+                         * @chainable
+                         */
+                        this.update = function() {
+                            $overview.find(".mirrored").remove();
+
+                            $slides = $overview.children();
+                            viewportSize = $viewport[0]["offset" + sizeLabel];
+                            slideSize = $slides.first()["outer" + sizeLabel](true);
+                            self.slidesTotal = $slides.length;
+                            self.slideCurrent = self.options.start || 0;
+                            slidesVisible = Math.ceil(viewportSize / slideSize);
+
+                            $overview.append($slides.slice(0, slidesVisible).clone().addClass("mirrored"));
+                            $overview.css(sizeLabel.toLowerCase(), slideSize * (self.slidesTotal + slidesVisible));
+
+                            _setButtons();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setEvents
+                         * @private
+                         */
+                        function _setEvents() {
+                            if(self.options.buttons) {
+                                $prev.click(function() {
+                                    self.move(--slideIndex);
+
+                                    return false;
+                                });
+
+                                $next.click(function() {
+                                    self.move(++slideIndex);
+
+                                    return false;
+                                });
+                            }
+
+                            $(window).resize(self.update);
+
+                            if(self.options.bullets) {
+                                $container.on("click", ".bullet", function() {
+                                    self.move(slideIndex = +$(this).attr("data-slide"));
+
+                                    return false;
+                                });
+                            }
+                        }
+
+
+                        /**
+                         * If the interval is stoped start it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.start = function() {
+                            if(self.options.interval) {
+                                clearTimeout(intervalTimer);
+
+                                self.intervalActive = true;
+
+                                intervalTimer = setTimeout(function() {
+                                    self.move(++slideIndex);
+
+                                }, self.options.intervalTime);
+                            }
+
+                            return self;
+                        };
+
+                        /**
+                         * If the interval is running stop it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.stop = function() {
+                            clearTimeout(intervalTimer);
+
+                            self.intervalActive = false;
+
+                            return self;
+                        };
+
+                        /**
+                         * Move to a specific slide.
+                         *
+                         * @method move
+                         * @chainable
+                         * @param {Number}  [index] The slide to move to.
+                         */
+                        this.move = function(index) {
+                            slideIndex = isNaN(index) ? self.slideCurrent : index;
+                            self.slideCurrent = slideIndex % self.slidesTotal;
+
+                            if(slideIndex < 0) {
+                                self.slideCurrent = slideIndex = self.slidesTotal - 1;
+                                $overview.css(posiLabel, -(self.slidesTotal) * slideSize);
+                            }
+
+                            if(slideIndex > self.slidesTotal) {
+                                self.slideCurrent = slideIndex = 1;
+                                $overview.css(posiLabel, 0);
+                            }
+                            contentStyle[posiLabel] = -slideIndex * slideSize;
+
+                            $overview.animate(
+                                contentStyle
+                            ,   {
+                                    queue : false
+                                ,   duration : self.options.animation ? self.options.animationTime : 0
+                                ,   always : function() {
+                                       /**
+                                        * The move event will trigger when the carousel slides to a new slide.
+                                        *
+                                        * @event move
+                                        */
+                                        $container.trigger("move", [$slides[self.slideCurrent], self.slideCurrent]);
+                                    }
+                                });
+
+                            _setButtons();
+                            self.start();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setButtons
+                         * @private
+                         */
+                        function _setButtons() {
+                            if(self.options.buttons && !self.options.infinite) {
+                                $prev.toggleClass("disable", self.slideCurrent <= 0);
+                                $next.toggleClass("disable", self.slideCurrent >= self.slidesTotal - slidesVisible);
+                            }
+
+                            if(self.options.bullets) {
+                                $bullets.removeClass("active");
+                                $($bullets[self.slideCurrent]).addClass("active");
+                            }
+                        }
+
+                        return _initialize();
+                    }
+
+                    /**
+                    * @class tinycarousel
+                    * @constructor
+                    * @param {Object} options
+                        @param {Number}  [options.start=0] The slide to start with.
+                        @param {String}  [options.axis=x] Vertical or horizontal scroller? ( x || y ).
+                        @param {Boolean} [options.buttons=true] Show previous and next navigation buttons.
+                        @param {Boolean} [options.bullets=false] Is there a page number navigation present?
+                        @param {Boolean} [options.interval=false] Move to another block on intervals.
+                        @param {Number}  [options.intervalTime=3000] Interval time in milliseconds.
+                        @param {Boolean} [options.animate=true] False is instant, true is animate.
+                        @param {Number}  [options.animationTime=1000] How fast must the animation move in ms?
+                        @param {Boolean} [options.infinite=true] Infinite carousel.
+                    */
+                    $.fn[pluginName] = function(options) {
+                        return this.each(function() {
+                            if(!$.data(this, "plugin_" + pluginName)) {
+                                $.data(this, "plugin_" + pluginName, new Plugin($(this), options));
+                            }
+                        });
+                    };
+                }));
+            $(function(){
+                $('#slider1').tinycarousel();
+                $( ".suggestion" ).click(function() {
+                    var id =  $(this).attr('id');
+                    var url = document.URL.split('?');
+                    var retUrl = url.length > 1 ? url[1] : ''; 
+                    //console.log(url.length);
+                    var url = '/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                    window.location.replace(url);
+                });
+            });
+
+        </script>
+    </body>
+    </html>
+</apex:page>

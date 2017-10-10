@@ -1,0 +1,23 @@
+<apex:page showHeader="true" sidebar="true" controller="PruebaDrive_ctrl" renderas="ADVANCED_PDF">
+    <table>
+        <tr>
+        <th>Nombre</th>
+        <th>Imagen</th>
+        <th>URL</th>
+        </tr>
+        <apex:repeat value="{!archivos}" var="arch" >
+            <tr>
+                <td>{!arch.name}</td>
+                <td><apex:image value="{!arch.url}" /></td>
+                <td>{!arch.url}</td>
+                
+            </tr>
+        </apex:repeat>
+    </table>
+    /**SFDC**/
+    <br/>
+        <apex:image value="https://goo.gl/images/VcTX75"/>
+    <br/>
+                
+    <apex:image value="https://www.google.com.mx/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" />
+</apex:page>

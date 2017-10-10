@@ -1,0 +1,96 @@
+<apex:page standardController="Gasto__c" extensions="ListaGastosController">
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+     <script type="text/javascript">
+         $j = jQuery.noConflict();
+         $j(document).ready(function() {
+             $j("#modalArchivos").dialog({ 
+                    autoOpen: false, 
+                    modal: true,   
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind"
+                });
+         });
+         
+        function abrirModalArchivos(idPadre,tipo){
+            document.getElementById('theIframe').src='../apex/GastosArchivos?gastoId=' + idPadre + '&tipo=' + tipo; 
+            $j("#modalArchivos").dialog("open");
+         }
+     </script>
+     <style>
+      .msgError{
+         font-size:10px;
+         color: red !important;
+      }
+      .orange{
+          background-color:#FECE27;
+          tex-align:center;
+      }
+  </style>
+    <apex:sectionHeader title="Solicitud de gastos de la oferta" subtitle="{!oferta.Name}"/>
+     <apex:pageBlock id="pbMain">
+          <apex:pageMessages id="pMessage"></apex:pageMessages>
+          <apex:pageblockSection columns="1" id="pbsPrincipal">
+              <apex:form >
+                  <apex:commandButton value="Administrar gastos" action="{!administrarGastos}"/>
+                   <apex:pageblockSection id="pbsExistentes" columns="1" title="Gastos existentes">
+                        <apex:outputPanel styleClass="tableContainer" layout="block" id="divTablaPrincipal">
+                             <apex:pageBlockTable value="{!gastos}" var="wg" id="pbtGastos">
+                                  <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Name.Label}">
+                                      <!--<apex:outputField value="{!wg.gasto.Name}"/>-->
+                                      <apex:outputLink value="/{!wg.gasto.Id}" id="theLink">{!wg.gasto.Name}</apex:outputLink>
+                                  </apex:column>
+                                  <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Estatus__c.Label}">
+                                      <apex:outputField value="{!wg.gasto.Estatus__c}"/>
+                                  </apex:column>
+                                  <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Account__c.Label}">
+                                     <apex:outputField value="{!wg.gasto.Account__c}"/>
+                                  </apex:column>
+                                 <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Concepto__c.Label}" id="columnaGLA">
+                                    <apex:outputField value="{!wg.gasto.Concepto__c}"/>   
+                                 </apex:column>
+                                 <apex:column headerValue="{!$ObjectType.Gasto__c.fields.SolicitudPago__c.Label}">
+                                    <apex:outputField value="{!wg.gasto.SolicitudPago__c}"/>   
+                                 </apex:column>
+                                  <apex:column headerValue="{!$ObjectType.Gasto__c.fields.EtapaOferta__c.Label}">
+                                    <apex:outputField value="{!wg.gasto.EtapaOferta__c}"/>   
+                                 </apex:column>
+                                 <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Importe__c.Label}">
+                                    <apex:outputField value="{!wg.gasto.Importe__c}"/>   
+                                 </apex:column>
+                                 <apex:column headerValue="Mensajes validación">
+                                      <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError1__c)),'1. ','')} {!wg.gasto.MensajeError1__c}</div>
+                                      <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError2__c)),'2. ','')} {!wg.gasto.MensajeError2__c}</div>
+                                      <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError3__c)),'3. ','')} {!wg.gasto.MensajeError3__c}</div>
+                                 </apex:column>
+                                 <apex:column headerValue="Solicitud">
+                                      <apex:outputPanel rendered="{!wg.gasto.Id != null}">
+                                          <button type="button" onclick="abrirModalArchivos('{!wg.gasto.Id}','Solicitud');" >Adjuntar</button>
+                                      </apex:outputPanel>
+                                 </apex:column>
+                               <apex:column headerValue="Comprobante pago">
+                                  <apex:outputPanel rendered="{!wg.gasto.Id != null}">
+                                      <button type="button" onclick="abrirModalArchivos('{!wg.gasto.Id}','Comprobante pago');" >Adjuntar</button>
+                                  </apex:outputPanel>
+                              </apex:column>
+                              <apex:column headerValue="Comprobante fiscal">
+                                  <apex:outputPanel rendered="{!wg.gasto.Id != null}">
+                                      <button type="button" onclick="abrirModalArchivos('{!wg.gasto.Id}','Comprobante fiscal');" >Adjuntar</button>
+                                  </apex:outputPanel>
+                              </apex:column>
+                            </apex:pageBlockTable>
+                       </apex:outputPanel>
+                  </apex:pageblockSection>
+              </apex:form>
+         </apex:pageblockSection>
+         <apex:outputPanel id="seccionCargaDocumentos">
+            <div id="modalArchivos" title="Carga de documentos">
+                <iframe src=""  scrolling="true" id="theIframe" frameborder="0" width="800px" height="500px"/>
+            </div>
+         </apex:outputPanel>
+    </apex:pageBlock>
+</apex:page>

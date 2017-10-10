@@ -1,0 +1,5 @@
+<apex:page standardController="Gasto__c" extensions="ValidaGastoExtension">
+   
+  
+  
+</apex:page>

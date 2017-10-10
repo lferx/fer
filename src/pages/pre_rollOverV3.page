@@ -1,0 +1,917 @@
+<apex:page controller="pre_rollOverV3_Controller" showHeader="true" sidebar="true">
+<head>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet" href="/resource/calendario/flatpickr-master/dist/flatpickr.min.css"/>
+<script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+<script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+
+
+<!-- <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+<script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/gh/stefangabos/Zebra_Datepicker/dist/zebra_datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stefangabos/Zebra_Datepicker/dist/css/default/zebra_datepicker.min.css" /> -->
+
+<!-- <script src="/resource/Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker/Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker/dist/zebra_datepicker.min.js"/>
+<link rel="stylesheet" href="/resource/Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker/Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker/dist/css/default/zebra_datepicker.min.css"/> -->
+
+
+<!-- Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker -->
+
+
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.title{
+	width: 80%;
+/*	border: 1px solid;*/
+	display: inline-block;
+	
+	padding: 0% 5% 0% 0%;
+}
+.title h1{
+	/*color: #1973DA;*/
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+    padding-left: 37.5%;
+}
+.logo{
+	width: 19%;
+/*	border: 1px solid;*/
+	display: inline-block;
+	vertical-align: middle;
+}
+.img_logo{
+	max-width: 70%;
+}
+.ctn_gral_form{
+/*	border: 1px solid;*/
+	margin: 0% 1% 0% 1%;
+}
+.inline {
+	border: 1px  #79c4de solid;
+	width: 45%;
+	margin: auto;
+	
+	background-color:#79c4de;
+
+}
+.encabezado_crear_lead{
+	text-align: center;
+	max-width: 20%;
+	height: 30px;
+	border: 1px #fff;
+	background-color:#79c4de;
+	display:block;
+	padding: 10px;
+	cursor: pointer;
+	margin-bottom: 0;
+	color:#ffebb5;
+	margin-left: -21%;
+}
+.encabezado_crear_lead:first-child{
+	margin-left: -21%;
+	/*margin-left: 2%;*/
+}
+h1{
+	font-size: 0.7vw;
+}
+.create_lead{
+	padding-top: 10px;
+}
+.preca{
+	display: none;
+}
+.asignacion{
+	display: none;
+}
+.dates{
+	background-color: #fff;
+	max-width: 100%;
+	margin: 0% 2% 2% 2%;
+	padding: 0px 20px 0px 20px;
+	border-top: none;
+	margin-top: -80px !important;
+	/*border: 1px  red solid;*/
+	
+	height: 550px;
+/*	background: rgba(237,237,237,1);
+background: -moz-linear-gradient(top, rgba(237,237,237,1) 4%, rgba(246,246,246,1) 13%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 69%, rgba(255,255,255,1) 97%);
+background: -webkit-gradient(left top, left bottom, color-stop(4%, rgba(237,237,237,1)), color-stop(13%, rgba(246,246,246,1)), color-stop(22%, rgba(255,255,255,1)), color-stop(69%, rgba(255,255,255,1)), color-stop(97%, rgba(255,255,255,1)));
+background: -webkit-linear-gradient(top, rgba(237,237,237,1) 4%, rgba(246,246,246,1) 13%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 69%, rgba(255,255,255,1) 97%);
+background: -o-linear-gradient(top, rgba(237,237,237,1) 4%, rgba(246,246,246,1) 13%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 69%, rgba(255,255,255,1) 97%);
+background: -ms-linear-gradient(top, rgba(237,237,237,1) 4%, rgba(246,246,246,1) 13%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 69%, rgba(255,255,255,1) 97%);
+background: linear-gradient(to bottom, rgba(237,237,237,1) 4%, rgba(246,246,246,1) 13%, rgba(255,255,255,1) 22%, rgba(255,255,255,1) 69%, rgba(255,255,255,1) 97%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff', GradientType=0 );*/
+
+
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 86%, rgba(237,237,237,1) 99%, rgba(246,246,246,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(15%, rgba(255,255,255,1)), color-stop(28%, rgba(255,255,255,1)), color-stop(86%, rgba(255,255,255,1)), color-stop(99%, rgba(237,237,237,1)), color-stop(100%, rgba(246,246,246,1)));
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 86%, rgba(237,237,237,1) 99%, rgba(246,246,246,1) 100%);
+background: -o-linear-gradient(top, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 86%, rgba(237,237,237,1) 99%, rgba(246,246,246,1) 100%);
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 86%, rgba(237,237,237,1) 99%, rgba(246,246,246,1) 100%);
+background: linear-gradient(to bottom, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 28%, rgba(255,255,255,1) 86%, rgba(237,237,237,1) 99%, rgba(246,246,246,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6', GradientType=0 );
+}
+.oculta_muestra{
+	display: block;
+}
+.inputs_create_lead, .inputs_asgina_lead{
+	/*margin: 0% 6% 0% 6%;*/
+	margin-bottom: 12px;
+}
+.fecha_nacimiento{
+	display: block;
+}
+.input_preca_tipo_credito{
+	display: block;
+}
+.btn_preca{
+	display: block;
+}
+.inputs_asignacion{
+	display: block;
+}
+.img_star_Interes{
+	display: inline-block;
+	width: 3%;
+	/*Esto sirve para ponerlo de color gris
+	Si se desea volver al color normal (amarillo)
+	Solo se debe quitar este atributo
+	*/
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	position: relative; left: 3%;
+	margin-top: 15px;
+}
+.img_star_Interess{
+	display: inline-block;
+	width: 3%;
+	/*Esto sirve para ponerlo de color gris
+	Si se desea volver al color normal (amarillo)
+	Solo se debe quitar este atributo
+	*/
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+	position: relative; left: 3%;
+	margin-top: 15px;
+}
+.img_star_tel{
+	display: inline-block;
+	width: 3%;
+	/*Esto sirve para ponerlo de color gris
+	Si se desea volver al color normal (amarillo)
+	Solo se debe quitar este atributo
+	*/
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	position: relative; 
+	left: 0.1%;
+	margin-top: 15px;
+}
+.img_star_tele{
+	display: inline-block;
+	width: 3%;
+
+	/*Esto sirve para ponerlo de color gris
+	Si se desea volver al color normal (amarillo)
+	Solo se debe quitar este atributo
+	*/
+	-webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
+}
+/*.inline_star{
+	display: inline-block;
+	width: 73%;
+}*/
+.inline_star_id:first-child{
+	display: inline-block;
+	width: 60%;
+	margin-left: 3.5%;
+}
+.input_tel{
+	margin-left: -2.5%;
+	font-size: 18px; 
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    border: none;
+    border-bottom: 1px solid #79c4de;
+    outline: none;
+    width: 66%;
+	margin-bottom: 10px;
+}
+/*.preca{
+	max-width: 35%;
+}*/
+.title_scoring, .owner_account, .date_asign{
+	display: block;
+	font-size: 18px;
+	padding: 15px 5px 15px 5px;
+
+}
+.total_scoring1, .total_scoring2, .total_scoring3{
+	display: inline-block;
+	margin: 0% 4% 0% 4%;
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	width: 3%;
+}
+.total_scoring11, .total_scoring22, .total_scoring33{
+	display: inline-block;
+	margin: 0% 4% 0% 4%;
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+	width: 3%;
+}
+.inp:first-child, .inp_aux
+{
+	font-size: 18px; 
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    width: 66%;
+    border: none;
+    border-bottom: 1px solid #79c4de;
+    outline: none;
+	margin: 0% 0% 0% 6%;
+}
+.inp_aux_score:first-child{
+	font-size: 18px; 
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    width: 57%;
+    border: none;
+    border-bottom: 1px solid #79c4de;
+    outline: none;
+	margin: 0% 0% 0% 6%;
+}
+.inp_aux_star{
+	font-size: 18px; 
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    border: none;
+    border-bottom: 1px solid #79c4de;
+    outline: none;
+	width: 65%;
+    margin-left: 7.4%;
+}
+.inputs_create_lead:focus, .fotito:hover {
+    transform: translate(6%,7%)scale(1.1);
+
+    transition: all .15s ease-out;
+}
+.inblock
+{
+      display: inline-block; 
+}
+.inblock:first-child{
+	display: inline-block;  
+
+}
+.dateOnlyInput input {
+    width: 65%;
+}
+.iconoBoton:hover{
+	width: 43px;
+	transform: translate(5%,6%)scale(1.1);
+	transition: all .15s ease-out;
+}
+.iconoBoton{
+	width:40px;	
+	display: block;
+	margin: 1% 30% 1% 30%;
+}
+.dateFormat{
+	display: none;
+}
+
+/*.oculto{
+display:none;
+}*/
+.oculto1 span{
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    width: 65%;
+    font-size: 18px;
+    border-bottom: 1px solid #79c4de;
+    display: block;
+}
+.justificar{
+	padding-top: 35px;
+}
+.justificar2{
+	padding-top: 70px;
+}
+.justificar2 span, .justificar2 h1{
+	font-size: 18px;
+}
+.justificar3 span, .justificar3 h1{
+	padding-top: 15px;
+	font-size: 18px;
+}
+.xx{
+	/*border: 1px solid 	green;*/
+}
+.active{
+	/*background-color:#ffffff;*/
+	color:#282e32;
+	/*border:1px solid #464c54; */
+	border-bottom: 1px solid #ffffff;
+	background-repeat:repeat-x;
+	background-position:top;
+background: rgba(246,246,246,1);
+background: -moz-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(237,237,237,1) 28%, rgba(240,240,240,1) 33%, rgba(255,255,255,1) 62%, rgba(255,255,255,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(246,246,246,1)), color-stop(28%, rgba(237,237,237,1)), color-stop(33%, rgba(240,240,240,1)), color-stop(62%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(237,237,237,1) 28%, rgba(240,240,240,1) 33%, rgba(255,255,255,1) 62%, rgba(255,255,255,1) 100%);
+background: -o-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(237,237,237,1) 28%, rgba(240,240,240,1) 33%, rgba(255,255,255,1) 62%, rgba(255,255,255,1) 100%);
+background: -ms-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(237,237,237,1) 28%, rgba(240,240,240,1) 33%, rgba(255,255,255,1) 62%, rgba(255,255,255,1) 100%);	
+}
+.posicion_save{
+	margin: 4% 47% 1% 47%;
+}
+.inputs_asgina_lead_letras{
+	margin: 0% 13% 0% 13%;
+	margin-bottom: 10px;
+}
+.fecha_born{
+	margin: 0% 16% 0% 16%;
+	margin-bottom: 10px;
+}
+.img_star_preca{
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	position: relative; 
+	left: 4%;
+	width: 3%;
+}
+.img_star_precaa{
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+	position: relative; 
+	left: 4%;
+	width: 3%;
+}
+.parcero{
+	background-color: blue !important;
+	background: red !important;
+	color: green !important;
+	font-size: 10px !important;
+}
+#j_id52_lkwgt{
+	display: none;
+}
+.html5tooltip-box
+{
+ color: #ffebb5;
+}
+
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton body .menuButton .menuButtonButton{
+	background: #f06e57 !important;
+}
+</style>
+
+
+</head>
+<!--   ENCABEZADO -->
+<body>
+  	<div class="title">
+  		<h1>PRE - ROLL OVER CREACION DE LEADS</h1>
+  	</div>
+  	<div class="logo">
+  		<apex:image value="{!URLFOR($Resource.logoRevimex)}" styleClass="img_logo"/>
+  	</div>
+
+<!-- FORM GENERAL -->
+<div class="ctn_gral_form">
+<apex:form >
+
+	<apex:outputPanel id="section1">
+		<div class="create_lead inline">
+
+			<div class="encabezado_crear_lead uno active tab" data-title="content_1"  >
+					<h1> CREAR LEAD</h1>
+			</div>
+			<div class="encabezado_crear_lead dos tab" data-title="content_2" >
+					<h1>PRECALIFICACIÓN</h1>
+					
+			</div>
+			<div class="encabezado_crear_lead tres tab" data-title="content_3" >
+					  <h1>ASIGNACIÓN</h1>
+			</div>
+				<div class="xx">
+				<div class="dates justificar oculta_muestra content " id="content_1">
+				<center>
+				<apex:outputPanel id="pagina1" >
+				<script type="text/javascript">
+
+	// j$ = jQuery.noConflict();
+	    $(document).ready(function(){
+			$(".flick").flatpickr({
+			  dateFormat: "d/m/Y",
+			  allowInput: true
+			});
+			$(".flick2").flatpickr({
+			  dateFormat: "d/m/Y",
+			  allowInput: true
+			});
+	    });
+
+</script>
+									<!-- <apex:outputPanel id="pinta"> -->
+			                <apex:inputText value="{!leadCliente.firstName}" id="pruebaEdgar"  html-placeholder="Nombre(s) (Obligatorio)" styleClass="inputs_create_lead inp_aux" onkeyup="this.value = this.value.replace(/[^aA-zZ\s]/g,'');"/>
+			                <center><apex:outputPanel rendered="{!msg}"><apex:outputText value="<b>Error:</b> Nombre Obligatorio" escape="false" style="color:#d74c3b;font-family: Arial,Helvetica,sans-serif;"/></apex:outputPanel></center>
+			                <!-- hijo de puta /^[a-z][a-z]*/
+			                <div style="clear: both;"></div>
+			                <apex:inputField value="{!leadCliente.firstName}" html-hidden="false" style="width: 10px; height: 20px;"/>
+			                hijo de puta 2 -->
+
+							<apex:inputText value="{!leadCliente.lastName}" html-placeholder="Apellido" styleClass="inputs_create_lead inp_aux" onkeyup="this.value = this.value.replace(/[^aA-zZ\s]/g,'');" style="margin-top: 12px;"/>
+							<div class="star">
+					
+							<apex:image value="{!URLFOR($Resource.star_scoring)}" styleClass="img_star_tel" id="myStar"/>
+							<apex:inputField value="{!leadCliente.Phone}" html-placeholder="Telefono (Obligatorio)" id="idTelefono" style="margin-left: 3%;" styleClass="inline_star input_tel" html-maxlength="10" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" onchange="scoreStar()"/>
+
+							
+							</div>
+
+							<apex:inputField value="{!leadCliente.PersonEmail}" html-placeholder="Email (Obligatorio)" id="idEmail" styleClass="inputs_create_lead inp_aux" onchange="checkEmail()"/>
+<!-- 							<apex:inputField id="Origen" value="{!leadCliente.Origen__c}" html-placeholder="Origen" label="Origen" styleClass="inputs_create_lead inp_aux" style="margin-top: 12px;"/> -->
+							<apex:selectList size="1" value="{!org}" styleClass="inputs_create_lead inp_aux" style="margin-top: 12px;">
+								<apex:selectOptions value="{!ListaOrigenes}"/> <!-- //metodo sin get devuelve lista -->
+							</apex:selectList>
+							
+							<!-- <apex:inputText  value="{!leadCliente.Fecha_de_nacimiento__c}" html-placeholder="Fecha de nacimiento" style="margin-top: 12px;display: block;" styleClass="inp_aux flick cal_fecha" id="idFecha" /> -->
+<!-- <input type="text" name="fecha_naci" class="inp_aux flick cal_fecha" onchange="menorDate();" placeholder="Fecha de nacimiento" style="margin-top: 12px;display: block;" value="{!leadCliente.Fecha_de_nacimiento__c}" /> -->
+<!-- 							<script type="text/javascript">
+								// cal_fecha
+								$('.cal_fecha').Zebra_DatePicker({
+								    view: 'years',
+    								format: 'd/m/Y'  
+								});
+								flick
+							</script> -->
+<!-- 							 <script type="text/javascript">
+								//var prueba = 
+								$('[id*="Origen"]').val('');
+								$('[id*="Origen"] option').first().html('-- Origen --');
+								//console.log(prueba);
+
+							</script> -->
+
+							 <apex:inputField value="{!leadCliente.Fecha_de_nacimiento__c}" onchange="menorDate();" styleClass="flick inp_aux  cal_fecha" html-placeholder="Fecha de Nacimiento" id="idFecha"/>
+
+							<apex:actionFunction name="menorDate" action="{!menorDate}" reRender="pagina1"/> 
+							<apex:actionFunction name="checkEmail" action="{!checkEmail}" reRender="pagina1"/>
+							<apex:actionFunction name="validaEstrallaPhone" action="{!validaEstrellaPhone}" oncomplete="star_uno();" reRender="pagina1"/>
+
+							
+							
+							<!-- <apex:inputField id="plazas" value="{!leadCliente.Ciudad_Plaza__c}" style="margin-top: 12px;" styleClass="inputs_create_lead inp_aux"/> -->
+							<apex:selectList size="1" value="{!plz}" label="Etapa de la Oportunidad" style="margin-top: 12px;" styleClass="inputs_create_lead inp_aux">
+								<apex:selectOptions value="{!ListaPlazas}"/> <!-- //metodo sin get devuelve lista -->
+							</apex:selectList>
+<!-- 							<script type="text/javascript">
+								//var prueba = 
+								$('[id*="plazas"]').val('');
+								$('[id*="plazas"] option').first().html('-- Plaza de Interes --');
+								//console.log(prueba);
+
+							</script> -->
+							<div class="star">
+							<apex:image value="{!URLFOR($Resource.star_scoring)}" styleClass="img_star_Interes" id="estrellaInteres"/>
+							<apex:inputField value="{!leadCliente.Id_de_Interes__c}" html-placeholder="ID  de interés" styleClass=" search inline_star_id inblock inp interesid" id="idInteres" onblur="scoreStar(this)"/>
+<!-- 							<script type="text/javascript">
+								if($('div').hasClass('.errorMsg')) {
+								
+								    alert("Se ha mostrado nensaje de error de Id de interes");
+								}
+							</script> -->
+
+							<apex:inputText value="{!leadCliente.Description}" html-placeholder="Descripción" styleClass="inputs_create_lead inp_aux" style="margin-top: 12px;"/>
+						<!-- 	Description -->
+							</div>
+							 <!-- <apex:commandButton value="GUARDAR" action="{!guardarDatos}"/>  -->
+
+							 <apex:image styleClass="iconoBoton posicion_save" value="{!URLFOR($Resource.preroll, 'icons/save.png')}" onclick="guarda();scoreStar();" html-data-tooltip="Guardar" html-data-tooltip-delay="1" html-data-tooltip-animate-function="scalein">
+							 
+							 
+							 <!-- <apex:actionSupport action="{!guardarDatos}" event="onclick">  
+			  				</apex:actionSupport> -->
+	 						<!-- muestra_dos(); -->
+							</apex:image>
+							<apex:actionFunction name="guarda" action="{!guardarDatos}" reRender="pagina1, fecha, elnombre, elapellido,elnombre1, elapellido1" oncomplete="muestra_dos()" />
+							<!-- <apex:messages /> -->
+				
+
+							<script type="text/javascript">
+																// slide all content up
+									//$(".content").slideUp();
+									
+									// slide this content up
+									$(document).ready(function(){
+
+										// Desasignar click
+										$("div.tab").unbind('click');
+
+										
+										// When a link is clicked
+										$("div.tab").click(function () {
+
+											console.log($(this));
+											console.log($(".active"));
+											
+											// switch all tabs off
+											$(".active").removeClass("active");
+											
+											// switch this tab on
+											$(this).addClass("active");
+											
+											// slide all content up
+
+											$(".content").slideUp();
+
+											
+											// slide this content up
+											var content_show = $(this).attr("data-title");
+											$("#"+content_show).slideDown();
+
+										  
+										});
+
+										scoreStar();
+									
+									  });
+								function muestra_uno(){
+									$(".oculta_muestra").show();
+									$(".asignacion").hide();
+									$(".preca").hide();
+									$('.inline').attr('border','none');
+									$(".dos").removeClass("active");
+									$(".tres").removeClass("active");
+									$(".uno").addClass("active");
+
+									// $('.encabezado_crear_lead').attr('margin-bottom', '0');
+									// $("img").attr("width","500");
+								}
+								function muestra_dos(){
+									if(!{!error}){
+										// swal({
+										//   title: "Registro Guardado",
+										//   text: "Da Click en el Boton!",
+										//   type: "success",
+										//   showCancelButton: false,
+										//   confirmButtonColor: "#DD6B55",
+										//   confirmButtonText: "Ir a Asignación!",
+										//   closeOnConfirm: true
+										// },
+										// function(){
+										//   //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										//   $('div.tab.dos').trigger('click');
+										// });
+
+										if($('.errorMsg').length>0){
+											return;
+										}
+
+										var f = $('[Id*="idFecha"]').val();
+                                        //     if((mp==null||mp=='')){
+										if(f!=null&&f!=''){
+											// swal({
+											//   title: "Registro Guardado",
+											//   text: "Da Click en el Boton!",
+											//   type: "success",
+											//   showCancelButton: false,
+											//   confirmButtonColor: "#DD6B55",
+											//   confirmButtonText: "Ir a Asignación!",
+											//   closeOnConfirm: true
+											// },
+											// function(){
+											//   //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+											  
+											// });
+											$('div.tab.dos').trigger('click');
+											//$(".preca").show();
+											//$(".oculta_muestra").hide();
+											//$(".asignacion").hide();
+											//$('.inline').attr('border','none');
+											//$(".uno").removeClass("active");
+											//$(".tres").removeClass("active");
+											//$(".dos").addClass("active");
+											
+										}
+										else{
+											$('div.tab.tres').trigger('click');
+											//$('[Id*="content_3"]').show();
+											//$('[Id*="content_1"]').hide();
+											
+										}
+									}
+									
+										
+
+									// $('.encabezado_crear_lead').attr('margin-bottom', '0');
+								}
+								function muestra_tres(){
+									/*$(".asignacion").show();
+									$(".oculta_muestra").hide();
+									$(".preca").hide();
+									$('.inline').attr('border','none');
+									$(".uno").removeClass("active");
+									$(".dos").removeClass("active");
+									$(".tres").addClass("active");*/
+									$('div.tab.tres').trigger('click');
+									// $('.encabezado_crear_lead').attr('style','margin-bottom : 0px');
+									// document.getElementsByClassName("encabezado_crear_lead").style.borderBottom = "0";
+								}
+								function star_uno() {
+									if ({!estrella}) {
+									
+									}
+								}
+								
+								/*var tabActiva = '{!tabname}';
+								if(tabActiva!=''){
+									$('div.tab.'+tabActiva).trigger('click');
+								}*/
+
+								function scoreStar(element) {
+
+									if(element != null){
+										console.log($(element));
+									}
+
+									var count_star = 0;
+
+									var x = $('[Id*="idTelefono"]').val();
+									var xx = $('[Id*="idInteres"]').val();
+									var xxx = $('.montoPrecaestrella').val();
+
+									if(element != null){
+										console.log($(element));
+										xx = $(element).val();
+									}
+
+									console.log('campo 1: '+x + ' ,Campo2: '+xx + ' Campo3: '+xxx);
+                                        
+									if(x!='' && x!=null){
+										// count_star=1;
+										count_star++;
+										$('[Id*="myStar"]').removeClass("img_star_tel").addClass( "img_star_tele" );
+
+									}else {
+
+										$('[Id*="myStar"]').removeClass("img_star_tele").addClass( "img_star_tel" );
+									}
+									
+                                         
+									if(xx!='' && xx!=null && xx!='null' && parseInt(xx)!=0 ){
+										
+										// count_star=2;
+										count_star++;
+										$('[Id*="estrellaInteres"]').removeClass("img_star_Interes").addClass( "img_star_Interess" );
+
+									 }
+									 else{
+
+										$('[Id*="estrellaInteres"]').removeClass("img_star_Interess").addClass( "img_star_Interes" );
+									 }
+									
+                                        // a08g0000008NAF9
+									if(parseInt(xxx)>=250000){
+										// count_star=3;
+										count_star++;
+										$('[Id*="estrella_Preca"]').removeClass("img_star_preca").addClass( "img_star_precaa" );
+
+									}else {
+										$('[Id*="estrella_Preca"]').removeClass("img_star_precaa").addClass( "img_star_preca" );
+									}
+
+
+
+										console.log(count_star);
+									$('[Id*="starScore1"]').removeClass("total_scoring11").addClass( "total_scoring1" );
+									$('[Id*="starScore2"]').removeClass("total_scoring22").addClass( "total_scoring2" );
+									$('[Id*="starScore3"]').removeClass("total_scoring33").addClass( "total_scoring3" );
+
+									if (count_star == 1) {
+										$('[Id*="starScore1"]').removeClass("total_scoring1").addClass( "total_scoring11" );
+									}
+									if (count_star == 2) {
+										$('[Id*="starScore1"]').removeClass("total_scoring1").addClass( "total_scoring11" );
+										$('[Id*="starScore2"]').removeClass("total_scoring2").addClass( "total_scoring22" );	
+									 }
+									if (count_star == 3) {
+										$('[Id*="starScore1"]').removeClass("total_scoring1").addClass( "total_scoring11" );
+										$('[Id*="starScore2"]').removeClass("total_scoring2").addClass( "total_scoring22" );
+										$('[Id*="starScore3"]').removeClass("total_scoring3").addClass( "total_scoring33" );	
+									}
+								
+
+									$("[Id*='scorecliente']").val(count_star);
+
+								}
+
+							</script>
+						</apex:outputPanel>
+
+						<!-- </apex:outputPanel> -->
+
+							<!--  -->
+				</center>			<!-- <apex:actionFunction name="prueba" action="{!SaveAndNew}" reRender="limpia"/> -->
+				</div> <!-- dates justificar oculta_muestra content --> 
+			</div> <!-- class xx -->
+		</div> <!-- create_lead inline -->
+	</apex:outputPanel>
+	<center>
+	<apex:outputPanel id="limpia">
+	<div class="preca inline content" id="content_2">
+
+			<div class="dates justificar2">
+			<center>
+			<h1 class="fecha_born">Nombre de Lead:</h1><br/>
+				 <apex:outputField value="{!leadCliente.firstName}" id="elnombre"/> &nbsp;&nbsp;
+				 <apex:outputField value="{!leadCliente.lastName}" id="elapellido"/><br/><br/> 
+			</center>
+	                <apex:outputText value="{0,date,dd/MM/yyyy}" styleClass="fecha_nacimiento inputs_create_lead inp calen" id="fecha">
+	                	<h1 class="fecha_born">Fecha de Nacimiento</h1>
+	       				<apex:param value="{!leadCliente.Fecha_de_nacimiento__c}" />
+	       			</apex:outputText>
+
+					<apex:inputField value="{!leadCliente.Numero_de_Seguro_Social__c}" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" html-placeholder="Numero de Seguro social (NSS)" styleClass="inp_aux_star inputs_asgina_lead_select inblock inputs_asgina_lead" style="width: 65%">
+					<apex:outputLink value="http://portal.infonavit.org.mx/wps/wcm/connect/Infonavit/Trabajadores/Obten+tu+Numero+de+Seguridad+Social+(NSS)" target="_blank">
+                        <apex:image url="{!URLFOR($Resource.icof, '/search2.svg')}" width="6%" title="Consultar NSS" styleClass="inblock"/>
+
+                        </apex:outputLink>
+					</apex:inputField>
+					<!-- <apex:commandButton value="Consultar NSS" action="http://portal.infonavit.org.mx/wps/wcm/connect/Infonavit/Trabajadores/Obten+tu+Numero+de+Seguridad+Social+(NSS)"/> -->
+
+					<div class="star">
+					<apex:image value="{!URLFOR($Resource.star_scoring)}" styleClass="img_star_preca" id="estrella_Preca"/>
+
+					<apex:inputField id="mp" value="{!leadCliente.Precalificacion__c}" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');creditoAutorizado(this);" html-placeholder="Monto Preca ($)" styleClass="inputs_asgina_lead_select inline_star preca inp_aux inblock montoPrecaestrella estilo" onchange="scoreStar()" >
+
+					<apex:outputLink value="http://precalificaciones.infonavit.org.mx/Precalificacion/precalif.xhtml?tipoProducto=CI" target="_blank">
+                        <apex:image url="{!URLFOR($Resource.icof, '/search2.svg')}" width="6%" title="Consultar Precalificación" styleClass="inblock"/>
+
+                        </apex:outputLink>
+					</apex:inputField>
+					<!-- <apex:commandButton value="Consultar Preca" action="http://precalificaciones.infonavit.org.mx/Precalificacion/precalif.xhtml?tipoProducto=CI"/> -->
+					</div>
+
+					<apex:inputField id="tc" value="{!leadCliente.Tipo_de_Credito__c}" onchange="ocultacampo1();ocultaCampo();precaCero();fechaConsulta();var y=this.value.localeCompare('Fecha_Proxima'); if(y==0) { $('.fechaProx').show();} if(y!=0) { $('.fechaProx').hide();}" style="width: 67%; margin-left: 4%; margin-top: 12px;" html-placeholder="Tipo de Credito" styleClass="input_preca_tipo_credito inputs_asgina_lead_select inp_aux creditoInfonavit" />
+							<script type="text/javascript ">
+									function precaCero()
+						                    {
+						                       var credito =$('[Id*="tc"]').val();
+
+						                       if(credito=='Sin_Relación_Laboral' || credito=='Fecha_Proxima'){
+						                        $('[Id*="mp"]').val("0");
+						                    }
+						                    }
+
+						                    function fechaConsulta() 
+                                                {       var fpago=$('[Id*="tc"]').val();
+                                                      
+                                                      if (fpago=='Sin_Relación_Laboral')
+                                                      {
+                                                            $('.oculto1').show();
+                                                            // $('[Id*="f_consulta"]').html(new Date());
+                                                            var today = new Date();
+															var dd = today.getDate();
+															var mm = today.getMonth()+1; //January is 0!
+															var yyyy = today.getFullYear();
+
+															if(dd<10) {
+															    dd = '0'+dd
+															} 
+
+															if(mm<10) {
+															    mm = '0'+mm
+															} 
+
+															today = mm + '/' + dd + '/' + yyyy;
+															$('[Id*="f_consulta"]').html(today);
+                                                            
+                                                      }else if(fpago!='Sin_Relación_Laboral'){
+                                                      	$('.oculto1').hide();
+                                                      }
+
+                                                 }
+
+                                                 function ocultaCampo(){
+                                                 	var creditoo =$('[Id*="tc"]').val();
+                                                 	if(creditoo=='Credito Listo para Ejercer' || creditoo=='Autorizado'){
+						                        		$('.oculto1').hide();
+						                    }
+
+                                                 }
+                                                 function ocultacampo1()
+						                    {
+						                       var credito =$('[Id*="tc"]').val();
+
+						                       if(credito== null){
+						                        $('.oculto1').hide();
+						                    }
+						                    }
+
+						    </script>
+						    <script type="text/javascript">
+								//var prueba = 
+								$('.creditoInfonavit').val('');
+								$('.creditoInfonavit option').first().html('-- Tipo de Credito Infonavit --');
+								//console.log(prueba);
+
+							</script>
+					<div hidden="true" class="fechaProx">
+					<apex:inputField value="{!leadCliente.Fecha_Proxima_Credito_Infonavit__c}" html-placeholder="Fecha" styleClass="input_preca_tipo_credito inp_aux flick2  fechaProx"  />
+					</div>
+					<div class="oculto1" hidden="true">
+						<apex:outputText value="{0,date,dd/MM/yyyy}" styleClass="fecha_consulta" id="f_consulta">
+							<h1 class="date_asign"> Fecha de Consulta </h1>
+							<apex:param value="{!leadCliente.Fecha_de_Consulta__c}"/>
+						</apex:outputText>
+					</div>
+					<!-- <apex:outputText value="{0,date,dd/MM/yyyy}"  styleClass="input_preca_tipo_credito inp_aux fechaProx">
+					<h1 class="date_asign">Fecha de Consulta</h1>
+					<apex:param value="{!leadCliente.Fecha_de_Consulta__c}"/>
+					</apex:outputText> -->
+				
+
+					<!--  <apex:outputText value="{0,date,dd/MM/yyyy}" styleClass="fecha_nacimiento inputs_create_lead inp calen">
+	                	<h1>Fecha de Nacimiento</h1>
+	       				<apex:param value="{!leadCliente.Fecha_de_nacimiento__c}"/>
+	       			</apex:outputText>
+
+ -->
+
+ 						 
+
+					<!--  <apex:commandButton value="ASIGNAR" action="{!guardarDatos}" styleClass="btn_preca" />  -->
+					<apex:image styleClass="iconoBoton Asigna"  style="margin-top: 30px" value="{!URLFOR($Resource.preroll, 'icons/asigna.png')}" onclick="muestra_tres();guarda1();" html-data-tooltip="Asignar" html-data-tooltip-delay="1" html-data-tooltip-animate-function="scalein">
+					<apex:actionFunction name="guarda1" action="{!guardarDatos}" reRender="fecha,elnombre1, elapellido1 "/>
+					</apex:image>
+					<!-- <apex:actionFunction name="prueba" action="{!SaveAndNew}" reRender="limpia"/> -->
+				
+			</div>
+	</div>
+	</apex:outputPanel>
+	</center>
+<center>
+	<apex:outputPanel >
+	<div class="asignacion inline content" id="content_3">
+			<div class="dates justificar3">
+					
+					<center>
+					<br/><br/>
+					<h1 class="fecha_born">Nombre de Lead:</h1><br/>
+						 <apex:outputField value="{!leadCliente.firstName}" id="elnombre1"/> &nbsp;&nbsp;
+						 <apex:outputField value="{!leadCliente.lastName}" id="elapellido1"/><br/><br/> 
+					</center>
+				
+					<h1 class="title_scoring inputs_asgina_lead_letras">Lead Scoring:</h1>
+					<apex:image value="{!URLFOR($Resource.star_scoring)}" id="starScore1" styleClass="total_scoring1 inputs_asgina_lead_letras"/>
+					<apex:image value="{!URLFOR($Resource.star_scoring)}" id="starScore2" styleClass="total_scoring2 inputs_asgina_lead_letras"/>
+					<apex:image value="{!URLFOR($Resource.star_scoring)}" id="starScore3" styleClass="total_scoring3 inputs_asgina_lead_letras"/>
+					<apex:inputField id="scorecliente" value="{!leadCliente.Lead_score__c}" styleClass="inputs_asignacion inputs_asgina_lead_letras" style="display: none;"/>
+						<h1 class="owner_account inputs_asgina_lead_letras">Propietario de la cuenta:</h1>
+						<apex:outputField value="{!leadCliente.OwnerId}" id="owner" style="text-align: center;" styleClass="inp_aux_score inputs_asgina_lead_select" html-disabled="true"/> 
+						<script type="text/javascript">
+						$('span[id*="owner"]').css({'font-size'  : '16px'});
+					</script>
+
+					<h1 class="date_asign inputs_asgina_lead_letras">Fecha de Asignación:</h1>
+					<apex:outputField id="parcero" value="{!leadCliente.Fecha_de_Asignacion_de_Lead__c}" styleClass="parcero" style="font-size: 40px !important"/><br/><br/>
+					<script type="text/javascript">
+						$('span[id*="parcero"]').css({'font-size'  : '16px'});
+					</script>
+					<!-- styleClass="inputs_asignacion inputs_asgina_lead_letras inp_aux_score" -->
+					<!-- <apex:commandButton value="Guardar y Crear Nuevo" action="{!createNewLead}"/> -->
+					<apex:commandLink action="{!createNewLead}">
+
+					<apex:image styleClass="iconoBoton" value="{!URLFOR($Resource.preroll, 'icons/home.png')}" html-data-tooltip="Nuevo Lead" html-data-tooltip-delay="1" html-data-tooltip-animate-function="scalein"/>
+					</apex:commandLink>
+					
+<!-- 					</apex:image>
+					<apex:actionFunction name="guarda2" action="{!createNewLead}" reRender="fecha" oncomplete="muestra_uno()"/> -->
+				
+			</div>
+	</div>
+	</apex:outputPanel>
+</center>
+			<apex:actionFunction name="creditoAutorizado" action="{!cambioTipoCredito}" reRender="tc" >
+            </apex:actionFunction>
+
+
+</apex:form>
+</div> <!-- contenido general -->
+
+
+</body>
+</apex:page>

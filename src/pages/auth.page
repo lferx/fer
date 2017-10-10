@@ -1,0 +1,1262 @@
+<apex:page controller="authcontroller" standardStylesheets="false">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="/resource/BootstrapModalOnly/css/bootstrap.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+  <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+  <script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+
+
+ <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara|Maven+Pro|Quicksand" rel="stylesheet"/> 
+ <script type="text/javascript">
+  $( function() {
+    $( 'body' ).tooltip();
+    $('ui-widget-content').show(function(){$('[data-toggle="tooltip"]').tooltip('destroy');});
+  } );
+</script>
+<style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Poppins');
+            @import url('https://fonts.googleapis.com/css?family=Dosis|Quicksand');
+
+
+
+*{
+    font-family: 'Quicksand', sans-serif!important;
+}
+
+a, a:focus
+{
+  outline: none;
+}
+#titulo {
+    text-align: center;
+    font-size: 18px;
+}
+#dialog, #dialog h1 {
+    text-align: center;
+    font-size:15px;
+}
+#fer {
+    width: 100%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#666;
+    font-size:12px;
+    text-shadow: 1px 1px 0px #fff;
+    background:#eaebec;
+    border:#ccc 1px solid;
+
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+
+    -moz-box-shadow: 0 1px 2px #d1d1d1;
+    -webkit-box-shadow: 0 1px 2px #d1d1d1;
+    box-shadow: 0 1px 2px #d1d1d1;
+}
+#fer th {
+    padding:21px 25px 22px 25px;
+    border-top:1px solid #fafafa;
+    border-bottom:1px solid #e0e0e0;
+    text-align: center;
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+    background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+#fer th:first-child {
+    padding-left:20px;
+}
+#fer tr:first-child th:first-child {
+    -moz-border-radius-topleft:3px;
+    -webkit-border-top-left-radius:3px;
+    border-top-left-radius:3px;
+}
+#fer tr:first-child th:last-child {
+    -moz-border-radius-topright:3px;
+    -webkit-border-top-right-radius:3px;
+    border-top-right-radius:3px;
+}
+#fer tr {
+    text-align: center;
+    padding-left:20px;
+}
+#fer td:first-child {
+    padding-left:20px;
+    border-left: 0;
+}
+#fer td {
+    padding:18px;
+    border-top: 1px solid #ffffff;
+    border-bottom:1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    text-align: center;
+    background: #fafafa;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+    background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+#fer tr.even td {
+    background: #f6f6f6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+    background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+.fer3{
+        background: #9FF781;
+}
+#fer tr:last-child td {
+    border-bottom:0;
+}
+#fer tr:last-child td:first-child {
+    -moz-border-radius-bottomleft:3px;
+    -webkit-border-bottom-left-radius:3px;
+    border-bottom-left-radius:3px;
+}
+#fer tr:last-child td:last-child {
+    -moz-border-radius-bottomright:3px;
+    -webkit-border-bottom-right-radius:3px;
+    border-bottom-right-radius:3px;
+}
+#fer tr:hover td {
+    background: #f2f2f2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+    background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);  
+}
+#fer .lauth{
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border: 0;
+    align-self: center;
+    cursor: pointer;
+    text-overflow: 
+    margin: 0em 1em 0em 0em;
+    padding: .7em;
+    color:white;
+    background:#02B7EE;
+
+}
+.lauth2{
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border: 0;
+    align-self: center;
+    cursor: pointer;
+    text-overflow: 
+    margin: 0em 1em 0em 0em;
+    padding: .7em;
+    color:white;
+    background:#02B7EE;
+
+}
+.lauth2:hover
+{
+ transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+a:hover
+{
+font-weight: bold;
+}
+#fer .lauth:hover {
+  transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+/*.wrap {
+  height: 1px;
+  width: 5px;
+  margin:2.2%;
+  position: relative;
+  perspective: 800;
+  perspective-origin: 50% 100px;
+}
+
+.cube div {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+  display: block;
+  margin: 0 auto;
+box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2)
+}
+
+.back {
+    transform: translateZ(-20px) rotateY(180deg);
+  background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+
+  background-size: cover;
+}
+
+.right {
+    transform: rotateY(90deg) translateX(20px);
+    transform-origin: top right;
+  background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+
+  background-size: cover;
+}
+
+.left {
+    transform: rotateY(-90deg) translateX(-20px);
+    transform-origin: center left;
+  background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+
+  background-size: cover;
+}
+
+.front {
+    transform: translateZ(20px);
+  background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+  background-size: cover;
+}*/
+
+.autorizada { -webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa));
+}
+
+
+@keyframes spin {
+    from { transform: rotateY(0); 
+  transform-origin: center;}
+    to { transform: rotateY(360deg); 
+  transform-origin: center;}
+}
+
+.cube {
+  transform-style: preserve-3d;
+  animation: spin 10s infinite linear;
+}
+.icono
+{
+    float: right;
+}
+.icono2
+{
+    float: right;
+    margin-top: 5px;
+}
+#search
+{
+    float: right;
+}
+#foto
+{
+    margin-left: 1%;
+    float: left;
+
+}
+#error
+{
+    font-size: 18px;
+    margin-left: 2%;
+    color: #848484;
+}
+.down
+{
+float: right;
+position: relative;
+}
+.down:hover
+{
+  transform: translate(7%,8%)scale(1.4);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+#qwe img:hover
+{
+  transform: translate(7%,8%)scale(1.4);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+#fto img:hover
+{
+  transform: translate(7%,8%)scale(1.2);
+
+  transition: all .15s ease-out;
+}
+p{
+  font-size: 10px;
+}
+.hoverme:hover, .ppv:hover
+{
+  transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+.last{
+    width: 85%;
+    margin-left: 15%;
+    display: grid;
+} 
+.s3 {
+    float: right;
+}
+.s2 {
+    display: inline-block;
+    margin-left: 10px;
+}
+.s1 {
+    float: left;
+}
+.last div:not(.popover) {
+/*    width: 30%;*/
+    height: 100%;
+}
+h4 {
+    font-size: 16px;
+}
+.close{
+    font-size: 21px;
+}
+.popover.bottom > .arrow {
+     border-bottom: none!important;
+}
+.popover-title {
+  margin: 0;
+  padding: 8px 40px!important;
+  background:none!important;
+  border-bottom: none!important;
+}
+ul.staggered-list li {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 0;
+  -webkit-transform-origin: 0 50%;
+          transform-origin: 0 50%;
+}
+
+/*********************
+  Media Query Classes
+**********************/
+@media only screen and (max-width: 600px) {
+  .hide-on-small-only, .hide-on-small-and-down {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .hide-on-med-and-down {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .hide-on-med-and-up {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .hide-on-med-only {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .hide-on-large-only {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .show-on-large {
+    display: block !important;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .show-on-medium {
+    display: block !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .show-on-small {
+    display: block !important;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .show-on-medium-and-up {
+    display: block !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .show-on-medium-and-down {
+    display: block !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .center-on-small-only {
+    text-align: center;
+  }
+}
+
+.page-footer {
+  padding-top: 20px;
+  background-color: #ee6e73;
+}
+
+.page-footer .footer-copyright {
+  overflow: hidden;
+  min-height: 50px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 0px;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(51, 51, 51, 0.08);
+}
+
+table, th, td {
+  border: none;
+}
+
+table {
+  width: 100%;
+  display: table;
+}
+
+table.bordered > thead > tr,
+table.bordered > tbody > tr {
+  border-bottom: 1px solid #d0d0d0;
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+table.striped > tbody > tr > td {
+  border-radius: 0;
+}
+
+table.highlight > tbody > tr {
+  transition: background-color .25s ease;
+}
+
+table.highlight > tbody > tr:hover {
+  background-color: #f2f2f2;
+}
+
+table.centered thead tr th, table.centered tbody tr td {
+  text-align: center;
+}
+
+thead {
+  border-bottom: 1px solid #d0d0d0;
+}
+
+td, th {
+  padding: 15px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+@media only screen and (max-width: 992px) {
+  table.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    position: relative;
+    /* sort out borders */
+  }
+  table.responsive-table td:empty:before {
+    content: '\00a0';
+  }
+  table.responsive-table th,
+  table.responsive-table td {
+    margin: 0;
+    vertical-align: top;
+  }
+  table.responsive-table th {
+    text-align: left;
+  }
+  table.responsive-table thead {
+    display: block;
+    float: left;
+  }
+  table.responsive-table thead tr {
+    display: block;
+    padding: 0 10px 0 0;
+  }
+  table.responsive-table thead tr th::before {
+    content: "\00a0";
+  }
+  table.responsive-table tbody {
+    display: block;
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  table.responsive-table tbody tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  table.responsive-table th {
+    display: block;
+    text-align: right;
+  }
+  table.responsive-table td {
+    display: block;
+    min-height: 1.25em;
+    text-align: left;
+  }
+  table.responsive-table tr {
+    padding: 0 10px;
+  }
+  table.responsive-table thead {
+    border: 0;
+    border-right: 1px solid #d0d0d0;
+  }
+  table.responsive-table.bordered th {
+    border-bottom: 0;
+    border-left: 0;
+  }
+  table.responsive-table.bordered td {
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  table.responsive-table.bordered tr {
+    border: 0;
+  }
+  table.responsive-table.bordered tbody tr {
+    border-right: 1px solid #d0d0d0;
+  }
+}
+
+.collection {
+  margin: 0.5rem 0 1rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.collection .collection-item {
+  background-color: #fff;
+  line-height: 1.5rem;
+  padding: 10px 20px;
+  margin: 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.collection .collection-item.avatar {
+  min-height: 84px;
+  padding-left: 72px;
+  position: relative;
+}
+
+.collection .collection-item.avatar .circle {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  left: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.collection .collection-item.avatar i.circle {
+  font-size: 18px;
+  line-height: 42px;
+  color: #fff;
+  background-color: #999;
+  text-align: center;
+}
+
+.collection .collection-item.avatar .title {
+  font-size: 16px;
+}
+
+.collection .collection-item.avatar p {
+  margin: 0;
+}
+
+.collection .collection-item.avatar .secondary-content {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.collection .collection-item:last-child {
+  border-bottom: none;
+}
+
+.collection .collection-item.active {
+  background-color: #02b7ee;
+  color: #eafaf9;
+}
+
+.collection .collection-item.active .secondary-content {
+  color: #fff;
+}
+
+.collection a.collection-item {
+  display: block;
+  transition: .25s;
+  color: #02b7ee;
+}
+
+.collection a.collection-item:not(.active):hover {
+  background-color: #ddd;
+}
+
+.collection.with-header .collection-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+}
+
+.collection.with-header .collection-item {
+  padding-left: 30px;
+}
+
+.collection.with-header .collection-item.avatar {
+  padding-left: 72px;
+}
+
+.secondary-content {
+  float: right;
+  color: #02b7ee;
+}
+
+.collapsible .collection {
+  margin: 0;
+  border: none;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.btn {
+    float: right !important;
+    padding: 0 .7rem !important;
+    height: 32px !important;
+    outline: none;
+}
+
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    -webkit-transition: .3s ease-out;
+    transition: .3s ease-out;
+  }
+  .btn, .btn-large {
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    -webkit-transition: .2s ease-out;
+    transition: .2s ease-out;
+    cursor: pointer;
+}
+.det p
+{
+font-size: 13px;
+}
+#myModal2 tr:hover>td {
+    background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+    background: -moz-linear-gradient(top, #f2f2f2, #f0f0f0);
+}
+.det div
+{
+  border: 1px solid #a09e9e;
+  text-align: center;
+}
+textarea {
+  width: 100%;
+  height: 3rem;
+  background-color: transparent;
+  outline: none;
+}
+
+textarea.materialize-textarea {
+  overflow-y: hidden;
+  /* prevents scroll bar flash */
+  padding: .8rem 0 1.6rem 0;
+  /* prevents text jump on Enter keypress */
+  resize: none;
+  min-height: 3rem;
+}
+
+textarea.materialize-textarea.validate + label {
+  height: 100%;
+}
+
+textarea.materialize-textarea.validate + label::after {
+  top: calc(100% - 12px);
+}
+
+textarea.materialize-textarea.validate + label:not(.label-icon).active {
+  -webkit-transform: translateY(-25px);
+          transform: translateY(-25px);
+}
+</style>
+<body>
+
+<apex:outputPanel id="contenido" rendered="{!if($User.LastName!='Vidal Pa', true, false)}">
+
+<apex:pageMessages escape="false"/>
+
+<section>
+  <table id="fer" cellspacing='0'> 
+    <thead>
+        <th id="titulo" colspan="5" style="text-align: center; font-size: 19px;"><div id="foto"><span id="fto">
+        <apex:form >
+                    <apex:image value="{!Photolink}" width="50" height="50" style="border-radius: 50%;" title="Ver creadas por mi ({!$User.FirstName})" >
+                     <!--      ="{!OR($User.ProfileId=='00e31000001i8VLAAY',$User.ProfileId=='00e31000001dvU9AAI',$User.Division=='Sistemas')}" -->
+                           <apex:actionSupport action="{!mine}" event="onclick" reRender="contenido, empty">  
+                          </apex:actionSupport>
+                    </apex:image>
+        </apex:form>
+
+        </span></div>Lista de Autorizaciones <br/><div id="search">
+        <apex:form > <apex:inputText value="{!busqueda}"
+         label="Oferta" title="Folio Oferta" /> 
+          &nbsp;
+          <span id="qwe">
+          <apex:image value="{!URLFOR($Resource.icof, '/search.png')}" width="22" height="22" title="Buscar" style="position:relative;
+          bottom:-5.5px;">
+          <apex:actionSupport action="{!search}" event="onclick" reRender="contenido, empty">  
+          </apex:actionSupport>
+          </apex:image>&nbsp;&nbsp;
+          <apex:image value="{!URLFOR($Resource.icof, '/load.png')}" width="22" height="22" title="Limpiar" style="position:relative;
+          bottom:-5.5px;">
+          <apex:actionSupport action="{!dat}" event="onclick" reRender="contenido, empty">  
+          </apex:actionSupport>
+          </apex:image>
+          </span>
+          </apex:form>
+          </div></th>
+        <tr>
+            <th>Oferta</th>
+            <th>Tipo
+             <div class="down">
+                <apex:form >
+                  <apex:image value="{!URLFOR($Resource.icof, '/down.png')}" width="23" height="23" style="position: absolute;" >
+                    <apex:actionSupport action="{!obt}" event="onclick" reRender="contenido">  
+                    </apex:actionSupport>
+                  </apex:image>
+                </apex:form>
+            </div>
+            </th>
+            <th>Estado
+            <div class="down">
+                <apex:form >
+                <apex:image value="{!URLFOR($Resource.icof, '/down.png')}" width="23" height="23" style="position: absolute;" >
+                  <apex:actionSupport action="{!obs}" event="onclick" reRender="contenido">  
+                  </apex:actionSupport>
+                  </apex:image>
+                  </apex:form>
+            </div>    
+
+            </th>
+            <th>Última Actividad
+                <div class="down">
+                <apex:form >
+                <apex:image value="{!URLFOR($Resource.icof, '/down.png')}" width="23" height="23" style="position: absolute;" >
+                  <apex:actionSupport action="{!obd}" event="onclick" reRender="contenido">  
+                  </apex:actionSupport>
+                  </apex:image>
+                  </apex:form>
+            </div> 
+            </th>
+            <th>
+            <apex:form >
+              <apex:image value="http://www.i-pos.com.mx/wp-content/uploads/2015/02/icon-factura.png" rendered="{!OR($User.LastName!='Vidal P',$User.LastName!='Prospero Romero', true, false)}" title="Ver Gastos Aprobados" styleClass="ppv" width="30">
+              <apex:actionSupport event="onclick" action="{!aproved}" reRender="contenido"/>
+              </apex:image>
+              </apex:form>
+            </th>
+        </tr>
+    </thead>
+
+<apex:repeat value="{!auto1}" var="x">
+    <tbody>
+<!--         <tr style="color :{!IF(x.estatus__c = 'Autorizada','red', 'blue')}"> -->
+            <tr>
+            <td style="background: {!IF(x.estatus__c= 'Autorizada','-webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa))','')} {!IF(x.estatus__c=='No Autorizada','-webkit-gradient(linear, left top, left bottom, from(#fed5d5), to(#fafafa))','')};"><apex:outputLink value="{!URLFOR('/')}{!x.ofertas__r.id}" target="_blank" style="text-decoration: underline;">{!x.Ofertas__r.name}</apex:outputLink></td>
+            <td  style="background: {!IF(x.estatus__c= 'Autorizada','-webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa))','')} {!IF(x.estatus__c=='No Autorizada','-webkit-gradient(linear, left top, left bottom, from(#fed5d5), to(#fafafa))','')};"><apex:outputText value="{!x.Tipo__c}"/>
+            <apex:image styleclass="icono" value="{!URLFOR($Resource.icof, '/bag.png')}" width="30" height="30" rendered="{!if(x.Tipo__c='Ofertas', true, false)}" title="{!x.name}, Creada por: {!x.creado__c}"/>
+            <apex:image styleclass="icono" value="{!URLFOR($Resource.icof, '/bills.png')}" width="30" height="30" rendered="{!if(x.Tipo__c='Gastos', true, false)}" title="{!x.name}, Creada por: {!x.creado__c}"/>
+         
+            <apex:image styleclass="icono" value="{!URLFOR($Resource.icof, '/doc.png')}" width="30" height="30" rendered="{!if(x.Tipo__c='Carta de Instrucción', true, false)}" 
+            title="{!x.name}, Creada por: {!x.creado__c}"/>
+            <apex:image styleclass="icono2" value="{!URLFOR($Resource.icof, '/info.png')}" width="25" height="20" rendered="{!AND (x.Montocarta__c!=null,x.Montocarta__c!=x.ofertas__r.MontoContado__c,x.Tipo_Oferta__c=='Contado', $User.LastName=='Vidal P', x.Tipo__c=='Carta de Instrucción')}" 
+            title="Se ha cambiado el monto {!x.Tipo_Oferta__c} de {!x.ofertas__r.MontoContado__c} a {!x.Montocarta__c}" />
+            <apex:image styleclass="icono2" value="{!URLFOR($Resource.icof, '/info.png')}" width="25" height="20" rendered="{!AND (x.Montocarta__c!=null,x.Montocarta__c!=x.ofertas__r.MontoCredito__c,x.Tipo_Oferta__c!='Contado', $User.LastName=='Vidal P', x.Tipo__c=='Carta de Instrucción')}" 
+            title="Se ha cambiado el monto {!x.Tipo_Oferta__c} de {!x.ofertas__r.MontoCredito__c} a {!x.Montocarta__c}"/>
+            </td>
+            <td  style="background: {!IF(x.estatus__c= 'Autorizada','-webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa))','')} {!IF(x.estatus__c=='No Autorizada','-webkit-gradient(linear, left top, left bottom, from(#fed5d5), to(#fafafa))','')};"><b><apex:outputText value="{!x.Estatus__c}"/></b> <br/><p onmouseenter ="reemplaza('{!x.id}');" >({!x.LastModifiedBy.name})</p></td>
+            <td  style="background: {!IF(x.estatus__c= 'Autorizada','-webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa))','')} {!IF(x.estatus__c=='No Autorizada','-webkit-gradient(linear, left top, left bottom, from(#fed5d5), to(#fafafa))','')};"><apex:outputText value="{!x.fecha__c}"/></td>
+            
+            <td  style="background: {!IF(x.estatus__c= 'Autorizada','-webkit-gradient(linear, left top, left bottom, from(#D3F4FF), to(#fafafa))','')} {!IF(x.estatus__c=='No Autorizada','-webkit-gradient(linear, left top, left bottom, from(#fed5d5), to(#fafafa))','')}; width: 12%;">
+<div class="last">
+            <apex:form >
+
+ <div class="s1">
+                   <apex:commandButton value=" Ver " styleclass="lauth" reRender="datos, contenido" onclick="ab('{!x.id}'); botones('{!x.Tipo__c}');" rendered="{!OR ($User.LastName== 'Vidal P',$User.LastName== 'Valverde Garzón')}" style="display: {!IF(x.Tipo__c=='Rehabilitación', 'none', 'block')}">
+ <apex:param name="oferta" assignTo="{!idauto}" value="{!x.id}"/>
+                </apex:commandButton>
+
+                <script type="text/javascript">
+
+
+ function ab(h) {
+    var x = '{!URLFOR("/apex/vista?idx=")}';        
+$( "#dialog" ).html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="no" />');
+$( "#dialog" ).dialog({
+      autoOpen: true,
+      resizable: false, 
+width: 700, 
+height: 600, 
+autoResize: true, 
+modal: true, 
+draggable: true,
+show: {
+effect: "fade",
+        duration: 500
+      },
+      hide: {
+        effect:"drop", duration: 600
+
+      },
+       
+              buttons: {
+        "Autorizar": function() {
+          $( this ).dialog( "close" );
+          autorizar();
+        },
+        "No Autorizar": function() {
+          $( this ).dialog( "close" );
+          noautorizar();
+        }
+        }
+       
+
+    });
+}
+function botones(tipo)
+{
+  var user="{!$User.LastName}";
+  if(tipo!='Ofertas'&&user!='Vidal P')
+  {
+    $('.ui-dialog-buttonpane').hide();
+  }
+  if(tipo=='Ofertas'&&user=='Valverde Garzón')
+  {
+    $('.ui-dialog-buttonpane').show();
+  }
+} 
+
+</script>
+                <apex:commandButton value=" Ver " styleclass="lauth" reRender="datos, contenido" onclick="ab2('{!x.id}')" rendered="{!OR($User.ProfileId=='00e31000001i8VLAAY',$User.ProfileId=='00e31000001dvU9AAI',$User.Division=='sistemas')}" style="display: {!IF(x.Tipo__c=='Rehabilitación', 'none', 'block')} ">
+ <apex:param name="oferta" assignTo="{!idauto}" value="{!x.id}"/>
+                </apex:commandButton>
+<apex:commandButton value=" Ver " styleclass="lauth" reRender="contenido, datos" rendered="{!if (x.Tipo__c=='Rehabilitación', true,false)}" html-data-target="#myModal2" html-data-toggle="modal" onmouseover="sendId('{!x.id}')">
+ <apex:param name="ofertame" assignTo="{!idauto}" value="{!x.id}"/>
+ </apex:commandButton>
+
+
+<script type="text/javascript">
+ function ab2(h) {
+    var x = '{!URLFOR("/apex/vista?idx=")}';        
+$( "#dialog" ).html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="no" />');
+$( "#dialog" ).dialog({
+      autoOpen: true,
+      resizable: false, 
+width: 700, 
+height: 600, 
+autoResize: true, 
+modal: true, 
+draggable: true,
+show: {
+effect: "fade",
+        duration: 500
+      },
+      hide: {
+        effect:"drop", duration: 600
+
+      }
+    });
+}
+</script>
+
+                <apex:commandButton value=" Ver "  styleclass="lauth" reRender="datos, contenido" onclick="ab3('{!x.id}')" rendered="{!AND($User.Title='Controller Ventas',x.Tipo__c!='Rehabilitación', true, false)}">
+ <apex:param name="oferta" assignTo="{!idauto}" value="{!x.id}"/>
+                </apex:commandButton>
+
+<script type="text/javascript">
+ function ab3(h) {
+    var x = '{!URLFOR("/apex/vista?idx=")}';        
+$( "#dialog" ).html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="no" />');
+$( "#dialog" ).dialog({
+      autoOpen: true,
+      resizable: false, 
+width: 700, 
+height: 600, 
+autoResize: true, 
+modal: true, 
+draggable: true,
+show: {
+effect: "fade",
+        duration: 500
+      },
+      hide: {
+        effect:"drop", duration: 600
+
+      },
+      buttons: {
+        "Validar": function() {
+          $( this ).dialog( "close" );
+          validar();
+        },
+        "Descartar": function() {
+          $( this ).dialog( "close" );
+          descartar();
+        }
+        }
+    });
+}
+</script>
+ </div>
+
+ <div class="s2">                           
+
+            <apex:image value="https://image.flaticon.com/icons/svg/138/138302.svg" rendered="{!if (x.files__c==true, true,false)}" width="30" height="30" style="float: right;" Styleclass="hoverme" html-data-toggle="modal" html-data-target="#myModal" onmouseover="variable('{!x.id}');" title="Archivos Adjuntos"/>
+
+
+
+</div>
+<div class="s3">
+
+            <apex:image rendered="{!if (x.Comentarios_Gasto__c!=null, true,false)}" value="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Info_icon-72a7cf.svg/2000px-Info_icon-72a7cf.svg.png" html-data-toggle="popover" title="Comentarios" html-data-content="{!x.Comentarios_Gasto__c}" width="20px" height="20px" html-data-placement="bottom" style="margin-top: 5px;" styleClass="ppv"/>
+
+
+
+
+<!--             <apex:image  rendered="{!if (x.Tipo__c=='Rehabilitación', true,false)}" value="http://epssquared.com/images/build-icon-lg.png"  width="25px" height="25px" html-data-placement="bottom" style="margin-top: 5px;" styleClass="ppv"  /> -->
+
+<!-- onclick="sendId('{!x.id}')" -->
+</div>
+            </apex:form>
+</div>
+            </td>
+            
+        </tr>
+       </tbody> 
+
+</apex:repeat>
+</table></section> 
+<apex:form >
+<apex:actionFunction name="sendId" oncomplete="getdatarehab();" reRender="">
+<apex:param name="sendId" assignTo="{!autoRhbId}" value=""/>
+</apex:actionFunction>
+<apex:actionFunction name="getdatarehab" action="{!getRehabData}" reRender="contentPanel" />
+
+
+</apex:form>
+<script>
+
+    $('[data-toggle="popover"]').popover(); 
+    $('body').on('click', function (e) {
+    //did not click a popover toggle or popover
+    if ($(e.target).data('toggle') !== 'popover'
+        && $(e.target).parents('.popover.in').length === 0) { 
+        $('[data-toggle="popover"]').popover('hide');
+    }
+});
+
+
+</script>   
+</apex:outputPanel>
+<div id="dialog" title="Detalles" >
+<apex:outputPanel id="datos" >
+<apex:form >
+    
+</apex:form>
+</apex:outputPanel>
+</div>
+<apex:form >
+            <apex:actionFunction action="{!autorizar}" name="autorizar"  reRender="contenido" />
+            <apex:actionFunction action="{!noautorizar}" name="noautorizar" reRender="contenido"/> 
+            <apex:actionFunction action="{!validar}" name="validar" reRender="contenido"/> 
+            <apex:actionFunction action="{!descartar}" name="descartar" reRender="contenido"/>              
+
+</apex:form>
+
+<apex:outputPanel id="empty">
+<apex:outputpanel rendered="{!if(empty==true, true, false)}"> <p id="error">No hay resultados.</p></apex:outputpanel>
+</apex:outputPanel>
+<!-- 
+  <div class="wrap">
+    <div class="cube" title="Sistemas!!!">
+      <div class="back"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="front"></div>
+    </div>
+  </div> -->
+
+
+<!-- // function reemplaza(id)
+//   {
+//   var title = $("[class*='"+id+"']").html();
+//   $('.ui-tooltip').html(title);
+//   } -->
+
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+    <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Archivos Adjuntos</h4>
+            </div>
+        <div class="modal-body">
+
+             <!--Carga de Archivos -->
+            <div id="modalfiles">
+            </div>
+
+
+        </div>
+        
+        <div class="modal-footer">
+        <!--         <apex:commandbutton action="{!upload}" value="Cargar" rerender=""/><br/> -->
+        </div>
+
+        </div>
+
+    </div>
+</div>
+    <div id="myModal2" class="modal fade" role="dialog" style="top: 25%;">
+    <apex:outputPanel id="contentPanel" layout="block" styleClass="modal-dialog">
+
+        <apex:outputPanel rendered="{!if (rhbData.RehabilitacionId__r.Total__c!=null, true,false)}" layout="block" styleClass="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <center><h4 class="modal-title">Presupuesto de Rehabilitación</h4></center> 
+            </div>
+
+                <center>
+                <table id="detallestable" class="det highlight" style="font-size: 14px; width: 90%;">
+                  <th>
+                    <p>Oferta </p>
+                  </th>
+                  <th>
+                    <p>Contratista</p>
+                  </th>
+                  <th>
+                    <p>Ciudad</p>
+                  </th>
+                  <th>
+                    <p>Metros Cuadrados</p>
+                  </th>
+                  <tr>
+                    <td>
+                      <p>{!rhbData.Ofertas__r.name}</p>
+                    </td>
+                    <td>
+                      <p>{!rhbData.Ofertas__r.Contratista__r.Name}</p>
+                    </td>
+                    <td>
+                      <p>{!rhbData.Ofertas__r.Estado__r.Name}</p>
+                    </td>
+                    <td>
+                      <p> <apex:outputText value="{!FLOOR(rhbData.Ofertas__r.Propiedad__r.Construccion_m2__c)}"/> </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div>
+                        <p>Total:
+                          <apex:outputText value=" ${0, number, 0,000}">
+                            <apex:param value="{!rhbData.RehabilitacionId__r.Total__c}"/>
+                          </apex:outputText> 
+                        </p>                      
+                      </div>
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                  </tr>
+                  </table>
+
+                  <div id="limites" class="highlight" style="max-height: 200px;">
+                            <h1>Detalles Precios/Promedio</h1>
+    <div style="height: 300px; overflow-y: auto;">
+        <table >
+                <thead>
+                  <tr>
+                      <th>Concepto</th>
+                      <th>Precio Unitario</th>
+                      <th style="text-align: center;">Unidades/Limite Unidades</th>
+                      <th>Total</th>
+                  </tr>
+                </thead>
+                <apex:repeat value="{!listLimits}" var="rh">
+                    <tr>
+                      <td width="30%">
+                        <apex:outputText value="{!rh.Name}"/>           
+                      </td>
+                      <td style="color: {!IF(rh.Limite__c>1 ,'red','')}">
+                        $<apex:outputText value="{!rh.Precio_Unitario__c}"/>
+                        <apex:image value="https://maxcdn.icons8.com/Share/icon/Very_Basic//info1600.png" width="15" rendered="{!IF(rh.Limite__c>0,true,false)}" title="Supera el Promedio por: ${!rh.Limite__c}" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  html-data-tooltip-stickto="right" />            
+                      </td>
+                      <td style="text-align: center;">
+                        <apex:outputText value="{!CEiLING(rh.Unidades__c)}" style="color: {!IF(FLOOR(rh.Unidades__c)>CEILING(rh.Promedio_Unidades__c) ,'red','')}"/>/<apex:outputText value="{!CEILING(rh.Promedio_Unidades__c)}"/>          
+                      </td>
+                      <td>
+                        $<apex:outputText value="{!FLOOR(rh.Total__c)}"/>
+                      </td>
+
+                    </tr>
+                </apex:repeat>
+            <br/>
+
+
+        </table>
+      </div>
+                  <apex:form >
+                      <apex:commandButton Styleclass="waves-effect waves-light btn ppv" onclick="autorizar();" style="background-color: #02b7ee!important; background-image: none;
+                      color: white; border: none;" value="Autorizar" html-data-dismiss="modal"/>
+                      <apex:commandbutton Styleclass="waves-effect waves-light btn ppv"  style="background-color: #f36c6c !important; background-image: none;
+                      color: white; margin-right: 10px; border: none;" html-data-dismiss="modal" reRender="nada" value="No Autorizar" html-data-toggle="modal" html-data-target="#CommnetModal" />
+                  </apex:form>
+                  </div>
+                </center>  
+
+        <script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+        </apex:outputPanel>
+
+ 
+    </apex:outputPanel>
+     </div>
+<div id="CommnetModal" class="modal fade" role="dialog" style="top: 25%;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+  <apex:form >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Comentario:</h4>
+      </div>
+      <div class="modal-body">
+        <apex:inputTextarea value="{!comentarioRehab}" id="comentarioRehab" styleclass="materialize-textarea"/>
+      </div>
+      <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="rejected();" style="background-color: #02b7ee!important; background-image: none;
+                      color: white; border: none;">Confirmar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: #f36c6c !important; background-image: none;
+                      color: white; margin-right: 10px; border: none;">Cancelar</button>
+
+      </div>
+    </div>
+    <apex:actionFunction name="savecomment" reRender="" oncomplete="noautorizar();">
+      <apex:param name="comentario" value="" assignTo="{!comentarioRehab}"/>
+    </apex:actionFunction>
+  </apex:form>
+
+  </div>
+</div>
+        <script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script>
+
+    <script>
+      function showDetails()
+      {
+        $('[id*="rehabUploader"]').fadeOut();
+        $('[id*="detailsRh"]').fadeIn();    
+      }
+      function hideDetails() {
+        $('[id*="detailsRh"]').fadeOut();
+        $('[id*="rehabUploader"]').fadeIn();
+      }
+      function showLimits()
+      {
+        $('#detallestable').fadeOut();
+        $('#limits').fadeIn();  
+      }
+      function hideLimits()
+      {
+              $('#limits').fadeOut();  
+        $('#detallestable').fadeIn();
+
+      }
+      function rejected()
+      {
+        var com=$('[id*="comentarioRehab"]').val();
+        savecomment(com);
+      }
+
+    </script>
+            <script type="text/javascript">
+
+              var idAuth;
+              function variable(x)
+              {
+                idAuth=x;
+              }
+
+              $('#myModal').on('shown.bs.modal', function() {
+
+                  var iframeArchivos = $('<iframe />').attr('src', encodeURI('/apex/AutorizacionFiles?filesId='+idAuth));
+                  iframeArchivos.attr('width','100%');
+                  iframeArchivos.attr('height','200px');
+                  iframeArchivos.attr('scrolling','true');
+                  iframeArchivos.attr('frameborder' ,'0');
+                  $("#modalfiles").html(iframeArchivos);
+              });
+ 
+
+          </script>
+  <script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+
+</body>
+</apex:page>

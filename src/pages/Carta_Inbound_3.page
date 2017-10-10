@@ -1,0 +1,101 @@
+<apex:page controller="Carteo_Inbound_Controller" renderAs="pdf" applyBodyTag="false">
+<apex:repeat value="{!listaOfertas}" var="carta"> 
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.PDFNotificacionDesalojo_CSS, 'css/styles.css')}" />
+        <style type="text/css">
+             ul {      list-style-type: none; 
+             padding: 0;
+             margin: 0;
+             
+                }
+             
+        </style>
+
+    </head>
+        <body style="background-image:url('{!$Resource.PDFNotificacionDesalojo_BG}');
+                        background-repeat:no-repeat;
+                        background-attachment:fixed;
+                        background-position:center;
+                        margin: 0px 100px 0px 100px;
+                        padding: 0;
+                        page-break-after: always;">
+<table>
+
+<tbody>
+   
+ <tr><td height="125"></td></tr>
+<tr>
+<td style="font-family:Arial,Helvetica,sans-serif; line-height:18px; text-align:justify">
+
+<div align="right">
+     <!--   <h1>New Account Name!</h1> -->
+     <!-- <apex:panelGrid columns="1" width="100%"> -->
+     <!--      <apex:outputText value="{!Account.Name}" styleClass="companyName"/> -->
+     <!--      <apex:outputText value="{!NOW()}"></apex:outputText>            -->
+     <!--   </apex:panelGrid>
+     <!--       <apex:outputText value="{0, date, MMMM d','  yyyy}"> -->
+     <!--     m <apex:param value="{!NOW()}" /> -->
+     <!--   </apex:outputText> -->
+
+<span>México, a&nbsp;
+
+<apex:outputText value="{!(DAY(DATEVALUE(NOW())))}" /> 
+
+de&nbsp;
+                                
+<apex:outputText value="{!CASE(MONTH(DATEVALUE(NOW())),
+                                1, 'Enero',
+                                2, 'Febrero',
+                                3, 'Marzo', 
+                                4, 'Abril', 
+                                5, 'Mayo', 
+                                6, 'Junio',
+                                7, 'Julio',
+                                8, 'Agosto',
+                                9, 'Septiembre',
+                                10, 'Octubre',
+                                11, 'Noviembre',
+                                12, 'Diciembre',
+                                '-')}" />
+del&nbsp;
+
+<apex:outputText value="{!(YEAR(DATEVALUE(NOW())))}" /> 
+</span>
+
+</div>
+
+<p><strong>REVIMEX</strong></p>
+<p>Departamento de Recuperaci&oacute;n de Casas</p>
+<p>&nbsp;</p>
+<p>Sr/Sra:</p>
+<p><span>Este es el <span style="color: red;"><strong>ULTIMO AVISO</strong></span> por el cual te informamos que Revimex,
+propietario legal, terminará el proceso judicial de adjudicación y tomará
+<strong>POSESIÓN</strong> de esta propiedad.</span></p>
+
+<p><span>Hemos <strong>ayudado</strong> ya a 994 familias en tus mismas condiciones.</span></p>
+
+<p><span>Contamos con una bolsa de <strong>$<apex:outputText value="{0, number, ###,##0}"><apex:param value="{!carta.ValorReferencia__c * 0.04}"/>
+</apex:outputText> Pesos.</strong> para desalojar esta propiedad y queremos que seas tu el beneficiario de este dinero. </span></p>
+
+<p><span>Di basta a las <strong>mentiras</strong> de personas que te ofrecen esta vivienda y solo buscan
+abusar de ti.</span></p>
+
+<p><span style="font-size:24px"><center>Aprovecha esta <strong>OPORTUNIDAD</strong> de partir voluntariamente y conseguir un ingreso extra!!!</center></span></p>
+
+<p><span style="font-size:24px"><center>Llamanos al siguiente telefono:<br/>
+<strong>01 800 200 04 40 opción: 3</strong><br/>
+Tenga a la mano el siguiente código: <strong>{!carta.name}</strong></center></span></p>
+
+<p>&nbsp;</p>
+<p align="center">Atentamente</p>
+<p>&nbsp;</p>
+<p align="center">Departamento de Recuperaci&oacute;n de Casas</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+        
+    </body>
+    </apex:repeat>
+</apex:page>

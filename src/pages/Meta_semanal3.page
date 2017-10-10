@@ -1,0 +1,120 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              table {
+                   width: 100%;
+                   border: 1px solid #000;
+                }
+                th, td {
+                   width: 25%;
+                   vertical-align: top;
+                   border: 1px solid #000;
+                   border-collapse: collapse;
+                   padding: 0.3em;
+                   
+                }
+              body {
+             
+                    background-image: url("{!URLFOR($Resource.meta_semanal3)}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             .text_encima {
+                    position: fixed;
+                    top: 470px;
+                    margin-left: 180px;
+                    color: blue;
+                    font-size:35px ;
+                    font-family: "Arial", Helvetica, sans-serif;
+                    }
+             
+               
+            </style>
+            <script>
+               <!--Copa-->
+                real= 6;
+                
+                function cambia() {
+                if (real>=1){
+                document.getElementById("fotocambia1").style.display = "block";
+                }
+                if (real>=3){
+                document.getElementById("fotocambia2").style.display = "block";
+                }
+                if (real>=6){
+                document.getElementById("fotocambia3").style.display = "block";
+                }
+                if (real>=9){
+                document.getElementById("fotocambia4").style.display = "block";
+                }
+                if (real>=12){
+                document.getElementById("fotocambia5").style.display = "block";
+                }
+                if (real>=18){
+                document.getElementById("fotocambia6").style.display = "block";
+                }
+                if (real>=21){
+                document.getElementById("fotocambia7").style.display = "block";
+                }
+                if (real>=24){
+                document.getElementById("fotocambia8").style.display = "block";
+                }
+                if (real>=27){
+                document.getElementById("fotocambia9").style.display = "block";
+                }
+                if (real>=31){
+                document.getElementById("fotocambia10").style.display = "block";
+                }
+                } 
+                
+                 function inicio() {
+                setInterval(cambia, 1000);
+                }
+                window.onload=inicio;
+            </script>
+            </head>
+ 
+            <body>
+            <DIV id ="fotocambia1" STYLE="position:absolute; top:435px; left:10px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa1)}" style="height:100%;width:100%;"/>
+              </div>
+             <DIV id ="fotocambia2" STYLE="position:relative; top:398px; left:10px; display:none;">    
+                <img  src="{!URLFOR($Resource.meta_semanal_copa2)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia3" STYLE="position:relative; top:320px; left:10px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa3)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia4" STYLE="position:absolute; top:326px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa4)}" style="height:97%;width:97%;"/>
+              </div>
+               <DIV id ="fotocambia5" STYLE="position:absolute; top:291px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa5)}" style="height:97%;width:97%;"/>
+              </div>
+               <DIV id ="fotocambia6" STYLE="position:absolute; top:255px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa6)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia7" STYLE="position:absolute; top:220px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa7)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia8" STYLE="position:absolute; top:185px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa8)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia9" STYLE="position:absolute; top:150px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa9)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV id ="fotocambia10" STYLE="position:absolute; top:115px; left:17px; display:none;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa10)}" style="height:97%;width:97%;"/>
+              </div>
+              <DIV  STYLE="position:fixed; top:465px; left:40px;">    
+                <img src="{!URLFOR($Resource.meta_semanal_copa11)}" style="height:90%;width:90%;"/>
+              </div>
+              
+              <span class="text_encima">      
+                           07
+              </span>
+            
+            </body>
+            </html>
+            </apex:page>

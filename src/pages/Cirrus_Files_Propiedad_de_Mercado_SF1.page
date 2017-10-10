@@ -1,0 +1,8 @@
+<!--
+ /**
+ * Auto Generated and Deployed by Cirrus Files
+ **/
+-->
+<apex:page standardController="Propiedad_de_Mercado__c" tabStyle="Propiedad_de_Mercado__c" cache="false" showHeader="false" sidebar="false" standardStylesheets="false">
+    <IGD:SF1 recordType="Propiedad_de_Mercado__c" recordId="{!Propiedad_de_Mercado__c.Id}"/>
+</apex:page>

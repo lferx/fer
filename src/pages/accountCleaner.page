@@ -1,0 +1,271 @@
+<apex:page controller="accountsCleaner_Controller">
+
+
+	<style type="text/css">
+  	.tabla{
+  		width: 100%;
+  		text-align: center;
+  		vertical-align: middle;
+  	}
+  	.tabla th{
+  		text-align: center;
+  		vertical-align: middle;
+  		border: 1px solid black;
+		border-bottom: none;
+		border-radius: 10px 10px 0px 0px;
+		background: #f7f7f7;
+  	}
+  	.tabla tr td{
+  		text-align: center;
+  		vertical-align: middle;
+  		border: 1px solid black;
+  		border-radius: 10px;
+  	}
+  	.color{
+  		background: #f6f6fa;
+  	}
+  	.boton{
+  		width: 30px;
+  	}
+  	.boton:hover{
+  		width: 40px;
+  	}
+  	.boton:active{
+  		width: 30px;
+  	}
+  	.operaciones{
+  		width: 40%; 
+  		text-align: center; 
+  		position: relative; 
+  		float: left;
+  	}
+  	.boton1{
+  		width: 80px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+  	.boton2{
+  		width: 40px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+  	.boton3{
+  		width: 40px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+  	.boton1:hover{
+  		width: 90px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+
+  	.boton2:hover{
+  		width: 50px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+
+  	.boton3:hover{
+  		width: 50px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+  	.boton1:active{
+  		width: 80px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+
+  	.boton2:active{
+  		width: 40px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+
+  	.boton3:active{
+  		width: 40px;
+  		border: 1px solid black;
+  		border-radius: 5px;
+  	}
+  	.input{
+  		border-radius: 10px;
+  	}
+  	.tablaOperaciones th{
+  		text-align: center;
+  		vertical-align: middle;
+  		border: 1px solid black;
+		border-bottom: none;
+		border-radius: 10px 10px 0px 0px;
+		background: #f7f7f7;
+  	}
+  	.tablaOperaciones td{
+  		position: relative;
+  		padding-left: 5%;
+  	}
+  </style>
+  
+  <h1 style="font-size: 20px">
+      REGISTRO DEL MAPA DE MATRICES<br/>
+  </h1>
+  <apex:variable value="{!0}" var="num"/>
+	  	<apex:form id="tablaCompleta">
+	  	<h1>Registros Restantes: {!restantes}</h1> <br/><br/>
+	  	<table class="tablaOperaciones" style="width: 100%; border: 1px solid black; border-radius: 10px;">
+	  		<thead>
+	  			<th>DESASOCIAR</th>
+	  			<th>ASOCIAR</th>
+	  			<th>FUSIONAR</th>
+	  		</thead>
+	  		<tbody>
+	  			<apex:actionRegion >
+	  			<tr>
+	  				<td style="width: 25%; vertical-align: middle; text-align: center;">
+	  					<div class="operaciones" style="width: 50%;">
+	  						<br/>
+	  						ID de cuenta para Desasociar: <apex:inputText id="des" styleClass="input" value="{!idDesasociar}" />
+	  						<apex:commandButton value="Desasociar" action="{!desasociar}" />
+	  					</div>
+	  					<!-- <div class="operaciones" style="text-align: left;">
+		  					<apex:image url="http://imageog.flaticon.com/icons/png/512/18/18155.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" alt="DESASOCIAR" styleClass="boton1">
+			  					<apex:actionSupport event="onclick" action="{!desasociar}" reRender="tablaCompleta">
+			  						<apex:param name="idDesasociar" value="des.value" assignTo="{!idDesasociar}"/>
+			  					</apex:actionSupport>
+			  				</apex:image>
+		  				</div> -->
+	  				</td>
+	  				<td style="width: 25%; vertical-align: middle; text-align: center;">
+	  					<div class="operaciones">
+	  						ID de cuenta Matriz: <apex:inputText styleClass="input" value="{!idAsociarMatriz}" /><br/>
+	  						ID de cuenta a Asociar: <apex:inputText styleClass="input" value="{!idAsociar}" />
+	  						<apex:commandButton value="Asociar" action="{!asociar}" />
+	  					</div>
+	  					<!-- <div class="operaciones" style="text-align: left;">
+		  					<apex:image url="https://image.flaticon.com/icons/png/512/90/90379.png" alt="ASOCIAR" styleClass="boton2">
+			  					<apex:actionSupport event="onclick" action="{!asociar}" reRender="tablaCompleta">
+			  					</apex:actionSupport>
+			  				</apex:image>
+		  				</div> -->
+	  				</td>
+	  				<td style="width: 25%; vertical-align: middle; text-align: center;">
+	  					<div class="operaciones">
+	  						ID Cuenta Maestra: <apex:inputText styleClass="input" value="{!idPrimeraCuenta}" /><br/>
+	  						ID cuenta a fusionar: <apex:inputText styleClass="input" value="{!idSegundaCuenta}" />
+	  						<apex:commandButton value="Fusionar" action="{!combinar}" />
+	  					</div>
+	  					<!-- <div class="operaciones" style="text-align: left;">
+		  					<apex:image url="https://maxcdn.icons8.com/Share/icon/Editing//merge_files1600.png" alt="COMBINAR" styleClass="boton3">
+			  					<apex:actionSupport event="onclick" action="{!combinar}" reRender="tablaCompleta">
+			  					</apex:actionSupport>
+			  				</apex:image>
+		  				</div> -->
+	  				</td>
+	  			</tr>
+	  			</apex:actionRegion>
+	  		</tbody>
+	  	</table>
+	  	<br/>
+	  	<table class="tabla">
+	  		<thead>
+	  			<th>ID de Cuenta Matriz</th>
+	  			<th>Cuentas Asociadas</th>
+	  		</thead>
+	  		<tbody>
+	  		<apex:repeat value="{!mapaMatrices}" var="key">
+	  			<tr class="{!IF(num == 0,'color','falso')}">
+		  			<td style="vertical-align: middle; width: 20%; border-right: none; border-radius: 10px 0px 0px 10px;">
+	  					<apex:actionRegion >
+		  				<apex:outputLink value="/{!key}" target="_blank">{!key}</apex:outputLink><br/>
+		  				<apex:image url="https://openclipart.org/image/2400px/svg_to_png/19804/andrea-S-checkmark-on-circle-2.png" alt="REVISADO" styleClass="boton">
+		  					<apex:actionSupport event="onclick" action="{!revisado}" reRender="tablaCompleta">
+		  						<apex:param name="idCuenta" assignTo="{!idCuenta}" value="{!key}"/>
+		  					</apex:actionSupport>
+		  				</apex:image>
+		  				</apex:actionRegion>
+		  			</td>
+		  			<td style="border-left: none; border-radius: 0px 10px 10px 0px;">
+		  				<table style="width: 100%"> 
+		  				<thead>
+		  					<th>ID</th>
+		  					<th>Nombre</th>
+		  					<th>Telefono</th>
+		  					<th>Email</th>
+		  					<th>RFC</th>
+		  					<th>CURP</th>
+		  					<th>CLABE</th>
+		  					<th>Numero de Seguro Social</th>
+		  					<th>Beneficiario de la Cuenta</th>
+		  				</thead>
+		  				<tbody>
+				  			<apex:repeat value="{!mapaMatrices[key]}" var="registro">
+				  				<tr>
+				  					<td style="width: 11%;"><apex:outputText value="{!registro.id}" /></td>
+				  					<td style="width: 11%;"><apex:outputLink value="/{!registro.id}" target="_blank">{!registro.name}</apex:outputLink><br/></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.phone}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.Email__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.RFC__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.CURP__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.CLABE__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.Numero_de_Seguro_Social__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.Beneficiario__c}" /></td>
+				  				</tr>
+				  			</apex:repeat>
+			  			</tbody>
+			  			</table>
+		  			</td>
+	  			</tr>
+	  			<apex:variable value="{!IF(num == 0,num+1,num-1)}" var="num"/>
+	  		</apex:repeat>
+	  		</tbody>
+	  	</table>
+	  	</apex:form>
+
+
+
+	  	<apex:form >
+	  		<table class="tabla">
+	  		<thead>
+	  			<th>ID de Cuenta Inversionista</th>
+	  			<th>Ofertas</th>
+	  		</thead>
+	  		<tbody>
+	  		<apex:repeat value="{!mapaCompleto}" var="key">
+	  			<tr class="{!IF(num == 0,'color','falso')}">
+		  			<td style="vertical-align: middle; width: 20%; border-right: none; border-radius: 10px 0px 0px 10px;">
+	  					<apex:actionRegion >
+		  				<apex:outputLink value="/{!key}" target="_blank">{!key}</apex:outputLink><br/>
+		  			<!-- 	<apex:image url="https://openclipart.org/image/2400px/svg_to_png/19804/andrea-S-checkmark-on-circle-2.png" alt="REVISADO" styleClass="boton">
+		  					<apex:actionSupport event="onclick" action="{!revisado}" reRender="tablaCompleta">
+		  						<apex:param name="idCuenta" assignTo="{!idCuenta}" value="{!key}"/>
+		  					</apex:actionSupport>
+		  				</apex:image> -->
+		  				</apex:actionRegion>
+		  			</td>
+		  			<td style="border-left: none; border-radius: 0px 10px 10px 0px;">
+		  				<table style="width: 100%"> 
+		  				<thead>
+		  					<th>ID</th>
+		  					<th>Nombre</th>
+		  					<th>Estatus</th>
+		  					<th>Oferta</th>
+		  				</thead>
+		  				<tbody>
+				  			<apex:repeat value="{!mapaCompleto[key]}" var="registro">
+				  				<tr>
+				  					<td style="width: 11%;"><apex:outputText value="{!registro.id}" /></td>
+				  					<td style="width: 11%;"><apex:outputLink value="/{!registro.id}" target="_blank">{!registro.Cuenta__r.name}</apex:outputLink><br/></td>
+					  				<td style="width: 11%;"><apex:outputText value="{!registro.Estatus2__c}" /></td>
+					  				<td style="width: 11%;"><apex:outputLink value="/{!registro.Oferta__c}" target="_blank">{!registro.Oferta__r.name}</apex:outputLink><br/></td>
+				  				</tr>
+				  			</apex:repeat>
+			  			</tbody>
+			  			</table>
+		  			</td>
+	  			</tr>
+	  			<apex:variable value="{!IF(num == 0,num+1,num-1)}" var="num"/>
+	  		</apex:repeat>
+	  		</tbody>
+	  	</table>
+	  	</apex:form>
+
+</apex:page>

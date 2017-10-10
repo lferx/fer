@@ -1,0 +1,740 @@
+<apex:page cache="false" doctype="HTML-5.0"  sidebar="false" showHeader="false" standardStylesheets="false" title="Detalle de propiedades" controller="PropiedadDetalleController" extensions="SitioHomePageController" action="{!addView}" >
+<head>
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+<apex:includeScript value="https://malsup.github.io/jquery.blockUI.js"/>
+<apex:includeScript value="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ5zlxrme3mI4Tt0OZDd2hDKzsNIKtY40&sensor=TRUE" />
+
+<!-- SmartMenus jQuery plugin -->
+<apex:includeScript value="{!URLFOR($Resource.smartmenu,'jquery.smartmenus.min.js')}"/>
+<!-- SmartMenus jQuery Keyboard Addon -->
+<apex:includeScript value="{!URLFOR($Resource.smartmenu,'addons/keyboard/jquery.smartmenus.keyboard.min.js')}"/>
+<!-- SmartMenus core CSS (required) -->
+<apex:stylesheet value="{!URLFOR($Resource.smartmenu,'css/sm-core-css.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.smartmenu,'css/sm-simple/sm-simple.css')}"/>
+
+<!-- menu slicknav -->
+<apex:includeScript value="{!URLFOR($Resource.slicknav,'jquery.slicknav.min.js')}" />
+<apex:stylesheet value="{!URLFOR($Resource.slicknav,'slicknav.css')}" />
+
+<!-- Camera  -->
+<apex:includeScript value="{!URLFOR($Resource.cameraslider,'scripts/camera.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cameraslider,'scripts/jquery.mobile.customized.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cameraslider,'scripts/jquery.easing.1.3.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.cameraslider,'css/camera.css')}"/>
+
+<!--Icon resource-->
+<apex:stylesheet value="{!URLFOR($Resource.font,'css/font-awesome.min.css')}"/>
+<!-- Purecss framwork -->
+<apex:stylesheet value="{!URLFOR($Resource.purecss,'pure-min.css')}"/>
+ <!--[if lte IE 8]>
+    <link rel="stylesheet" href="{!URLFOR($Resource.purecss,'grids-responsive-old-ie-min.css')}"></link>
+<![endif]-->
+<!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="{!URLFOR($Resource.purecss,'grids-responsive-min.css')}"></link>
+<!--<![endif]-->
+
+
+<style type="text/css">
+    body {
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif
+    background-color:#F1F4F9;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    }
+    #wrapper {
+       /* min-height:100%;*/
+    }
+    #wrapper-contenido{
+        top:130px; /*Altura del header*/
+        bottom:30px; /*Altura del footer*/
+        position: fixed;
+        min-width: 100%;
+        overflow: auto;
+    }
+    #header {
+        position: fixed;
+        height: 50px;
+        line-height: 50px;
+        text-align:center;
+        top: 0;
+        z-index:9000;
+    }
+    #menu-header{
+        float:left;
+        margin:0px;
+    }
+    #contentMain{
+         width: 90%;
+         margin: 0 auto;
+         
+    }
+    #footer {
+        text-align:center;
+        //background:#2E3335;
+        background: rgb(59,56,56);
+        width:100%;
+        height:30px;
+        position:absolute;
+        bottom:0;
+        left:0;
+        line-height: 30px;
+        color:white;
+    }
+    #footer a{
+        color:white;
+    }
+    .fixed-stage-right {
+        width: 80%;
+        top:130px; /*Altura del header*/
+        bottom:30px; /*Altura del footer*/
+        position: fixed;
+        overflow: auto;
+        color: #000;
+        background-color:blue;
+        margin-left: 10% ;
+        margin-right: 10% ;
+        padding:10px;
+    }
+    
+    .scrollable {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    /*MENUS*/
+    .home-menu {
+        padding: 0.5em;
+        text-align: center;
+        box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+    }
+    .home-menu ul {
+                float: right;
+            }
+    .home-menu.pure-menu-open {
+        //background: #0099CC;
+        background: rgb(255,255,255);
+    }
+    .pure-menu.pure-menu-open.pure-menu-fixed {
+        border-bottom: none;
+    }
+    
+    .home-menu .pure-menu-heading {
+        display: inline-block;
+        height: 56px;
+        margin: 10px 0 0 0;
+        vertical-align: top;
+        width: 215px;
+    }
+    
+    .home-menu .pure-menu-selected a {
+       //color: white;
+       color: rgb(28,121,167);
+    }
+    
+    .home-menu a {
+        color: #6FBEF3;
+    }
+    .home-menu li a:hover,
+    .home-menu li a:focus {
+        background: none;
+        border: none;
+        color: #AECFE5;
+    }
+    
+    .search-menu {
+        //background: #60B7E1;
+        background:rgb(82,170,206);
+    }
+    
+    /*MENU REGRESAR*/
+    .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active,
+    .sm-simple a.highlighted {
+        background:#eee;
+        color:#555;
+        text-decoration:none;
+    }
+    .sm-simple li.radio-menu:hover, .sm-simple li.radio-menu:focus, .sm-simple li.radio-menu:active,
+    .sm-simple li.radio-menu.highlighted {
+        background:#eee;
+        color:#555;
+        text-decoration:none;
+    }
+    .sm-simple a{
+        color:white;
+    }
+    /*
+        Galeria fotos
+    */
+   
+     #divMapaCalle{
+            min-width:200px;
+            min-height:400px;
+     }
+      #divMapa{
+           min-width:200px;
+           min-height:400px;
+     }
+     
+     .camera_thumbs_cont ul li > img{
+         max-width:55px!important;
+         max-height:55px!important;
+     }
+ 
+    /*Cuadro de información*/
+    #informacion{
+        padding-top:20px;
+    }
+    #contentInformacion{
+        margin-top:10px;
+    }
+    
+    .bubble
+        {
+        margin: 0 auto;
+        position: relative;
+        text-align:left;
+        padding: 10px 40px; 
+        background-color:#B6E4F5;
+        }
+        
+        .bubble:after
+        {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 0 15px 15px;
+        border-color: #B6E4F5 transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        top: -15px;
+        left: 202px;
+        }
+    .description-price{
+        color: #999 !important;
+        font-size: 16px;
+        margin-bottom: 5px !important;
+    }
+    
+    .description{
+        font-size: 14px;
+        line-height:100%;
+        color: black;
+    }
+    
+    #botones{
+        margin-top:10px;
+    }
+    
+    /*Propiedades cercanas*/
+    #contenPropiedades{
+    }
+    .l-box {
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-bottom: 15px;
+        
+    }
+    .l-box-cuadro {
+        border: 1px solid #d6dce2;;
+        padding: 7px;
+        background-color:white;
+        
+    }
+    .result{
+        max-height: 100px;
+        padding: 19px;
+        font-size: 19px;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        color: #333333;
+        border-bottom: 1px solid #d6dce2;;
+    }
+    .result:hover{
+       background-color:#F9F7F1;
+       cursor: pointer; 
+       cursor: hand;
+    }
+    .result-img {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-right: 10px;
+    }
+    .result-description {
+        text-align:left;
+        font-size: 12px;
+    }
+    .result-description-title {
+        height: 26px;
+        overflow: hidden;
+        font-size: 12px;
+    }
+    .result-description-price{
+        color: #999 !important;
+        font-size: 16px;
+        margin-bottom: 5px !important;
+    }
+    
+    /*Formulario contactanos*/
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .alert > li{
+        list-style: none;
+    }
+    .alert-danger {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+    .errorMsg {
+      text-align: right;
+      color: red;
+    }
+    .smallText{
+        font-size: 0.80em;
+    }
+    /*Controll of screen*/
+    @media (min-width: 48em) {
+            .home-menu {
+                text-align: left;
+            }
+            .search-menu {
+                text-align: left;
+            }
+    }
+    @media (max-width: 38em) {
+        .fixed-stage-right{
+            top:140px;
+        }
+    }
+     @media (max-width: 48em) {
+        .home-menu ul {
+                float: none;
+            }
+        .fixed-stage-right {
+             width: 100%;
+             margin-left: 0;
+             margin-right: 0;
+        }
+        #footer{
+            display:none;
+        }
+        #contentMain{
+            width:100%;
+            margin:0;
+        }
+     }
+     
+       .iframe-infonavit {
+                        border: none;
+                        background-color: ;
+                        border-right: 5px;
+                    }
+               .nss-container {
+                    display: none;
+                }
+                .btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 300px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+        
+        
+        
+</style>
+<script>
+     j$ = jQuery.noConflict();
+     var urlOrigen;
+     var sv = new google.maps.StreetViewService();
+     var centroMapa;
+     var panorama = null;
+     var mapa = null;
+     j$(document).ready(function(){
+             centroMapa = new google.maps.LatLng('{!propiedad22.Punto__Latitude__s}','{!propiedad22.Punto__Longitude__s}');
+            j$( ".result" ).click(function() {
+                    var id =  j$(this).attr('idPropiedad');
+                    var url = document.URL.split('?');
+                    var retUrl = url.length > 1 ? url[1] : ''; 
+                    console.log(url.length);
+                    var url = '{!$Site.Domain}/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                    window.location.replace(url);
+            });
+            j$('#main-menu').smartmenus({
+                supIndicatorsText : '+',
+                hideOnClick:true
+             });
+            
+     });
+     
+     function initializePanorama(){
+         if(panorama == null){
+             var panoramaOptions = {
+                position: centroMapa,
+                pov: {
+                  heading: 34,
+                  pitch: 10
+                }
+              };
+            panorama = new  google.maps.StreetViewPanorama(document.getElementById('divMapaCalle'), panoramaOptions); 
+         }
+     }
+     
+     function initializeMapa(){
+        if(mapa == null){
+            var mapOptions = {
+                center: centroMapa,
+                zoom: 16,
+                streetViewControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            mapa = new google.maps.Map(document.getElementById("divMapa"),mapOptions);
+            var marker = new google.maps.Marker({
+                  position: centroMapa,
+                  map: mapa
+              });
+                
+         }
+     }
+     
+      function processSVData(data, status){
+            if (status == google.maps.StreetViewStatus.OK) {
+                  panorama.setVisible(true);
+            }else{
+                j$("#divMapaCalle").html('No se encontro información para esta localización');
+                panorama.setVisible(false);
+                console.log('Street View data not found for this location.');
+            }
+        }
+     
+     function regresar(){
+            var estado =  getURLParameter('estado') != null ?  getURLParameter('estado') : 'Todos';
+            var ciudad =  getURLParameter('ciudad') != null ?  getURLParameter('ciudad') : 'Todos';
+            var tipo =  getURLParameter('tipo') != null ?  getURLParameter('tipo') : 'Todos';
+            urlOrigen = '/apex/MapaBusquedas?estado='+ estado + '&ciudad=' + ciudad + '&tipo=' + tipo;
+            window.location.replace(urlOrigen);
+     }
+     
+     function returnMapaCercano(){
+        var estado =  getURLParameter('estado') != null ?  getURLParameter('estado') : 'Todos';
+            var ciudad =  getURLParameter('ciudad') != null ?  getURLParameter('ciudad') : 'Todos';
+            var tipo =  getURLParameter('tipo') != null ?  getURLParameter('tipo') : 'Todos';
+            urlOrigen = '/apex/MapaBusquedas?estado='+ estado + '&ciudad=' + ciudad + '&tipo=' + tipo + '&centroPropiedad={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}';
+           window.location.replace(urlOrigen);
+     }
+     
+     function getURLParameter(sParam)
+     {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) 
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) 
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+    
+</script>
+
+</head>
+<apex:form >
+    <div id="wrapper" class="pure-g">
+       <div id="header" class="pure-u-1">
+            <div id="menu-principal" class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-u">
+                               <div id="menu-header" class="pure-menu-heading">
+                                  <a href="../apex/HomeRevimex">
+                                  <apex:image id="theImage" value="{!URLFOR($Resource.logoRevimex)}" style="width:100%;height:auto;padding-bottom:0px;"/>
+                                  </a>
+                              </div>
+                              <ul id="main-menu-header">
+                                  <li class="pure-menu-selected"><a href="/">Inicio</a></li>
+                              </ul>
+            </div>
+            <div id="menu-filter" class="search-menu pure-u-1" >
+                <ul id="main-menu" class="sm sm-simple mega-menu search-menu">
+                      <li>
+                           <a href="#" onclick="regresar();">Regresar búsqueda</a>
+                      </li>
+                </ul>
+            </div>
+       </div>
+       <div id="wrapper-contenido" class="pure-g">
+        <div id="contentMain" class="pure-u-g">
+            <div id="centro"  class="pure-u-lg-3-5 pure-u-md-2-3 pure-u-1">
+                 <div class="l-box-cuadro pure-u-1">
+                     <div class="camera_wrap camera_emboss" id="camera_wrap_2">
+                             <apex:repeat value="{!images}" var="image" id="imgrepeatBloque4">
+                                       <div data-thumb="{!image}" 
+                                            data-src="{!URLFOR($Resource.cameraslider,'images/blank.gif')}" data-alignment="center">
+                                            <div style="text-align:center;">
+                                                <apex:image url="{!image}"  style="width:100% height:100%;"/>
+                                            </div>
+                                       </div>
+                            </apex:repeat>
+                            <div data-thumb="https://maps.googleapis.com/maps/api/staticmap?center={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&zoom=16&v=3&size=52x38&maptype=mobile&markers={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&sensor=false" 
+                                     data-src="https://maps.googleapis.com/maps/api/staticmap?center={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&zoom=16&v=3&size=866x300&maptype=mobile&markers={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&sensor=false">
+                                     <div id="divContentMapa">
+                                            <div id="divMapa"></div>
+                                     </div>
+                            </div>
+                            <div data-thumb="https://maps.googleapis.com/maps/api/streetview?size=52x38&location={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&fov=90&heading=235&pitch=10&sensor=false" 
+                                    data-src="https://maps.googleapis.com/maps/api/streetview?size=400x300&location={!propiedad22.Punto__Latitude__s},{!propiedad22.Punto__Longitude__s}&fov=90&heading=235&pitch=10&sensor=false" >
+                                        <div id="divContentMapaCalle">
+                                            <div id="divMapaCalle"></div>
+                                        </div>
+                            </div>
+                           
+                            <!-- 
+                            <div data-thumb="https://sachinchoolur.github.io/lightslider/img/thumb/cS-1.jpg" data-src="https://sachinchoolur.github.io/lightslider/img/cS-1.jpg">
+                            </div>
+                            <div data-thumb="https://sachinchoolur.github.io/lightslider/img/thumb/cS-2.jpg" data-src="https://sachinchoolur.github.io/lightslider/img/cS-2.jpg">
+                            </div>
+                             -->
+                     </div>
+                 </div>
+                 
+                 <!--codigo boton--> 
+                            
+                 <div class="pure-u-g">
+                    <div  id="contentInformacion" class="l-box-cuadro pure-u-1">
+                        <div id="informacion">
+                                <h2>
+                                "{!propiedad22.Calle__c}, {!propiedad22.Colonia__c}, {!propiedad22.Municipio__c}"
+                                </h2>
+                                <p>
+                                    <div class="description-price">
+                                          <h3> <span style="color:Blue">Precio Venta: </span> <span style="color:red">$<apex:outputText value="{0, number, #,##0}"><apex:param value="{!propiedad22.Oferta_Valor_Referencia__c}"/></apex:outputText></span></h3>
+                                     </div>
+                                     <div class="description">
+          <table border="0" > <!-- Lo cambiaremos por CSS -->
+           
+           <tr>
+              <td><B>Plaza:</B> </td>
+              <td><H4>{!propiedad22.Plaza__c}</H4></td>
+              <td> &nbsp;&nbsp;&nbsp;&nbsp; </td>
+              <td><B>Tipo inmueble:</B></td>
+              <td><H4>{!propiedad22.Tipo__c}</H4></td>
+          </tr>
+          <tr>
+              <td><B>Terreno:</B></td>
+              <td><H4>{!propiedad22.Terreno_m2__c} m<sup>2</sup></H4></td>
+              <td>      &nbsp;          &nbsp; </td>
+              <td><B>Construcción : </B></td>
+              <td><H4>{!propiedad22.Construccion_m2__c} m<sup>2</sup> </H4></td>
+          </tr>
+          <tr>
+          <td><B>Numero de Recamaras:</B></td>
+          <td><H4>{!propiedad22.N_de_Habitaciones__c}</H4></td>
+          <td>                &nbsp;&nbsp;  </td>
+          <td><B>Numero de Baños:</B></td>
+          <td><H4>{!propiedad22.N_de_Ba_os__c}</H4></td>
+          </tr>
+          <tr>
+          <td>   </td>
+          <td>   </td>
+          <td>   </td>
+          <td>   </td>
+           </tr>
+          <tr>
+          <td><B>Numero de Estacionamiento: </B></td>
+          <td><H4>{!propiedad22.Estacionamiento__c}</H4></td>
+          <td> &nbsp;&nbsp;  </td>
+          <td><B>Numero de Plantas: </B></td>
+          <td><H4>{!propiedad22.Niveles_Plantas__c}</H4></td>
+          </tr>
+           <tr> 
+           <td>   </td>
+           <td>   </td>
+           <td>   </td>
+           <td>   </td>
+           </tr> 
+           <tr>
+          <td><B>Tipo de piso:</B></td>
+          <td><H4>{!propiedad22.Tipo_de_Pisos__c}</H4></td>
+          <td>                &nbsp;&nbsp;        </td>
+          <td><B>Fecha publicación:</B></td>
+          <td><H4><apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!propiedad22.FechaPublicacionWeb__c}"/></apex:outputText></H4></td>
+          </tr>
+        </table>
+                                       
+                                          
+                                 
+                                 
+                                        
+                                     </div>
+                                </p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div id="columna" class="pure-u-lg-2-5 pure-u-md-1-3 pure-u-1">
+            
+                 <div id="contenPropiedades"  class="pure-u-1" style="width: auto; min-width:500px">
+                    <div class="l-box">
+                    
+                        <div class="l-box-cuadro">
+                        
+                            <div style="width:100%; text-align:center; margin-bottom:10px;height: 350px;">
+                            <center>
+                                <iframe  src="www.revimex.mx/PageControllerCuestionarioweb" style="height: 300px;width: 100%;min-width:400px;border-left-width: 0px;border-right-width: 0px;border-bottom-width: 10px;border-top-width: 0px;margin-bottom: 0px;padding-bottom: 10px;"></iframe>
+                            </center>
+                                    <h3>
+                                    Propiedades cercanas
+                                    </h3>
+                            </div>
+                            <apex:repeat value="{!propiedadesCercanas}" var="prop" id="rPropiedadesCercanas">
+                                        <div class="result pure-g" idPropiedad="{!prop.propiedad.Id}">
+                                                <div class="result-img  pure-u">
+                                                    <!--<apex:image url="{!mapImagenesMini[prop.propiedad.Id]}"  width="60" height="60" />-->
+                                                    <apex:image url="{!mapImagenesMini[prop.propiedad.Id]}"  width="60" height="60" />
+                                                </div>
+                                                <div class="result-description pure-u-3-4">
+                                                    <div class="resul-description-title">
+                                                        <div style="width:100%;">
+                                                        <h3>{!prop.propiedad.Calle__c},{!prop.propiedad.Colonia__c},{!prop.propiedad.Municipio__c}</h3>
+                                                        </div>
+                                                       
+                                                        
+                                                         Habs:    <apex:outputText value=" 3" rendered="{!prop.propiedad.N_de_Habitaciones__c=='3 Recamara'}"/>
+                                                                  <apex:outputText value=" 2" rendered="{!prop.propiedad.N_de_Habitaciones__c=='2 Recamara'}"/>
+                                                                  <apex:outputText value=" 1" rendered="{!prop.propiedad.N_de_Habitaciones__c=='1 Recamara'}"/>
+                                                       &nbsp;&nbsp;
+                                                        Baños:<apex:outputText value=" 1" rendered="{!prop.propiedad.N_de_Ba_os__c=='1 Baño'}"/>
+                                                                 <apex:outputText value=" 1 1/2" rendered="{!prop.propiedad.N_de_Ba_os__c=='1 1/2 Baños'}"/>
+                                                                 <apex:outputText value=" 2" rendered="{!prop.propiedad.N_de_Ba_os__c=='2 Baños'}"/>
+                                                                 <apex:outputText value=" 2 1/2" rendered="{!prop.propiedad.N_de_Ba_os__c=='2 1/2 Baños'}"/>
+                                                                 <apex:outputText value=" 3" rendered="{!prop.propiedad.N_de_Ba_os__c=='3 Baños'}"/> &nbsp;&nbsp;
+                                                       {!prop.propiedad.Construccion_m2__c} m<sup>2</sup><br></br>
+                                           
+                                         
+                                                       <spam style="font-weight: bold;color:#4f519e" >
+                                                        Distancia : <apex:outputText value="{0, number, #,##0}"><apex:param value="{!prop.distancia}"/></apex:outputText> m
+                                                        </spam>     
+                                                     
+                                                    </div>
+                                                     <div style="width:100%;">
+                                                    <span  style="color:red;  font-size: 26px">$<apex:outputText value="{0, number, #,##0}"><apex:param value="{!prop.propiedad.Oferta_Valor_Referencia__c}"/></apex:outputText>
+                                                     <apex:outputText value=" Vendida" rendered="{!prop.propiedad.EstatusVenta2__c == 'Vendida'}"/> </span></div>
+                                                </div>
+                                                
+                                            </div>
+                                             
+                            </apex:repeat>
+                             <div>
+                                <apex:outputLink value="#" onclick="returnMapaCercano();" id="theLink" rendered="{!propiedadesCercanas.size > 0}">Ver en mapa</apex:outputLink>
+                             </div>
+                        </div>
+                        <div id="contenFormulario"  class="pure-u-g">
+                            <div class="pure-u-1-1">
+                                <div class="l-box l-box-cuadro">
+                                    <div style="width:100%; text-align:center; margin-bottom:10px">
+                                    <h3>
+                                        ¿Quieres ganar una casa?    
+                                    </h3>
+                                    </div>
+                                     <apex:outputPanel id="panelForm" >
+                                        <apex:outputPanel id="form" rendered="{!NOT(mensajeEnviado)}">
+                                            <apex:messages styleClass="alert alert-danger"/>
+                                             <div class="pure-form pure-g">
+                                                       <div class="pure-u-1-1">
+                                                           <div class="l-box">
+                                                             <img src="{!URLFOR($Resource.HomeRevimex,'images/slide-1.jpg')}" alt="slide 1" class="pure-img"/>
+                                                          </div>
+                                                       </div>
+                                                     
+                                             </div>
+                                        </apex:outputPanel>
+                                     </apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+            </div>
+       </div>
+       <div id="footer" class="pure-u-1">
+            Powered by <a href="http://www.ctconsulting.com.mx" target="_blank">CTConsulting</a>
+        </div>
+    </div>
+</apex:form>
+
+
+
+<script>
+         var validate = {
+        init: function () {
+                 $(document).on( 'click', '.nss-show', this.shownssiframe);
+                 },
+        
+         validateNss: function () {
+                    $(this).val($(this).val().substr(0, 11));
+                    if ($(this).val().length == 11 ) {
+                        validate.nss = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.nss = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+               shownssiframe: function (event) {
+                    event.preventDefault();
+                    $('.nss-container').slideToggle();
+                }
+            }
+
+                $(function(){
+                validate.init();
+            });
+                 
+              
+          </script>
+          
+          
+<script type="text/javascript">
+            jQuery(document).ready(function(j$) {
+              j$('#camera_wrap_2').camera({
+                height: '400px',
+                loader: 'bar',
+                pagination: false,
+                thumbnails: true,
+                time: 1000,
+                transPeriod: 1000,
+                imagePath: '../images/',
+                autoAdvance:false,
+                fx: 'simpleFade',
+                onStartLoading: function() { 
+                },
+                onEndTransition: function() {
+                    var body = j$('body');
+                    var ind = body.find('.camera_target .cameraSlide.cameracurrent').index();
+                    if( ind == '1'){
+                        initializePanorama();
+                    }
+                    if(ind == '0'){
+                        initializeMapa();
+                    }
+                }
+              });
+            });
+</script>
+<style>
+      .nss-container {
+                display: none;
+            }
+      </STYLE>
+</apex:page>

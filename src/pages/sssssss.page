@@ -1,0 +1,573 @@
+<apex:page >
+<head><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"/>
+<script type="text/javascript" src="code.jquery.com/jquery-3.2.1.min.js"></script>
+
+   <link href="{!URLFOR($Resource.bootstrap, 'bootstrap/sib2/bootstrap/css/bootstrap.min.css')}" rel="stylesheet" media="screen"/>
+    <link href="{!URLFOR($Resource.bootstrap, 'bootstrap/css/bootstrap-datetimepicker.min.css')}" rel="stylesheet" media="screen"/>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+
+<script type="text/javascript" src="/resource/picker/wickedpicker/wickedpicker.min.js"></script>
+        <link type="text/css" href="/resource/bootstrap/css/bootstrap.min.css" />
+        <link type="text/css" href="/resource/bootstrap/css/bootstrap-timepicker.min.css" />
+        <script type="text/javascript" src="/resource/bootstrap/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/resource/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/resource/bootstrap/js/bootstrap-timepicker.min.js"></script>
+
+
+
+
+<!--     <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+         <link href="//getbootstrap.com/examples/signin/signin.css" rel="stylesheet" media="screen"/>
+                   <link href="{!URLFOR($Resource.bootStrap, 'bootstrap/css/bootstrap-datetimepicker.min.css')}" rel="stylesheet" media="screen"/>
+                    <link href="{!URLFOR($Resource.bootStrap, 'bootstrap/css/bootstrap-datetimepicker.css')}" rel="stylesheet" media="screen"/>
+
+
+ <Script src="{!URLFOR($Resource.bootstrap, 'js/bootstrap.min.js')}"/>
+         <Script src="{!URLFOR($Resource.bootstrap, 'js/bootstrap-datetimepicker.min.js')}"/>
+                  <Script src="{!URLFOR($Resource.jquery2, 'jquery-3.2.1.min.js')}"/>
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/bootstrap-timepicker.min.js')}"/> 
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/moment.js')}"/> 
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/jquery.js')}"/>
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/collapse.js')}"/>
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/transition.js')}"/>
+                  <script src="{!URLFOR($Resource.bootstrap, 'js/transition.js')}"/>
+
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+ -->
+        <style type="text/css"> 
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+            .carrin{
+          width: 50%;
+        
+      }
+        .carrin th{
+            background-color: orange;
+        }
+        .carrin td{
+            background-color: #F7F6C0;
+        }
+        .ui-timepicker-standard {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1em;
+    background-color: #FFF;
+    border: none;
+    color: #ec2f2f;
+    margin: 0;
+    padding: 2px;
+}
+.ui-timepicker-standard a:focus, .ui-timepicker-standard a:hover {
+    text-decoration: none;
+}
+                    
+                    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    /* border: 1px solid #003eff; */
+    background: #c3c8ce;
+    font-weight: normal;
+    color: #ffffff;
+    outline: none;
+}        
+
+
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,700,900');
+@import url('https://fonts.googleapis.com/css?family=Palanquin:300');
+@import url('https://afeld.github.io/emoji-css/emoji.css');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+#02B7EE: #02B7EE;
+#2575fc: #2575fc;
+#6a11cb: #6a11cb;
+#8f959a: #8f959a;
+
+
+@import url('https://jdewit.github.io/bootstrap-timepicker/css/bootstrap-timepicker.min.css');
+.container {
+        position: absolute;
+}
+.button
+{
+    font-family: 'Poppins', sans-serif;
+}
+.inner-container {
+    max-width: 50%;
+    /* min-width: 360px; */
+    /* height: 60%; */
+    /* width: 100%; */
+
+    margin: 0 auto 100px;
+}
+.message
+{
+      white-space: nowrap;
+    width: 50%;
+    height: 60px;
+    border: none;
+background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 72%, rgba(237,237,237,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+h1
+{
+  font-family: 'Poppins', sans-serif;
+}
+.content {
+  font-family: 'Poppins', sans-serif;
+
+    position: absolute;
+    opacity: 0;
+    top: 2em;
+    left: 10%;
+    width: 80%;
+    margin: 0 auto;
+    color: #02b7ee;
+}
+
+.active {
+    display: block !important;
+    margin: 0 auto;
+    opacity: 1;
+    transition: ease-in-out 1s;
+    position: absolute;
+}
+
+.card {
+    position: relative;
+    background: #fff;
+    border-radius: 5px;
+    padding: 2em 0;
+    height: 400px;
+    box-sizing: border-box;
+    transition: .3s ease;
+    box-shadow: 0 3px 10px -2px rgba(0,0,0,0.35);
+        font-family: 'Poppins', sans-serif;
+}
+.card:nth-child(2) {
+
+    background: #02B7EE;
+}
+
+.card:nth-child(2) {
+    background: darken(#02B7EE, 2%);
+    height: 11px;
+    border-radius: 5px 5px 0 0;
+    padding: 0;
+    box-shadow: none;
+    background: #02B7EE;
+    border-top: 1px solid white;
+}
+.card:first-child
+{
+        background: darken(#02B7EE, 2%);
+    height: 11px;
+    border-radius: 5px 5px 0 0;
+    padding: 0;
+    box-shadow: none;
+        background: #02B7EE;
+        margin-left: 10px;
+    margin-right: 10px;
+}
+  
+ .progress-container {
+
+        height: 6px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 0 0 5px 5px;
+      }
+        .step {
+            background-color: #02B7EE;
+            height: 6px;
+            width: 33%;
+            border-radius: 0 0 0 5px;
+
+}
+
+
+.card h1 {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: darken(#02B7EE, 3%);
+    margin: 0;
+}
+
+.card p {
+    margin-top: 0;
+}
+
+.card a {
+color: #02B7EE;
+    text-decoration: none;
+    position: relative;
+    background: white;
+    border: none;
+    font-size: 17px;
+
+
+}  
+.card a:before {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 0%;
+        border-bottom: 2px solid #02B7EE;
+        transition: 0.3s;
+    }
+
+.card a:hover {
+    text-decoration: none;
+    font-size: 17px;
+        width: 80%;
+    }  
+
+    body a:hover {
+    text-decoration: none;
+    color: #999;
+}
+
+body, td {
+    /* font-family: Arial,Helvetica,sans-serif; */
+    color: #222;
+    font-family: 'Poppins', sans-serif;
+}
+
+.holder{
+  background: #fff;
+  border-radius:5px;  
+  padding:30px 20px 20px;
+ width: 100%;
+}
+
+td{
+  border-bottom:1px solid #f6f6f6;
+  padding:5px 10px;
+
+}
+
+td:nth-child(2){
+  text-align: right;
+  width: 40px;
+}
+
+tr:last-child td{
+  border:none;
+
+  text-align: center;
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+  height: 30px;
+  margin:4px 0 0;
+  position: absolute;
+  opacity: 0;
+  width: 30px;
+  z-index: 2;
+}
+
+input[type=checkbox] + span {
+  background: #999;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.1);
+  display: inline-block;
+  height: 30px;
+  margin:4px 0 0;
+  position:relative;
+  width: 30px;
+  transition: all .2s ease;
+}
+
+input[type=checkbox] + span::before, input[type=checkbox] + span::after{
+  background:#fff;
+  content:'';
+  display:block;
+  position:absolute;
+  width:4px;
+  transition: all .2s ease;
+}
+
+input[type=checkbox] + span::before{
+height: 9px;
+    left: 9px;
+    top: 13px;
+  -webkit-transform:rotate(-45deg);
+  transform:rotate(-45deg);
+}
+
+input[type=checkbox] + span::after{
+ height: 15px;
+    right: 11px;
+    top: 8px;
+  -webkit-transform:rotate(45deg);
+  transform:rotate(45deg);
+}
+
+input[type=checkbox]:checked + span {
+  background:#2ecc71;         
+}
+
+input[type=checkbox]:checked + span::before{
+  height: 9px;
+  left: 9px;
+  top: 13px;
+  -webkit-transform:rotate(-47deg);
+  transform:rotate(-47deg);
+}
+
+input[type=checkbox]:checked + span::after{
+  height: 15px;
+  right: 11px;
+  top: 8px;
+}
+
+input[type=submit] {
+  background-color: #2ecc71;
+  border: 0;
+  border-radius: 4px;
+  color: #FFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size:16px;
+  text-align: center;
+  padding: 12px 20px 14px;
+}
+.modal-dialog
+{
+top:30%;
+outline: none;
+
+}
+
+
+.modal-dialog {x
+  -webkit-animation: animation 1000ms linear both;
+  animation: animation 1000ms linear both;
+}
+
+/* Generated with Bounce.js. Edit at https://goo.gl/c5eMhQ */
+
+
+
+
+.buttonx {
+    display: inline-block;
+    cursor: pointer;
+    padding: 1em 2em;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+    background-color: #3498db;
+    border: 1px solid #1f74ac;
+    border-radius: 0.3em;
+    margin-top: 4em;
+}
+
+.buttonx:hover {
+    background-color: #2487c9;
+}
+
+
+
+.dialog,
+.dialog-overlay {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.dialog {
+    position: fixed;
+    pointer-events: none;
+}
+
+.dialog-overlay {
+    position: absolute;
+    z-index: 1;
+    background: rgba(33, 35, 42, 0.8);
+    opacity: 0;
+    transition-property: opacity;
+    -webkit-backface-visibility: hidden;
+}
+
+.dialog-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    max-width: 500px;
+    background: #fff;
+    padding: 4em;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%) scale(1.15); 
+    transform: translate(-50%, -50%) scale(1.15); 
+    transition-property: opacity, transform;
+    will-change: -webkit-transform;
+    will-change: transform;
+}
+
+.dialog-overlay,
+.dialog-content {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
+
+.show-dialog .dialog-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dialog.show-dialog .dialog-content {
+    opacity: 1; 
+    -webkit-transform: translate(-50%, -50%) scale(1); 
+    transform: translate(-50%, -50%) scale(1); 
+    pointer-events: auto;
+}
+.ui-timepicker-container .ui-timepicker-no-scrollbar .ui-timepicker-standard
+{
+  position: absolute;
+      z-index: 1051;
+}
+.imgg
+{
+padding: 1px;
+    width: 50px;
+    height: 50px;
+    margin-left: 12px;
+}
+.imgg:hover
+{
+ transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+
+
+
+
+
+
+
+
+        </style>
+        </head>
+<div ng-app="descrCreator">
+<div class="container" ng-controller="descrCreatorCtrl">
+  <div class="row">
+    <div class="col-lg-12">
+    <ol class="breadcrumb mtb-15">
+      <li ng-class="{'active' : step == 1}"><a href="#" ng-click="step=1">Title  Date</a></li>
+      <li ng-class="{'active' : step == 2}"><a href="#" ng-click="step=2">Description</a></li>
+    </ol>
+  </div>
+  </div>
+  <div class="row" ng-show="step==1">
+    <div class="col-sm-6">
+      <label for="header">Title:</label>
+      <input type="text" id="header" class="header" ng-model="posting.title"/>
+    </div>
+    <div class="col-sm-6">
+      <h1>{{posting.title}}</h1>
+    </div>
+  </div>
+  
+  <div class="row" ng-show="step==1">
+    <div class="col-sm-6 form-inline">
+      <!--<label for="header">Due date:</label>
+      <input type="text" id="header" class="header" ng-model="posting.date_due"/>-->
+  <div class="form-group">
+    <label class="control-label"><i class="fa fa-calendar"></i> Date: </label><br/>
+    <div class="form-group">
+<!--       <input type="text" size="10" class="form-control" ng-model="sharedDate" data-autoclose="1" placeholder="Date" bs-datepicker="" ng-model="posting.date_due"/> -->
+    </div>
+    <div class="form-group">
+      <input type="text" size="8" class="form-control" ng-model="sharedDate" data-time-format="h:mm:ss a" data-autoclose="1" placeholder="Time" bs-timepicker=""/>
+    </div>
+  </div>
+  </div>
+    <div class="col-sm-6">
+      <div>{{posting.date_due}}</div>
+    </div>
+  </div>
+  
+  <div class="row" ng-show="step==2">
+    <div class="col-lg-12">
+      <label for="desc">Edit your post below:</label>
+      <div text-angular="" ng-model="posting.htmlText" id="desc" name="posting.htmlText" placeholder="Type and style description here" ></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <!--<h4>Html Content: </h4>
+    <div>{{posting.htmlText}}</div>
+    <h4>Noneditable Content using ta-bind:</h4>
+    <div ta-bind ng-model="posting.htmlText"></div>
+    <h4>Noneditable Content using ng-bind-html:</h4>
+    <div ng-bind-html="posting.htmlText"></div>-->
+    </div>
+  </div>
+</div>
+</div>
+
+
+<script>
+  function descrCreatorCtrl($scope){
+  $scope.post = {};
+  $scope.step = 1;
+}
+
+var descrCreator = angular.module('descrCreator', [
+'ngSanitize', 
+'textAngular',
+'mgcrea.ngStrap'
+]);
+
+descrCreator
+.config(function($provide){
+    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
+        // $delegate is the taOptions we are decorating
+        // register the tool with textAngular
+        taRegisterTool('colorRed', setColorOption('red', '#E6194D'));
+        taRegisterTool('colorBlue', setColorOption('blue', '#17BACE'));
+        taRegisterTool('colorGray', setColorOption('gray', '#555'));
+      
+        function setColorOption(colorName, color){
+          var option = {
+            name: colorName + " text",
+              iconclass: "fa fa-square " + colorName,
+              action: function(){
+                this.$editor().wrapSelection('forecolor', color);
+              }
+          };
+          return option;
+        }
+        taOptions.toolbar = [
+                ['h1','h2','h3','p','ol','ul','insertLink', 'html'],
+                ['bold','italics','underline','colorRed', 'colorBlue','colorGray'],
+                ['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
+                ['undo','redo','clear']
+            ];
+      
+        return taOptions;
+    }]);
+});
+
+descrCreator.controller('descrCreatorCtrl', ['$scope', descrCreatorCtrl]);
+</script>
+</apex:page>

@@ -1,0 +1,171 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              table {
+                   width: 100%;
+                   border: 0px;
+                }
+                th, td {
+                   width: 25%;
+                   vertical-align: top;
+                   border: 0px;
+                   border-collapse: collapse;
+                   padding: 0.3em;
+                   
+                }
+              body {
+             
+                    background-image: url("{!URLFOR($Resource.imagen_contados3)}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             
+               
+            </style>
+             <script>
+            
+                objetivo = 40;
+                <!--Marisol-->
+                real1= 10;
+                <!--Iran-->
+                real2= 3;
+                <!--Trinidad-->
+                real3= 15;
+                <!--Ana-->
+                real4= 0;
+                <!--Diego-->
+                real5= 0;
+                
+                
+                function cambia() {
+                
+                if (real1>=7){
+
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                else if (real1>=4 && real1<=6){
+
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real1>=0 && real1<=3){
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                
+                if (real2>=5){
+
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                else if (real2>=3 && real2<=4){
+
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real2>=0 && real2<=2){
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                
+                if (real3>=7){
+
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                else if (real3>=4 && real3<=6){
+
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real3>=0 && real3<=3){
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                
+                if (real4>=5){
+
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                else if (real4>=3 && real4<=4){
+
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real4>=0 && real4<=2){
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                
+                if (real5>=4 && real5<=4){
+
+                document.getElementById("fotocambia5").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                else if (real5>=2 && real5<=3){
+
+                document.getElementById("fotocambia5").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real5>=0 && real5<=1){
+                document.getElementById("fotocambia5").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                } 
+            
+              function inicio() {
+                setInterval(cambia, 1000);
+                }
+                window.onload=inicio;
+            </script>
+            </head>
+ 
+            <body>
+               
+               <div style="position:absolute; top:120px; left:60px;">
+                <table border="0">
+                      <tr>
+
+                         <td>
+                          <img id="fotocambia" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="70%" height="110%"/>
+                         </td>
+                      </tr>
+              </table>
+              </div>
+              
+              <div style="position:absolute; top:250px; left:60px;">
+                <table border="0">
+                      <tr>
+
+                         <td>
+                          <img id="fotocambia2" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="70%" height="110%"/>
+                         </td>
+                      </tr>
+              </table>
+              </div>
+         
+             <div style="position:absolute; top:380px; left:60px;">
+                    <table border="0">
+                          <tr>
+    
+                             <td>
+                              <img id="fotocambia3" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="70%" height="110%"/>
+                             </td>
+                          </tr>
+                  </table>
+                  </div>
+                  
+                  <div style="position:absolute; top:510px; left:60px;">
+                    <table border="0">
+                          <tr>
+    
+                             <td>
+                              <img id="fotocambia4" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="70%" height="110%"/>
+                             </td>
+                          </tr>
+                  </table>
+                  </div>
+                  
+                  <!--<div style="position:absolute; top:640px; left:60px;">
+                    <table border="0">
+                          <tr>
+    
+                             <td>
+                              <img id="fotocambia5" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="70%" height="110%"/>
+                             </td>
+                          </tr>
+                  </table>
+                  </div>-->
+            
+            </body>
+            </html>
+            </apex:page>

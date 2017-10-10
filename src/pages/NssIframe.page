@@ -1,0 +1,10 @@
+<apex:page standardController="Preca_Web__c" showHeader="true" sidebar="true">
+    <style type="text/css">
+        .iframe-infonavit {
+            border: none;
+            background-color: #fff;
+            border-right: 5px;
+        }
+    </style>
+    <iframe class="iframe-infonavit" src="//portal.infonavit.org.mx/wps/portal/nss" height="350px" width="100%"></iframe>
+</apex:page>

@@ -1,0 +1,925 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="Account" 
+       extensions="FormularioControllerFacebook"  docType="html-5.0">
+    <html class="no-js" lang="es">
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="es"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="es"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="es"> <![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content="Revimex.mx"/>
+        <meta name="description" content="Paguinas Google Ads" />
+        <meta name="keywords" content="Revimex, Incuestas, Sorteo, Locura" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1.0,minimun-scale=1.0"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>   
+        <title>Revimex</title>
+        
+        <style>
+       <!--RJP Pedir modificacion en la hoja de estilos-->
+                h2 {
+                     text-align: left;
+                     color:#ABABAB;
+                     font-family:"Arial", Helvetica, sans-serif;
+                     font-size:;
+                     font-weight:;
+                     line-height:;
+                     text-decoration:;
+                     text-transform:;
+                      }   
+                input {
+                    text-transform: uppercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 245px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+                margin:10px auto;
+                max-width: 200px;
+                padding: 20px 12px 10px 20px;
+                font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            }
+            .form-style-1 li {
+                padding: 0;
+                display: block;
+                list-style: none;
+                margin: 10px 0 0 0;
+            }
+            label{
+                margin:0 0 3px 0;
+                padding:0px;
+                display:block;
+                font-weight: bold;
+            }
+            
+            .messageTable{
+                width: 100%;
+                background-color: blanchedalmond;
+            }
+            
+            #footer-menu a {
+                border-right: 1px solid #686868;
+                color: #FFFFFF;
+                font-size: 14px;
+                padding: 0 12px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            #Title-menu a {
+                border-right: 1px solid #686868;
+                color: #000000;
+                font-size: 14px;
+                padding: 0 12px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+
+
+            input[type=text],
+            input[type=date],
+            input[type=datetime],
+            input[type=number],
+            input[type=search],
+            input[type=time],
+            input[type=url],
+            input[type=email],
+            input[type=datetime-local],
+            input[type=password],
+            input[type=telefono],
+            
+            textarea,
+            select{
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                border:1px solid #BEBEBE;
+                padding: 7px;
+                margin:0px;
+                -webkit-transition: all 0.30s ease-in-out;
+                -moz-transition: all 0.30s ease-in-out;
+                -ms-transition: all 0.30s ease-in-out;
+                -o-transition: all 0.30s ease-in-out;
+                outline: none;
+                width: 90%; 
+            }
+            input[type=text]:focus,
+            input[type=date]:focus,
+            input[type=datetime]:focus,
+            input[type=number]:focus,
+            input[type=search]:focus,
+            input[type=time]:focus,
+            input[type=url]:focus,
+            input[type=email]:focus,
+            input[type=datetime-local]:focus,
+            input[type=password]:focus,
+            input[type=telefono]:focus,
+            
+            textarea:focus,
+            select:focus{
+                -moz-box-shadow: 0 0 8px #88D5E9;
+                -webkit-box-shadow: 0 0 8px #88D5E9;
+                box-shadow: 0 0 8px #88D5E9;
+                border: 1px solid #88D5E9;
+            }
+            
+            input[type=submit], .form-style-1 input[type=button]{
+                background: #F76244;
+                padding: 8px 15px 8px 15px;
+                border: none;
+                color: #fff;
+            }
+            input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+                background:#F76244;
+                box-shadow:none;
+                -moz-box-shadow:none;
+                -webkit-box-shadow:none;
+            }
+            .required{
+                color:red;
+            }
+            .btn-sortelo-login {width: 250px;margin: 0 auto;
+            margin-top:30px;}
+            .btn-sortelo-login a.btn-action {
+                color: #F76244;
+                padding: 10px;
+                width: 250px;
+                margin: 10px auto; 
+                background: #F76244;
+            }  
+            
+            
+                    .btn-action2 {
+                        color: #F76244;
+                        padding: 10px;
+                        width: 290px;
+                        margin: 10px auto;
+                        background-color: #1C79A7;
+                    } 
+                    input[type=button].btn-action2 {
+                        color: #F76244;
+                        padding: 10px;
+                        width: 100px !important;
+                        border: none;
+                        margin: 10px auto;
+                        background: #F76244;
+                        text-transform: capitalize;
+                    }
+                    input[type=button].btn-action2.dis {
+                        opacity:.4;
+                        filter: alpha(opacity=40)
+                    }
+                    button.btn-action2 {
+                        border: none;
+                    }
+                #img2 { 
+                width: 44px; 
+                height: 38px; 
+                }
+                
+                body {
+             
+                    background-image: url("{!URLFOR($Resource.fondonuevo)}");
+                    position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+                
+                }
+                
+                #leading-content4 {
+                      
+                    background: #5295D0;
+                    height: 524px;
+                    width:1648px;
+                    overflow: hidden;
+                    text-align: center;
+                    z-index: 1;
+                    
+                }
+                 #search-box2{
+                    background: #000000;
+                    display: inline-block;
+                    height: ;
+                    margin: 0 -4px 0 0;
+                    position: relative;
+                    vertical-align: top; 
+                    width: 330px;   
+                }
+                
+                    #search-box2 .fix-box-right{
+                        background: #1C79A7;
+                        height: ;
+                        left: 0;
+                        position: absolute;
+                        top: 0;
+                        width: 3000px;
+                        z-index: 1;
+                    }
+                    
+                    #search-box2 form{
+                        box-sizing: border-box;
+                        margin: 120px 0 0 0;
+                        padding: 0 20px;
+                        position: relative;
+                        text-align: left;
+                        z-index: 2;
+                    }
+                    
+                    #search-box2 h2{
+                        background: url(../images/lens-icon.png) no-repeat left;
+                        font-size: 22px;
+                        font-weight: normal;
+                        margin: 0;
+                        padding: 0 0 0 28px;
+                        text-transform: uppercase;
+                    }
+                    
+                    #search-box2 .note{
+                        color: #98D6FF;
+                        font-size: 15px;
+                        line-height: 16px;
+                    }
+                                
+                    #search-box3{
+                    
+                    display: inline-block;
+                    height: ;
+                    margin: 0 -4px 0 0;
+                    position: relative;
+                    vertical-align: top; 
+                    width: 330px;   
+                }
+                .nss-container {
+                    display: none;
+                    }
+             #slider2 {
+                display: inline-block;
+                height: 368px;
+                margin: 0 -253px 0 0;
+                overflow: hidden;
+                position: relative;
+                vertical-align: top;
+                width: 1000px;
+            }
+              p {
+                margin: -2em 0;
+                color: #777;
+            }
+            .lplh-26, .cke-text.nlh .lplh-26 {
+                line-height: 26px;
+            }
+            #lp-pom-text-36 {
+                display: block;
+                background: rgba(255,255,255,0);
+                -pie-background: rgba(255,255,255,0);
+                border-style: none;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                left: 0px;
+                top: 835px;
+                z-index: 33;
+                width: 487px;
+                height: 77px;
+                position: absolute;
+            }
+            #lp-pom-block-50 {
+                display: block;
+                background: rgba(37,156,167,1);
+                -pie-background: rgba(37,156,167,1);
+                border-style: none;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0px;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                width: 100%;
+                height: 100px;
+                position: relative;
+            }
+            div.lp-pom-root, .cke-text {
+                font-family: 'helvetica', 'arial', sans-serif;
+                font-size: 14px;
+                line-height: 17px;
+            }
+            .lplh-43, .cke-text.nlh .lplh-43 {
+                    line-height: px;
+                }
+            element.style {
+                height: auto;
+            }
+            
+            #lp-pom-text-41 {
+                display: block;
+                background: rgba(255,255,255,0);
+                -pie-background: rgba(255,255,255,0);
+                border-style: none;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                left: 55px;
+                top: 952px;
+                z-index: 32;
+                width: 361px;
+                height: 190px;
+                position: absolute;
+            }    
+            #lp-pom-text-18 {
+                display: block;
+                background: rgba(255,255,255,0);
+                -pie-background: rgba(255,255,255,0);
+                border-style: none;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                left: 0px;
+                top: 193px;
+                z-index: 3;
+                width: 940px;
+                height: 29px;
+                position: absolute;
+            }
+            #lp-pom-text-81 {
+                display: block;
+                background: rgba(255,255,255,0);
+                -pie-background: rgba(255,255,255,0);
+                border-style: none;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                left: 0px;
+                top: 1750px;
+                z-index: 13;
+                width: 940px;
+                height: 42px;
+                position: absolute;
+            }
+            #lp-pom-block-78 {
+                display: block;
+                background: rgba(228,79,61,1);
+                -pie-background: rgba(228,79,61,1);
+                border-style: none;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0px;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                width: 100%;
+                height: 100px;
+                position: relative;
+            }
+            #lp-pom-block-80 {
+                display: block;
+                background: rgba(40,41,54,1);
+                -pie-background: rgba(40,41,54,1);
+                border-style: none;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0px;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                width: 100%;
+                height: 65px;
+                position: relative;
+            }
+            container {
+                border-style: none;
+                behavior: url(/PIE.htc);
+                border-radius: 0px;
+                width: 30px;
+                height: 32px;
+            }
+                        </style>
+            <script>
+                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', 'UA-71967023-1', 'auto');
+                    ga('send', 'pageview');
+             </script> 
+             
+      </head>
+      <body>       
+         <div class="header-wrapper">
+        <br /><br/>
+            <img src="{!URLFOR($Resource.landinpage, 'revimex.jpg')}"><br/><br/><br/><p align="right">Recuperadora de Vivienda Mexicana </p></img>
+           
+               <center><br /><br /><br />
+               <span style="font-size:45px;"><strong><span style="color:#259ca7;"><span style="font-family:lato;">Casas Adjudicadas</span></span></strong></span>
+              
+                
+               </center>
+        </div>   
+        <br />
+       <div >
+            <center>
+              <span style="font-size: 24px; color: rgb(141, 142, 159);">¡Regístrate! y Encuentra Tu Casa Ideal, Aprovecha Tu Crédito Infonavit</span>
+            </center>
+           
+       </div>
+       
+       <center>
+        <apex:form >
+        <br />
+        
+            <div>
+            <div id="slider" style="max-width: 700px; padding-left: 0px; padding-right: 0px; left: 0px; min-height: 365px; height: autopx;">
+                  <img src="{!URLFOR($Resource.landinpage,'dos.jpg')}" style="width: 100%;height: autopx;"/>
+               <!-- <img src="{!URLFOR($Resource.pageFacebbok)}" style="width: 100%;height: 366px;"/>-->
+               
+            </div>
+       
+  <div id="search-box3" style="width: autopx;">
+  <table border="0">
+  <tbody>
+    <tr>
+      <td>
+      
+
+        <div id="search-box2" style="width: 320px;">
+            <table Border ="0"  style= "margin: auto; width: auto; margin-top: auto; margin-bottom: auto;" >
+                <tr>
+                    <td colspan="2" style="height: 50px;" ><a style="color:white">Datos generales</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="color:white">Nombre(s) <span class="required">*</span></label>
+                        <apex:input value="{!strNombre}" type="text" styleClass="fname" required="true"/>
+                   
+                    
+                        <label style="color:white">Apellidos<span class="required">*</span></label>
+                        <apex:input value="{!strApellidoPaterno}" type="text" styleClass="lname" required="true"/>
+                    </td>
+                    
+                </tr>      
+                <tr>
+                    <td>
+                        <label style="color:white">Email </label>
+                        <apex:input value="{!stremail}" type="email"  styleClass="email_field" style="text-transform: none;"/>
+                    
+                        <label style="color:white">Teléfono celular<span class="required">*</span></label>
+                        <apex:input value="{!strtelefono}" type="tel" styleClass="numbersOnly phone" required="true"/>
+                    </td>
+                  
+                </tr>
+                
+                <tr>
+                    <td  style="padding-top: 30px;">
+                     <center> <apex:commandButton styleClass="btn-action2" value="Quiero recibir asesoría" onclick="myFunction()" action="{!InsertarLead}" rerender="msj,msj2"/></center>
+                    </td>
+                </tr>
+               
+            </table>
+            
+            </div>
+            
+            
+            </td>
+            </tr>
+            <tr>
+            <td>
+            
+
+            
+            
+            
+            <img src="{!URLFOR($Resource.landinpage,'mensaje.png')}" style="width: auto px;max-width:100%;height: auto px;min-height:100%;"/>
+            
+
+
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            
+            
+            </div>
+            
+            
+            </apex:form>
+            <!--<br/>
+            <center>
+            <img src="{!URLFOR($Resource.landinpage,'mensaje.png')}" style="width: 100%;max-width:600px;height: 100%;max-height:400px;"/>
+            </center>
+            <br />-->
+        <br />
+        <br />
+        <br />
+        <br /><br />
+        <div class="lp-element lp-pom-block" id="lp-pom-block-50" style="width: auto;height: auto;min-height:100px;">
+            <div id="lp-pom-block-50-color-overlay"></div>
+            <div class="lp-pom-block-content">
+            </div>
+            
+            <div class="lp-element lp-pom-text nlh" id="lp-pom-text-51" style="height: auto;">
+                    <p class="lplh-43" style="text-align: center;">
+                    <font color="#ffffff" face="lato"><span style="font-size: 34px;">Casas en las Mejores Ubicaciones y a Precios de Remate</span></font>
+                    </p>
+            </div>
+        </div>
+        <br />
+              <br />
+              <br />
+             
+             <div>                  
+                         <img src="{!URLFOR($Resource.landinpage,'img1.png')}" style="width: 300px;height: 100%;"/>
+                         <img src="{!URLFOR($Resource.landinpage,'img2.png')}" style="width: 300px;height: 100%;"/>
+                        
+                         <img src="{!URLFOR($Resource.landinpage,'img3.png')}" style="width: 300px;height: 110%;"/>
+             </div>
+                 
+              <br />
+              <br />
+              <br />
+              <br />
+        </center> 
+        
+        <div class="lp-element lp-pom-block" id="lp-pom-block-78" style="height: auto;min-height: 130px;">
+        <div id="lp-pom-block-78-color-overlay"></div>
+        <div class="lp-pom-block-content"></div>
+        <div>
+            <p class="lplh-43" style="text-align: center;">
+            <font color="#ffffff" face="lato"><span style="font-size: 33px;">Pide Más Informes Ahora Sin Compromiso</span></font>
+            </p>
+        </div>
+             </div>
+             
+             
+             
+             <div class="lp-element lp-pom-block" id="lp-pom-block-80">
+                <div id="lp-pom-block-80-color-overlay"></div>
+                <div class="lp-pom-block-content"></div><center>
+                <div class="lp-element lp-pom-image" id="lp-pom-image-84">
+                
+                <br />
+                    <div class="lp-pom-image-container" style="overflow: hidden;">
+                    <img src="{!URLFOR($Resource.landinpage,'ban.png')}" style="width: 16px;height: 16px;" /></div>
+                    
+                    </div>
+                 
+                <div class="lp-element lp-pom-text nlh" id="lp-pom-text-83" style="height: auto;">
+                    <p class="lplh-22">
+                    <span style="font-size:14px;"><span style="font-family:lato;"><span style="color:#aaacbc;">Revimex © Copyright 2016</span></span></span>
+                    </p>
+                    </div>
+                    </center>
+             </div>
+               
+                <!--Start of Zopim Live Chat Script-->
+            <script type="text/javascript">
+            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+            d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+            _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?3ihiLjWyaiZHOzH5z1eFEtaAop6zlLTy";z.t=+new Date;$.
+            type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+            </script>
+        <!--End of Zopim Live Chat Script-->
+               <script>
+              var validate = {
+                fname: false,
+                lname: false, 
+                plaza: false, 
+                nss: false, 
+                bdate: false, 
+                phone: false,               
+                email: false,
+                clabe: false,
+                lada: false,
+                cuenta: false,
+                init: function () {
+                    $('.js-send').attr('disabled',true);
+                    $('.js-send').addClass('.dis');
+                    $(document).on( 'keyup', '.fname', this.validateFname);  
+                    $(document).on( 'change', '.plaza', this.validatePlaza);
+                    $(document).on( 'keyup', '.lname', this.validateLname);  
+                    $(document).on( 'keyup', '.email_field', this.validateEmail);  
+                    $(document).on( 'keyup', '.nss', this.validateNss);  
+                    $(document).on( 'keyup', '.bdate', this.validateBdate);
+                    $(document).on( 'keyup', '.cuenta', this.validateCuenta);  
+                    $(document).on( 'keyup', '.phone', this.validatePhone);
+                    $(document).on( 'click', '.nss-show', this.shownssiframe);
+                    $(document).on( 'click', '.datos-show', this.showdatostable);
+                
+                
+                   },
+                    validateFname: function () {
+                     this.value = this.value.replace(/[^a-z A-Z\.]/g,'',Ñ);
+                    if ($(this).val().length >=3) {
+                        validate.fname = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.fname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateLname: function () {
+                this.value = this.value.replace(/[^a-z A-Z\.]/g,'',Ñ);
+                    if ($(this).val().length >=3 ) {
+                    
+                        validate.lname = true;
+                        $(this).removeClass('error');
+                    }
+                     else {
+                     
+                        validate.lname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateEmail: function () {
+                    var email = $(".email_field").val();
+                    
+                    
+                    if(email != 0) {
+                        console.log('email value: '+ isValidEmailAddress(email));
+                        
+                        if(validate.isValidEmailAddress(email)) {
+                            
+                            validate.email = true;
+                            $(".email_field").css({
+                                "background-color": "white"
+                            });
+                        }  else {
+                            
+                            validate.email = false;
+                            $(".email_field").css({
+                                "background-color": "red"
+                            });
+                        }
+                    }  else {
+                        validate.email = false;
+                        $(".email_field").css({
+                            "background-color": "white"
+                        });         
+                    }
+                    validate.all();
+                },
+                validateNss: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 11));
+                    if ($(this).val().length == 11 ) {
+                        validate.nss = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.nss = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateClabe: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 18));
+                    if ($(this).val().length == 18 ) {
+                        validate.clabe = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.clabe = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateCuenta: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length == 10 ) {
+                        validate.cuenta = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.cuenta = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateBdate: function () {
+                    if(validate.isDate($(this).val())) {
+                        validate.bdate = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.bdate = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                 validatePhone: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length >= 10 || $(this).val().length <= 11 ) {
+                        validate.phone = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.phone = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateLada: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 3));
+                    if ($(this).val().length == 2 || $(this).val().length == 3 ) {
+                        validate.lada = true;
+                        $(this).removeClass('error');
+                    }
+                   
+                    else {
+                        validate.lada = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePlaza: function () {
+                    if ($(this).val() != '') {
+                        validate.plaza = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.plaza = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                isValidEmailAddress: function (emailAddress) {
+                    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!regex.test(emailAddress)) {
+                       return false;
+                    }else{
+                       return true;
+                    }
+                },
+                isDate: function (date) {
+                    console.log(date);
+
+                    var currVal = date;
+                    if(currVal == '')
+                        return false;
+                    //Declare Regex 
+                    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+                    var dtArray = currVal.match(rxDatePattern); // is format OK?
+                    if (dtArray == null)
+                        return false;
+
+                    //Checks for mm/dd/yyyy format.
+                   dtDay= dtArray[1];
+                    dtMonth= dtArray[3];
+                    dtYear = dtArray[5];
+
+                    if (dtMonth < 1 || dtMonth > 12)
+                        return false;
+                    else if (dtDay < 1 || dtDay> 31)
+                        return false;
+                    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31)
+                        return false;
+                    else if (dtMonth == 2)
+                    {
+                        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                        if (dtDay> 29 || (dtDay ==29 && !isleap))
+                            return false;
+                    }
+                    return true;
+                },
+                all: function () {
+                    if (validate.fname && validate.lname && validate.plaza && validate.nss && validate.bdate && validate.phone && validate.email) {
+                        $('.js-send').attr('disabled',false);
+                        $('.js-send').removeClass('dis');
+                        console.log('cloudmobile... true');
+                        console.log(validate);
+                    } else {
+                        $('.js-send').attr('disabled',true);
+                        $('.js-send').addClass('dis');
+                        console.log('cloudmobile... false');
+                        console.log(validate);
+                    }
+                },
+                shownssiframe: function (event) {
+                    event.preventDefault();
+                    $('.nss-container').slideToggle();
+                    
+                },
+                    
+
+                      showdatostable: function (event) {
+                      event.preventDefault();
+                    $('.datos-container').slideToggle();
+   
+                }
+                
+                 
+            }
+
+
+            $(function(){
+                validate.init();
+            });
+            
+            function isValidEmailAddress (emailAddress) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z 0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(!regex.test(emailAddress)) {
+                   return false;
+                }else{
+                   return true;
+                }
+            }
+                
+            $('.onlyNumbers').keyup(function () { 
+                    this.value = this.value.replace(/[^0-9\.]/g,'');
+                }),
+            $('.letras').keyup(function () { 
+                    this.value = this.value.replace(/[^a-z A-Z\ .]/g,'');
+                
+                });
+
+                     function myFunction() {
+                   <!--alert("Gracias por registrarte, en breve nos pondremos en contacto contigo para darte más información de tu próxima casa") ; -->
+                    open('http://www.revimex.mx/alert','','top=300,left=400,width=400,height=400') ; 
+                 
+                }  
+        </script>
+       </body>
+    </html>
+</apex:page>

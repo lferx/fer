@@ -1,0 +1,20 @@
+<apex:page controller="ReporteVencimientoConsola_controller" contentType="application/vnd.ms-excel#Vencimientos.xls" >
+	<table>
+	<tr>
+		<th>Responsable</th>
+		<th>Nombre de Documento</th>
+		<th>Fecha de Vencimiento</th>
+		<th>Dias Retrasados</th>
+		<th>Proximo Recordatorio</th> 
+	</tr>
+	<apex:repeat value="{!vencimientos}" var="ven" >
+		<tr>
+			<td>{!ven.responsable}</td>
+			<td>{!ven.nombre}</td>
+			<td><apex:outputText value="{0,date,d'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText></td>
+			<td>{!ven.diasRetrasado}</td>
+			<td>{!ven.proximoRecordatorio}</td>
+		</tr>
+	</apex:repeat>
+	</table>
+</apex:page>

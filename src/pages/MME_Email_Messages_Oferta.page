@@ -1,0 +1,13 @@
+<apex:page standardController="Oferta__c" showHeader="false" sidebar="false">
+    <div id="mme_detail">
+        <apex:detail inlineEdit="true" oncomplete="mme.fix_mme_rlist_dom('mme_detail');" showChatter="true"/>
+    </div>
+    <div id="mme_rlist" class="bRelatedList">
+        <MME:EmailMessageListRelated owner="{!Oferta__c}" useFrame="true"/>
+    </div>
+    <script>
+        mme.$(document).ready(function () {
+          mme.detailMoveToRListTop('mme_detail', 'mme_rlist');
+        });
+    </script>
+</apex:page>

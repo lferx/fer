@@ -1,0 +1,32 @@
+<apex:page showHeader="true" sidebar="true">
+	
+	<link rel="stylesheet" href="/resource/Pagina_basica1/Pagina-basica/css/sweetalert.css"/>
+<script src="/resource/Pagina_basica1/Pagina-basica/js/sweetalert.min.js"></script>
+
+
+<style type="text/css">
+	body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton body .menuButton .menuButtonButton{
+		background: #f06e57 !important;
+	}
+</style>
+<script type="text/javascript">
+	swal({
+	  title: "Good job!",
+	  text: "You clicked the button!",
+	  type: "success",
+	  showCancelButton: false,
+	 
+	  confirmButtonText: "Yes, delete it!",
+	  closeOnConfirm: true
+	},
+	function(){
+	  //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+	  alert('abrir panel siguiente');
+	});
+</script>
+
+
+<div>
+	<h1> HOLA</h1>
+</div>
+</apex:page>

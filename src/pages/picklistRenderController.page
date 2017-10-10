@@ -1,0 +1,15 @@
+<apex:page controller="picklistRenderController" showHeader="true" sidebar="true">
+<apex:form >
+    <apex:pageBlock >
+        <apex:selectList value="{!selectId}" size="1">
+            <apex:selectOptions value="{!display}"></apex:selectOptions>
+            <apex:actionSupport event="onchange" action="{!displayButton}" reRender="d"/>
+        </apex:selectList>
+        <apex:pageBlockButtons location="bottom" id="d">
+            <apex:commandButton action="{!buttonA}" value="Button A"/>
+            <apex:commandButton action="{!buttonB}" value="Button B" rendered="{!selectId=='show'}"/>
+        </apex:pageBlockButtons>
+     </apex:pageBlock>
+</apex:form>
+	
+</apex:page>

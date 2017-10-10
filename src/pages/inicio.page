@@ -1,0 +1,161 @@
+<apex:page >
+    <style>
+    
+        .wrap {
+            height: 1px;
+            width: 5px;
+            margin:2.2%;
+            position: relative;
+            perspective: 800;
+            perspective-origin: 50% 100px;
+        }
+    
+        .cube div {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2)
+        }
+    
+        .back {
+            transform: translateZ(-20px) rotateY(180deg);
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+    
+        .right {
+            transform: rotateY(90deg) translateX(20px);
+            transform-origin: top right;
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+    
+        .left {
+            transform: rotateY(-90deg) translateX(-20px);
+            transform-origin: center left;
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+    
+        .front {
+            transform: translateZ(20px);
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+    
+        @keyframes spin {
+            from { transform: rotateY(0); 
+            transform-origin: center;}
+            to { transform: rotateY(360deg); 
+            transform-origin: center;}
+        }
+    
+        .cube {
+            transform-style: preserve-3d;
+            animation: spin 10s infinite linear;
+        }
+    
+        .cube:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90%;
+            height: 90%;
+            background-color: white;
+            z-index: 2;
+        }
+    
+        body{
+            background-color: red;
+            width: 99%;
+            height: 100%;
+
+        }
+        h1{
+            font-family: arial;
+            font-size: 30px;
+
+        }
+        h2{
+            font-size: 25px;
+
+        }
+        .header{
+            width: 100%;
+            height: 50px;
+            background-color: #646464;
+        }
+        .diver{
+            width: 150px;
+            height: 50px;
+            background-color: #fefefe;
+        }
+        .diver:hover{
+
+            background-color: #eeeeee;
+        }
+        .diver:active{
+            background-color: #dddddd;
+            
+        }
+        a{
+            width: auto;
+        }
+    </style>
+    <body>
+        <center>
+            <div class="header">Cabecera</div>
+
+            <h1>Bienvenido al inicio de consolas</h1><br/>
+            <h2>¿Que desea abrir?</h2><br/>
+            <a href="/apex/AAEFitlraOfertas2" target="_blank">
+                <div class="diver">Consola Stock Ventas</div>
+            </a>
+            <a href="/apex/Consola_Pendientes" target="_blank">
+                <div class="diver">Consola Pendientes</div>
+            </a>
+            
+            <a href="/apex/ConsolaComercial?id=001g000001gZIbn" target="_blank">
+                <div class="diver">ConsolaComercial</div>
+            </a>
+            <a href="/apex/auth" target="_blank">
+                <div class="diver">Autorizaciones</div>
+            </a>
+            <a href="/apex/FichaTecnica?id=a08g0000008NAHhAAO" target="_blank">
+                <div class="diver">Ficha tecnica</div>
+            </a>
+            <a href="/apex/Calculadora" target="_blank">
+                <div class="diver">Calculadora</div>
+            </a>
+            <a href="/apex/reporte_seguimiento_infonavit" target="_blank">
+                <div class="diver">Reporte Seguimiento infonavit</div>
+            </a>
+
+            
+
+
+
+
+            <h6>Elaborado por Sistemas&reg; generacion 2016</h6>
+
+        </center>
+        
+        
+        <div class="wrap" style="left: -50;width: 80px;">
+            <div style="position: absolute; font-size: 14px; color: #707070; top: 10px;">Created by:</div>
+            <div class="cube" title="Sistemas 2.0" style="position: relative;left: 77px;">
+              <div class="back"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+            </div>
+        </div>
+        
+    </body>
+
+
+
+</apex:page>

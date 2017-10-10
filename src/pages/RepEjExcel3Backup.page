@@ -1,0 +1,251 @@
+<!-- Codigo edgar
+<apex:page id="thePage" controller="ReporteEjDetController3Backup" >
+
+<!--
+    <apex:dataTable Value="{!lwofertas6} or= {!lwofertas7} or={!lwofertas8}or={!lwofertas9}" var="oft">
+    
+        <apex:column id="1" headerValue="Etapa" value="{!oft.sEtapa}"/>
+ 
+        <apex:column headerValue="Etapa">
+            columna normal
+        </apex:column>
+
+    </apex:dataTable>
+
+
+
+find de codigo edgar 
+
+    <apex:pageBlock title="Stock Completo">
+        <apex:pageBlockTable Value="{!lwofertas6} or= {!lwofertas7} or= {!lwofertas8} or= {!lwofertas9}" var="oft">
+            <apex:column headerValue="Etapa" value="{!oft.sEtapa}"/>
+            <apex:column headerValue="Seccion" value="{!oft.sSeccion}"/>
+            <apex:column headerValue="Folio Oferta" value="{!oft.oferta.Oferta__r.name}"/>
+            <apex:column headerValue="Direccion" value="{!oft.oferta.Oferta__r.Direccion2__c}"/>
+            <apex:column headerValue="Plaza" value="{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}"/>
+            <apex:column headerValue="Precio de Venta" value="{!oft.oferta.Oferta__r.PrecioVenta__c}"/>
+            <apex:column headerValue="Margen Neto" value="{!oft.oferta.Oferta__r.MargenNeto__c}"/>
+            <apex:column headerValue="Beneficio Neto" value="{!oft.oferta.Oferta__r.BeneficioNeto__c}"/>
+            <apex:column headerValue="Dictamen" value="{!oft.oferta.Oferta__r.Dictamen__c}"/>
+            <apex:column headerValue="Fecha de Dictamen" value="{!oft.oferta.Oferta__r.Fecha_Dictamen__c}"/>
+            <apex:column headerValue="Propietario" value="{!oft.oferta.Oferta__r.Owner.name}"/>
+            <apex:column headerValue="Nombre de Etapa" value="{!oft.oferta.Etapa__r.name}"/>
+            <apex:column headerValue="Documentos Faltantes" value="{!oft.oferta.DocumentosFaltantes__c}"/>
+            <apex:column headerValue="Promotor" value="{!oft.oferta.Oferta__r.Promotor__r.name}"/>
+            <apex:column headerValue="Contratista" value="{!oft.oferta.Oferta__r.Contratista__r.name}"/>
+            <apex:column headerValue="Valuador Venta" value="{!oft.oferta.Oferta__r.Valuador_Venta__r.name}"/>
+            <apex:column headerValue="Valuadro Compra" value="{!oft.oferta.Oferta__r.Valuador_Compra__r.name}"/>
+            <apex:column headerValue="Ventanilla Unica" value="{!oft.oferta.Oferta__r.VentanillaUnica__r.name}"/>
+            <apex:column headerValue="Gestor" value="{!oft.oferta.Oferta__r.Gestor__r.name}"/>
+            <apex:column headerValue="Comentarios" value="{!oft.oferta.Oferta__r.Comentarios__c}"/>
+            <apex:column headerValue="Estatus" value="{!oft.oferta.Oferta__r.Estatus__c}"/>
+            <apex:column headerValue="Tipo de Oferta" value="{!oft.oferta.Oferta__r.TipoOferta__c}"/>
+            <apex:column headerValue="Tiempo Ofertas Dias" value="{!oft.oferta.Oferta__r.TiempoOferta__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+
+</apex:page>
+
+-->
+
+<apex:page controller="ReporteEjDetController3Backup">
+<apex:form >
+ 
+<apex:pageBlock title="Stock Completo">
+
+    
+
+    <apex:pageBlockTable value="{!lwofertas6}" var="oft">
+        <apex:column id="v1" headervalue="Etapa" value="{!oft.sEtapa}"/>
+        <apex:column id="v2" headerValue="Seccion" value="{!oft.sSeccion}"/>
+        <apex:column id="v3" headerValue="Folio Oferta" value="{!oft.oferta.Oferta__r.name}"/>
+        <apex:column id="v4" headerValue="Direccion" value="{!oft.oferta.Oferta__r.Direccion2__c}"/>
+        <apex:column id="v5" headerValue="Plaza" value="{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}"/>
+        <apex:column id="v6" headerValue="Precio de Venta" value="{!oft.oferta.Oferta__r.PrecioVenta__c}"/>
+        <apex:column id="v7" headerValue="Margen Neto" value="{!oft.oferta.Oferta__r.MargenNeto__c}"/>
+        <apex:column id="v8" headerValue="Beneficio Neto" value="{!oft.oferta.Oferta__r.BeneficioNeto__c}"/>
+        <apex:column id="v9" headerValue="Dictamen" value="{!oft.oferta.Oferta__r.Dictamen__c}"/>
+        <apex:column id="v10" headerValue="Fecha de Dictamen" value="{!oft.oferta.Oferta__r.Fecha_Dictamen__c}"/>
+        <apex:column id="v11" headerValue="Propietario" value="{!oft.oferta.Oferta__r.Owner.name}"/>
+        <apex:column id="v12" headerValue="Nombre de Etapa" value="{!oft.oferta.Etapa__r.name}"/>
+        <apex:column id="v13" headerValue="Documentos Faltantes" value="{!oft.oferta.DocumentosFaltantes__c}"/>
+        <apex:column id="v14" headerValue="Promotor" value="{!oft.oferta.Oferta__r.Promotor__r.name}"/>
+        <apex:column id="v15" headerValue="Contratista" value="{!oft.oferta.Oferta__r.Contratista__r.name}"/>
+        <apex:column id="v16" headerValue="Valuador Venta" value="{!oft.oferta.Oferta__r.Valuador_Venta__r.name}"/>
+        <apex:column id="v17" headerValue="Valuadro Compra" value="{!oft.oferta.Oferta__r.Valuador_Compra__r.name}"/>
+        <apex:column id="v18" headerValue="Ventanilla Unica" value="{!oft.oferta.Oferta__r.VentanillaUnica__r.name}"/>
+        <apex:column id="v19" headerValue="Gestor" value="{!oft.oferta.Oferta__r.Gestor__r.name}"/>
+        <apex:column id="v20" headerValue="Comentarios" value="{!oft.oferta.Oferta__r.Comentarios__c}"/>
+        <apex:column id="v21" headerValue="Estatus" value="{!oft.oferta.Oferta__r.Estatus__c}"/>
+        <apex:column id="v22" headerValue="Tipo de Oferta" value="{!oft.oferta.Oferta__r.TipoOferta__c}"/>
+        <apex:column id="v23" headerValue="Tiempo Ofertas Dias" value="{!oft.oferta.Oferta__r.TiempoOferta__c}"/>  
+    </apex:pageBlockTable>
+
+    <apex:pageBlockTable value="{!lwofertas7}" var="oft">
+        <apex:column id="v1" headervalue="Etapa" value="{!oft.sEtapa}"/>
+        <apex:column id="v2" headerValue="Seccion" value="{!oft.sSeccion}"/>
+        <apex:column id="v3" headerValue="Folio Oferta" value="{!oft.oferta.Oferta__r.name}"/>
+        <apex:column id="v4" headerValue="Direccion" value="{!oft.oferta.Oferta__r.Direccion2__c}"/>
+        <apex:column id="v5" headerValue="Plaza" value="{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}"/>
+        <apex:column id="v6" headerValue="Precio de Venta" value="{!oft.oferta.Oferta__r.PrecioVenta__c}"/>
+        <apex:column id="v7" headerValue="Margen Neto" value="{!oft.oferta.Oferta__r.MargenNeto__c}"/>
+        <apex:column id="v8" headerValue="Beneficio Neto" value="{!oft.oferta.Oferta__r.BeneficioNeto__c}"/>
+        <apex:column id="v9" headerValue="Dictamen" value="{!oft.oferta.Oferta__r.Dictamen__c}"/>
+        <apex:column id="v10" headerValue="Fecha de Dictamen" value="{!oft.oferta.Oferta__r.Fecha_Dictamen__c}"/>
+        <apex:column id="v11" headerValue="Propietario" value="{!oft.oferta.Oferta__r.Owner.name}"/>
+        <apex:column id="v12" headerValue="Nombre de Etapa" value="{!oft.oferta.Etapa__r.name}"/>
+        <apex:column id="v13" headerValue="Documentos Faltantes" value="{!oft.oferta.DocumentosFaltantes__c}"/>
+        <apex:column id="v14" headerValue="Promotor" value="{!oft.oferta.Oferta__r.Promotor__r.name}"/>
+        <apex:column id="v15" headerValue="Contratista" value="{!oft.oferta.Oferta__r.Contratista__r.name}"/>
+        <apex:column id="v16" headerValue="Valuador Venta" value="{!oft.oferta.Oferta__r.Valuador_Venta__r.name}"/>
+        <apex:column id="v17" headerValue="Valuadro Compra" value="{!oft.oferta.Oferta__r.Valuador_Compra__r.name}"/>
+        <apex:column id="v18" headerValue="Ventanilla Unica" value="{!oft.oferta.Oferta__r.VentanillaUnica__r.name}"/>
+        <apex:column id="v19" headerValue="Gestor" value="{!oft.oferta.Oferta__r.Gestor__r.name}"/>
+        <apex:column id="v20" headerValue="Comentarios" value="{!oft.oferta.Oferta__r.Comentarios__c}"/>
+        <apex:column id="v21" headerValue="Estatus" value="{!oft.oferta.Oferta__r.Estatus__c}"/>
+        <apex:column id="v22" headerValue="Tipo de Oferta" value="{!oft.oferta.Oferta__r.TipoOferta__c}"/>
+        <apex:column id="v23" headerValue="Tiempo Ofertas Dias" value="{!oft.oferta.Oferta__r.TiempoOferta__c}"/>  
+    </apex:pageBlockTable>
+    
+    <apex:pageBlockTable value="{!lwofertas8}" var="oft">
+        <apex:column headerValue="Etapa" value="{!oft.sEtapa}"/>
+        <apex:column headerValue="Seccion" value="{!oft.sSeccion}"/>
+        <apex:column headerValue="Folio Oferta" value="{!oft.oferta.Oferta__r.name}"/>
+        <apex:column headerValue="Direccion" value="{!oft.oferta.Oferta__r.Direccion2__c}"/>
+        <apex:column headerValue="Plaza" value="{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}"/>
+        <apex:column headerValue="Precio de Venta" value="{!oft.oferta.Oferta__r.PrecioVenta__c}"/>
+        <apex:column headerValue="Margen Neto" value="{!oft.oferta.Oferta__r.MargenNeto__c}"/>
+        <apex:column headerValue="Beneficio Neto" value="{!oft.oferta.Oferta__r.BeneficioNeto__c}"/>
+        <apex:column headerValue="Dictamen" value="{!oft.oferta.Oferta__r.Dictamen__c}"/>
+        <apex:column headerValue="Fecha de Dictamen" value="{!oft.oferta.Oferta__r.Fecha_Dictamen__c}"/>
+        <apex:column headerValue="Propietario" value="{!oft.oferta.Oferta__r.Owner.name}"/>
+        <apex:column headerValue="Nombre de Etapa" value="{!oft.oferta.Etapa__r.name}"/>
+        <apex:column headerValue="Documentos Faltantes" value="{!oft.oferta.DocumentosFaltantes__c}"/>
+        <apex:column headerValue="Promotor" value="{!oft.oferta.Oferta__r.Promotor__r.name}"/>
+        <apex:column headerValue="Contratista" value="{!oft.oferta.Oferta__r.Contratista__r.name}"/>
+        <apex:column headerValue="Valuador Venta" value="{!oft.oferta.Oferta__r.Valuador_Venta__r.name}"/>
+        <apex:column headerValue="Valuadro Compra" value="{!oft.oferta.Oferta__r.Valuador_Compra__r.name}"/>
+        <apex:column headerValue="Ventanilla Unica" value="{!oft.oferta.Oferta__r.VentanillaUnica__r.name}"/>
+        <apex:column headerValue="Gestor" value="{!oft.oferta.Oferta__r.Gestor__r.name}"/>
+        <apex:column headerValue="Comentarios" value="{!oft.oferta.Oferta__r.Comentarios__c}"/>
+        <apex:column headerValue="Estatus" value="{!oft.oferta.Oferta__r.Estatus__c}"/>
+        <apex:column headerValue="Tipo de Oferta" value="{!oft.oferta.Oferta__r.TipoOferta__c}"/>
+        <apex:column headerValue="Tiempo Ofertas Dias" value="{!oft.oferta.Oferta__r.TiempoOferta__c}"/>       
+    </apex:pageBlockTable>
+
+
+    <apex:PageBlockTable value="{!lwofertas9}" var="oft">
+        <apex:column headerValue="Etapa" value="{!oft.sEtapa}"/>
+        <apex:column headerValue="Sección" value="{!oft.sSeccion}"/>
+        <apex:column headerValue="Folio Oferta" value="{!oft.oferta.Oferta__r.name}"/>
+        <apex:column headerValue="Dirección" value="{!oft.oferta.Oferta__r.Direccion2__c}"/>
+        <apex:column headerValue="Plaza" value="{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}"/>
+        <apex:column headerValue="Precio de Venta" value="{!oft.oferta.Oferta__r.PrecioVenta__c}"/>
+        <apex:column headerValue="Margen Neto" value="{!oft.oferta.Oferta__r.MargenNeto__c}"/>
+        <apex:column headerValue="Beneficio Neto" value="{!oft.oferta.Oferta__r.BeneficioNeto__c}"/>
+        <apex:column headerValue="Dictamen" value="{!oft.oferta.Oferta__r.Dictamen__c}"/>
+        <apex:column headerValue="Fecha de Dictamen" value="{!oft.oferta.Oferta__r.Fecha_Dictamen__c}"/>
+        <apex:column headerValue="Propietario" value="{!oft.oferta.Oferta__r.Owner.name}"/>
+        <apex:column headerValue="Nombre de Etapa" value="{!oft.oferta.Etapa__r.name}"/>
+        <apex:column headerValue="Documentos Faltantes" value="{!oft.oferta.DocumentosFaltantes__c}"/>
+        <apex:column headerValue="Promotor" value="{!oft.oferta.Oferta__r.Promotor__r.name}"/>
+        <apex:column headerValue="Contratista" value="{!oft.oferta.Oferta__r.Contratista__r.name}"/>
+        <apex:column headerValue="Valuador Venta" value="{!oft.oferta.Oferta__r.Valuador_Venta__r.name}"/>
+        <apex:column headerValue="Valuador Compra" value="{!oft.oferta.Oferta__r.Valuador_Compra__r.name}"/>
+        <apex:column headerValue="Ventanilla Unica" value="{!oft.oferta.Oferta__r.VentanillaUnica__r.name}"/>
+        <apex:column headerValue="Gestor" value="{!oft.oferta.Oferta__r.Gestor__r.name}"/>
+        <apex:column headerValue="Comentarios" value="{!oft.oferta.Oferta__r.Comentarios__c}"/>
+        <apex:column headerValue="Estatus" value="{!oft.oferta.Oferta__r.Estatus__c}"/>
+        <apex:column headerValue="Tipo de Oferta" value="{!oft.oferta.Oferta__r.TipoOferta__c}"/>
+        <apex:column headerValue="Tiempo Ofertas Dias" value="{!oft.oferta.Oferta__r.TiempoOferta__c}"/>
+     </apex:pageBlockTable>
+     
+     </apex:pageBlock> 
+
+     </apex:form>
+</apex:page>
+
+
+
+
+
+
+<!-- codigo shell
+
+<apex:page controller="ReporteEjDetController3Backup">
+<apex:form >
+
+
+
+
+"Etapa","Seccion","Folio oferta","Direccion","Plaza","Precio de Venta","Margen neto","Beneficio neto","Dictamen","Fecha de Dictamen","Propietario","Nombre de etapa","Documentos Faltantes","Promotor","Contratista","Valuador Venta","Valuador Compra","Ventanilla unica","Gestor","Comentarios","Estatus","Tipo de Oferta","Tiempo oferta dias"
+
+<apex:repeat value="{!lwofertas6}" var="oft">
+"{!oft.sEtapa}","{!oft.sSeccion}","{!oft.oferta.Oferta__r.name}","{!oft.oferta.Oferta__r.Direccion2__c}","{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}","{!oft.oferta.Oferta__r.PrecioVenta__c}","{!oft.oferta.Oferta__r.MargenNeto__c}","{!oft.oferta.Oferta__r.BeneficioNeto__c}","{!oft.oferta.Oferta__r.Dictamen__c}","{!oft.oferta.Oferta__r.Fecha_Dictamen__c}","{!oft.oferta.Oferta__r.Owner.name}","{!oft.oferta.Etapa__r.name}","{!oft.oferta.DocumentosFaltantes__c}","{!oft.oferta.Oferta__r.Promotor__r.name}","{!oft.oferta.Oferta__r.Contratista__r.name}","{!oft.oferta.Oferta__r.Valuador_Venta__r.name}","{!oft.oferta.Oferta__r.Valuador_Compra__r.name}","{!oft.oferta.Oferta__r.VentanillaUnica__r.name}","{!oft.oferta.Oferta__r.Gestor__r.name}","{!oft.oferta.Oferta__r.Comentarios__c}","{!oft.oferta.Oferta__r.Estatus__c}","{!oft.oferta.Oferta__r.TipoOferta__c}","{!oft.oferta.Oferta__r.TiempoOferta__c}"
+</apex:repeat>
+<apex:repeat value="{!lwofertas7}" var="oft">
+"{!oft.sEtapa}","{!oft.sSeccion}","{!oft.oferta.Oferta__r.name}","{!oft.oferta.Oferta__r.Direccion2__c}","{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}","{!oft.oferta.Oferta__r.PrecioVenta__c}","{!oft.oferta.Oferta__r.MargenNeto__c}","{!oft.oferta.Oferta__r.BeneficioNeto__c}","{!oft.oferta.Oferta__r.Dictamen__c}","{!oft.oferta.Oferta__r.Fecha_Dictamen__c}","{!oft.oferta.Oferta__r.Owner.name}","{!oft.oferta.Etapa__r.name}","{!oft.oferta.DocumentosFaltantes__c}","{!oft.oferta.Oferta__r.Promotor__r.name}","{!oft.oferta.Oferta__r.Contratista__r.name}","{!oft.oferta.Oferta__r.Valuador_Venta__r.name}","{!oft.oferta.Oferta__r.Valuador_Compra__r.name}","{!oft.oferta.Oferta__r.VentanillaUnica__r.name}","{!oft.oferta.Oferta__r.Gestor__r.name}","{!oft.oferta.Oferta__r.Comentarios__c}","{!oft.oferta.Oferta__r.Estatus__c}","{!oft.oferta.Oferta__r.TipoOferta__c}","{!oft.oferta.Oferta__r.TiempoOferta__c}"
+</apex:repeat>
+<apex:repeat value="{!lwofertas8}" var="oft">
+"{!oft.sEtapa}","{!oft.sSeccion}","{!oft.oferta.Oferta__r.name}","{!oft.oferta.Oferta__r.Direccion2__c}","{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}","{!oft.oferta.Oferta__r.PrecioVenta__c}","{!oft.oferta.Oferta__r.MargenNeto__c}","{!oft.oferta.Oferta__r.BeneficioNeto__c}","{!oft.oferta.Oferta__r.Dictamen__c}","{!oft.oferta.Oferta__r.Fecha_Dictamen__c}","{!oft.oferta.Oferta__r.Owner.name}","{!oft.oferta.Etapa__r.name}","{!oft.oferta.DocumentosFaltantes__c}","{!oft.oferta.Oferta__r.Promotor__r.name}","{!oft.oferta.Oferta__r.Contratista__r.name}","{!oft.oferta.Oferta__r.Valuador_Venta__r.name}","{!oft.oferta.Oferta__r.Valuador_Compra__r.name}","{!oft.oferta.Oferta__r.VentanillaUnica__r.name}","{!oft.oferta.Oferta__r.Gestor__r.name}","{!oft.oferta.Oferta__r.Comentarios__c}","{!oft.oferta.Oferta__r.Estatus__c}","{!oft.oferta.Oferta__r.TipoOferta__c}","{!oft.oferta.Oferta__r.TiempoOferta__c}"
+</apex:repeat>
+<apex:repeat value="{!lwofertas9}" var="oft">
+"{!oft.sEtapa}","{!oft.sSeccion}","{!oft.oferta.Oferta__r.name}","{!oft.oferta.Oferta__r.Direccion2__c}","{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}","{!oft.oferta.Oferta__r.PrecioVenta__c}","{!oft.oferta.Oferta__r.MargenNeto__c}","{!oft.oferta.Oferta__r.BeneficioNeto__c}","{!oft.oferta.Oferta__r.Dictamen__c}","{!oft.oferta.Oferta__r.Fecha_Dictamen__c}","{!oft.oferta.Oferta__r.Owner.name}","{!oft.oferta.Etapa__r.name}","{!oft.oferta.DocumentosFaltantes__c}","{!oft.oferta.Oferta__r.Promotor__r.name}","{!oft.oferta.Oferta__r.Contratista__r.name}","{!oft.oferta.Oferta__r.Valuador_Venta__r.name}","{!oft.oferta.Oferta__r.Valuador_Compra__r.name}","{!oft.oferta.Oferta__r.VentanillaUnica__r.name}","{!oft.oferta.Oferta__r.Gestor__r.name}","{!oft.oferta.Oferta__r.Comentarios__c}","{!oft.oferta.Oferta__r.Estatus__c}","{!oft.oferta.Oferta__r.TipoOferta__c}","{!oft.oferta.Oferta__r.TiempoOferta__c}"
+</apex:repeat>
+<apex:repeat value="{!lwofertas}" var="oft">
+"{!oft.sEtapa}","{!oft.sSeccion}","{!oft.oferta.Oferta__r.name}","{!oft.oferta.Oferta__r.Direccion2__c}","{!oft.oferta.Oferta__r.Propiedad__r.Plaza__c}","{!oft.oferta.Oferta__r.PrecioVenta__c}","{!oft.oferta.Oferta__r.MargenNeto__c}","{!oft.oferta.Oferta__r.BeneficioNeto__c}","{!oft.oferta.Oferta__r.Dictamen__c}","{!oft.oferta.Oferta__r.Fecha_Dictamen__c}","{!oft.oferta.Oferta__r.Owner.name}","{!oft.oferta.Etapa__r.name}","{!oft.oferta.DocumentosFaltantes__c}","{!oft.oferta.Oferta__r.Promotor__r.name}","{!oft.oferta.Oferta__r.Contratista__r.name}","{!oft.oferta.Oferta__r.Valuador_Venta__r.name}","{!oft.oferta.Oferta__r.Valuador_Compra__r.name}","{!oft.oferta.Oferta__r.VentanillaUnica__r.name}","{!oft.oferta.Oferta__r.Gestor__r.name}","{!oft.oferta.Oferta__r.Comentarios__c}","{!oft.oferta.Oferta__r.Estatus__c}","{!oft.oferta.Oferta__r.TipoOferta__c}","{!oft.oferta.Oferta__r.TiempoOferta__c}"
+</apex:repeat>
+
+
+
+
+
+
+<!-- <style type="text/css">       
+        .col1 {width:400px; text-align:left;}
+        .col2 {width:600px; text-align:left;} 
+        p { font-weight: bold; }
+                  
+    </style>
+    <apex:form id="theForm">
+            <apex:pageBlock id="mainblock">
+                
+                
+                <apex:pageBlockButtons >
+                  <apex:commandButton action="{!ExpRepEj2}" value="Reset"/>
+                </apex:pageBlockButtons>
+                <apex:panelGrid columns="2">
+                
+                 
+                      
+                </apex:panelGrid>
+            
+            </apex:pageBlock>
+        </apex:form>
+
+<apex:form >  
+       <apex:pageBlock >
+               <li> <b>Detalle</b> </li>  
+               <li> <b>{!sEtapa}</b> </li>  
+                            
+               <apex:pageBlockTable id="Det" var="of" value="{!lofertas}" columnsWidth="25%,25%,25%,25%">
+                <apex:column value="{!of.Etapa__r.NumEtapa__c}" headerValue="Etapa"/>
+                <apex:column value="{!of.Oferta__r.Owner.Name}" headerValue="Propietario"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Plaza__c}" headerValue="Plaza"/>
+                <apex:column value="{!of.Oferta__r.name}" headerValue="Folio"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Tipo__c}" headerValue="Tipo"/>
+                <apex:column value="{!of.Oferta__r.Direccion2__c}" headerValue="Direccion"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Colonia__c}" headerValue="Colonia"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Terreno_m2__c}" headerValue="Terreno m2"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Construccion_m2__c}" headerValue="Construccion m2"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.Numero_de_habitaciones__c}" headerValue="Habitaciones"/>
+                <apex:column value="{!of.Oferta__r.Propiedad__r.N_de_Ba_os__c}" headerValue="Baños"/>
+                <apex:column value="{!of.Oferta__r.PrecioVenta__c}" headerValue="Precio Venta"/>
+                <apex:column value="{!of.Oferta__r.ValorReferencia__c}" headerValue="Valor Referencia"/>                                       
+               </apex:pageBlockTable>     
+               <li> <b>Total: {!itotal}</b> </li>           
+       </apex:pageBlock> -9-> 
+    </apex:form>
+</apex:page>
+
+fin de codigo shell -->

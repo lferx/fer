@@ -1,0 +1,268 @@
+<apex:page controller="ReporteEjecutivoController">
+    <style type="text/css">       
+        .col1 {width:400px; text-align:left;}
+        .col2 {width:600px; text-align:left;} 
+        p { font-weight: bold; }
+                  
+    </style>
+    <apex:form >  
+       <apex:pageBlock >
+               <li> <b>Reporte al: {!shoy}</b> </li>  
+               <br> </br>
+               <li> <b>Etapa 8: Escrituras a Registrar </b> </li>  
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa8a}" value="Detalle Pendiente de Registro"/>
+                  <apex:commandButton action="{!DetalleEtapa8b}" value="Detalle Registradas Diarias"/>
+                  <apex:commandButton action="{!DetalleEtapa8c}" value="Detalle Acumuladas Semana"/>
+               </apex:pageBlockButtons>
+                            
+               <apex:pageBlockTable id="Etapa8" var="op" value="{!mInfoEtapa8}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa8[op].sGerente}" headerValue="Gerente"/>
+                   <apex:column value="{!mInfoEtapa8[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa8[op].iPdteRegistro}" headerValue="Pendiente Registro"/>
+                   <apex:column value="{!mInfoEtapa8[op].iRegistradas}" headerValue="Registradas diarias"/>
+                   <apex:column value="{!mInfoEtapa8[op].iAcumuladas}" headerValue="Acumulado"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Compradas           : {!iSumComEtapa8} </li>
+               <li>Registradas Diarias : {!iSumRegEtapa8} </li>
+               <li>Total Pendientes    : {!iSumPteEtapa8} </li>
+       </apex:pageBlock>  
+             
+       <apex:pageBlock > 
+               <br> </br>
+               <li> <b>Etapa 9: Ofertas </b> </li>  
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa9}" value="Detalle Stock"/>
+                  <apex:commandButton action="{!DetalleEtapa9a}" value="Detalle Ingreso Esc"/>
+                  <apex:commandButton action="{!DetalleEtapa9b}" value="Detalle Ofertas Semanal"/>
+               </apex:pageBlockButtons>
+                            
+               <apex:pageBlockTable id="Etapa9" var="op" value="{!mInfoEtapa9}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa9[op].sGerente}" headerValue="Gerente"/>
+                   <apex:column value="{!mInfoEtapa9[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa9[op].iStock}" headerValue="{!stockhoy}"/>
+                   <apex:column value="{!mInfoEtapa9[op].iIngresoEsc}" headerValue="Ingresos con Escrituras"/>
+                   <apex:column value="{!mInfoEtapa9[op].iOfertaSem}" headerValue="Ofertas Semanal"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Escrituras           : {!iSumEscEtapa9} </li>
+               <li>Ofertas              : {!iSumEscEtapa9} </li>
+               <li>Stock Final          : {!iSumStkEtapa9} </li>
+               <br> </br>
+               <li>Acumulado            : {!iSumOftEtapa9} </li>
+               <li>Meta Diaria          : {!iOmetaDiaria}</li>
+               <li>Meta Semanal         : {!iOmetaSemanal}</li>
+       </apex:pageBlock> 
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa101}" value="Detalle Invadida No Pag"/>
+                  <apex:commandButton action="{!DetalleEtapa101a}" value="Detalle Invadida Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa101b}" value="Detalle Invadida Mas 5"/>
+                  <apex:commandButton action="{!DetalleEtapa101c}" value="Detalle Desalojadas"/>
+               </apex:pageBlockButtons>
+               <br> </br>
+               <li> <b>Etapa 10: Rehabilitación </b> </li>                 
+               <li> <b>Invadida </b> </li>             
+               <apex:pageBlockTable id="Etapa101" var="op" value="{!mInfoEtapa101}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa101[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa101[op].iNoPagada}" headerValue="No Pagada"/>
+                   <apex:column value="{!mInfoEtapa101[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa101[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa101[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Invadida             : {!isumInvEtapa101}</li>
+               <li>Desalojada           : {!isumDesEtapa101}</li>
+               <li>Cambio de Portafolio : {!isumChgEtapa101}</li>
+               
+       </apex:pageBlock> 
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa10a1}" value="Detalle Presupuesto Rehab Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa10a2}" value="Detalle Presupuesto Rehab Mas 5"/>
+               </apex:pageBlockButtons>   
+               <br> </br>
+               <li> <b>Presupuesto Rehabilitación </b> </li>             
+               <apex:pageBlockTable id="Etapa10a" var="op" value="{!mInfoEtapa10a}" columnsWidth="40%,20%,20%,20%">
+                   <apex:column value="{!mInfoEtapa10a[op].sPlaza}" headerValue="Plaza"/>                   
+                   <apex:column value="{!mInfoEtapa10a[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa10a[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa10a[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Desalojadas             : {!isumDesEtapa101}</li>
+               <li>Por Rehabilitar         : {!isumRehEtapa10a}</li>
+               
+               
+       </apex:pageBlock> 
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa10b}" value="Detalle Rehabilitación No Pagada"/>
+                  <apex:commandButton action="{!DetalleEtapa10b1}" value="Detalle Rehabilitación Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa10b2}" value="Detalle Rehabilitación Mas 5"/>
+               </apex:pageBlockButtons> 
+               <br> </br>
+               <li> <b>Rehabilitación </b> </li>             
+               <apex:pageBlockTable id="Etapa10b" var="op" value="{!mInfoEtapa10b}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa10b[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa10b[op].iNoPagada}" headerValue="No Pagada"/>
+                   <apex:column value="{!mInfoEtapa10b[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa10b[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa10b[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Rehabilitándose          : {!isumRehEtapa10b};</li>
+               <li>Rehabilitadas            : {!isumRehdasEtapa10b}</li>
+               <li>Cambio de Portafolio     : {!isumChgEtapa10b}</li>
+               <br> </br>
+               <li>Acumulado               : {!isumAcuEtapa10b}</li>
+               <li>Meta Diaria             : {!iRmetaDiaria}</li>
+               <li>Meta Mensual            : {!iRmetaMensual}</li>
+               
+       </apex:pageBlock> 
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa11a}" value="Detalle Avaluo No Pagada"/>
+                  <apex:commandButton action="{!DetalleEtapa11a1}" value="Detalle Avaluo Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa11a2}" value="Detalle Avaluo Mas 5"/>
+               </apex:pageBlockButtons> 
+               <br> </br>
+               <li> <b>Etapa 11: Compilación Expediente Crediticio </b> </li> 
+               <li> <b>Avalúo </b> </li>             
+               <apex:pageBlockTable id="Etapa11a" var="op" value="{!mInfoEtapa11a}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa11a[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa11a[op].iNoPagada}" headerValue="No Pagada"/>
+                   <apex:column value="{!mInfoEtapa11a[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa11a[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa11a[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Avalúo                             : {!isumAvaEtapa11}</li>
+               <li>CLG(Certificado Libre de Gravamen) : {!isumClgEtapa11}</li>
+               <li>Cambio de Portafolio               : {!isumChgEtapa11 * -1}</li>
+               
+       </apex:pageBlock> 
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >
+                  <apex:commandButton action="{!DetalleEtapa11b}" value="Detalle CLG No Pagada"/>
+                  <apex:commandButton action="{!DetalleEtapa11b1}" value="Detalle CLG Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa11b2}" value="Detalle CLG Mas 5"/>
+               </apex:pageBlockButtons> 
+               <br> </br>
+               <li> <b>CLG </b> </li>             
+               <apex:pageBlockTable id="Etapa11b" var="op" value="{!mInfoEtapa11b}" columnsWidth="30%,25%,15%,15%,15%">
+                   <apex:column value="{!mInfoEtapa11b[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa11b[op].iNoPagada}" headerValue="No Pagada"/>
+                   <apex:column value="{!mInfoEtapa11b[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa11b[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa11b[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>CLG(Certificado Libre de Gravamen) : {!isumClgEtapa11}</li>
+               <li>Avalúo                             : {!isumAvaEtapa11}</li>
+               <li>Cambio de Portafolio               : {!isumChgEtapa11}</li>
+               
+       </apex:pageBlock> 
+       
+       <apex:pageBlock >
+               <apex:pageBlockButtons >                 
+                  <apex:commandButton action="{!DetalleEtapa11c1}" value="Detalle Ing Infonavit Menos 5"/>
+                  <apex:commandButton action="{!DetalleEtapa11c2}" value="Detalle Ing Infonavit Mas 5"/>
+               </apex:pageBlockButtons>  
+               <br> </br>
+               <li> <b>Ingreso Infonavit </b> </li>             
+               <apex:pageBlockTable id="Etapa11c" var="op" value="{!mInfoEtapa11c}" columnsWidth="40%,20%,20%,20%">
+                   <apex:column value="{!mInfoEtapa11c[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa11c[op].iMenos5}" headerValue="Menos 5"/>
+                   <apex:column value="{!mInfoEtapa11c[op].iMas5}" headerValue="Mas 5"/>
+                   <apex:column value="{!mInfoEtapa11c[op].iTotalGral}" headerValue="Total General"/>
+                   
+               </apex:pageBlockTable> 
+               <li>Ingreso Infonavit    : {!isumInfEtapa11}</li>                              
+               
+       </apex:pageBlock> 
+       
+        
+       
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >                 
+                  <apex:commandButton action="{!DetalleEtapa12a1}" value="Detalle Ing Notaria 12"/>
+                  <apex:commandButton action="{!DetalleEtapa12a2}" value="Detalle Firma Cliente"/>
+                  <apex:commandButton action="{!DetalleEtapa13a1}" value="Detalle Firma Intermedia"/>
+                  <apex:commandButton action="{!DetalleEtapa13a3}" value="Detalle PrePantalla"/>
+                  <apex:commandButton action="{!DetalleEtapa13a2}" value="Detalle Detonadas"/>
+               </apex:pageBlockButtons> 
+               <br> </br>
+               <apex:pageBlockSection collapsible="false" columns="3" >
+                   
+                   
+                   <apex:outputText style="font-weight:bold" value="• Etapa 12: Expediente ________________________"/>
+                   <apex:outputText style="font-weight:bold" value="_______________________________________________________"/>
+                   <apex:outputText style="font-weight: bold" value="_______________  • Etapa 13: Cobradas"/>
+                   
+                  
+               </apex:pageBlockSection>           
+               <apex:pageBlockTable id="Etapa12" var="op" value="{!mInfoEtapa12}" columnsWidth="20%,20%,20%,10%,10%,10%,10%">
+                   <apex:column value="{!mInfoEtapa12[op].sGestor}" headerValue="Supervisor"/>
+                   <apex:column value="{!mInfoEtapa12[op].sGerente}" headerValue="Gerente"/>
+                   <apex:column value="{!mInfoEtapa12[op].sPlaza}" headerValue="Plaza"/>
+                   <apex:column value="{!mInfoEtapa12[op].iNoCarta}" headerValue="Notaria"/>
+                   <apex:column value="{!mInfoEtapa12[op].iIngresoInf}" headerValue="Firma Cliente"/>                   
+                   <apex:column value="{!mInfoEtapa12[op].ixDet}" headerValue="Firma Intermedia"/>
+                   <apex:column value="{!mInfoEtapa12[op].iPrePan}" headerValue="PrePantalla"/>
+                   <apex:column value="{!mInfoEtapa12[op].iDet}" headerValue="Detonadas"/>      
+                   
+               </apex:pageBlockTable> 
+                              
+               
+               <li>Ingreso a Expediente  : {!isumExpEtapa12}</li>
+               <li>Ingreso a Cobradas    : {!isumCobEtapa12}</li>
+               <li>Cambio de Portafolio  : {!isumChgEtapa12}</li> 
+               <li>Acumulado             : {!isumAcuEtapa13}</li>
+               <li>Meta Diaria           : {!iEmetaDiaria}</li> 
+               <li>Meta Semanal          : {!iEmetaSemanal}</li>
+               
+       </apex:pageBlock> 
+       <apex:pageBlock > 
+               <apex:pageBlockButtons >                 
+                  <apex:commandButton action="{!DetalleContado}" value="Detalle Ofertas Contado"/>                  
+               </apex:pageBlockButtons> 
+               <br> </br>
+               <li> <b>Contado </b> </li>             
+               <br> </br>             
+               <li>Total Ofertas de Contado  : {!isumContado}</li>
+       </apex:pageBlock> 
+       <apex:pageBlock > 
+               <br> </br>
+               <li> <b>RESUMEN </b> </li>             
+               <apex:pageBlockTable id="Resumen" var="op" value="{!mInfoRes}" columnsWidth="10%,30%,20%,20%,20%">
+                   <apex:column value="{!op}" headerValue="No"/>
+                   <apex:column value="{!mInfoRes[op].sEtapa}" headerValue="Etapa"/>
+                   <apex:column value="{!mInfoRes[op].iEtapaEnt}" headerValue="Entradas"/>
+                   <apex:column value="{!mInfoRes[op].iEtapaSal}" headerValue="Salidas"/>
+                   <apex:column value="{!mInfoRes[op].iEtapaDif}" headerValue="Diferencia"/>
+                   
+               </apex:pageBlockTable>               
+               
+       </apex:pageBlock> 
+       <apex:pageBlock > 
+               <br> </br>
+               <li> <b>RESUMEN SEMANAL </b> </li>             
+               <apex:pageBlockTable id="ResumenSem" var="op" value="{!mInfoRes}" columnsWidth="10%,30%,30%,30%">
+                   <apex:column value="{!op}" headerValue="No"/>
+                   <apex:column value="{!mInfoRes[op].sEtapa}" headerValue="Etapa"/>
+                   <apex:column value="{!mInfoRes[op].iEtapaSal}" headerValue="Avance Diario"/>
+                   <apex:column value="{!mInfoRes[op].iEtapaAcu}" headerValue="Acumulado"/>
+                   
+                   
+               </apex:pageBlockTable>               
+               
+       </apex:pageBlock>              
+    </apex:form>
+</apex:page>

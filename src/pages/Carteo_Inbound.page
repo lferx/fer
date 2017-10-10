@@ -1,0 +1,293 @@
+<apex:page controller="Carteo_Inbound_Controller">
+    <style type="text/css"> 
+        @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i|Overpass|Poiret+One|Righteous');
+        @font-face {
+            font-family: "Bebas-Neue";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+        }
+        @font-face {
+            font-family: "gotham-rounded-book";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+        }
+        @font-face {
+            font-family: "gotham-rounded-medium";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+        }
+        
+        .titulo{
+            font-size: 59px;
+            color: #698d9e;
+            letter-spacing: 2px;
+            font-family: 'Poiret One';
+            font-weight: bolder;
+        }
+        .binevenida{
+            position: relative;
+            top: -20px;
+            color: #8E8E8E;
+            font-family: 'gotham-rounded-book';
+            font-weight: bolder;
+            letter-spacing: -2px;
+        }
+        .etiqueta{
+            background: #D1DA28; 
+            border-radius: 30px; 
+            border: 1px solid white; 
+            text-align: center; 
+            width: 150px;
+            float: left; 
+            font-size: 15px;
+        }
+        .textArea{
+            height: 25px;
+            float: left;
+            border: none;
+            border-bottom: 3px solid #b0dfec;
+            border-top: 3px solid #b0dfec;
+            color: #374d54;
+            position: relative;
+            left: 44.5%;
+            width: 10%;
+            text-align: center;
+            outline: none;
+            font-family: 'gotham-rounded-book';
+            font-size: 14px;
+            transition: .5s;
+        }
+        .textArea:focus{
+            transform: translate(7%,8%) scale(1.3);
+
+        }
+        .boton{
+            width: 20%;
+            position: relative;
+        }
+        .boton:hover{
+            width: 23%;
+            position: relative;
+        }
+        .wrap {
+            height: 1px;
+            width: 5px;
+            margin:2.2%;
+            position: relative;
+            perspective: 800;
+            perspective-origin: 50% 100px;
+        }
+
+        .cube div {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2)
+        }
+
+        .back {
+            transform: translateZ(-20px) rotateY(180deg);
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+
+        .right {
+            transform: rotateY(90deg) translateX(20px);
+            transform-origin: top right;
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+
+        .left {
+            transform: rotateY(-90deg) translateX(-20px);
+            transform-origin: center left;
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+
+        .front {
+            transform: translateZ(20px);
+            background-image: url('{!$Resource.logo}'), linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%);
+            background-size: cover;
+        }
+
+        @keyframes spin {
+            from { transform: rotateY(0); 
+            transform-origin: center;}
+            to { transform: rotateY(360deg); 
+            transform-origin: center;}
+        }
+
+        .cube {
+            transform-style: preserve-3d;
+            animation: spin 10s infinite linear;
+        }
+
+        .cube:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90%;
+            height: 90%;
+            background-color: white;
+            z-index: 2;
+        }
+        .rp_sep_shadows3 {
+            border: none;
+            height: 20px;
+            width: 100%;
+            height: 50px;
+            margin-top: 0;
+            margin:30px 0;
+            border-bottom: 1px solid #1f1209;
+            box-shadow: 0 20px 20px -20px #333;
+            margin: -50px auto 10px;
+        }
+
+        .button1 , .button2, .button3{
+            width: 150px !important;
+            background-color: white !important;
+            color: black !important; 
+            border-radius: 20px !important;
+        }
+        .button1 {
+            border: 1px solid #089403 !important;
+        }
+
+        .button1:hover {
+            background: #86af85 !important;
+            color: white !important;
+        }
+
+        .button2 {
+            border: 1px solid #C9C904 !important;
+        }
+
+        .button2:hover {
+            background: #d6d67c !important;
+            color: white !important;
+        }
+
+        .button3 {
+            border: 1px solid #f44336 !important;
+        }
+        
+        .button3:hover {
+            background: #e2867f !important;
+            color: white !important;
+        }
+    </style>
+    
+    <script>
+        $(function(){
+            $(document).tooltip();
+        });
+    </script> 
+    
+
+    <apex:form id="encabezado" style="font-family: 'Bebas-Neue'; font-size: 20px;">
+        <center>
+            <div class="titulo">
+                <br/>
+                <apex:outputText value="CARTEO INBOUND"/> 
+            </div>
+            <br/>
+            <div>
+                <apex:image value="{!fotoUsuario}" width="50" height="50" style="border-radius: 50%;"/>&nbsp;
+                <apex:outputText value="Bienvenid@ {!vuser}" styleClass="binevenida"/> 
+            </div>
+        </center>
+        <br/>
+        <div class="rp_sep_shadows3"></div>
+    </apex:form>
+    <br/>
+    <apex:form >
+        <br/>
+        <br/>
+        <div>
+            <apex:inputTextArea value="{!folio}" styleClass="textArea" html-placeholder="Ingresa los ID's"/>&nbsp;&nbsp;&nbsp;
+        </div>
+        
+        <br/>
+        <br/>
+        <br/>
+        
+        <div style="width: 12%; position: relative; left: 46.5%;">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:image url="{!$Resource.Agregar}" styleClass="boton" title="Agregar a la Lista">
+                <apex:actionSupport event="onclick" action="{!llenaLista}" reRender="tablaFolios" status="Proceso"/>
+            </apex:image>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:image url="{!$Resource.limpiarLista}" styleClass="boton" title="Limpiar lista Completa" >
+                <apex:actionSupport event="onclick" action="{!limpiaLista}" reRender="tablaFolios" status="Proceso"/>
+            </apex:image>
+        </div>
+        <center>
+            <apex:actionStatus id="Proceso">
+                <apex:facet name="start">
+                    <apex:image url="{!$Resource.cargando}" style="width: 100px;"/>
+                </apex:facet>
+            </apex:actionStatus>
+        </center>
+        <br/>
+        <br/>
+        <center>
+            <apex:commandLink target="_blank" action="{!pdf1}">
+                <apex:commandButton value="Generar Carta 1" status="Proceso" styleClass="button1"/>
+            </apex:commandLink>
+            &nbsp;
+            <apex:commandLink target="_blank" action="{!pdf2}">
+                <apex:commandButton value="Generar Carta 2" status="Proceso" styleClass="button2"/>
+            </apex:commandLink>
+            &nbsp;
+            <apex:commandLink target="_blank" action="{!pdf3}">
+                <apex:commandButton value="Generar Carta 3" status="Proceso" styleClass="button3"/>
+            </apex:commandLink>
+        </center>
+        <br/>
+        
+    <apex:variable value="{!0}" var="index" />
+    <apex:pageBlock Id="tablaFolios" >
+        <apex:pageBlockTable value="{!listaOfertas}" var="registro" styleClass="botonAgregar">
+            <apex:column style="width: 50px; text-align: center;">
+                <apex:actionStatus id="ProcesoEliminar">
+                    <apex:facet name="stop">
+                        <apex:image url="https://image.flaticon.com/icons/png/512/61/61848.png" alt="Eliminar" style="width: 20px;" >
+                            <apex:actionSupport event="onclick" action="{!eliminar}" reRender="tablaFolios" status="ProcesoEliminar">
+                                <apex:param name="regPosicion" assignTo="{!posicion}" value="{!index}" />
+                            </apex:actionSupport>
+                        </apex:image>
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:image url="{!$Resource.cargando}" style="width: 30px;"/>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:column>
+            <apex:column headerValue="#">
+                <apex:outputText >
+                <apex:variable value="{!index + 1}" var="index" />
+                {!index}
+                </apex:outputText>
+            </apex:column>
+            <apex:column value="{!registro.name}" headerValue="ID Oferta"/>
+            <apex:column value="{!registro.ValorReferencia__c}" headerValue="Valor Referencia"/>
+            <apex:column headerValue="Valor Maximo de Negociacion">
+                $<apex:outputText value="{0, number, ###,##0}"><apex:param value="{!registro.ValorReferencia__c * 0.04}"/></apex:outputText>
+            </apex:column>
+            <apex:column value="{!registro.Plaza__c}" headerValue="Plaza"/>
+        </apex:pageBlockTable>
+        <apex:variable value="{!0}" var="index"/>
+    </apex:pageBlock>
+    </apex:form>
+
+    <div class="wrap" style="left: -50;width: 80px;">
+        <div style="position: absolute; font-size: 14px; color: #707070; top: 10px;font-family: 'Bebas-Neue';font-size: 18px;">Created by:</div>
+        <div class="cube" title="Sistemas 2.0" style="position: relative;left: 77px;">
+          <div class="back"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+        </div>
+    </div>
+
+</apex:page>

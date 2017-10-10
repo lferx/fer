@@ -1,0 +1,3 @@
+<apex:page >
+    <c:Precaa_4 text="Contenido del componente personalizado" />
+</apex:page>

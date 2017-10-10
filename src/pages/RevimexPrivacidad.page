@@ -1,0 +1,641 @@
+<apex:page standardController="Preca_Web__c" cache="false" extensions="PrecaRegisterController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0">
+
+    <html class="no-js" lang="es">
+    
+        <head>
+        
+            <meta charset="utf-8"/>
+            <meta name="author" content=""/>
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
+            <meta name="robots" content="index, follow" />
+            <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+            
+            <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+            <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+            
+            <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+            
+            <title>Revimex</title>
+            
+            <style>
+            
+                <!--RJP Pedir modificacion en la hoja de estilos-->
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 225px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+    margin:10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.messageTable{
+    width: 100%;
+    background-color: blanchedalmond;
+}
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=datetime-local],
+input[type=password],
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+input[type=datetime-local]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #4691A4;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}   
+            </style>
+            
+        </head>
+        
+        <body>
+        
+            <header>
+                <div class="header-wrapper">
+                    
+                    <a href="http://revimex.force.com" id="header-showmenu-btn">
+                        <img src="{!URLFOR($Resource.HomeRevimex,'images/menu-vertical-btn.png')}" alt="menú"/>
+                    </a>
+                    <figure id="main-logo" class="fullwidth-picture">
+                        <a href="http://revimex.force.com"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo.png')}" alt="Revimex"/></a>
+                    </figure>
+                    <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div> <div class="font-size-40">hoy</div></div>
+                </div>
+                <div id="header-phone">
+                    <span class="phone-icon" style="margin-top: -13px;">
+                        
+                        <a href="tel:018002000440">01-800-200-0440</a>
+                    </span>
+                </div>
+            </header>
+            
+        <section id="leading-content" class="clearfix" style="height: 400px;">
+            <div id="slider" style="width: 1090px;">
+                <div id="slider-mask">
+                    <div id="slides">                                    
+                        <a href="#" target="_self">
+                            <figure><img src="{!$Resource.portadaconcurso}" alt="slide 1" class="slide-picture 1"/></figure>
+                        </a>      
+                    </div>
+                </div>
+            </div>
+        </section>
+                
+        <section id="home-intro" style="text-align: justify;text-justify: inter-word; padding-top: 2em;padding-right: 10em;padding-bottom: 10em;padding-left: 10em;">
+            
+            <h1>AVISO DE PRIVACIDAD:</h1>
+            
+            <ul>
+            
+            <li>
+            REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V.  ubicada en Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349, es responsable del tratamiento de sus datos personales. Puede contactarnos: A nuestro departamento de datos personales con atención a contacto@revimex.mx Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 a la dirección Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 teléfono (01800) 200 0440
+
+            </li>
+            
+            <li>
+            Sus datos personales serán utilizados para proveer los servicios y productos requeridos por usted, así como para informar sobre cambios relacionados por lo adquirido por el cliente y evaluar la calidad de nuestro servicio.
+            </li>
+            
+             <li>
+            Para las finalidades señaladas en el presente aviso de privacidad, podemos recabar sus datos personales cuando usted nos lo proporcione directamente, cuando visita nuestro sitio de internet o utiliza nuestros servicios en línea, y cuando obtenemos información mediante otras fuentes que están permitidas por la ley. 
+            </li>
+            
+             <li>
+            Los datos personales que requerimos nos proporcione son Nombre, Domicilio, Teléfono, Correo Electrónico, considerado como sensible según la ley Federal de Protección de Datos Personales en Posesión de los Particulares.
+            </li>
+            
+             <li>
+            Le informamos que para cumplir con las finalidades previstas en este aviso de privacidad, estos últimos datos personales sensibles serán tratados bajo las más estrictas medidas de seguridad que garanticen su confidencialidad.
+
+            </li>
+
+
+             <li>
+             Los datos personales podrán ser tratados y utilizados por REHABILITADORA DE PROPIEDADES MEXICANAS, S.A. DE C.V.   para cumplir aquellas obligaciones que se derivan de la relación jurídica y/o comercial existente; la identificación, operación, administración y comercialización de productos o servicios contratados; ser contactado y enviar información a fin de conocer el nivel de satisfacción en relación con la adquisición de bienes y/o servicios, así como dar seguimiento a sus peticiones, sugerencias, reclamaciones y/o cualquier otra solicitud o para realizar acciones de actualizaciones técnicas de los productos y/o servicios que hubiese adquirido; ser contactado y enviar información para darle a conocer información comercial de nuestra empresa y/o de terceros, entre la que se destaca la relacionada con trivias, sorteos, promociones, concursos, información de nuevos productos, servicios, eventos, cambios en productos y/o servicios, evaluación de la calidad en los servicios, información de nuestros socios de negocios, estudios internos sobre hábitos de consumo, incluyendo cualquier acción de mercadotecnia, publicidad, estadística y de prospección comercial; ser contactado y enviar información para dar cumplimiento a requerimientos legales, mantener actualizados nuestros registros, dar seguimiento a nuestra relación comercial, si existiese, y mantener comunicación en general.
+            </li>
+            
+             <li>
+            Usted tiene derecho a acceder, rectificar y cancelar sus datos personales, así como de oponerse al tratamiento de los mismos o revocar el consentimiento que para tal fin nos haya otorgado a través de los procedimientos que hemos implementado. Para conocer dichos procedimientos, los requisitos y plazos se puede poner en contacto con nuestro departamento de datos personales en Avenida Santa Fe 505, Piso 9, Cruz Manca Santa Fe, México, Distrito Federal, C.P 05349 a la dirección electrónica contacto@revimex.mx teléfono (0155) 4161 66 00
+
+            </li>
+            
+             <li>
+            Así mismo si usted desea dejar de recibir mensajes promocionales de nuestra parte, puede solicitarlo a través del número telefónico  (0155) 4161 0030 ext. o bien al correo revimexcumpletussuenos@revimex.mx
+
+            </li>
+            
+             <li>
+            Nos reservamos el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente aviso de privacidad, para la atención de nuevos requerimientos legales, políticas internas o nuevos requerimientos para la prestación u ofrecimiento de nuestros productos o servicios. Estas modificaciones estarán visibles al público a través de nuestra página de internet en el siguiente enlace http://www.revimex.mx/
+
+            </li>
+            
+             <li>
+            Si usted considera que su derecho de protección de datos personales ha sido lesionado por alguna conducta de nuestros empleados o de nuestras actuaciones o respuestas, presume que en el tratamiento de sus datos personales existe alguna violación a las disposiciones previstas en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, podrá interponer la queja o denuncia correspondiente ante el IFAI, para mayor información visite www.ifai.org.mx
+
+            </li>
+            
+            </ul>
+            
+            
+        </section> 
+        
+    <footer>
+        <div class="main-wrapper" style="width: auto;">
+              <center>  
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            
+            <nav id="footer-menu" style="font-size:12px;">
+                <div>
+                                   
+                    
+                    <!--<figure id="footer-logo" class="fullwidth-picture" style="width: 45px;"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /></figure><a href="whatsapp://send?text=ME%20INTERESA!">5554096818</a>-->
+                    <figure id="footer-logo" class="fullwidth-picture" style="width: 45px;"><img id="img2" src="{!URLFOR($Resource.icinollamadas)}" /></figure><a href="tel://018002000440" target="_blank">01-800-200-0440</a>
+                            <a href="http://revimex.force.com">home</a>
+                            <a href="http://revimex.force.com/RevimexTerminosCondiciones" target="_blank">PERMISO DE SEGOB</a>
+                            <a href="http://revimex.force.com/SorteoLogin">RECOMENDADORES</a>
+                            <a href="http://revimex.force.com/RTAF" class="noborder-right">INVITA UN AMIGO</a>
+                </div>
+            </nav>
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/watch?v=mdauRwA98iw" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+            </center>
+            
+        </div>
+        
+        </footer>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+        <script>
+              var parametros =  {
+                    'estado':String('Todos'),
+                    'ciudad':String('Todos'),
+                    'tipo':String('Todos')
+                };
+                ;(function(factory) {
+                    if(typeof define === 'function' && define.amd) {
+                        define(['jquery'], factory);
+                    }
+                    else if(typeof exports === 'object') {
+                        module.exports = factory(require('jquery'));
+                    }
+                    else {
+                        factory(jQuery);
+                    }
+                }
+                (function($) {
+                    var pluginName = "tinycarousel"
+                    ,   defaults   =
+                        {
+                            start: 0
+                        ,   axis: "x"
+                        ,   buttons: true
+                        ,   bullets: false
+                        ,   interval: false
+                        ,   intervalTime: 3000
+                        ,   animation: true
+                        ,   animationTime: 1000
+                        ,   infinite: true
+                        }
+                    ;
+
+                    function Plugin($container, options) {
+                        /**
+                         * The options of the carousel extend with the defaults.
+                         *
+                         * @property options
+                         * @type Object
+                         * @default defaults
+                         */
+                        this.options = $.extend({}, defaults, options);
+
+                        /**
+                         * @property _defaults
+                         * @type Object
+                         * @private
+                         * @default defaults
+                         */
+                        this._defaults = defaults;
+
+                        /**
+                         * @property _name
+                         * @type String
+                         * @private
+                         * @final
+                         * @default 'tinycarousel'
+                         */
+                        this._name = pluginName;
+
+                        var self = this
+                        ,   $viewport = $container.find(".viewport:first")
+                        ,   $overview = $container.find(".overview:first")
+                        ,   $slides = null
+                        ,   $next = $container.find(".next:first")
+                        ,   $prev = $container.find(".prev:first")
+                        ,   $bullets = $container.find(".bullet")
+
+                        ,   viewportSize = 0
+                        ,   contentStyle = {}
+                        ,   slidesVisible = 0
+                        ,   slideSize = 0
+                        ,   slideIndex = 0
+
+                        ,   isHorizontal = this.options.axis === 'x'
+                        ,   sizeLabel = isHorizontal ? "Width" : "Height"
+                        ,   posiLabel = isHorizontal ? "left" : "top"
+                        ,   intervalTimer = null
+                        ;
+
+                        /**
+                         * The index of the current slide.
+                         *
+                         * @property slideCurrent
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slideCurrent = 0;
+
+                        /**
+                         * The number of slides the carousel is currently aware of.
+                         *
+                         * @property slidesTotal
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slidesTotal = 0;
+
+                        /**
+                         * If the interval is running the value will be true.
+                         *
+                         * @property intervalActive
+                         * @type Boolean
+                         * @default false
+                         */
+                        this.intervalActive = false;
+
+                        /**
+                         * @method _initialize
+                         * @private
+                         */
+                        function _initialize() {
+                            self.update();
+                            self.move(self.slideCurrent);
+
+                            _setEvents();
+
+                            return self;
+                        }
+
+                        /**
+                         * You can use this method to add new slides on the fly. Or to let the carousel recalculate itself.
+                         *
+                         * @method update
+                         * @chainable
+                         */
+                        this.update = function() {
+                            $overview.find(".mirrored").remove();
+
+                            $slides = $overview.children();
+                            viewportSize = $viewport[0]["offset" + sizeLabel];
+                            slideSize = $slides.first()["outer" + sizeLabel](true);
+                            self.slidesTotal = $slides.length;
+                            self.slideCurrent = self.options.start || 0;
+                            slidesVisible = Math.ceil(viewportSize / slideSize);
+
+                            $overview.append($slides.slice(0, slidesVisible).clone().addClass("mirrored"));
+                            $overview.css(sizeLabel.toLowerCase(), slideSize * (self.slidesTotal + slidesVisible));
+
+                            _setButtons();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setEvents
+                         * @private
+                         */
+                        function _setEvents() {
+                            if(self.options.buttons) {
+                                $prev.click(function() {
+                                    self.move(--slideIndex);
+
+                                    return false;
+                                });
+
+                                $next.click(function() {
+                                    self.move(++slideIndex);
+
+                                    return false;
+                                });
+                            }
+
+                            $(window).resize(self.update);
+
+                            if(self.options.bullets) {
+                                $container.on("click", ".bullet", function() {
+                                    self.move(slideIndex = +$(this).attr("data-slide"));
+
+                                    return false;
+                                });
+                            }
+                        }
+
+
+                        /**
+                         * If the interval is stoped start it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.start = function() {
+                            if(self.options.interval) {
+                                clearTimeout(intervalTimer);
+
+                                self.intervalActive = true;
+
+                                intervalTimer = setTimeout(function() {
+                                    self.move(++slideIndex);
+
+                                }, self.options.intervalTime);
+                            }
+
+                            return self;
+                        };
+
+                        /**
+                         * If the interval is running stop it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.stop = function() {
+                            clearTimeout(intervalTimer);
+
+                            self.intervalActive = false;
+
+                            return self;
+                        };
+
+                        /**
+                         * Move to a specific slide.
+                         *
+                         * @method move
+                         * @chainable
+                         * @param {Number}  [index] The slide to move to.
+                         */
+                        this.move = function(index) {
+                            slideIndex = isNaN(index) ? self.slideCurrent : index;
+                            self.slideCurrent = slideIndex % self.slidesTotal;
+
+                            if(slideIndex < 0) {
+                                self.slideCurrent = slideIndex = self.slidesTotal - 1;
+                                $overview.css(posiLabel, -(self.slidesTotal) * slideSize);
+                            }
+
+                            if(slideIndex > self.slidesTotal) {
+                                self.slideCurrent = slideIndex = 1;
+                                $overview.css(posiLabel, 0);
+                            }
+                            contentStyle[posiLabel] = -slideIndex * slideSize;
+
+                            $overview.animate(
+                                contentStyle
+                            ,   {
+                                    queue : false
+                                ,   duration : self.options.animation ? self.options.animationTime : 0
+                                ,   always : function() {
+                                       /**
+                                        * The move event will trigger when the carousel slides to a new slide.
+                                        *
+                                        * @event move
+                                        */
+                                        $container.trigger("move", [$slides[self.slideCurrent], self.slideCurrent]);
+                                    }
+                                });
+
+                            _setButtons();
+                            self.start();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setButtons
+                         * @private
+                         */
+                        function _setButtons() {
+                            if(self.options.buttons && !self.options.infinite) {
+                                $prev.toggleClass("disable", self.slideCurrent <= 0);
+                                $next.toggleClass("disable", self.slideCurrent >= self.slidesTotal - slidesVisible);
+                            }
+
+                            if(self.options.bullets) {
+                                $bullets.removeClass("active");
+                                $($bullets[self.slideCurrent]).addClass("active");
+                            }
+                        }
+
+                        return _initialize();
+                    }
+
+                    /**
+                    * @class tinycarousel
+                    * @constructor
+                    * @param {Object} options
+                        @param {Number}  [options.start=0] The slide to start with.
+                        @param {String}  [options.axis=x] Vertical or horizontal scroller? ( x || y ).
+                        @param {Boolean} [options.buttons=true] Show previous and next navigation buttons.
+                        @param {Boolean} [options.bullets=false] Is there a page number navigation present?
+                        @param {Boolean} [options.interval=false] Move to another block on intervals.
+                        @param {Number}  [options.intervalTime=3000] Interval time in milliseconds.
+                        @param {Boolean} [options.animate=true] False is instant, true is animate.
+                        @param {Number}  [options.animationTime=1000] How fast must the animation move in ms?
+                        @param {Boolean} [options.infinite=true] Infinite carousel.
+                    */
+                    $.fn[pluginName] = function(options) {
+                        return this.each(function() {
+                            if(!$.data(this, "plugin_" + pluginName)) {
+                                $.data(this, "plugin_" + pluginName, new Plugin($(this), options));
+                            }
+                        });
+                    };
+                }));
+            $(function(){
+                $('#slider1').tinycarousel();
+                $( ".suggestion" ).click(function() {
+                    var id =  $(this).attr('id');
+                    var url = document.URL.split('?');
+                    var retUrl = url.length > 1 ? url[1] : ''; 
+                    //console.log(url.length);
+                    var url = '/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                    window.location.replace(url);
+                });
+            });
+
+        </script>
+    </body>
+    </html>
+</apex:page>

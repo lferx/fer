@@ -1,0 +1,700 @@
+<apex:page controller="FichaTecnica_Controller" showheader="false" > 
+    <!-- renderAs="PDF" applyBodyTag="false" -->
+
+    <!-- 
+
+    azulfuerte: #0C326B
+    AZULCALRO: #4DB1E0
+    VERDE: #E5F38F
+    NARANJA FUERTE: #E7AD47
+    NARANJE CLARO: #FFD082
+
+    para pdf
+    https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_quick_start_renderas_pdf.htm
+
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+
+    -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: 'Bebas-Neue';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: 'gotham-rounded-book';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: 'gotham-rounded-medium';
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            
+            h1{
+                font-size: 20px;
+                font-weight: normal;
+                color: #0C326B;
+                font-family: 'Bebas-Neue';
+                text-transform:uppercase;
+                /*font-size:3vw;*/
+                         
+
+            }
+            h2{
+                font-size: 16px;
+                font-weight: bold;
+                color: #0C326B;
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3{
+                font-size: 10px;
+                font-weight: bold;
+                font-family: 'gotham-rounded-book';
+                color: #fff;
+                text-transform: uppercase;
+            }
+            h4{
+                font-size: 11px;
+                font-family: 'gotham-rounded-book';
+                color: #000;
+                text-transform: uppercase;
+
+            }
+            .imagenrevimex{
+                position: relative;
+                text-align: center;
+                height:40px; 
+                width: 145px;
+
+            
+            }
+            .imagentitulos{
+                width: 35px;
+                height: 35px;
+            }
+            
+            .divcabeceranaranja{
+                width: auto;
+                height: auto;
+                text-align: center;
+                border-radius: 0px 0px 0px 0px;
+                border: 0px solid #000000;
+                background: #E7AD47;
+            }
+            .imagentitulos{
+                width: 35px;
+                height: 35px;
+            }
+
+
+            .divnaranjaclaro{
+                text-align: center; 
+                align-content: center;
+                background-color: #FFD082;
+                height: 100%;
+            }
+            .tdnaranjaclaro{
+                background-color: #FFD082;
+            }
+
+
+            /* Estilo para tabla de titulos */
+            .sectiontd{
+                width: 30%;
+                padding: 2px 10px 2px 10px;
+            }
+            .sectiondivtext{
+                padding: 0px 5px 0px 5px;
+            }
+            .sectiondiv{
+                height: 40px;
+                /*padding: 3px;*/ 
+                border-radius: 10px; 
+                border:4px solid #4DB1E0; 
+                text-align: center; 
+                align-content: center;
+            }
+            /* Estilo para tabla de contenido tecnica propiedad */
+            .sectioncontenttr{
+                width: 20%;
+            }
+            .sectioncontenttd2{
+                width: 80%;
+            }
+            .sectiondivverde{
+                background-color: #E5F38F;
+                text-align: center;
+                padding: 2px;
+                min-height: 15px;
+            }
+            .tdverde{
+                background: #E5F38F;
+                width: 50%;
+            }
+
+
+            .sectiondivazul{
+                background: #0C326B;
+                text-align: center;
+                padding: 2px;
+            }
+            .tdazul{
+                background: #0C326B;
+                width: 50%;
+            }
+            .imgth{
+                width: 15px;
+                height: 15px;
+            }
+            .tablaspequenas{
+                border: 1px;
+                width: 100%;
+                border: 0px;
+            }
+            .tablaspequenas tr td{
+                border: 0px;
+            }
+            .tablaspequenas2{
+                border: 1px;
+                width: 83%;
+                border:  0;
+            }
+            .tablaspequenas2 tr td{
+                border: 0;
+            }
+            .w3-button{border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+            /*.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+            .w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+
+            .w3-tooltip,.w3-display-container{position:relative}.w3-tooltip .w3-text{display:none}.w3-tooltip:hover .w3-text{display:inline-block}
+            .w3-display-container:hover .w3-display-hover{display:block}.w3-display-container:hover span.w3-display-hover{display:inline-block}.w3-display-hover{display:none}
+            .w3-text-white,.w3-hover-text-white:hover{color:#fff!important}
+            .w3-container:after,.w3-container:before,.w3-panel:after,.w3-panel:before,.w3-row:after,.w3-row:before,.w3-row-padding:after,.w3-row-padding:before,
+            .w3-cell-row:before,.w3-cell-row:after,.w3-clear:after,.w3-clear:before,.w3-bar:before,.w3-bar:after{content:"";display:table;clear:both}
+            .w3-container,.w3-panel{padding:0.01em 16px}.w3-panel{margin-top:16px;margin-bottom:16px}*/
+            .w3-black{
+                background-color: rgba(201, 200, 200, 0.5);
+                /*background-color: #C9C8C8;
+                opacity: 0.5;*/
+            }
+            .w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+            .w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+
+            .w3-display-container{
+                position:relative;
+                /*max-height: 250px;*/
+            }
+            .w3-display-container:hover{
+                display:block;
+
+            }
+            .w3-text-white{color:#fff !important;}
+            .w3-container:after,.w3-container:before{content:"";display:table;clear:both}
+            .w3-container{padding:0.01em 16px}
+
+
+            .mySlides{
+                width: 100%;
+                height: 270px;
+                object-fit: cover;
+            }
+            /*.trEspecial td{
+                min-height: 91px;
+            }*/
+        </style>
+
+    </head>
+    <script>
+        $( document ).ready(function() {
+            // $$('[id*="folioOferta"] a').target = '_blank';
+            // $( '[id^="lookupa"]' ).prop('target','_blank');
+            $('span a').prop('target','_blank');
+            // $$( '[id^="lookupa"] a' ).target='_blank';
+            
+        });
+    </script>
+    <apex:form >
+
+
+        <apex:pageMessages />
+        <apex:variable var="sinimagen" value="/resource/1494289530000/imagen_no_encontrada" />
+
+        <center>
+            <section style="max-width: 700px;">
+                <center>
+
+                    <table border="0" width="100%">
+                        <tr style="height: 100px;">
+
+                            <td colspan="3" style="background: #0c326b;text-align: center; width: 50%;">
+                                <div><!-- <img src="http://www.revimex.mx/images/logotipo.png"  class="imagenrevimex"/> -->
+                                    <apex:image value="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex2.png')}" styleClass="imagenrevimex"/>
+                                </div>
+                            </td>
+
+                            <td colspan="3" style="background: #E7AD47;text-align: center;">
+                                <div class="divcabeceranaranja"><h1 style="font-size: 36px;">Ficha Técnica Comercial</h1></div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="6"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" rowspan="2">
+                                <div id="BotonFotos">
+                                    <!-- <apex:repeat value="{!fotos}" var="foto">
+                                      <img src="{!foto.url}" style="max-width: 100%" class="mySlides" />
+                                    </apex:repeat>
+                                    <p class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</p>
+                                    <p class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</p> -->
+                                    <!-- <img src="{!imagenbase64}"/> -->
+
+                                    <div class="w3-display-container w3-text-white">
+                                        <apex:repeat value="{!fotos}" var="foto">
+                                            <img src="{!foto.url}" style="max-width: 100%" class="mySlides" />
+                                        </apex:repeat>
+                                        <apex:outputPanel rendered="{!IF(fotosSize > 1,true,false)}">
+                                            <div class="w3-display-left w3-container"><p class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</p></div>
+                                            <div class="w3-display-right w3-container"><p class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</p></div>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <!--img src="{!fotoPrincipal}" style="max-width: 100%" /-->
+                                </div>
+                            </td>
+                            <td colspan="3" class="tdnaranjaclaro">
+                                <div id="FolioOferta" class="divnaranjaclaro"><br/>
+                                    <apex:outputLink value="/{!objetoOferta.id}" target="_blank">
+                                        <h2 style="font-size: 23px;"><apex:outputField value="{!objetoOferta.Name}"/></h2>
+                                    </apex:outputLink>
+                                    <br/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tdnaranjaclaro">
+                                <div id="DireccionCompleta" class="divnaranjaclaro"> 
+                                    <div style="padding: 0 10% 0 10%">
+                                        <h2>
+                                            <!-- <apex:outputText value="{!vtipodecalle}"/>
+                                            <apex:outputText value="{!vcalle}"/>
+                                            <apex:outputText value="{!vnumeroexterior}"/>
+                                            <apex:outputText value="{!vnumerointerior}"/>
+                                            <apex:outputText value="{!vlote}"/>
+                                            <apex:outputText value="{!vmz}"/>
+                                            <apex:outputText value="{!vcp}"/>
+                                            <apex:outputText value="{!vtipodecolonia}"/> -->
+                                            <apex:outputText value="{!direccionCompleta}"/>
+                                            <apex:outputField value="{!objetoOferta.Colonia_busqueda__c}" id="folioOferta"/>, &nbsp;
+                                            <apex:outputField value="{!objetoOferta.Ciudad_Tabla__c}"/>, &nbsp;
+                                            <apex:outputField value="{!objetoOferta.Estado__c}"/>.
+                                        </h2> 
+                                    </div>
+                                </div>
+                            </td>
+                        </tr><!-- 
+                    </table>
+
+                    <table border="1"> -->
+                        <tr>
+                            <td colspan="2" class="sectiontd">
+                                <div class="sectiondiv">
+                                    <center>
+                                        <table class="tablaspequenas">
+                                            <tr>
+                                                <td>
+                                                    <apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/tecnica.png')}" styleClass="imagentitulos"/>
+                                                </td>
+                                                <td>
+                                                    <div class="sectiondivtext"><h1>técnica propiedad</h1></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </center>
+                                </div>
+                            </td>
+
+                            <td colspan="2" class="sectiontd">
+                                <div class="sectiondiv">
+                                    <center>
+                                        <table class="tablaspequenas">
+                                            <tr>
+                                                <td>
+                                                    <apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/resumen.png')}" styleClass="imagentitulos"/>
+                                                </td>
+                                                <td>
+                                                    <div class="sectiondivtext"><h1>resumen financiero</h1></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </center>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </td>
+
+                            <td colspan="2" class="sectiontd">
+                                <div class="sectiondiv">
+                                    <center>
+                                        <table class="tablaspequenas">
+                                            <tr>
+                                                <td>
+                                                    <apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/promocion.png')}" styleClass="imagentitulos"/>
+                                                </td>
+                                                <td>
+                                                    <div class="sectiondivtext"><h1>promoción</h1> </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </center>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+
+                                <center>
+                                    <table class="tablaspequenas2">
+                                        <tr class="sectioncontenttr">
+                                            <td>
+                                                <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/terreno2.png')}" styleClass="imgth"/>
+                                            </td>
+                                            <td  class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputText value="{0,number,###,###}  m<sup>2</sup>" escape="false">
+                                                            <apex:param value="{!objetoOferta.Propiedad__r.Terreno_m2__c}"/>
+                                                        </apex:outputText>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="sectioncontenttr">
+                                            <td class="sectioncontenttr">
+                                                <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/construccion2.png')}" styleClass="imgth"/> 
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputText value="{0,number,###,###}  m<sup>2</sup>" escape="false">
+                                                            <apex:param value="{!objetoOferta.Propiedad__r.Construccion_m2__c}"/>
+                                                        </apex:outputText>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="sectioncontenttr">
+                                            <td class="sectioncontenttr">
+                                              <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/habitaciones2.png')}" styleClass="imgth"/>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputField value="{!objetoOferta.Propiedad__r.N_de_Habitaciones__c} "/>
+                                                    </h4>
+                                              </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="sectioncontenttr">
+                                            <td class="sectioncontenttr">
+                                                <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/banios2.png')}" styleClass="imgth"/>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputField value="{!objetoOferta.Propiedad__r.N_de_Ba_os__c} "/>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="sectioncontenttr">
+                                            <td class="sectioncontenttr">
+                                                <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/patio2.png')}" styleClass="imgth"/> 
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputField value="{!objetoOferta.Propiedad__r.Patios__c} "/>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                         <tr class="sectioncontenttr">
+                                            <td class="sectioncontenttr">
+                                              <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/estacionamiento2.png')}" styleClass="imgth"/>
+                                            </td>
+                                            <td>
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputField value="{!objetoOferta.Propiedad__r.Estacionamiento__c}"/>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </td>
+                            <td colspan="2">
+                                <center>
+                                    <table class="tablaspequenas2">
+                                        <!-- <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>$ Avaluo: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4><apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!objetoOferta.Valor_Aval_o_Infonavit__c}"/></apex:outputText></h4></div>
+                                            </td>
+                                         </tr> -->
+
+                                        <tr>
+                                        <td class="tdazul">
+                                          <div class="sectiondivazul"><h3>$ Referencia: </h3></div>
+                                        </td>
+                                        <td class="tdverde">
+                                          <div class="sectiondivverde"><h4><apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!objetoOferta.ValorReferencia__c}"/></apex:outputText></h4></div>
+                                        </td>
+                                          </tr>
+
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>$ Original: </h3> </div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4> <apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!objetoOferta.Precio_Original__c}"/></apex:outputText> </h4></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>$ colonia:</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputText value="$ {0,number,###,###}"><apex:param value="{!pcolonia}"/></apex:outputText></h4></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>ahorro:</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputText value="{0,number,###} %"><apex:param value="{!IF(ahorro > 0,ahorro,0)}" /></apex:outputText></h4></div></td>
+                                        </tr>
+
+                                        <!-- <tr>
+                                            <td class="tdazul">
+                                              <div class="sectiondivazul"><h3>$ Contado: </h3>  </div>
+                                            </td>
+                                            <td class="tdverde">
+                                              <div class="sectiondivverde"><h4><apex:outputText value="$ {0,number,###,###}"><apex:param value="{!precioContado}"/></apex:outputText></h4></div>
+                                            </td>
+                                        </tr> -->
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Escrituras: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4> <apex:outputText value="{!IF(objetoOferta.Escritu__c == 'Con Escrituras','Si','No')}"/> </h4></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Desalojada: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <apex:variable value="{!objetoOferta.Estatus_de_Invasion__c}" var="inva" />
+                                                <div class="sectiondivverde"><h4><apex:outputText value="{!IF(inva == '','N/A',IF(inva == 'Invadida','No','Si'))}"/></h4></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Dias Stock: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4><apex:outputText value="{0,number,###,###}"><apex:param value="{!objetoOferta.TiempoOferta__c}"/></apex:outputText></h4></div>
+                                            </td>
+                                        </tr> -->
+                                    </table>
+                                </center>
+                            </td>
+                            <td colspan="2">
+                                <center>
+                                    <table class="tablaspequenas2">
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Dias Stock: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4><apex:outputText value="{0,number,###,###}"><apex:param value="{!objetoOferta.TiempoOferta__c}"/></apex:outputText></h4></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tdazul" >
+                                                <div class="sectiondivazul"><h3>$ Referencia:</h3></div>
+                                                <!-- style="min-height: 43px !important;" -->
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4><apex:outputText value="{!promodias}"/></h4></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Comision promotor: </h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde" style="min-height: 30px !important;"><h4><apex:outputText value="{!promodesalojadas}"/></h4></div>
+                                            </td>
+                                        </tr>
+                                          <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3> Comision +: </h3> </div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4> <apex:outputText value="{!objetoOferta.Campa__r.Comisi_n__c}"/></h4></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3> Extras: </h3>  </div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde">
+                                                    <h4>
+                                                        <apex:outputText value="N/A" rendered="{!IF(sizelist == false,true,false)}"/>
+                                                        <apex:selectList style="background: #E5F38F; border: 1px solid white; width:98%"  size="1" rendered="{!sizelist}">
+                                                            <apex:selectOptions value="{!ExtraList}"/>
+                                                        </apex:selectList>
+                                                    </h4>
+                                                </div>
+                                            </td>
+                                          </tr>
+                                    </table>
+                                </center>
+                            </td>
+                        </tr><!-- 
+                    </table>
+                    <table border="1" width="100%"> -->
+                        <tr>
+                            <td colspan="6" class="sectiontd">
+                                <div class="sectiondiv">
+                                    <center>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <apex:image value="{!URLFOR($Resource.consolas, 'recursos/ficha/argumentos.png')}" styleClass="imagentitulos"/>
+                                                </td>
+                                                <td>
+                                                    <div class="sectiondivtext"><h1>Argumentos comerciales</h1></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </center>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <center>
+                                    <table class="tablaspequenas">
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Localizador</h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde"><h4><apex:outputLink onclick="window.open('http://maps.google.es/?q={!objetoOferta.Propiedad__r.Punto__Latitude__s}%20{!objetoOferta.Propiedad__r.Punto__Longitude__s}','_blank','location=yes,height=800,width=800,scrollbar=yes');">Abrir mapa</apex:outputLink></h4></div><!-- value="http://maps.google.es/?q={!objetoOferta.Propiedad__r.Punto__Latitude__s}%20{!objetoOferta.Propiedad__r.Punto__Longitude__s}" -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul" style="height: 95px;">
+                                                <div class="sectiondivazul" ><h3>Referencia</h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde" style="white-space:nowrap; max-width: 230px;clip-path: inset(0 0 0 0);display: block;"><h4><apex:outputText value="{!objetoOferta.Propiedad__r.referencias_links__c}" escape="false"/><br/></h4></div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>$ colonia</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputText value="$ {0,number,###,###}"><apex:param value="{!objetoOferta.Colonia_busqueda__r.Precio_medio_de_mercado__c}"/></apex:outputText></h4></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>ahorro</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputText value="{0,number,###} %"><apex:param value="{!IF(objetoOferta.Colonia_busqueda__r.Precio_medio_de_mercado__c != null,IF(objetoOferta.Colonia_busqueda__r.Precio_medio_de_mercado__c > objetoOferta.ValorReferencia__c,100 -(objetoOferta.ValorReferencia__c * 100 / objetoOferta.Colonia_busqueda__r.Precio_medio_de_mercado__c),0),0)}" /></apex:outputText></h4></div></td>
+                                        </tr> -->
+                                    </table>
+                                </center>
+                            </td>
+                            <td colspan="3">
+                                <center>
+                                    <table class="tablaspequenas">
+                                        <tr>
+                                            <td class="tdazul">
+                                                <div class="sectiondivazul"><h3>Judicial</h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                              <div class="sectiondivverde"><h4><apex:outputText value="{!IF(AND(objetoOferta.Desalojo__r.EtapaDesalojoJudicial__c != null,objetoOferta.Desalojo__r.EtapaDesalojoJudicial__c != ''),objetoOferta.Desalojo__r.EtapaDesalojoJudicial__c,'NO INICIADO')}"/></h4></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>vendidas</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputField value="{!objetoOferta.Colonia_busqueda__r.Vendidas__c}"/></h4></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul"><div class="sectiondivazul"><h3>disponibles</h3></div></td>
+                                            <td class="tdverde"><div class="sectiondivverde"><h4><apex:outputField value="{!objetoOferta.Colonia_busqueda__r.Propiedades_Disponibles__c}"/></h4></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdazul">
+                                              <div class="sectiondivazul"><h3>Descripción</h3></div>
+                                            </td>
+                                            <td class="tdverde">
+                                                <div class="sectiondivverde" style="min-height: 45px;"><h4><apex:outputField value="{!objetoOferta.Propiedad__r.Argumentos_comerciales__c}"/><apex:outputText value="N/A" rendered="{!objetoOferta.Propiedad__r.Argumentos_comerciales__c == null}"/></h4></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <!-- <center><apex:commandButton action="{!irANegociacion}" value="Autorización"/></center> -->
+                </center>
+                    
+            </section>
+        </center>
+    </apex:form>
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = x.length}
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+            }
+            x[slideIndex-1].style.display = "block";  
+        }
+    </script>
+
+</apex:page>

@@ -1,0 +1,32 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              body {
+             
+                    background-image: url("{!URLFOR($Resource.imagen_ejecutivos2)}");
+                    position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             
+               
+            </style>
+            </head>
+ 
+            <body>
+              <DIV STYLE="position:relative; top:140px;left:150px;">    
+                <img id ="fotocambia1" src="{!URLFOR($Resource.Foto_anette)}" style="height:27%;width:27%;"/>
+              </div>
+            <DIV STYLE="position:relative; top:160px;left:150px;">    
+                <img id ="fotocambia1" src="{!URLFOR($Resource.Foto_esmeralda)}" style="height:27%;width:27%;"/>
+              </div>               
+            <!--<DIV STYLE="position:relative; top:180px;left:150px;">    
+                <img id ="fotocambia1" src="{!URLFOR($Resource.Foto_jesus)}" style="height:27%;width:27%;"/>
+              </div>-->
+               <DIV STYLE="position:relative; top:200px;left:150px;">    
+                <img id ="fotocambia1" src="{!URLFOR($Resource.foto_Samantha)}" style="height:27%;width:27%;"/>
+              </div>
+            </body>
+            </html>
+            </apex:page>

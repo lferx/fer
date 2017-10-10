@@ -1,0 +1,40 @@
+<apex:page standardController="Etapa__c" recordsetvar="etapas" standardStylesheets="false" sidebar="false">
+
+<apex:stylesheet value="{!URLFOR($Resource.GanttChart, 'style.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.GanttChart, 'js/jquery-1.5.1.min.js')}"/>
+ <apex:includeScript value="{!URLFOR($Resource.GanttChart, 'js/jquery.fn.gantt.js')}"/>
+ 
+ <!-- 
+ <apex:stylesheet value="{!URLFOR($Resource.GanttChartOri, 'style.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.GanttChartOri, 'js/jquery-1.5.1.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.GanttChartOri, 'js/jquery.fn.gantt.js')}"/>
+ -->
+<div class="gantt" />
+
+<script type="text/javascript">
+
+$gc = jQuery.noConflict(); 
+
+function getHostName()
+{
+    var p = $gc(location).attr('href');
+    pathArray = p.split( '/' );
+    var protocol = pathArray[0];
+    var host = pathArray[2];
+    return protocol+'//'+host;
+}
+
+var jsonDataURL = getHostName()+'/apex/GanttChartData?core.apexpages.devmode.url=0';
+//var jsonDataURL = "{!URLFOR($Resource.GanttChart, 'js/dataHours.js')}";
+    $gc(function () {
+        $gc(".gantt").gantt({source: jsonDataURL, itemsPerPage: '30', navigate: 'scroll', scale: 'days', maxScale: 'weeks', minScale: 'days', hollydays: ["\/Date(1293836400000)\/"]});                   
+     });
+     /*
+          dateStr = "/Date(1334665800000)/";
+          var date = eval('new' + dateStr.replace(/\//g, ' '));
+          var parsedDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+          alert (parsedDate);
+          */      
+</script>
+
+</apex:page>

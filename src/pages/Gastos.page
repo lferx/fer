@@ -1,0 +1,407 @@
+<apex:page standardController="Gasto__c" extensions="GastosController"  tabStyle="Gasto__c" title="Administrar gastos" >
+  <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+  <script type="text/javascript">
+      $j = jQuery.noConflict();
+      $j(document).ready(function() {
+          $j("#modalArchivos").dialog({ 
+                    autoOpen: false, 
+                    modal: true,   
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind"
+          });
+           $j("#modalAgrupador").dialog({ 
+                    autoOpen: false, 
+                    modal: true,   
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind"
+          });
+          init();
+      });
+      
+      function init(){
+            $j(".newGla").each(function() {
+                var id = $j(this).attr("id");
+                $j("a[id$='" + id + "_lkwgt']").hide();
+                $j(this).prop("disabled",true);
+            });
+      }
+      function setRowColor() {
+          var objDiv = $j( "div[id$='divTablaPrincipal']" );
+          $j("input[type='hidden'][name='isNew']").each(function() {
+            if($j(this).val() == "true") {
+                $j(this).parent().parent().css("background","#CFC");
+            }
+        });
+      }
+      function obteinBeneficiarioNew(){
+          var idConcepto =  $j("select[name*='listConcepto']").val();
+          var idAccount=  $j("input[id*='pbsNew:newBeneficiario_lkid']").val();
+          obtainGLANew(idConcepto,idAccount);
+      }
+      function obteinBeneficiario(index){
+          var idConcepto =  $j("select[name*='"+ index +":listConceptoTabla']").val();
+          var idAccount=  $j("input[id*='"+ index +":benefeciario_lkid']").val();
+          //console.log(index + ',' + idConcepto + ',' + idAccount);
+          obtainGLATabla(idConcepto,idAccount,index);
+      }
+     
+      function obteinEtapas(){
+          var idOferta=  $j("input[id*='pbsNew:ofertaNew_lkid']").val();
+          obtainEtapasOferta(idOferta);
+      }
+      
+      function abrirModalArchivos(idPadre,tipo,isGasto){
+            if(isGasto){
+                console.log('Es gasto');
+                document.getElementById('theIframe').src='../apex/GastosArchivos?gastoId=' + idPadre + '&tipo=' + tipo; 
+            }else{
+                 console.log('Es solicitud');
+                document.getElementById('theIframe').src='../apex/GastosArchivos?solicitudId=' + idPadre + '&tipo=' + tipo;             
+            }
+            $j("#modalArchivos").dialog("open");
+      }
+      function abrirModalAgrupador(){
+           $j("#modalAgrupador").dialog("open");
+      }
+  </script>
+  <style>
+      .msgError{
+         font-size:10px;
+         color: red !important;
+      }
+      .orange{
+          background-color:#FECE27;
+          tex-align:center;
+      }
+      .bold{
+        font-weight:bold;
+      }
+      .button-adjuntar{
+        width:100px;
+      //height:50px;
+      //line-height: 50px;
+        text-align:center;
+      }
+
+  </style>
+      <apex:sectionHeader title="Solicitud de gastos de la oferta" subtitle="{!oferta.Name}"/>
+      <apex:pageBlock id="pbMain">
+          <apex:pageMessages id="pMessage"></apex:pageMessages>
+          
+          <apex:pageblockSection columns="1" id="pbsPrincipal">
+              <apex:form >
+              <apex:actionFunction action="{!obtainGLANew}" name="obtainGLANew" status="loadStatus" rerender="pbsNew" immediate="true">
+                    <apex:param name="idConcepto" value=""/>
+                    <apex:param name="idAccount" value=""/>
+                    <apex:param name="idOferta" value=""/>
+              </apex:actionFunction>
+              <apex:actionFunction action="{!obtainEtapasOferta}" name="obtainEtapasOferta" status="loadEtapas" rerender="pbsNew,pMessage" immediate="true">
+                   <apex:param name="idOferta" value=""/>
+              </apex:actionFunction> 
+              <apex:actionFunction action="{!iniciaAgruparGastos}" name="iniciaAgruparGastos" oncomplete="abrirModalAgrupador();" rerender="opAgrupador,pMessageAgrupador" immediate="true">
+              </apex:actionFunction>
+              <apex:pageblockSection id="pbsNew" columns="2" title="Gasto nuevo">
+                  <apex:inputField value="{!gastoNew.Oferta__c}" id="ofertaNew"  required="true">
+                      <apex:actionSupport event="onchange" reRender="pbsNew,pMessage" oncomplete="" immediate="true"/>
+                  </apex:inputField>
+                  
+                  <!--<apex:outputPanel ></apex:outputPanel>
+                  <apex:selectList value="{!gastoNew.EtapaOferta__c}" multiselect="false" size="1" id="selectEtapasOferta" required="true">
+                          <apex:selectOptions value="{!etapasOferta}"/>
+                   </apex:selectList>-->
+                   <apex:actionStatus startText="Processing" stopText="" id="loadEtapas"/> 
+                 
+                  <apex:selectList value="{!gastoNew.Concepto__c}" multiselect="false" size="1" onchange="obtainGLANew(this.value,'','{!gastoNew.Oferta__c}');" id="listConcepto" required="true">
+                        <apex:selectOptions value="{!conceptoGastos}"/>
+                  </apex:selectList>        
+                  <apex:outputPanel ></apex:outputPanel>
+                  <apex:inputField value="{!gastoNew.Account__c}" onchange="obteinBeneficiarioNew();" id="newBeneficiario" required="true"/>
+                  <apex:actionStatus startText="Processing" stopText="" id="loadStatus"/>
+                  <apex:inputField value="{!gastoNew.Fecha__c}" required="true"/>
+                  <!--<apex:outputPanel ></apex:outputPanel>
+                  <apex:inputField value="{!gastoNew.FolioFactura__c}" required="true"/>-->
+                  <apex:outputPanel ></apex:outputPanel>
+                  <apex:inputField value="{!gastoNew.Importe__c}" required="true" rendered="{!priceEditNew}"/>
+                  <apex:outputField value="{!gastoNew.Importe__c}" rendered="{!NOT(priceEditNew)}"/>
+                  <apex:outputPanel ></apex:outputPanel>
+                  <apex:inputField value="{!gastoNew.Comentario__c}"/>
+                  <apex:pageBlockSectionItem >
+                      <apex:commandButton action="{!addGasto}" value="Agregar" reRender="pMessage,pbsNew,divTablaPrincipal"/>
+                      <script>init();</script>
+                  </apex:pageBlockSectionItem>
+              </apex:pageblockSection>
+               <script>twistSection(document.getElementById('{!$Component.pbsNew}').getElementsByTagName('img')[0])</script>
+              </apex:form>
+              <apex:pageblockSection id="pbsExistentes" columns="1" title="Gastos existentes">
+              <apex:outputPanel styleClass="tableContainer" layout="block" id="divTablaPrincipal">
+                  <apex:form >
+                  <apex:actionFunction action="{!obtainGLA}" name="obtainGLATabla" status="loadStatus" rerender="divTablaPrincipal,pMessage">
+                    <apex:param name="idConcepto" value=""/>
+                    <apex:param name="idAccount" value=""/>
+                    <apex:param name="index" value=""/>
+                  </apex:actionFunction>
+                  <apex:variable value="{!0}" var="index" id="variableIndex"/>
+                  <apex:pageBlockTable value="{!gastos}" var="wg" id="pbtGastos" columnsWidth="10%,10%,10%,15%,15%,10%,8%,8%,8%,8%,8%">
+                      <apex:column width="100px">
+                          <apex:facet name="header">
+                              <apex:outputPanel >
+                                  <apex:commandButton action="{!duplicateGasto}" value="Clonar" reRender="pMessage,divTablaPrincipal"/>
+                                  <!-- <apex:commandButton action="{!deleteGasto}" value="cancelar" reRender="pMessage,divTablaPrincipal"/> -->
+                                  <apex:commandButton action="{!iniciaAgruparGastos}" value="Agrupar"  oncomplete="abrirModalAgrupador();" rerender="opAgrupador,pMessageAgrupador"/>
+                              </apex:outputPanel>
+                          </apex:facet>
+                          <apex:facet name="footer">
+                              <apex:outputPanel >
+                                  <apex:commandButton action="{!duplicateGasto}" value="Clonar" reRender="pMessage,divTablaPrincipal"/>
+                                  <apex:commandButton action="{!iniciaAgruparGastos}" value="Agrupar"  oncomplete="abrirModalAgrupador();" rerender="opAgrupador,pMessageAgrupador"/>
+                              </apex:outputPanel>
+                          </apex:facet> 
+                         <apex:inputCheckbox value="{!wg.selected}"/>
+                         <input type="hidden" value="{!wg.isNew}" name="isNew"/>
+                      </apex:column>
+                      <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Name.Label}">
+                          <apex:outputField value="{!wg.gasto.Name}"/>
+                      </apex:column>
+                       <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Cancelado__c.Label}">
+                          <apex:inputField value="{!wg.gasto.Cancelado__c}"/>
+                      </apex:column>
+                      <apex:column headerValue="{!$ObjectType.Gasto__c.fields.Oferta__c.Label}">
+                          <apex:inputField value="{!wg.gasto.Oferta__c}" rendered="{!(wg.gasto.Estatus__c == 'Nuevo' || wg.isNew)}"/>
+                          <apex:outputField value="{!wg.gasto.Oferta__c}" rendered="{!(wg.gasto.Estatus__c != 'Nuevo'&& !wg.isNew)}"/> 
+                      </apex:column>
+                      <apex:column headerValue="Información">
+                           <table border="0">
+                            <tr>
+                                <td> 
+                                    <apex:outputLabel value="Beneficiario: " styleClass="bold"></apex:outputLabel>
+                                    <apex:inputField value="{!wg.gasto.Account__c}" onchange="obteinBeneficiario({!index-1});" styleClass="beneficiario{!index}" id="benefeciario" rendered="{!wg.gasto.Estatus__c == 'Rechazado' || wg.gasto.Estatus__c == 'Nuevo' || wg.isNew}"/>
+                                    <apex:outputField value="{!wg.gasto.Account__c}" rendered="{!wg.gasto.Estatus__c != 'Rechazado' && wg.gasto.Estatus__c != 'Nuevo'&& !wg.isNew}"/>
+                                </td>
+                             </tr>
+                              <tr>
+                                <td>
+                                    <apex:outputLabel value="Concepto: " styleClass="bold"></apex:outputLabel>
+                                    <apex:selectList value="{!wg.gasto.Concepto__c}" multiselect="false" size="1" onchange="" style=""  id="listConceptoTabla" rendered="{!wg.gasto.Estatus__c == 'Rechazado' || wg.gasto.Estatus__c == 'Nuevo' || wg.isNew}">
+                                            <apex:selectOptions value="{!conceptoGastos}"/>
+                                    </apex:selectList>
+                                    <apex:outputField value="{!wg.gasto.Concepto__c}" rendered="{!wg.gasto.Estatus__c != 'Rechazado' && wg.gasto.Estatus__c != 'Nuevo'&& !wg.isNew}"/>
+                                    <apex:variable var="index" value="{!index + 1}" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    <apex:outputLabel value="Etapa  Oferta: " styleClass="bold"></apex:outputLabel>
+                                    <apex:outputField value="{!wg.gasto.EtapaOferta__r.Etapa__r.Name}"/>
+                                </td>
+                              </tr>
+                          </table>
+                      </apex:column>
+                      <apex:column headerValue="Información dos">
+                          <table border="0">
+                              <tr>
+                                <td>
+                                    <apex:outputLabel value="Empresa: " styleClass="bold"></apex:outputLabel>
+                                    <apex:outputField value="{!wg.gasto.Oferta__r.Inversor__c}"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    <apex:outputLabel value="Plaza: " styleClass="bold"></apex:outputLabel>
+                                    <apex:outputField value="{!wg.gasto.Oferta__r.Plaza__c}"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    <apex:outputLabel value="Subtipo: " styleClass="bold"></apex:outputLabel>
+                                    <apex:outputField value="{!wg.gasto.Concepto__r.Subtipo__c}"/>
+                                </td>
+                              </tr>
+                          </table>
+                      </apex:column>
+                      <apex:column headerValue="Importe">
+                          <apex:outputPanel >
+                          <apex:inputField value="{!wg.gasto.Importe__c}" required="true" rendered="{!(wg.gasto.Estatus__c == 'Rechazado' || wg.gasto.Estatus__c == 'Nuevo' || wg.isNew || wg.gasto.Concepto__r.CampoImporteOrigen__c == 'CosteRehabilitacion__c') && wg.priceEdit && (wg.gasto.Concepto__r.CampoImporteOrigen__c == null || wg.gasto.Concepto__r.CampoImporteOrigen__c == 'CosteRehabilitacion__c')}"/>
+                          <apex:outputField value="{!wg.gasto.Importe__c}" rendered="{!NOT((wg.gasto.Estatus__c == 'Rechazado' || wg.gasto.Estatus__c == 'Nuevo' || wg.isNew || wg.gasto.Concepto__r.CampoImporteOrigen__c == 'CosteRehabilitacion__c') && wg.priceEdit && (wg.gasto.Concepto__r.CampoImporteOrigen__c == null || wg.gasto.Concepto__r.CampoImporteOrigen__c == 'CosteRehabilitacion__c'))}"/>
+                          <apex:outputLabel value="Aplicar IVA 16%"></apex:outputLabel>
+                          <apex:inputCheckbox value="{!wg.gasto.AplicarIVA__c}"/>
+                          </apex:outputPanel>
+                      </apex:column>
+                      <apex:column headerValue="Importe final">
+                          <apex:outputField value="{!wg.gasto.ImporteFinal__c}"/>
+                      </apex:column>
+                      <apex:column headerValue="Comentarios">
+                            <apex:inputField value="{!wg.gasto.Comentario__c}" rendered="{!wg.gasto.Estatus__c == 'Rechazado' || wg.gasto.Estatus__c == 'Nuevo' || wg.isNew}"/>
+                            <apex:outputField value="{!wg.gasto.Comentario__c}" rendered="{!wg.gasto.Estatus__c != 'Rechazado' && wg.gasto.Estatus__c != 'Nuevo' && !wg.isNew}"/>
+                      </apex:column>
+                      <apex:column headerValue="Mensajes validación">
+                          <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError1__c)),'1. ','')} {!wg.gasto.MensajeError1__c}</div>
+                          <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError2__c)),'2. ','')} {!wg.gasto.MensajeError2__c}</div>
+                          <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError3__c)),'3. ','')} {!wg.gasto.MensajeError3__c}</div>
+                      </apex:column>
+                      <apex:column headerValue="Documentos">
+                          <table>
+                              <tr>
+                                <td>
+                                <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!wg.gasto.Id}','Solicitud',true);" >Solicitud</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                 <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!wg.gasto.Id}','Comprobante pago',true);" >Comprobante pago</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!wg.gasto.Id}','Comprobante fiscal',true);" >Adjuntar</button>
+                                 </td>
+                              </tr>
+                          </table>
+                      </apex:column>
+                  </apex:pageBlockTable>
+                  <script>
+                      setRowColor();
+                  </script>
+                   <apex:outputPanel >
+                       <apex:commandButton action="{!saveGastos}" value="Guardar gastos" reRender="pMessage,divTablaPrincipal"/>
+                      <apex:commandButton action="{!regresar}" value="Regresar" rendered="{!oferta != null}"/>
+                   </apex:outputPanel>
+                  </apex:form>
+           </apex:outputPanel>
+           </apex:pageblockSection>
+           <apex:pageblockSection id="pbsAgrupaciones" columns="1" title="Agrupaciones existentes">
+              <apex:form >
+                  <apex:pageMessages />
+                  <apex:pageBlockTable value="{!solicitudesPago}" var="sw">
+                      <apex:column headerValue="Solicitud pago">
+                          <apex:outputField value="{!sw.solicitud.Name}"/>
+                          <hr></hr>
+                          <apex:outputField value="{!sw.solicitud.Datos_bancarios__c }"/>
+                      </apex:column>
+                      <apex:column headerValue="Enviar CxP">
+                          <apex:inputField value="{!sw.solicitud.EnviarCxP__c}"/>
+                      </apex:column>
+                      <apex:column headerValue="Cancelado">
+                          <apex:inputField value="{!sw.solicitud.Cancelado__c }"/>
+                      </apex:column>
+                      <apex:column headerValue="Folio factura">
+                          <apex:inputField value="{!sw.solicitud.FolioFactura__c}"/>
+                      </apex:column>
+                       <apex:column headerValue="Importe">
+                          <apex:outputField value="{!sw.solicitud.Importe__c}"/>
+                      </apex:column>
+                       <apex:column headerValue="Importe final">
+                          <apex:outputField value="{!sw.solicitud.ImporteFinal__c}"/>
+                      </apex:column>
+                      <apex:column headerValue="Documentos">
+                          <table>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Solicitud',false);" >Solicitud</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Comprobante pago',false);" >Comprobante pago</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Comprobante fiscal',false);" >Comprobante fiscal</button>
+                                </td>
+                              </tr>
+                          </table>
+                       </apex:column>
+                      <apex:column >
+                          <apex:facet name="header">
+                              <apex:outputPanel >
+                                    <apex:commandButton value="Desagrupar" action="{!desagruparGasto}" rerender="pbsAgrupaciones,pbsExistentes"/>
+                                    Gastos agrupados
+                              </apex:outputPanel>
+                          </apex:facet>
+                          <apex:facet name="footer">
+                              <apex:outputPanel >
+                                    <apex:commandButton value="Desagrupar" action="{!desagruparGasto}"  rerender="pbsAgrupaciones,pbsExistentes"/>
+                                    Gastos agrupados
+                              </apex:outputPanel>
+                          </apex:facet>
+                          <apex:pageBlockTable value="{!sw.gastos}" var="wg" id="pbtGastos" columnsWidth="4%,8%,8%,20%,20%,20%,20%">
+                            <apex:column headerValue="">
+                                <apex:inputCheckbox value="{!wg.selected}"/>
+                            </apex:column>
+                            <apex:column headerValue="Gasto">
+                                <apex:outputField value="{!wg.gasto.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Oferta">
+                                <apex:outputField value="{!wg.gasto.Oferta__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Concepto">
+                                <apex:outputField value="{!wg.gasto.Concepto__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Importe">
+                                <apex:inputField value="{!wg.gasto.Importe__c }"/>
+                                <apex:outputLabel value="Aplicar IVA 16%"></apex:outputLabel>
+                                <apex:inputCheckbox value="{!wg.gasto.AplicarIVA__c}"/>
+                            </apex:column>
+                             <apex:column headerValue="Importe final">
+                                <apex:outputField value="{!wg.gasto.ImporteFinal__c }"/>
+                            </apex:column>
+                            <apex:column headerValue="Comentarios">
+                                <apex:inputField value="{!wg.gasto.Comentario__c }"/>
+                            </apex:column>
+                            <apex:column headerValue="Mensajes validación">
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError1__c)),'1. ','')} {!wg.gasto.MensajeError1__c}</div>
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError2__c)),'2. ','')} {!wg.gasto.MensajeError2__c}</div>
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError3__c)),'3. ','')} {!wg.gasto.MensajeError3__c}</div>
+                            </apex:column>
+                          </apex:pageBlockTable>
+                      </apex:column>
+                  </apex:pageBlockTable>
+                  <apex:commandButton value="Guardar solicitudes" action="{!saveSolicitudes}" rerender="pbsExistentes,pbsAgrupaciones"/>
+              </apex:form>
+           </apex:pageblockSection> 
+           <apex:outputPanel id="seccionCargaDocumentos">
+            <div id="modalArchivos" title="Carga de documentos">
+                <iframe src=""  scrolling="true" id="theIframe" frameborder="0" width="800px" height="500px"/>
+            </div>
+           </apex:outputPanel>
+          </apex:pageblockSection>
+      </apex:pageBlock>
+      <div id="modalAgrupador" title="Agrupador de gastos">
+          <apex:outputPanel id="opAgrupador"> 
+             <apex:form >
+                 <apex:actionFunction action="{!getSolicitud}" rerender="opAgrupador" name="getSolicitud" status="buscandoEstatus">
+                     <apex:param name="agrupacionSelected" value="" assignTo="{!agrupacionSelected}"/>
+                </apex:actionFunction>
+              
+                 <apex:pageBlock >
+                     <apex:pageMessages id="pMessageAgrupador"></apex:pageMessages>
+                     <apex:pageBlockSection columns="1">
+                          <apex:pageblockSectionItem >
+                              <apex:outputLabel value="Destino de la agrupación" for="slAgrupadores"/>
+                              <apex:selectList id="slAgrupadores" value="{!agrupacionSelected}" size="1" rendered="{!msgAgruparGastos == ''}" onchange="getSolicitud(this.value);">
+                                   <apex:selectOptions value="{!soAgrupaciones}"/>
+                              </apex:selectList>
+                          </apex:pageblockSectionItem>
+                         <apex:actionStatus id="buscandoEstatus" startText="Buscando..." stopText=""></apex:actionStatus>
+                     </apex:pageBlockSection>
+                     <apex:pageBlockSection columns="1" id="pbsAgrupador" rendered="{!msgAgruparGastos == ''}">
+                         <apex:inputField value="{!solicitudPago.Name}" style="width: 400px;"/>
+                         <apex:outputField value="{!solicitudPago.Account__c}"/>
+                         <apex:outputField value="{!solicitudPago.Empresa__c}"/>
+                         <apex:outputField value="{!solicitudPago.Tipo__c}"/>
+                         <apex:outputField value="{!solicitudPago.Plaza__c}"/>
+                     </apex:pageBlockSection> 
+                     <apex:commandButton value="Agrupar" action="{!guardarAgrupacion}" rendered="{!msgAgruparGastos == ''}" rerender="opAgrupador,pMessageAgrupador,pbsExistentes,pbsAgrupaciones"/>
+                 </apex:pageBlock>
+             </apex:form>
+          </apex:outputPanel>
+      </div>
+</apex:page>

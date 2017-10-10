@@ -1,0 +1,297 @@
+<apex:page showHeader="false" sidebar="false" controller="ferc" standardStylesheets="false">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Hind+Vadodara|Maven+Pro|Quicksand" rel="stylesheet"/> 
+	<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+	<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+	<script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+	
+
+	<style type="text/css">
+
+		*
+		{
+			font-size: 11px !important;
+			font-family: 'Quicksand', sans-serif!important;
+		}	
+
+		.btn
+		{
+			float: right !important;
+			padding: 0 .7rem !important;
+			height: 32px !important;
+		}
+		.large
+		{
+			font-size: 20px!important;
+		}
+		img
+		{
+			float: right;
+			margin-right: 30%;
+		}
+		img:hover
+		{
+			transform: translate(7%,8%)scale(1.2);
+			background-size: 180%;
+			background-position: 60% 0%;
+			transition: all .15s ease-out;
+		}
+		h1
+		{
+			font-size: 15px!important;
+			text-align: center!important;
+		    overflow: hidden;
+		    font-family: 'Quicksand', sans-serif;
+		    border-spacing: 5px;
+		    color: #061c3e;
+		}
+		.back
+		{
+			position: fixed;
+			top: 2px;
+			right: 10px;
+			margin-right: 0;
+			background: white;
+			border-radius: 15px;
+		}
+		.det p
+		{
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+		.csv
+		{
+		    width: 35px;
+		    position: fixed;
+		    right: -160px;
+		    top: 0px;	
+		}
+		.det div
+		{
+			border: 1px solid #a09e9e;
+			text-align: center;
+		}
+	</style>
+</head>
+
+
+	<body>
+		<apex:outputPanel layout="block" rendered="{!if (loader=='true', true,false)}">
+			<apex:form >
+					<apex:repeat value="{!newAttachments}" var="x">
+							<apex:inputFile value="{!x.body}" filename="{!x.name}" />
+					</apex:repeat>
+					<apex:commandButton value="Guardar" action="{!saveAtt}" styleClass="waves-effect waves-light btn" />
+			</apex:form>
+		</apex:outputPanel>
+		<apex:outputPanel layout="block" styleClass="files" style="margin-top: {!if(loader=='true','30px;','')}">
+				<table class="highlight">
+				        <apex:repeat value="{!attachments}" var="attachment">
+					        <tr>
+					        	<td>
+									<apex:outputField value="{!attachment.Name}"/>        		
+					        	</td>
+					        	<td>
+					        		<apex:outputLink value="{!URLFOR($Action.Attachment.Download, attachment.Id)}" target="_blank">Ver</apex:outputLink>   
+					        	</td>
+					        	<td>
+					        		<img src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/close_red.png" width="20px" height="20px" onclick="deleteMe('{!attachment.Id}');"  class="responsive-img" / >
+					        	</td>
+					        </tr>
+						</apex:repeat>
+				</table>
+		</apex:outputPanel>
+		<apex:form >
+			<apex:actionFunction name="deleteMe" oncomplete="deletethis();">
+				<apex:param name="idDelete" assignTo="{!idDelete}" value=""/>
+			</apex:actionFunction>
+			<apex:actionFunction action="{!deleteMe}" name="deletethis"/>
+		</apex:form>
+
+		<apex:outputPanel layout="block" rendered="{!IF (idfiles==null, true,false)}" id="rehabUploader">
+
+
+				<apex:outputPanel id="csvLoader" layout="block" rendered="{!OR (totalRehab==null,showMore==true)}">
+	                <apex:form >
+	                    <apex:inputFile value="{!contentFile}" filename="{!nameFile}" accept="csv"/> 
+	                    <apex:commandButton action="{!ReadFile}" value="Subir CSV" id="theButton" styleClass="waves-effect waves-light btn"/>
+	                    <br/>
+	                    <apex:repeat value="{!records}" var="x">
+	                        <apex:outputtext value="{!x}"/>
+	                    </apex:repeat>
+	                </apex:form>
+	             </apex:outputPanel>
+	             <apex:image value="{!URLFOR($Resource.icof, '/csv.svg')}" rendered="{!IF (totalRehab!=null, true,false)}" onclick="showLoader();" styleClass="csv"/>
+
+                <apex:outputPanel rendered="{!if (totalRehab!=null, true,false)}">
+					<h1>Presupuesto de Rehabilitación</h1>
+					<script type="text/javascript">
+					$(document).ready(function()
+					{
+					var x='0{!totalRehab}';
+					if(x>30000)
+						{
+							$('#show').show()
+						}
+					});
+
+					</script>
+					<center><p id="show" hidden="hidden">(Se Requiere Solicitar Autorización)</p></center>
+                	<table class="det highlight">
+                	<th>
+                		<p>Oferta </p>
+                	</th>
+                	<th>
+                		<p>Contratista</p>
+                	</th>
+                	<th>
+                		<p>Ciudad</p>
+                	</th>
+                	<th>
+                		<p>Metros Cuadrados</p>
+                	</th>
+                	<tr>
+                		<td>
+                			<p>{!acct.name}</p>
+                		</td>
+                		<td>
+                			<p>{!acct.Contratista__r.Name}</p>
+                		</td>
+                		<td>
+                			<p>{!acct.Estado__r.Name}</p>
+                		</td>
+                		<td>
+                			<p> <apex:outputText value="{!FLOOR(Acct.Propiedad__r.Construccion_m2__c)}"/> </p>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>
+                			<div>
+	 		                	<p>Total:
+				                	<apex:outputText value=" ${0, number, 0,000}">
+				                		<apex:param value="{!totalRehab}"/>
+				                	</apex:outputText> 
+			                	</p>               				
+                			</div>
+
+                		</td>
+                		<td></td>
+                		<td></td>
+                		<td>
+						<button class="waves-effect waves-light btn" onclick="showDetails();" style="background-color: #02b7ee;">Detalles</button>
+                		<button class="waves-effect waves-light btn" onclick="showLimits();" style="background-color: #f36c6c; margin-right: 10px;">Límites</button>
+                		</td>
+                	</tr>
+                	</table>
+
+                	
+                </apex:outputPanel>
+		</apex:outputPanel>
+		<apex:outputPanel id="detailsRh" layout="block" html-hidden="hidden">
+
+				<h1>Detalles Rehabilitación</h1>
+				<img src="http://help.earthsoft.com/default.asp?pg=pgDownload&pgType=pgWikiAttachment&ixAttachment=181199&sFileName=back.icon.jpg" onclick="hideDetails();" width="30" class="back" />
+
+				<table class="highlight ">
+				        <thead>
+				          <tr>
+				              <th>Categoría</th>
+				              <th>Concepto</th>
+				              <th>Precio Unitario</th>
+				              <th>Unidades</th>
+				              <th>Comentarios</th>
+				          </tr>
+				        </thead>
+				        
+				        <apex:repeat value="{!showMe}" var="rh">
+					        <tr>
+					        	<td>
+									<apex:outputText value="{!rh.Concepto__c}"/>        		
+					        	</td>
+					        	<td>
+									<apex:outputText value="{!rh.Name}"/>        		
+					        	</td>
+					        	<td>
+									$<apex:outputText value="{!FLOOR(rh.Precio_Unitario__c)}"/>        		
+					        	</td>
+					        	<td>
+									<apex:outputText value="{!FLOOR(rh.Unidades__c)}"/>        		
+					        	</td>
+					        	<td width="20%">
+					        		<div class="comments">
+					        			<apex:outputText value="{!rh.Comentarios__c}"/>  
+					        		</div>   		
+					        	</td>
+					        </tr>
+						</apex:repeat>
+						
+				</table>
+		</apex:outputPanel>
+		<apex:outputPanel id="detailsLimits" layout="block" html-hidden="hidden">
+				<h1>Detalles Precios/Promedio</h1>
+				<img src="http://help.earthsoft.com/default.asp?pg=pgDownload&pgType=pgWikiAttachment&ixAttachment=181199&sFileName=back.icon.jpg" onclick="hideLimits();" width="30" class="back" />
+				<table class="highlight">
+				        <thead>
+				          <tr>
+				              <th>Concepto</th>
+				              <th>Precio Unitario</th>
+				              <th style="text-align: center;">Unidades/Limite Unidades</th>
+				              <th>Total</th>
+
+				          </tr>
+				        </thead>
+				        
+				        <apex:repeat value="{!listLimits}" var="rh">
+					        <tr>
+					        	<td width="30%">
+									<apex:outputText value="{!rh.Name}"/>        		
+					        	</td>
+					        	<td style="color: {!IF(rh.Limite__c>1 ,'red','')}">
+									$<apex:outputText value="{!rh.Precio_Unitario__c}"/>
+									<apex:image value="https://maxcdn.icons8.com/Share/icon/Very_Basic//info1600.png" width="15" rendered="{!IF(rh.Limite__c>0,true,false)}" html-data-tooltip="Supera el Promedio por: ${!rh.Limite__c}" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  html-data-tooltip-stickto="right" />        		
+					        	</td>
+					        	<td style="text-align: center;">
+									<apex:outputText value="{!rh.Unidades__c}" style="color: {!IF(FLOOR(rh.Unidades__c)>CEILING(rh.Promedio_Unidades__c) ,'red','')}"/>/<apex:outputText value="{!CEILING(rh.Promedio_Unidades__c)}"/>      		
+					        	</td>
+					        	<td>
+					        		$<apex:outputText value="{!FLOOR(rh.Total__c)}"/>
+					        	</td>
+
+					        </tr>
+						</apex:repeat>
+						
+				</table>
+		</apex:outputPanel>
+		<apex:form >
+	        <apex:actionFunction action="{!sMore}" name="showLoader" reRender="rehabUploader"/>
+		</apex:form>
+		<script>
+		function showDetails()
+		{
+			$('[id*="rehabUploader"]').fadeOut();
+			$('[id*="detailsRh"]').fadeIn();		
+		}
+		function hideDetails() {
+			$('[id*="detailsRh"]').fadeOut();
+			$('[id*="rehabUploader"]').fadeIn();
+		}
+		function showLimits()
+		{
+			$('[id*="rehabUploader"]').fadeOut();
+			$('[id*="detailsLimits"]').fadeIn();	
+		}
+		function hideLimits()
+		{
+			$('[id*="detailsLimits"]').fadeOut();
+			$('[id*="rehabUploader"]').fadeIn();
+		}
+
+		</script>
+
+		<script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+		<script src="/resource/materialize/materialize/js/materialize.js"></script>
+	</body>
+</apex:page>

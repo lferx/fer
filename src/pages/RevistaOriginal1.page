@@ -1,0 +1,839 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" controller="PropiedadesController" 
+            extensions="SitioHomePageController">
+    <html class="no-js" lang="es">
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="es"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="es"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="es"> <![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content=""/>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1.0,minimun-scale=1.0"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+    
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+        
+        <script type='text/javascript'>
+                 function detectarCarga2(){ 
+                
+         
+        wait(3000);
+         
+         } 
+         function wait(waitsecs){
+            setTimeout(donothing(), 'waitsecs');
+            }function donothing() {
+            <!--alert ('Bienvenido a Revimex');-->
+            document.getElementById("imgLOAD").style.display="none"; 
+
+            }
+        </script>
+        
+        
+    
+        <title>Revimex</title>
+        <style>
+            <!--RJP Pedir modificacion en la hoja de estilos-->
+            #home-statistics article strong.big-font {
+                font-family: 'CalibriBold', sans-serif;
+                font-size: 27px;
+                line-height: 50px;
+                padding: 0 5px 0 0;
+                }
+                a.participa {
+                    position: absolute;
+                    width: 400px;
+                    height: 110px;
+                    bottom: 0;
+                    top: 405px;
+                    left: 15px;
+                    z-index: 300;
+                }
+                
+                a.participa {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 400px;
+                    height: 110px;
+                    
+                    
+                    left: 15px;
+                    z-index: 6;
+                }
+                
+                <!--a.encuentra {
+                    width: 400px;
+                    height: 110px;
+                    position: absolute;
+                    top: 337px;
+                    right: 57px;
+                    z-index: 200;
+                }-->
+                a.encuentra {
+                    width: 550px;
+                    height: 187px;
+                    position: absolute;
+                    top: 37px;
+                    right: 57px;
+                    z-index: 200;
+                }
+                a.segob1 {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    right: 210PX;
+                    width: 80px;
+                    height: 80px;
+                    z-index: 999;
+                    top: 287px;
+                }
+                a.segob2 {
+                    position: absolute;
+                    bottom: 208px;
+                    right: 48px;
+                    width: 350px;
+                    height: 70px;
+                    z-index: 999;
+                }
+                a.segob3 {
+                    position: absolute;
+                    bottom: 234px;
+                    right: 0;
+                    width: 250px;
+                    height: 70px;
+                    z-index: 999;
+                }
+                .selectfield-100 {
+                    background: #fff;
+                    border: none;
+                    box-sizing: border-box!important;
+                    color: #000;
+                    font-size: 15px;
+                    height: 24px;
+                    margin: 0 -5px 5px 0 !important;
+                    overflow: hidden;
+                    padding: 0 0 0 6px;
+                    text-transform: uppercase;
+                    width: 100%;
+                    -webkit-border-radius: 0px;
+                }
+                /* Tiny Carousel */
+            .suggestion {
+                cursor: pointer;
+            }
+            .slider-wrapper {
+                padding: 0 15px;
+            }
+            
+            #slider1 {
+    height: 1%;
+    margin: 30px 0 0;
+    overflow: hidden;
+    position: relative;
+    
+    padding: 10px 50px 10px;
+}
+
+
+
+
+            #slider1 .viewport {
+                height: 240px;
+                
+                overflow: auto;
+                position: relative;
+            }
+
+            #slider1 .buttons {
+                background: #1C79A7;
+                border-radius: 35px;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 35px;
+                height: 35px;
+                color: #fff;
+                font-weight: bold;
+                text-align: center;
+                line-height: 35px;
+                text-decoration: none;
+                font-size: 22px;
+            }
+
+            #slider1 .next {
+                right: 0;
+                left: auto;
+                top: 50%;
+            }
+            
+
+            #slider1 .buttons:hover {
+                color: #1C79A7;
+                background: #fff;
+                border: 1px solid #1C79A7;
+            }
+
+            #slider1 .disable {
+                visibility: hidden;
+            }
+
+            #slider1 .overview {
+                list-style: none;
+                position: absolute;
+                padding: 5px;
+                margin: 0;
+                width: 240px;
+                left: 0;
+                top: 0;
+                height: 225px;
+                overflow: auto;
+            }
+            
+            #slider1 .overview li {
+                float: left;
+                margin: 0 20px 0 0;
+                padding: 10px;
+                height: 205px;
+                width: 236px;
+                border: 1px solid #dcdcdc;
+                background-color: #fff;
+             }
+             #slider1 .overview li:hover {
+                -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+             }
+             
+             body {
+             
+                    background-image: url("{!URLFOR($Resource.fondonuevo)}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             
+             
+             
+             button:before {
+                 content:'';
+                 position: absolute;
+                 top: 0px;
+                 left: 0px;
+                 width: 0px;
+                 height: 42px;
+                 background: url("{!URLFOR($Resource.quienessomos)}");
+                
+                 
+                 border-radius: 5px;
+                 transition: all 2s ease;
+              }
+
+              button:hover:before {
+                 width: 100%;
+              }
+              
+              #title {
+                opacity:0.6;
+                filter:alpha(opacity=60);
+              }
+              
+              
+              #img2 { 
+                width: 44px; 
+                height: 38px; 
+              }
+              
+              #cashback2 {
+                width: 80%; 
+                height: auto;
+            }
+            
+         
+              
+              #search-box form {
+                box-sizing: border-box;
+                    margin: 40px 0 0 0;
+                    padding: 0 20px;
+                    position: relative;
+                    text-align: left;
+                    z-index: 2;
+                    height:100%;
+                    margin-top: 40px;
+                    width: auto;
+                  
+              }
+              
+                
+              
+              <!--.secction1{
+                 margin:0px auto;
+                 height:70px;
+                 padding:0px;
+                 width:0px;
+                 text-align:center;
+                 display:inline-block;
+              }-->
+             .secction2{
+                 margin:0 auto ;
+                 height:65px;
+                 padding:0px;
+                 width:100% ;
+                 text-align:center;
+                 display:inline-block;
+                 max-width:1000px;
+                 
+                 
+              }
+              
+             
+              
+              h2 {
+             text-align: left;
+             color:#ABABAB;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              }   
+              
+                  h1 {
+             text-align:;
+             color:black;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:36px;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              } 
+              
+              
+              #leading-content4 {
+                      <!--#98D6FF-->
+                    background: ;
+                    height: 500px;
+                    /* min-width: 1280px; */
+                    overflow: hidden;
+                    text-align: center;
+                    z-index: 1;
+                }
+                #search-box2 {
+                
+    color: #fff;
+    display: inline-block;
+    height: auto;
+    margin: 0 -4px 0 0;
+    position: relative;
+    vertical-align: top;
+    width:40%;
+}
+              #search-box .fix-box-right {
+    background: #1C79A7;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 3000px;
+    z-index: 1;
+}
+     
+     #slides figure img {
+    height: auto;
+    width: 100%;
+    margin-top: 40px;
+    }
+     
+     
+     #footer-menu {
+    display: inline-block;
+    text-align: center;
+     margin: 0;
+    
+        }
+     
+              
+              
+              
+              
+              <meta name="viewport" content="width=device-width, minimum-scale=0.1">
+               <title>bannernuevo</title>
+             </meta>
+    
+                        </style>
+            <script>
+           
+                      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                      ga('create', 'UA-71967023-1', 'auto');
+                      ga('send', 'pageview');
+
+                </script> 
+                  
+                 
+                  
+        </head>
+        
+       
+       
+       <body>
+      
+         
+        <div class="header-wrapper">
+        
+            <figure  class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.bannernuevo)}" alt="Revimex"/></a></figure>
+                
+             <a href="https://join.skype.com/vkhg5c897Qlx" target="_blank" ><img src="{!URLFOR($Resource.skypechat)}" />
+              </a>       
+             
+           
+            <nav id="footer-menu">
+                <div>
+                    
+                    <a href="http://www.revimex.mx/quienessomos">QUIENES SOMOS</a>
+                    <a href="http://www.revimex.mx/SorteoLogin">RECOMENDADORES</a>
+                    <a href="http://www.revimex.mx/CheckIn">PROMOTORES</a>
+                    <a href="http://www.revimex.mx/PrecaRegisterPage">SORTEO</a>
+                    <a href="http://www.revimex.mx/Contactanos">CONTACTO</a>
+                    <a href="http://www.revimex.mx/RTAF">INVITA UN AMIGO</a>
+                    <a href="http://www.revimex.mx/MapaBusquedas?estado=Todos&ciudad=Todos&tipo=Todos" >PROPIEDADES</a>
+                    <a href="http://www.revimex.mx/RevimexPrivacidad" target="_blank">AVISO DE PRIVACIDAD</a>
+                    <a href="http://www.revimex.mx/RevimexTerminosCondiciones" target="_blank" class="noborder-right">PERMISO DE SEGOB</a>
+                </div>
+            </nav>
+           
+        </div>
+            
+
+                   
+
+    
+                      
+            
+        
+                   
+                
+                  
+         
+        
+        
+        
+        <center>
+               
+          
+                <div>
+                    <iframe width="100%" height="720" src="http://www.revimex.mx/RevistaOriginal3" frameborder="0"></iframe>
+                </div>
+            </center>
+             
+           
+           <footer>
+           
+
+        <div class="main-wrapper">
+                
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            
+            <nav id="footer-menu">
+                <div>
+                    <a><h2>Sugerencias y Comentarios</h2></a>
+                    <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.icinollamadas)}" /><a href="tel://5569716208">5569716208</a></figure>
+                    <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /><a href="whatsapp://send?text=ME%20INTERESA!">5569716208</a></figure>
+                    <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /><a href="whatsapp://send?text=ME%20INTERESA!">5554096818</a></figure>
+                    
+                    
+                </div>
+            </nav>
+            
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/watch?v=mdauRwA98iw" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+        </div>    
+        </footer>
+
+       <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+        
+             
+        <script>
+              var parametros =  {
+                    'estado':String('Todos'),
+                    'ciudad':String('Todos'),
+                    'tipo':String('Todos')
+                };
+                ;(function(factory) {
+                    if(typeof define === 'function' && define.amd) {
+                        define(['jquery'], factory);
+                    }
+                    else if(typeof exports === 'object') {
+                        module.exports = factory(require('jquery'));
+                    }
+                    else {
+                        factory(jQuery);
+                    }
+                }
+                (function($) {
+                    var pluginName = "tinycarousel"
+                    ,   defaults   =
+                        {
+                            start: 0
+                        ,   axis: "x"
+                        ,   buttons: true
+                        ,   bullets: false
+                        ,   interval: false
+                        ,   intervalTime: 3000
+                        ,   animation: true
+                        ,   animationTime: 1000
+                        ,   infinite: true
+                        }
+                    ;
+
+                    function Plugin($container, options) {
+                        /**
+                         * The options of the carousel extend with the defaults.
+                         *
+                         * @property options
+                         * @type Object
+                         * @default defaults
+                         */
+                        this.options = $.extend({}, defaults, options);
+
+                        /**
+                         * @property _defaults
+                         * @type Object
+                         * @private
+                         * @default defaults
+                         */
+                        this._defaults = defaults;
+
+                        /**
+                         * @property _name
+                         * @type String
+                         * @private
+                         * @final
+                         * @default 'tinycarousel'
+                         */
+                        this._name = pluginName;
+
+                        var self = this
+                        ,   $viewport = $container.find(".viewport:first")
+                        ,   $overview = $container.find(".overview:first")
+                        ,   $slides = null
+                        ,   $next = $container.find(".next:first")
+                        ,   $prev = $container.find(".prev:first")
+                        ,   $bullets = $container.find(".bullet")
+
+                        ,   viewportSize = 0
+                        ,   contentStyle = {}
+                        ,   slidesVisible = 0
+                        ,   slideSize = 0
+                        ,   slideIndex = 0
+
+                        ,   isHorizontal = this.options.axis === 'x'
+                        ,   sizeLabel = isHorizontal ? "Width" : "Height"
+                        ,   posiLabel = isHorizontal ? "left" : "top"
+                        ,   intervalTimer = null
+                        ;
+
+                        /**
+                         * The index of the current slide.
+                         *
+                         * @property slideCurrent
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slideCurrent = 0;
+
+                        /**
+                         * The number of slides the carousel is currently aware of.
+                         *
+                         * @property slidesTotal
+                         * @type Number
+                         * @default 0
+                         */
+                        this.slidesTotal = 0;
+
+                        /**
+                         * If the interval is running the value will be true.
+                         *
+                         * @property intervalActive
+                         * @type Boolean
+                         * @default false
+                         */
+                        this.intervalActive = false;
+
+                        /**
+                         * @method _initialize
+                         * @private
+                         */
+                        function _initialize() {
+                            self.update();
+                            self.move(self.slideCurrent);
+
+                            _setEvents();
+
+                            return self;
+                        }
+
+                        /**
+                         * You can use this method to add new slides on the fly. Or to let the carousel recalculate itself.
+                         *
+                         * @method update
+                         * @chainable
+                         */
+                        this.update = function() {
+                            $overview.find(".mirrored").remove();
+
+                            $slides = $overview.children();
+                            viewportSize = $viewport[0]["offset" + sizeLabel];
+                            slideSize = $slides.first()["outer" + sizeLabel](true);
+                            self.slidesTotal = $slides.length;
+                            self.slideCurrent = self.options.start || 0;
+                            slidesVisible = Math.ceil(viewportSize / slideSize);
+
+                            $overview.append($slides.slice(0, slidesVisible).clone().addClass("mirrored"));
+                            $overview.css(sizeLabel.toLowerCase(), slideSize * (self.slidesTotal + slidesVisible));
+
+                            _setButtons();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setEvents
+                         * @private
+                         */
+                        function _setEvents() {
+                            if(self.options.buttons) {
+                                $prev.click(function() {
+                                    self.move(--slideIndex);
+
+                                    return false;
+                                });
+
+                                $next.click(function() {
+                                    self.move(++slideIndex);
+
+                                    return false;
+                                });
+                            }
+
+                            $(window).resize(self.update);
+
+                            if(self.options.bullets) {
+                                $container.on("click", ".bullet", function() {
+                                    self.move(slideIndex = +$(this).attr("data-slide"));
+
+                                    return false;
+                                });
+                            }
+                        
+                           
+
+                            $(window).resize(self.update);
+
+                            if(self.options.bullets) {
+                                $container.on("click", ".bullet", function() {
+                                    self.move(slideIndex = +$(this).attr("data-slide"));
+
+                                    return false;
+                                });
+                            }
+                        }
+
+
+                        /**
+                         * If the interval is stoped start it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.start = function() {
+                            if(self.options.interval) {
+                                clearTimeout(intervalTimer);
+
+                                self.intervalActive = true;
+
+                                intervalTimer = setTimeout(function() {
+                                    self.move(++slideIndex);
+
+                                }, self.options.intervalTime);
+                            }
+
+                            return self;
+                        };
+
+                        /**
+                         * If the interval is running stop it.
+                         *
+                         * @method start
+                         * @chainable
+                         */
+                        this.stop = function() {
+                            clearTimeout(intervalTimer);
+
+                            self.intervalActive = false;
+
+                            return self;
+                        };
+
+                        /**
+                         * Move to a specific slide.
+                         *
+                         * @method move
+                         * @chainable
+                         * @param {Number}  [index] The slide to move to.
+                         */
+                        this.move = function(index) {
+                            slideIndex = isNaN(index) ? self.slideCurrent : index;
+                            self.slideCurrent = slideIndex % self.slidesTotal;
+
+                            if(slideIndex < 0) {
+                                self.slideCurrent = slideIndex = self.slidesTotal - 1;
+                                $overview.css(posiLabel, -(self.slidesTotal) * slideSize);
+                            }
+
+                            if(slideIndex > self.slidesTotal) {
+                                self.slideCurrent = slideIndex = 1;
+                                $overview.css(posiLabel, 0);
+                            }
+                            contentStyle[posiLabel] = -slideIndex * slideSize;
+
+                            $overview.animate(
+                                contentStyle
+                            ,   {
+                                    queue : false
+                                ,   duration : self.options.animation ? self.options.animationTime : 0
+                                ,   always : function() {
+                                       /**
+                                        * The move event will trigger when the carousel slides to a new slide.
+                                        *
+                                        * @event move
+                                        */
+                                        $container.trigger("move", [$slides[self.slideCurrent], self.slideCurrent]);
+                                    }
+                                });
+
+                            _setButtons();
+                            self.start();
+
+                            return self;
+                        };
+
+                        /**
+                         * @method _setButtons
+                         * @private
+                         */
+               
+                        function _setButtons() {
+                            if(self.options.buttons && !self.options.infinite) {
+                                $prev.toggleClass("disable", self.slideCurrent <= 0);
+                                $next.toggleClass("disable", self.slideCurrent >= self.slidesTotal - slidesVisible);
+                            }
+
+                            if(self.options.bullets) {
+                                $bullets.removeClass("active");
+                                $($bullets[self.slideCurrent]).addClass("active");
+                            }
+                        }
+                        function  validacomas(){
+                          a("entron");
+                         var cadenaBase=this.value;
+                         var largoCadena= cadenaBase.length;
+                         var puntoPosicion= cadenaBase.lastIndexOf('.');
+                         var decenas="";
+                         var centenas="";
+                         var millares="";
+                         if(puntoPosicion == 6){
+                                decenas=cadenaBase.substring(0, 2);
+                                centenas=cadenaBase.substring(3, 5);
+                             }
+                         else if(puntoPosicion == 7){
+                                decenas=cadenaBase.substring(1, 3);
+                                centenas=cadenaBase.substring(4, 6);
+                                millares=cadenaBase.charAt(0);
+                             }
+                         else if(puntoPosicion == 8){
+                                decenas=cadenaBase.substring(2, 4);
+                                centenas=cadenaBase.substring(5, 7);
+                                millares=cadenaBase.substring(0,1);
+                             }
+                         else{
+                                decenas=cadenaBase.substring(3, 5);
+                                centenas=cadenaBase.substring(6, 8);
+                                millares=cadenaBase.substring(0,2);
+                             }   
+                             var regreso = millares+','+decenas+','+centenas; 
+                             this.value= regreso
+                         }
+
+                        return _initialize();
+                    }
+                    
+               
+                    /**
+                    * @class tinycarousel
+                    * @constructor
+                    * @param {Object} options
+                        @param {Number}  [options.start=0] The slide to start with.
+                        @param {String}  [options.axis=x] Vertical or horizontal scroller? ( x || y ).
+                        @param {Boolean} [options.buttons=true] Show previous and next navigation buttons.
+                        @param {Boolean} [options.bullets=false] Is there a page number navigation present?
+                        @param {Boolean} [options.interval=false] Move to another block on intervals.
+                        @param {Number}  [options.intervalTime=3000] Interval time in milliseconds.
+                        @param {Boolean} [options.animate=true] False is instant, true is animate.
+                        @param {Number}  [options.animationTime=1000] How fast must the animation move in ms?
+                        @param {Boolean} [options.infinite=true] Infinite carousel.
+                    */
+                    $.fn[pluginName] = function(options) {
+                        return this.each(function() {
+                            if(!$.data(this, "plugin_" + pluginName)) {
+                                $.data(this, "plugin_" + pluginName, new Plugin($(this), options));
+                            }
+                        });
+                    };
+                }));
+            $(function(){
+                $('#slider1').tinycarousel();
+                $( ".suggestion" ).click(function() {
+                    var id =  $(this).attr('id');
+                    var url = document.URL.split('?');
+                    var retUrl = url.length > 1 ? url[1] : ''; 
+                    //console.log(url.length);
+                    var url = '/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                    window.location.replace(url);
+                });
+                $( ".validacomas" ).each(function( index ) {
+                  var text = $( this ).text().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                  $( this ).text(text);
+                });
+            });
+        
+                            
+        
+       </script>
+     
+       </body>
+     
+  
+      
+
+    </html>
+</apex:page>

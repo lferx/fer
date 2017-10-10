@@ -1,0 +1,855 @@
+<apex:page cache="false" Controller="RecomendadorBaseController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0" >
+
+    <html class="no-js" >
+    
+        <head>
+        
+            <meta charset="utf-8"/>
+            <meta name="author" content=""/>
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
+            <meta name="robots" content="index, follow" />
+            <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+            
+            <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+            <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+            
+            <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+            
+            <title>Revimex</title>
+            
+            <style>
+            
+                <!--RJP Pedir modificacion en la hoja de estilos-->
+                input {
+                    text-transform: lowercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 245px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+    margin:10px auto;
+    max-width: 200px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.messageTable{
+    width: 100%;
+    background-color: blanchedalmond;
+}
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=datetime-local],
+input[type=password],
+input[type=telefono],
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+input[type=datetime-local]:focus,
+input[type=password]:focus,
+input[type=telefono]:focus,
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #1C79A7;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #1C79A7;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.help-text {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin: 10px 0;
+}
+
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}  
+        a.btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 250px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+        .btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 250px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+        input[type=button].btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 100px !important;
+            border: none;
+            margin: 10px auto;
+            background-color: #1C79A7;
+            text-transform: lowercase;
+        }
+        input[type=button].btn-action.dis {
+            opacity:.4;
+            filter: alpha(opacity=40)
+        }
+        button.btn-action {
+            border: none;
+        }
+        .iframe-infonavit {
+                    border: none;
+                    background-color: #fff;
+                    border-right: 5px;
+                }
+                 .outBorder {
+    border:3px outset black;
+   }
+   .inBorder{
+    border-top:2px dotted blue;
+    border-left:2px dotted blue;
+   }
+            </style>
+            
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-71967023-1', 'auto');
+              ga('send', 'pageview');
+
+            </script>
+        </head>
+        
+        <body>
+        
+            <header>
+                <div class="header-wrapper">
+                    
+                    <a href="#" id="header-showmenu-btn">
+                        <img src="{!URLFOR($Resource.HomeRevimex,'images/menu-vertical-btn.png')}" alt="menú"/>
+                        
+                    </a>
+                    <figure id="main-logo" class="fullwidth-picture">
+                        <a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo.png')}" alt="Revimex"/></a>
+                        
+                    </figure>
+                    <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div><div class="font-size-40">hoy</div></div>
+                </div>
+                <div id="header-phone">
+                    <span class="phone-icon" style="margin-top: -13px;">
+                        <a href="tel:015541706600">0155 4170 6600 - </a>
+                        
+                        <a href="tel:015541610030">0155 4161 0030</a>
+                        <A>recomendadores@revimex.mx</a>
+                    </span>
+                </div>
+            </header> 
+            
+            
+        <section id="leading-content" class="clearfix" style="height: 400px;">
+            <div id="slider" style="width: 1090px;">
+                <div id="slider-mask">
+                    <div id="slides">                                    
+                        <a href="#" target="_self">
+                            <figure><img src="{!$Resource.Logo_recomendador}" alt="slide 1" class="slide-picture 1" style="height: 420px; width: 1000px;"/></figure>
+                            
+                        </a>      
+                    </div>
+                </div>
+            </div>
+        </section>
+                
+        <section id="home-intro">
+            <div class="main-wrapper">
+                
+                
+                <BR></BR>
+                
+                 <h1>RECUERDA</h1>
+                <li>
+                    Los recomendadores no pueden recomendarse a si mismos.
+                    </li><li>Para hacerse acreedor a los $2,000 pesos el recomendado debe completar el proceso de compra de la propiedad.
+                    </li><li>Para que un recomendado sea válido éste no debe tener algún proceso de adquisición de vivienda vigente con Revimex , de lo contrario será descartado.</li>
+                    <li>Es importante que registre a su recomendado mínimo 12 horas antes de que él inicie el proceso de adquisición de alguna propiedad de lo contrario no será considerado y no se hará acreedor de los $2,000 pesos.
+                </li><li>DE NO INGRESAR CORRECTAMENTE SUS DATOS LA TRANSFERENCIA BANCARIA NO SERÁ APROBADA</li>
+                
+                
+                <h3>Nota:</h3>
+                <li>El proceso de compra de vivienda dura de la etapa 9, que es la oferta del Recomendado, a la 13</li>
+                <li>Su Recomendado será visible para usted una vez que el Recomendado inicie el proceso de compra y usted de clic en actualizar</li>
+                
+                <center><h2>Registrar nuevo recomendado.</h2>
+                <a href= "http://www.revimex.mx/Guia_para_precalificar_recomendado" target="_blank"><button class="btn-action">Guía para precalificar Infonavit</button></a>
+               <a href = "http://www.infonavit.org.mx:5052/SocPrTradicionalWeb/Precalifica#init" target="_blank"><button class="btn-action"> Precalifica a tu Recomendado</button></a>
+             <button class="btn-action recomendado-show" href="#js">Nuevo Recomendado</button>
+               
+              <button class="btn-action nss-show" href="#js">Consulta tu Número de Seguro Social</button>
+               <center>
+                <div class="nss-container">
+                    <iframe class="iframe-infonavit" src="//portal.infonavit.org.mx/wps/portal/nss" height="350px" width="100%"></iframe>
+                </div></center>
+
+               
+              
+        
+                </center>
+               
+               <!---modificado hoy---->
+
+                  
+
+            </div>
+            
+            <apex:form Id="myForm">
+                <apex:pageMessages />
+                 
+                 <div class="recomendado-container">
+                       
+                 <table style="margin-left: 320px;width: 60%;margin-top: 50px;margin-bottom: 100px;">
+                    
+                    <tr>
+                        <td colspan="2" style="height: 50px;" ><label>Datos generales</label></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>Nombre(s) <span class="required">*</span></label>
+                            <apex:input id="val1" value="{!strNombre}" type="text" styleClass="fname" required="true"/>
+                        </td>
+                        
+                        <td>
+                            <label>Apellido(s) <span class="required">*</span></label>
+                            <apex:input id="val2" value="{!strApellido}" type="text" styleClass="lname" required="true"/>
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+              
+                        
+                        <td><br></br>
+                            <label>Plaza <span class="required">*</span></label>
+                            <apex:inputField id="val3" value="{!propiedad.Plaza__c}" type="text" styleClass="plaza"/>
+                        </td>
+                        
+                        <br></br>
+                        <td>
+                        <label>Teléfono celular<span class="required">*</span></label>
+                            <apex:input id="val4" value="{!strtelefono}" type="tel" styleClass="phone" required="true"/>
+                        </td>
+                    
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                    <br></br>
+                            <label>Email <span class="required">*</span></label>
+                            <apex:input id="val5" value="{!stremail}" type="email" required="true" style="email_field"/>
+                        </td> 
+                        
+                        <td>
+                    <br></br>
+                            <label>Tipo de pago(Crédito Bancario/Infonavit/Contado) <span class="required">*</span></label>
+                            <!---<apex:input value="{!strpago}" type="text" required="true"/>-->
+                            <select value="{!strpago}" id="val6">
+                                   <option value="1">--Ninguno--</option>
+                                   <option value="2">Crédito Bancario</option> 
+                                   <option value="3">Infonavit</option> 
+                                   <option value="4">Contado</option>
+   
+                            </select>
+                        </td> 
+                        
+                    </tr>
+                    <tr> 
+                        <td>
+                    <br></br>
+                            <label>Monto <span class="required">*</span></label>
+                            <apex:input id="val7" value="{!intmonto}" type="number" styleClass="onlyNumbers numbersOnly" required="true"/>
+                        
+                        </td> 
+                      <td>
+                            <label>Número de Seguro Social <span class="required">*</span></label>
+                            <apex:input id="val8" value="{!strnss}" styleClass="nss" type="text" required="true"/>
+                        </td>
+                       </tr>
+                       <tr>
+                       
+                       <tr>
+                           <td>    
+                               <label>Fecha de Nacimiento<span class="required">*</span></label>
+                               <apex:input id="val9" value="{!fechaNacimiento}" type="date" required="true"  />
+                           </td>
+                           <td></td>
+                       </tr>
+                        
+                             
+                        <td style="padding-top: 30px;">
+                          <!--<apex:commandButton styleClass="js-send btn-action" value="Guardar"  action="{!IngresaRecomendado}" rerender="msj,msj2"/>-->
+                          
+                          <apex:commandButton styleClass="btn-action btn-action" value="Guardar"  action="{!IngresaRecomendado}"  onclick="window.location.reload()"  rerender="msj,msj2"/>
+                        
+                        </td>
+                        
+                        
+                      
+                    </tr>
+
+                        
+                        
+                        
+                </table>
+ 
+                </div>
+                <br></br>
+                <center>
+                    <td style="width: 100%; margin-top: 15px;">
+                    <a href="http://www.revimex.mx">
+                   <apex:commandButton value="cerrar Sesión" onclick="this.disabled=true;window.top.location='/RTAF'" action="{!logout}" />
+                        
+                        </a>
+                    </td>
+                </center>
+                
+         <hr color="black" size='3'></hr>
+          
+          
+             <form method="post">  
+             <td style="width: 100%; margin-top: 15px;">
+                <apex:commandButton value="Actualizar Página" onclick="window.location.reload()" action="{!getOfertas}" />
+             </td>
+             </form> 
+         
+               <center>
+                     <apex:dataTable value="{!Candidatos}" var="account" id="theTable" rowClasses="odd,even" styleClass="outBorder" border="4">
+                     <apex:facet name="caption">RECOMENDADORES</apex:facet>
+                     <apex:facet name="header">RECOMENDADOS</apex:facet>
+                           <apex:facet name="footer">Recuerda que el pago se realiza hasta que el cliente adquiera una casa</apex:facet>
+                           
+                            <apex:column >
+                            <apex:facet name="header">Nombre</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!account.name}"/>
+                            </apex:column>
+                            
+                            <!-- <apex:column>
+                            <apex:facet name="header">Plaza</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!account.Plaza__c}"/>
+                            </apex:column> -->
+                            
+                            <apex:column >
+                            <apex:facet name="header">Email</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!account.Email}"/>
+                            </apex:column>
+                            
+                            <!--<apex:column >
+                            <apex:facet name="header">Telefono</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!account.Phone}"/>
+                            </apex:column>-->
+                            
+                       </apex:dataTable>
+
+                  </center>
+
+                  <center>
+                     <apex:dataTable value="{!RecomendadosOferta1}" var="Oferta1" id="theTable2" rowClasses="odd,even" styleClass="outBorder" border="4">
+                     <apex:facet name="caption">RECOMENDADORES</apex:facet>
+                     <apex:facet name="header">Con Compra</apex:facet>
+                        <apex:facet name="footer">Recuerda que el pago se realiza hasta que el cliente adquiera una casa</apex:facet>
+                            <apex:column >
+                            <apex:facet name="header">Nombre</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!Oferta1.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                            <apex:facet name="header">Promotor</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!Oferta1.Promotor__c}"/>
+                            </apex:column>
+                            <apex:column >
+                            <apex:facet name="header">Plaza</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!Oferta1.Plaza__c}"/>
+                            </apex:column>
+                            
+                            <apex:column >
+                            <apex:facet name="header">Estatus</apex:facet>
+                            <apex:facet name="footer"></apex:facet>
+                            <apex:outputText value="{!Oferta1.Estatus__c}"/>
+                            </apex:column>
+                  
+                           
+                            
+                            </apex:dataTable> 
+                 </center>
+                     
+                     
+                      
+                   
+               <apex:pageMessages id="msj2"/>
+             </apex:form>
+        </section> 
+        
+        <hr color="black" size='3'></hr>
+       
+        <div class="main-wrapper">
+                <h1>Tus boletos son los siguientes  </h1>
+            </div>
+            
+            <div style="height: 600px;overflow:auto;text-align: center;">
+                <table style="margin-left: 130px;">
+                    <apex:repeat value="{!lstBoletos}" var="boletos">
+                        <tr>
+                            <apex:repeat value="{!boletos}" var="boleto">
+                                <td class="boleto">
+                                    <img src="{!$Resource.boleto}" width="230" height="150" />
+                                    <p style="color: #555"><span style="color: #1C79A7">{!boleto.Name} </span></p>
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+        
+        
+       
+        
+       
+        <footer>
+
+
+<div class="main-wrapper">
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            <nav id="footer-menu">
+                <div>
+                    <a href="http://www.revimex.mx">home</a>
+                    <a href="http://www.revimex.mx/privacidad.php" >aviso de privacidad</a>
+                    <a href="http://www.revimex.mx/RevimexTerminosCondiciones"  class="noborder-right">Permiso de SEGOB</a>
+                </div>
+            </nav>
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/Revimex.oficial" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+        </div>
+    </footer>
+
+ <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+         <script>
+              var validate = {
+                fname: false,
+                lname: false, 
+                plaza: false, 
+                nss: false, 
+                phone: false,               
+                email: false,
+                init: function () {
+                    $('.js-send').attr('disabled',true);
+                    $('.js-send').addClass('.dis');
+                    $(document).on( 'keyup', '.fname', this.validateFname);  
+                    $(document).on( 'change', '.plaza', this.validatePlaza);
+                    $(document).on( 'keyup', '.lname', this.validateLname);  
+                    $(document).on( 'keyup', '.email_field', this.validateEmail);  
+                    $(document).on( 'keyup', '.nss', this.validateNss);   
+                    $(document).on( 'keyup', '.phone', this.validatePhone); 
+                    $(document).on( 'click', '.nss-show', this.shownssiframe);
+                    $(document).on( 'click', '.recomendado-show', this.showrecomendadotable);
+                },
+                    validateFname: function () {
+                     this.value = this.value.replace(/[^a-z \.]/g,'');
+                    if ($(this).val().length >=3) {
+                        validate.fname = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.fname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateLname: function () {
+                this.value = this.value.replace(/[^a-z \.]/g,'');
+                    if ($(this).val().length >=3 ) {
+                    
+                        validate.lname = true;
+                        $(this).removeClass('error');
+                    }
+                     else {
+                     
+                        validate.lname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateEmail: function () {
+                    var email = $(".email_field").val();
+                    
+                    
+                    if(email != 0) {
+                        console.log('email value: '+ isValidEmailAddress(email));
+                        
+                        if(validate.isValidEmailAddress(email)) {
+                            
+                            validate.email = true;
+                            $(".email_field").css({
+                                "background-color": "white"
+                            });
+                        }  else {
+                            
+                            validate.email = false;
+                            $(".email_field").css({
+                                "background-color": "red"
+                            });
+                        }
+                    }  else {
+                        validate.email = false;
+                        $(".email_field").css({
+                            "background-color": "white"
+                        });         
+                    }
+                    validate.all();
+                },
+                validateNss: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 11));
+                    if ($(this).val().length == 11 ) {
+                        validate.nss = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.nss = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateBdate: function () {
+                    if(validate.isDate($(this).val())) {
+                        validate.bdate = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.bdate = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                     
+                },
+                validatePhone: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length == 10 ) {
+                        validate.phone = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.phone = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePlaza: function () {
+                    if ($(this).val() != '') {
+                        strplaza = Plaza__c;
+                        validate.plaza = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.plaza = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                isValidEmailAddress: function (emailAddress) {
+                    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!regex.test(emailAddress)) {
+                       return false;
+                    }else{
+                       return true;
+                    }
+                },
+              isDate: function (date) {
+                    console.log(date);
+
+                    var currVal = date;
+                    if(currVal == '')
+                        return false;
+                    //Declare Regex 
+                    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+                    var dtArray = currVal.match(rxDatePattern); // is format OK?
+                    if (dtArray == null)
+                        return false;
+
+                    //Checks for mm/dd/yyyy format.
+                    dtYear = dtArray[1];
+                    dtMonth= dtArray[3];
+                    dtDay = dtArray[5];
+
+                    if (dtMonth < 1 || dtMonth > 12)
+                        return false;
+                    else if (dtDay < 1 || dtDay> 31)
+                        return false;
+                    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31)
+                        return false;
+                    else if (dtMonth == 2)
+                    {
+                        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                        if (dtDay> 29 || (dtDay ==29 && !isleap))
+                            return false;
+                    }
+                    return true;
+                },
+                all: function () {
+                    if (validate.fname && validate.lname && validate.plaza && validate.nss && validate.phone && validate.email) {
+                        $('.js-send').attr('disabled',false);
+                        $('.js-send').removeClass('dis');
+                        console.log('cloudmobile... true');
+                        console.log(validate);
+                    } else {
+                        $('.js-send').attr('disabled',true);
+                        $('.js-send').addClass('dis');
+                        console.log('cloudmobile... false');
+                        console.log(validate);
+                    }
+                },
+                shownssiframe: function (event) {
+                    event.preventDefault();
+                    $('.nss-container').slideToggle();
+                },
+                showrecomendadotable: function (event) {
+                    event.preventDefault();
+                    $('.recomendado-container').slideToggle();
+                }
+            }
+
+            $(function(){
+                validate.init();
+            }),
+            
+            function isValidEmailAddress (emailAddress) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(!regex.test(emailAddress)) {
+                   return false;
+                }else{
+                   return true;
+                }
+            }
+                
+            $('.onlyNumbers').keyup(function () { 
+                    this.value = this.value.replace(/[^0-9\ .]/g,'');
+                }),
+            $('.letras').keyup(function () { 
+                    this.value = this.value.replace(/[^a-zA-Z\ .]/g,'');
+                });
+                
+                
+                
+            <!--modificado-->
+            function validar() {
+
+  
+    var option1 = document.getElementById('campo');
+    var option2 = document.getElementById('campo2');
+     
+         
+        if (option1.checked) {
+           
+            option2.style.visibility = 'visible';
+        }else{
+            
+            
+            option2.style.visibility = 'hidden';
+        }
+  }
+  
+  
+     
+        
+<!--modificado--->
+
+
+        </script>
+    </body>
+        <style>
+            #validEmail
+        {
+        margin-top: 4px;
+        margin-left: 9px;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        }
+        .error {
+        background-color: red;
+        }
+
+        .nss-container {
+        display: none;
+        }
+        
+        .recomendado-container {
+        display: none;
+        }
+
+        .text
+        {
+        font-family: Arial, Tahoma, Helvetica;
+        }
+        
+        
+       </style>
+        
+    </html>
+</apex:page>

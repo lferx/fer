@@ -1,0 +1,4 @@
+<apex:page showHeader="true" sidebar="true">
+
+	<c:BitacoraConsola documentoId="a05g000000DJzSn" />	
+</apex:page>

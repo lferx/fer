@@ -1,0 +1,22 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              
+                
+            img.double-border {
+                border: 5px solid #ddd;
+                padding: 5px; /*Inner border size*/
+                background: #fff; /*Inner border color*/
+            }
+            </style>
+            </head>
+ 
+  <body>
+             <center>
+                    <img class="double-border" src="{!URLFOR($Resource.Fany)}" WIDTH="340PX" HEIGHT="390PX"/>
+                 
+                </center>
+</body>
+</html>
+</apex:page>

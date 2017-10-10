@@ -1,0 +1,2082 @@
+<apex:page Controller="AAEFiltraOfertasController2" sidebar="false" action="{!llenadoPaginas}">
+<!-- 
+color azul fuerte: #0C326B
+COLOR AZUL CLARO: #4DB1E0
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+color gris:  #cfcfcf
+mnmorado claro: A37DB3;
+morado fuerta: 672183;
+
+COLOR AZUL CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(77,177,244,1),rgba(77,177,224,0));
+COLOR VERDE CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0));
+COLOR NARANJA DEGRADADO: background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+
+-->
+	<head>
+		<!-- Links para abrir el modal (3) -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+	  	<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+	  	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>  -->
+		<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+		<link rel="stylesheet" href="/resources/demos/style.css"/>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"/>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
+	
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
+		<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+
+		<style type="text/css"> 
+			@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+			@font-face {
+				font-family: 'Bebas-Neue';
+				src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+			}
+			@font-face {
+				font-family: 'gotham-rounded-book';
+				src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+			}
+			@font-face {
+				font-family: 'gotham-rounded-medium';
+				src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+			}
+			.ebody{
+				width:99%;
+				background-color: #fff;
+			}
+			.h1{
+				font-family: 'Bebas-Neue' !important;
+				font-size: 24px !important;
+				text-transform:uppercase !important;
+			}
+			.h2{
+				font-family: 'gotham-rounded-medium' !important;
+				font-weight: bold !important;
+				font-size: 13px !important;
+				text-transform:uppercase !important;
+				color: #0C326B !important;
+
+			}
+			.h3, .h4 , .h5{
+				font-family: 'gotham-rounded-book' !important;
+				text-transform:uppercase !important;
+			}
+			.h3{
+				font-weight: bold !important;
+				font-size: 13px !important;
+				color: #0C326B !important;
+				text-align:right !important;
+			}
+			.h4{
+				font-size: 13px !important;
+				color: #000 !important;
+			}
+			.h5{
+				font-size: 11px !important;
+				color: #fff !important;
+			}
+			.header{
+				background: url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-der.png')}") top right no-repeat,
+										url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-izq.png')}") top left no-repeat;
+				background-color: #fff;
+				width: 100%;
+				text-align: center;
+				align-content: center;
+				align-items: center;
+				border-bottom: 25px solid #D1DA28;
+					
+			}
+			.headertable {
+				vertical-align: center;
+				align-content: center;
+				text-align: center;
+				max-width: 500px;
+			}
+			.headertable tr{
+				width: auto;
+				height: auto;
+			}
+			.headertable tr td{
+				height: auto;
+			}
+			.headertable2 {
+				/*background-color:#fff;*/
+				vertical-align: center;
+				align-content: center;
+				text-align: center;
+				max-width: 500px;
+			}
+			.headertable2 tr{
+				/*background-color:#fff;*/
+				width: auto;
+				height: auto;
+			}
+			.headertable2 tr td{
+				/*background-color:#fff;*/
+				height: auto;
+
+			}
+			.headertable3 {
+				vertical-align: center;
+				align-content: center;
+				text-align: center;
+				max-width: 600px;
+			}
+			.headertable3 tr{
+				width: auto;
+				height: auto;
+			}
+			.headertable3 tr td{
+				height: auto;
+				padding: 15px 40px 15px 40px;
+			}
+			.detallestabla4 tr td:first-child{
+				text-align: right;
+
+			}
+			.detallestabla4 tr td{
+				text-align: left;
+			}
+
+			.botones,.botonesCliente,.botonesfijar,.botones2{
+				font-family: 'gotham-rounded-book' !important;
+				text-transform:uppercase !important;
+				display:block !important;
+				margin: 20px !important;
+				border-radius: 10px !important;
+				cursor: pointer !important;
+			}
+
+			.botones,.botonesCliente,.botonesfijar{
+				font-size: 10px !important;
+				width:170px !important;
+				padding: 3px 0px 3px 0px !important;
+			}
+			.botones {
+				background: #D1DA28 !important;
+				background-color: #D1DA28 !important;
+				color: #0C326B !important;
+			}
+			.botones:hover{
+				background: #A6AE1A !important;
+			}
+			.botones:active{
+				background: #C95A50 !important;
+			}
+			.botonesCliente {
+				background: #4DB1E0 !important;
+				color: #0C326B !important;
+			}
+			.botonesCliente:hover{
+				background: #C95A50 !important;
+			}
+			.botonesCliente:active{
+				background: #C95A50 !important;
+			}
+			.botonesfijar{
+				background: #A37DB3 !important;
+				background-color: #A37DB3 !important;
+				color: #fff !important;
+			}
+			.botonesfijar:hover{
+				background:#672183 !important;
+			}
+			.botonesfijar:active{
+				background: #C95A50 !important;
+			}
+			
+			.botones2{
+				font-size: 11px  !important;
+				color: #fff !important;
+				width:100px !important; 
+				background: #4DB1E0 !important;
+				padding: 5px !important;
+					
+			}
+			.botones2:hover{
+				background: #2A85AF !important;
+			}
+			.botones2:active{
+				background-color:#D1DA28 !important;
+			}
+			.contenedorfiltros{
+				width:200px; 
+				height:auto;
+				position: relative !important;
+			}
+			.divfiltrolabel{
+				cursor:pointer;
+				background: url('{!URLFOR($Resource.consolas, 'recursos/icons/flecha-boton.png')}') top right no-repeat;
+				background-size: 10% 100%;
+				background-color:#cfcfcf;
+				color:#0C326B;
+				position: relative;
+				width:200px;
+				height:18px;
+				z-index:1000;
+				
+				overflow-wrap: break-word;
+				overflow: auto;
+				border-radius: 40px;
+				font-family: 'gotham-rounded-book';
+				font-size: 12px;
+			}
+			.divfiltrolista{
+				display:none;
+				background-color:red;
+				width:auto;
+				min-width:200px;
+				height:auto;
+				position: absolute;
+				z-index:1000;
+				border:1px solid #000;
+				overflow-wrap: break-word;
+				overflow: auto;
+				border-radius: 7px;
+				max-height:500px;
+			}
+			.labelcontador{
+				font-family: "gotham-rounded-book" !important;
+				font-size: 20px  !important;
+				background: #0C326B;
+				border-radius: 60px;
+				padding: 10px 10px 10px 10px;
+				font-size: 16px;
+				color: white;
+				margin: 30px 30px !important;
+			}
+
+
+
+
+
+
+			.pagination {
+				display: inline-block;
+				background-color: #fff;
+			}
+
+			.pagination a {
+				font-family: "gotham-rounded-book" !important;
+				font-size: 14px  !important;
+				color: black;
+				float: left;
+				padding: 5px 10px;
+				text-decoration: none;
+				transition: background-color .3s;
+			}
+
+			.pagination a.active {
+				background-color: #5A2A7E;
+				color: white;
+			}
+			.pagination a:hover:not(.active) {
+				background-color: #ddd;
+			}
+
+			
+			.tdtrue{
+				background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+			}
+			.tdfalse{
+				background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;                
+			}
+			.imagestyle{
+				width:30px;
+				filter: grayscale(30%);
+			}
+			.styledetalles{
+				display: none;
+				font-size:12px;
+				font-weight: normal;
+				max-width: 600px;
+					
+			}
+			.imgth{
+				width: 30px;
+				height: 30px;
+			}
+			.sectioncabecera{
+				border-radius: 15px 15px 0px 0px;
+				background-color: #C95A50;
+				height: 40px;
+				padding: 7px 2px 0px 2px;
+				width: auto;
+
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+			.section{
+				position: relative !important;
+				border: 1px solid #fff !important;
+				border-spacing: 2px !important;
+				padding-top: 90px !important;
+				background: #fff !important;
+				border-radius:10px !important;
+				width:100% !important;
+				height:100% !important;
+					
+			}
+			/*@media (min-width: 1200px)
+			grid.less:7
+			.container {
+					width: 100%;
+			}
+			table{
+				border-spacing:2px !important;
+				border-collapse:separate !important;
+			}*/
+			.container {
+				display:block ;
+				min-height: 150px;
+				max-height: calc(100vh - 210px);
+				height: 100% ;
+				overflow-y: auto ;
+				width:100% ;
+			}
+			.table2 {
+				border-spacing: 2px ;
+				width:100% ;
+			}
+			.table2 td,th {
+				border-bottom:1px solid #eee;
+				background: #fff;
+				color: #000 ;
+				padding: 3px 10px ;
+				max-width:200px ;
+				width:auto ;
+				text-align: center ;
+			}
+			.table2 th {
+				height: 0 ;
+				line-height: 0 ;
+				padding-top: 0 ;
+				padding-bottom: 0 ;
+				color: transparent ;
+				border: none ;
+				white-space: nowrap;
+				text-align: center ;
+			}
+			.table2 th .divset{
+				position: absolute ;
+				background: transparent ;
+				color: #000 ;
+				padding: 2px 5px ;
+				top:0 ;
+				margin-left: -10px ;
+				line-height: normal ;
+				border-left: 1px solid #C0C4C5;
+				text-align: center ; 
+				width: auto ;
+			}
+			.table2 th:first-child .divset{
+				border: none ;
+			}
+			.recientes td{
+					background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+			}
+			.imagensistemas{
+					width: 30px;
+					height: 30px;
+					border-radius:50%;
+					transition: 1s;
+					float: centre;
+					position: relative;
+					left: 5px;
+					bottom: -12px;
+			} 
+			.imagensistemas:hover{
+					width: 90px;
+					height: 90px;
+					transition-timing-function: ease;
+					border-radius:0%;
+			}
+			.comentariosbotoneditar{
+					background-color: white;
+					position:relative;
+					padding:2px;
+					border: 1.5px solid #CED0D1;
+					height:21px;
+					width:20px;
+					border-radius:5px;
+					transition:0.2s;
+					box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+					filter: brightness(96.5%);
+					
+			}
+			.comentariosbotoneditar:hover {
+					background-color: #DBF4FC;
+					color: white;
+					transition-timing-function:ease;
+					height:25px;
+					width:25px;
+			}
+			.comentarioscontainer{
+					background-image: url("{!$Resource.ventana_comentario}");
+					border-radius:20px;
+					position:absolute;
+					z-index:1000;
+					height:200px;
+					width:300px;
+					border: .5px solid #000;
+					top: calc(30% - 100px);
+					left: calc(75% - 150px);
+					filter: opacity(95%);
+			}
+			.comentarioslabel{
+					position:relative; 
+					left: 88px; 
+					top: 45px; 
+			}
+			.comentariostexto{
+					position:relative; 
+					align:center;
+					left: 50px;
+					top: 45px;
+					width:200px;
+					height:70px;
+			}
+			.comentariosbotonguardar{
+					position:relative;
+					background-size:cover;
+					width:85px;
+					top: 50px;
+					float: left;
+					margin: 0px 25px 0px 25px;
+			}
+			.filtrocaja1{
+					position: reltive;
+					width:auto; 
+					height:18px;
+					float:left;
+			}
+			.filtrocaja2{
+					position: relative;
+					width:auto;
+					height:18px;
+					z-index:1000;
+					background-color:#fff;
+					border:1px solid #000;
+					overflow-wrap: break-word;
+					overflow: auto;
+					border-radius: 7px;    
+			}
+			.filtrocaja2:hover{
+					height:auto;
+					max-height:500px;
+					overflow: auto;
+					display: inline-block;
+					position: relative;
+			}
+			.filtrolabel{
+					float:left;
+			}
+			.listadeseleccion{
+					cursor:pointer;
+					width:200px;
+			}
+
+			/*ESTILO PARA REMOVER EL SCROLLING CUANDO SE HABRE LA FICHA TECNICA*/
+			.stop-scrolling {
+					overflow:hidden;
+			}
+
+			
+			/*ESTILO PARA HABRIR EL MODAL DE OBJECIONES CUANDO TIENE USUARIO*/
+			#toast-container {
+				display: block;
+				position: fixed;
+				z-index: 10000;
+			}
+			@media only screen and (max-width: 600px) {
+				#toast-container {
+					min-width: 100%;
+					bottom: 0%;
+				}
+			}
+			@media only screen and (min-width: 601px) and (max-width: 992px) {
+				#toast-container {
+					left: 5%;
+					bottom: 7%;
+					max-width: 90%;
+				}
+			}
+			@media only screen and (min-width: 993px) {
+				#toast-container {
+					top: 10%;
+					right: 7%;
+					max-width: 86%;
+				}
+			}
+			.toast {
+				border-radius: 2px;
+				top: 35px;
+				width: auto;
+				clear: both;
+				margin-top: 10px;
+				position: relative;
+				max-width: 100%;
+				height: auto;
+				min-height: 48px;
+				line-height: 1.5em;
+				word-break: break-all;
+				background-color: #323232;
+				padding: 10px 25px;
+				font-size: 1.5rem;
+				font-weight: 300;
+				color: #fff;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-align-items: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-justify-content: space-between;
+				-ms-flex-pack: justify;
+				justify-content: space-between;
+			}
+			.toast .btn, .toast .btn-large, .toast .btn-flat {
+					margin: 0;
+					margin-left: 3rem;
+			}
+			.toast.rounded {
+					border-radius: 24px;
+			}
+			@media only screen and (max-width: 600px) {
+					.toast {
+							width: 100%;
+							border-radius: 0;
+					}
+			}
+			@media only screen and (min-width: 601px) and (max-width: 992px) {
+					.toast {
+							float: left;
+					}
+			}
+			@media only screen and (min-width: 993px) {
+					.toast {
+							float: right;
+					}
+			}
+
+			/*ESTILO PARA LOS BOTONES DE AVANZAR ATRAS Y CANCELAR CUANDO HAY USUARIO*/
+			/*cancelar*/
+			.cancelar{
+				left: 48%;
+				bottom:25px;
+				position: absolute;
+			}
+			/*precalificacion*/
+			.atras{
+				left: 20%;
+				bottom:25px;
+				position: absolute;
+			} 
+				/*envio ficha*/
+			.siguiente{
+				right: 20%;
+				bottom:25px;
+				position: absolute;
+			}
+			.tableBotonesAA {
+				width: 100%;
+				position: relative;
+				margin-top: 7%;
+			}
+			.tableBotonesAA tr{
+				width: auto;
+				height: auto;
+			}
+			/*IMAGEN DEL CARRITO*/
+			.imagenCarrio{
+				width: 30px;
+				height: 30px;
+				/*background: black;*/
+			}
+			.imagenCarrio:hover{
+				width: 32px;
+				height: 32px;
+				/*background: red;*/
+			}
+
+			.imagenCarrio:active{
+				width: 31px;
+				height: 31px;
+				/*background: blue;*/
+			}
+			.totalCarritos{
+				width: 60px;
+				height: 60px;
+			}
+			/*
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  outline: 0;
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  transition: -webkit-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out, -o-transform 0.3s ease-out;
+  -webkit-transform: translate(0, -25%);
+	   -o-transform: translate(0, -25%);
+		  transform: translate(0, -25%);
+}
+
+.modal.show .modal-dialog {
+  -webkit-transform: translate(0, 0);
+	   -o-transform: translate(0, 0);
+		  transform: translate(0, 0);
+}
+
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+
+.modal-content {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+	  -ms-flex-direction: column;
+		  flex-direction: column;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+		  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+.modal-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+	  -ms-flex-align: center;
+		  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+	  -ms-flex-pack: justify;
+		  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #eceeef;
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.modal-body {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+	  -ms-flex: 1 1 auto;
+		  flex: 1 1 auto;
+  padding: 15px;
+}
+
+.modal-footer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+	  -ms-flex-align: center;
+		  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+	  -ms-flex-pack: end;
+		  justify-content: flex-end;
+  padding: 15px;
+  border-top: 1px solid #eceeef;
+}
+
+.modal-footer > :not(:first-child) {
+  margin-left: .25rem;
+}
+
+.modal-footer > :not(:last-child) {
+  margin-right: .25rem;
+}
+
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+	max-width: 233px;
+	margin: 15% auto;
+  }
+  .modal-sm {
+	max-width: 300px;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+	max-width: 800px;
+  }
+}
+*/
+		</style>
+				
+		<!--
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script>
+				window.onmousedown = function (e) {
+						var el = e.target;
+						if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+								e.preventDefault();
+				
+								// toggle selection
+								if (el.hasAttribute('selected')) el.removeAttribute('selected');
+								else el.setAttribute('selected', '');
+				
+								// hack to correct buggy behavior
+								var select = el.parentNode.cloneNode(true);
+								el.parentNode.parentNode.replaceChild(select, el.parentNode);
+						}
+						
+				}
+		</script>
+		-->
+		<script type="text/javascript">
+			function ftrue(z){
+				document.getElementById(z).style.display = 'block';
+			}
+			function ffalse(y){
+				document.getElementById(y).style.display = 'none';
+			}
+		</script>
+
+		<!-- SCRIP PARA ABRIR COMENTARIOS -->
+		<script>
+			$( function() {
+				$( "#comentarios" ).dialog({
+					autoOpen: false,
+					title: 'Comentarios',
+					resizable: false, 
+					width: 720, 
+					height: 600, 
+					autoResize: true, 
+					modal: true, 
+					draggable: true,
+					show: {
+							effect: "fade",
+							duration: 500
+					},
+					hide: {
+							effect:"explode", duration: 600
+					}
+
+				});
+
+				$( ".comentariosbotoneditar" ).on( "click", function() {
+					$( "#comentarios" ).dialog( "open" );
+				});
+			});
+		</script>
+
+		<!-- SCRIPT PARA ABRIR FICHA TECNICA -->
+		<script type="text/javascript">
+			function ab(h) {
+				var x = '{!URLFOR("/apex/FichaTecnica?id=")}';        
+				$( '<div> </div>').html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="yes" />')
+				.dialog({
+					autoOpen: true,
+					title: 'Ficha Técnica',
+					resizable: true, 
+					width: 700, 
+					height: 600, 
+					autoResize: true, 
+					modal: true, 
+					draggable: true,
+					show: {
+						effect: "fade",
+						duration: 500
+					},
+					hide: {
+						effect:"drop",
+						duration: 300
+					},
+					open: function(){
+						$('body').addClass('stop-scrolling');
+					},
+					close: function(){
+						$('body').removeClass('stop-scrolling');
+					}
+				});
+			}
+		</script>
+
+		<!--<script type="text/javascript">
+			//var j$ = jQuery.noConflict();
+			function abrefiltro() {
+				$('#hola').dialog({
+					autoOpen: false,
+					title: 'Filtro',
+					resizable: false, 
+					width: 720, 
+					height: 600, 
+					autoResize: true, 
+					modal: true, 
+					draggable: true,
+					show: {
+							effect: "fade",
+							duration: 500
+					},
+					hide: {
+							effect:"explode", duration: 600
+					}
+
+				});
+	
+			}
+
+		</script>-->
+	</head>
+	
+		
+	
+	<body class="ebody">
+	<!-- <button type="button" onclick="abrefiltro();">Open</button>
+
+	<div id="hola" >
+		goal
+
+	</div> -->
+<!-- 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title">Modal Header</h4>
+	  </div>
+	  <div class="modal-body">
+		<p>Some text in the modal.</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  </div>
+	</div>
+
+  </div>
+</div> -->
+
+		<apex:form >
+
+			<apex:actionRegion >
+				
+				<apex:outputPanel >
+					<div class="header"><!-- //////////////////    COMIENZA DIV HERDAR   ////////////////////////// -->
+					<!-- <center>
+					<table border="1" align="center">
+					<tr>
+					<td>
+							componante 1
+					</td>
+					<td> -->
+						<apex:outputPanel >
+							<div style="clear: both;">
+							
+							<table class="menuArgumentosObservaciones" align="left" border="0">
+								<td colspan="4" align="center">
+								<!-- 	<div class="divTableRow">
+										<apex:variable value="AAEFitlraOfertas2" var="pagina"/>
+										<div class="divTableCell"><c:Menu_rapidolead account="{!nuevoLead.Id}" visual="pagina"/></div>
+									</div> -->
+								</td>
+							</table>
+							
+							<table class="menuArgumentosObservaciones2" align="right" border="0" width="17%">
+								<td colspan="4" align="center">
+									<div class="divTableRow">
+										<!-- <div class="divTableCell"><c:Stock /></div> -->
+									</div>
+								</td>
+							</table> 
+							</div>
+						</apex:outputPanel>
+
+
+
+						<div id="cuerpoDeFiltros">
+							<table class="headertable1" align="center" border="1"> 
+								<tr>
+									<td colspan="3"><img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" width="150px" height="35px"/></td>
+								</tr>
+								<tr>
+									<td rowspan="3"><img src="{!URLFOR($Resource.consolas, 'recursos/imagenes/elemento-izq.jpg')}" width="40px" height="20px" /></td>
+									<td><font class="h1" style="color: #0C326B;">BIENVENIDO {!UPPER($User.FirstName)} {!UPPER($User.LastName)}</font></td>
+									<td rowspan="3"><img src="{!URLFOR($Resource.consolas, 'recursos/imagenes/elemento-der.jpg')}" width="40px" height="20px" /></td>
+								</tr>
+								<tr style="height: 1px;">
+									<td height="1px" ><font class="h1" style="color: #5A2A7E;">-</font></td>
+								</tr>
+								<tr>
+									<td><font class="h1" style="color: #4DB1E0;">STOCK COMPLETO PARA VENTAS</font></td>
+								</tr>
+							</table>
+							<apex:outputPanel layout="none">
+								<div id="datosDelCliente">
+									<br/>
+									<!-- <font class="h3">{!nombre} {!apellido}</font> -->
+									<br/>
+								</div>
+							</apex:outputPanel>
+
+							<!-- <apex:outputPanel rendered="{!!huboReferencia}"> -->
+							<table class="headertable2" align="center">
+								<tr>
+									<td><apex:commandButton value="Ocultar filtros" styleClass="botones" onclick="ocultar('idcontenedorfiltros','botoneraFinal',this)" reRender="/" /></td>
+									<td><apex:commandButton value="Detalles de la seleccion" styleClass="botones" onclick="detalles('iddetalles')" reRender="/" /></td>
+									<td><apex:commandButton accesskey="e" value="Exportar a Excel" action="{!exportar}" styleClass="botones"/></td>
+									<td><apex:commandButton value="Cambiar Etapas" action="{!cambiarofertas}" styleClass="{!IF(filtroespecial,'botonesfijar','botones')}"/></td>
+								</tr>
+							</table>
+
+							<!-- <apex:inputText value="{!folioOferta}" styleClass="feroferta"/> -->
+							<!-- <apex:commandButton value="Buscar" action="{!buscar}" style="height: 25px !important;padding: 0px 11px 0px 12px"/> -->
+
+							<div id="idcontenedorfiltros">
+								<table class="headertable3"  align="center" border="1">
+		
+									<tr ALIGN="CENTER">
+										<apex:outputPanel layout="none" >
+											<td colspan="3"><font class="h2">Usuario</font> <br/>
+												<div onmouseout="ffalse('fd001')" class="contenedorfiltros">
+													<apex:outputPanel id="fl01">
+														<div id="fd01" class="divfiltrolabel" onclick="ftrue('fd001');">
+															{!GerenteSelec} 
+														</div>
+													</apex:outputPanel>  
+													<div id="fd001" class="divfiltrolista" onmouseover="ftrue('fd001');">
+														<apex:selectList id="idusuario" styleClass="listadeseleccion" value="{!GerenteSelec}" multiselect="True">
+														   <apex:selectOptions value="{!gelst}"/>
+															<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl01,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+														</apex:selectList>
+													</div>
+												</div>  
+											</td>
+										</apex:outputPanel>
+										<td colspan="3"><font class="h2">Oferta</font><br/>
+											<!--<div onmouseout="ffalse('fd002')" class="contenedorfiltros">
+												<apex:outputPanel id="fl02">
+													<div id="fd02" class="divfiltrolabel" onclick="ftrue('fd002');">
+														{!IF(ofs=="true","Con Oferta",IF(ofs=="false","Sin Oferta","Todo"))}
+													</div>
+												</apex:outputPanel>
+												<div id="fd002" class="divfiltrolista" onmouseover="ftrue('fd002');">
+													<apex:selectList id="idoferta" styleClass="listadeseleccion" value="{!ofs}">
+														<apex:selectOptions value="{!oflst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl02,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>-->
+										</td>
+										<td colspan="3"><font class="h2">Escrituras</font><br/>
+											<div onmouseout="ffalse('fd003')" class="contenedorfiltros">
+												<apex:outputPanel id="fl03">
+													<div id="fd03" class="divfiltrolabel" onclick="ftrue('fd003');">
+														{!ess}
+													</div>
+												</apex:outputPanel>
+												<div id="fd003" class="divfiltrolista" onmouseover="ftrue('fd003');">
+													<apex:selectList id="idescrituras" styleClass="listadeseleccion" value="{!ess}">
+														<apex:selectOptions value="{!eslst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl03,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList> 
+												</div>
+											</div>
+										</td>
+										<apex:outputPanel layout="none" >
+											<td colspan="3"><font class="h2">Precio</font><br/>
+												<div onmouseout="ffalse('fd004')" class="contenedorfiltros">
+													<apex:outputPanel id="fl04">
+														<div id="fd04" class="divfiltrolabel" onclick="ftrue('fd004');">
+															{!IF(prs==0,'Todo','Hasta $'+TEXT(prs))}
+														</div>
+													</apex:outputPanel>
+													<div id="fd004" class="divfiltrolista" onmouseover="ftrue('fd004');">
+														<apex:selectList id="idprecio" styleClass="listadeseleccion" value="{!prs}">
+															<apex:selectOptions value="{!prlst}"/>
+															<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+														</apex:selectList>
+													</div>
+												</div>
+											</td>
+										</apex:outputPanel>
+										<!-- <apex:outputPanel layout="none">
+											<td colspan="3"><font class="h2">Habitaciones</font><br/>
+												<div onmouseout="ffalse('fd013')" class="contenedorfiltros">
+													<apex:outputPanel id="fl13">
+														<div id="fd13" class="divfiltrolabel" onclick="ftrue('fd013');">
+															{!nhs}
+														</div>
+													</apex:outputPanel>
+													<div id="fd013" class="divfiltrolista " onmouseover="ftrue('fd013');">
+														<apex:selectList id="idhabitaciones" styleClass="listadeseleccion" value="{!nhs}">
+															<apex:selectOptions value="{!nhlst}"/>
+															<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl13,idescrituras,idestado,idciudad,idcolonia,idetapa,idrehabilitacion2,paginacion,asid,tabladeresultados,idinvasion,idhtipo"/>
+														</apex:selectList>
+													</div>
+												</div>
+											</td>
+											<td colspan="3"><font class="h2">Tipo</font><br/>
+												<div onmouseout="ffalse('fd014')" class="contenedorfiltros">
+													<apex:outputPanel id="fl14">
+														<div id="fd14" class="divfiltrolabel" onclick="ftrue('fd014');">
+															{!nhs}
+														</div>
+													</apex:outputPanel>
+													<div id="fd014" class="divfiltrolista " onmouseover="ftrue('fd014');">
+														<apex:selectList id="idhtipo" styleClass="listadeseleccion" value="{!tps}">
+															<apex:selectOptions value="{!tplst}"/>
+															<apex:actionSupport status="mySaveStatus2" event="onchange" action="{!actualizar}" reRender="fl14,idescrituras,idestado,idciudad,idcolonia,idetapa,idrehabilitacion2,paginacion,asid,tabladeresultados,idinvasion,idhabitaciones"/>
+														</apex:selectList>
+													</div>
+												</div>
+											</td>
+										</apex:outputPanel> -->
+									</tr>
+									<tr ALIGN="CENTER">
+										<td colspan="3"><font class="h2">Dias</font><br/>
+											<div onmouseout="ffalse('fd005')" class="contenedorfiltros">
+												<apex:outputPanel id="fl05">
+													<div id="fd05" class="divfiltrolabel" onclick="ftrue('fd005');">
+														{!IF(dis==0,'Todo','Mas de ' + TEXT(dis))}
+													</div>
+												</apex:outputPanel>
+												<div id="fd005" class="divfiltrolista" onmouseover="ftrue('fd005');">
+													<apex:selectList id="iddias" styleClass="listadeseleccion" value="{!dis}">
+														<apex:selectOptions value="{!dilst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl05,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+										<td colspan="3"><font class="h2">Estado</font><br/>
+											<div onmouseout="ffalse('fd006')" class="contenedorfiltros">
+												<apex:outputPanel id="fl06">
+													<div id="fd06" class="divfiltrolabel" onclick="ftrue('fd006');">
+														{!EstadoSelec}
+													</div>
+												</apex:outputPanel>
+												<div id="fd006" class="divfiltrolista" onmouseover="ftrue('fd006');">
+													<apex:selectList id="idestado" styleClass="listadeseleccion" value="{!EstadoSelec}" multiselect="True">
+														<apex:selectOptions value="{!edoLst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onclick" action="{!actualizar}" reRender="fl06,idusuario,idoferta,idescrituras,idprecio,iddias,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+										<td colspan="3"><font class="h2">Ciudad</font><br/>
+											<div onmouseout="ffalse('fd007')" class="contenedorfiltros">
+												<apex:outputPanel id="fl07">
+													<div id="fd07" class="divfiltrolabel" onclick="ftrue('fd007');">
+														{!CiudadSelec}
+													</div>
+												</apex:outputPanel>
+												<div id="fd007" class="divfiltrolista" onmouseover="ftrue('fd007');">
+													<apex:selectList id="idciudad" styleClass="listadeseleccion" value="{!CiudadSelec}" multiselect="True">
+														<apex:selectOptions value="{!cdLst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl07,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+										<td colspan="3"><font class="h2">Colonia</font><br/>
+											<div onmouseout="ffalse('fd008')" class="contenedorfiltros">
+												<apex:outputPanel id="fl08">
+													<div id="fd08" class="divfiltrolabel" onclick="ftrue('fd008');">
+														{!ColoniaSelec}
+													</div>
+												</apex:outputPanel>
+												<div id="fd008" class="divfiltrolista" onmouseover="ftrue('fd008');">
+													<apex:selectList id="idcolonia" styleClass="listadeseleccion" value="{!ColoniaSelec}" multiselect="True">
+														<apex:selectOptions value="{!colLst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl08,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr ALIGN="CENTER">
+										<td colspan="4"><font class="h2">Invasion</font><br/>
+											<div onmouseout="ffalse('fd009')" class="contenedorfiltros" >
+												<apex:outputPanel id="fl09">
+													<div id="fd09" class="divfiltrolabel" onclick="ftrue('fd009');">
+														{!InvasionSelec}
+													</div>
+												</apex:outputPanel>
+												<CENTER><div id="fd009" class="divfiltrolista" onmouseover="ftrue('fd009');">
+													<apex:selectList id="idinvasion" styleClass="listadeseleccion" value="{!InvasionSelec}" multiselect="True">
+														<apex:selectOptions value="{!inlst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl09,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div></CENTER>
+											</div>
+										</td>
+										<td colspan="4"><font class="h2">Etapa</font><br/>
+											<div onmouseout="ffalse('fd010')" class="contenedorfiltros">
+												<apex:outputPanel id="fl10">
+													<div id="fd10" class="divfiltrolabel" onclick="ftrue('fd010');">
+															{!EtapaSelec}
+													</div>
+												</apex:outputPanel>
+												<div id="fd010" class="divfiltrolista" onmouseover="ftrue('fd010');">
+													<apex:selectList id="idetapa" styleClass="listadeseleccion" value="{!EtapaSelec}" multiselect="True">
+														<apex:selectOptions value="{!etlst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl10,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+										<td colspan="4"><font class="h2">Rehabilitacion</font><br/>
+											<div onmouseout="ffalse('fd011')" class="contenedorfiltros">
+												<apex:outputPanel id="fl11">
+													<div id="fd11" class="divfiltrolabel" onclick="ftrue('fd011');">
+															{!IF(rehas=='True','Rehabilitadas',IF(rehas=='False','No Rehabilitadas','Todo'))}
+													</div>
+												</apex:outputPanel>
+												<div id="fd011" class="divfiltrolista" onmouseover="ftrue('fd011');">
+													<apex:selectList id="idrehabilitacion" styleClass="listadeseleccion" value="{!rehas}">
+														<apex:selectOptions value="{!rehalst}"/>
+														<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl11,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+													</apex:selectList>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<table class="headertable3"  align="center" border="1">
+									<tr>
+										<td colspan="12" ALIGN="CENTER"><apex:outputLabel styleclass="labelcontador" >Total de registros: {!n} </apex:outputLabel></td>
+									</tr>
+									<tr>
+										<td colspan="6" ALIGN="RIGHT">
+											<apex:commandButton accesskey="l" value="Limpiar" action="{!Reset}" styleClass="botones2"/>
+										</td>
+										<td colspan="6" ALIGN="LEFT">
+											<apex:actionStatus id="mySaveStatus1">
+												<apex:facet name="stop">
+													<apex:commandButton status="mySaveStatus1" id="btnenter" accesskey="e" value="Actualizar" action="{!llenadoPaginas}" styleClass="botones2" />
+												</apex:facet>
+												<apex:facet name="start">
+													<apex:outputPanel >
+															<apex:image value="/img/loading32.gif" style="height: 15px;"/>
+															<apex:commandButton status="mySaveStatus1" value="Processing..." disabled="true" styleClass="botones2" style="background-color: red !Important"/>
+													</apex:outputPanel>
+												</apex:facet>
+											</apex:actionStatus>
+										</td>
+									</tr>
+								</table>
+							</div>
+
+								
+						<!-- </apex:outputPanel> -->
+
+							<center>
+								<div id="botoneraFinal">
+									<table class="headertable3"  align="center" border="1">
+										<tr>
+											<td colspan="12" ALIGN="CENTER"><apex:outputLabel styleclass="labelcontador" >Total de registros: {!n} </apex:outputLabel></td>
+										</tr>
+										<tr>
+											<!-- <td colspan="6" ALIGN="RIGHT">
+													<apex:commandButton value="Limpiar" action="{!Reset}" styleClass="botones2"/>
+											</td>
+											<td colspan="6" ALIGN="LEFT">
+												<apex:actionStatus id="mySaveStatus1k">
+													<apex:facet name="stop">
+														<apex:commandButton status="mySaveStatus1k" id="btnenterk" accesskey="e" value="Actualizar" action="{!llenadoPaginas}" styleClass="botones2" />
+													</apex:facet>
+													<apex:facet name="start">
+														<apex:outputPanel >
+															<apex:image value="/img/loading32.gif" style="height: 15px;"/>
+															<apex:commandButton status="mySaveStatus1k" value="Processing..." disabled="true" styleClass="botones2" style="background-color: red !Important"/>
+														</apex:outputPanel>
+													</apex:facet>
+												</apex:actionStatus> 
+											</td>-->
+										</tr>
+									</table>
+								</div>
+
+								<div id="iddetalles" class="styledetalles">
+									<apex:outputPanel id="asid">
+										<table class="tabla4">
+											<apex:outputPanel layout="none">
+												<tr>
+													<td><font class="h3">Usuario:</font></td>       <td><font class="h4">{!GerenteSelec}</font></td>
+												</tr>
+											</apex:outputPanel>
+											<tr>
+												<td><font class="h3">Oferta:</font></td>                <td><font class="h4">[{!IF(ofs=="true","Con Oferta",IF(ofs=="false","Sin Oferta","Todo"))}]</font></td>
+											</tr>
+											<tr>
+												<td><font class="h3">Escritura:</font></td>             <td><font class="h4">[{!ess}]</font></td>
+											</tr>
+											<apex:outputPanel layout="none">
+												<tr>
+													<td><font class="h3">Precio:</font></td>        <td><font class="h4">[{!IF(prs==0,'Todo','Hasta $'+TEXT(prs))}]</font></td>
+												</tr>
+											</apex:outputPanel>
+											<tr>
+												<td><font class="h3">Dias:</font></td>                  <td><font class="h4">[{!IF(dis==0,'Todo','Mas de ' + TEXT(dis))}]</font></td>
+											</tr>
+											<tr>
+												<td><font class="h3">Estado:</font></td>                <td><font class="h4">{!EstadoSelec}</font></td>
+											</tr>
+											<tr>
+												<td><font class="h3">Ciudad:</font></td>                <td><font class="h4">{!CiudadSelec}</font></td>
+											</tr>
+											<tr>    
+												<td><font class="h3"> Colonia:</font></td>      <td><font class="h4">{!ColoniaSelec}</font></td>
+											</tr>
+											<tr>
+												<td><font class="h3">Invasion:</font></td>      <td><font class="h4">{!InvasionSelec}</font></td>
+											</tr>
+											<tr>
+												<td><font class="h3">Etapa:</font></td>                 <td><font class="h4">{!EtapaSelec}</font></td>
+											</tr>
+											<tr>    
+												<td><font class="h3">Rehabilitacion:</font></td><td><font class="h4">[{!IF(rehas=='True','Rehabilitadas',IF(rehas=='False','No Rehabilitadas','Todo'))}]</font></td>
+											</tr>
+										</table>
+										<br/>
+									</apex:outputPanel>
+								</div>
+						
+
+								<apex:outputPanel layout="none">
+									<table class="tableBotonesAA" align="center" border="1">
+										<tr>
+											<td>
+												<div class="atras">
+													<!-- <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/BOTON-FLECHA-ATRAS.png')}" styleClass="circulo1">
+														<apex:actionSupport event="onclick" action="{!precalificacion}"/>
+													</apex:image> -->
+													<br/>
+													<h1 style="color: #0C326B">PRECALIFICACION</h1>
+												</div>
+											</td>
+											<td>
+												<div class="cancelar">
+													<apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/BOTON-CANCELAR.png')}" onclick="confirm2()" styleClass="circulo1" >
+													</apex:image>
+													<br/><h1 style="color: #0C326B">CANCELAR</h1>
+												</div>
+											</td>
+											<td>
+												<div class="siguiente">
+													<!-- <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/BOTON-FLECHA-SIGUIENTE.png')}" styleClass="circulo1">
+														<apex:actionSupport event="onclick" action="{!envioficha}"/>
+													</apex:image> -->
+													<br/>
+													<h1 style="color: #0C326B">ENVIO DE FICHA</h1>
+												</div>
+											</td>
+										</tr>
+									</table>
+										
+									<!-- <apex:outputPanel rendered="{!carroLleno > 0}" id="cantidadDeCarritos">
+										<apex:image url="http://svet-con.ru/upload/iblock/7f4/image.png" styleClass="totalCarritos"/>
+										<font size="h1">{!carroLleno}</font>
+									</apex:outputPanel> -->
+
+								</apex:outputPanel>
+
+							</center>
+						</div>
+
+						<!-- FINALIZA PRUEBA DE CODIGO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+						<!-- </td>
+						<td>
+						componente 2
+						</td>
+						</tr>
+						
+						</table>
+						</center> -->
+
+																		
+
+						<div style="clear: both;">
+						<!-- INICIA BOTONES PARA PAGINACION -->
+							<!-- <apex:outputPanel id="paginacion">
+								<apex:outputText rendered="{!!paginasBoolean}">Presiona "Actualizar" para refrescar los registros</apex:outputText>
+								<div class="pagination">
+									<apex:commandLink accesskey="e" action="{!previous}" rendered="{!IF(AND(npag2 > 1,paginasBoolean),true,false)}" >&laquo; Anterior</apex:commandLink>
+									<apex:repeat var="a" value="{!sizelistarray}" rendered="{!IF(paginasBoolean,true,false)}">
+										<apex:commandLink value="{!a}" action="{!llenadoPaginas}" styleClass="{!IF(npag2==a,'active','false')}" >
+											<apex:param name="pagin" assignTo="{!npag2}" value="{!a}"/>
+											<apex:param name="pagin2" assignTo="{!num2}" value="{!(a-1)*300}"/>
+										</apex:commandLink>
+									</apex:repeat>
+
+									<apex:commandLink accesskey="e" action="{!next}" rendered="{!IF(AND(npag2 < sizelist,paginasBoolean),true,false)}">Siguiente &raquo;</apex:commandLink>
+								</div>
+							</apex:outputPanel> -->
+						<!-- TERMINA BOTONES PARA PAGINACION -->
+						</div>
+
+
+					</div><!-- //////////////////////////   TERMINA DIV HEADER   ////////////////////////// -->
+				</apex:outputPanel>
+			</apex:actionRegion>
+		</apex:form> 
+
+
+
+
+
+
+		<apex:variable var="num" value="{!num2}"/> <!-- /////////////////// variable /////////////////////// -->
+
+	 
+		<apex:outputPanel >
+		
+			<apex:form >
+					
+
+				<div> 
+					<!-- Inicio tabla html -->
+					<section class="section">
+						<apex:actionRegion >
+							<apex:outputPanel id="tablaregistros">
+								<!--<div id="carga" style="position: absolute; ">
+										<img src="http://www.arsenal.com/assets/images/player/loading.gif"/>
+								</div>-->
+								
+
+
+								<div id="tablaregistros" class="container">
+									<table class="table2">
+										<thead>
+											<tr class="header">
+												<th data-campo='num'><font class="h5"><br/>#</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/numeros.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"> <br/>#</font></section>
+													</div>
+												</th>
+												<th data-campo='Folio'><font class="h5">Folio <br/> oferta</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/folio.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Folio <br/> oferta</font></section>
+													</div>
+												</th>
+												<th data-campo='Plaza'><font class="h5"><br/>Plaza</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/plaza.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Plaza</font></section>
+													</div>
+												</th>
+												<th data-campo='Etapa'><br/><font class="h5">Etapa</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/etapa.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"> <br/>Etapa</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Oferta'><font class="h5">Oferta <br/> cargada</font>
+														<div  class="divset">
+														<div style="clear: both;">
+															<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/oferta-cargada.png')}" styleClass="imgth"/>
+															<br/>
+															<section class="sectioncabecera"><font class="h5"> Oferta <br/> cargada</font></section>
+														<!-- </div> -->
+
+
+																<div onmouseout="ffalse('fd002')" class="contenedorfiltros">
+																	<apex:outputPanel id="fl02">
+																		<div id="fd02" class="divfiltrolabel" onclick="ftrue('fd002');">
+																			{!IF(ofs=="true","Con Oferta",IF(ofs=="false","Sin Oferta","Todo"))}
+																		</div>
+																	</apex:outputPanel>
+																	<div id="fd002" class="divfiltrolista" onmouseover="ftrue('fd002');">
+																		<apex:selectList id="idoferta" styleClass="listadeseleccion" value="{!ofs}">
+																			<apex:selectOptions value="{!oflst}">
+																			</apex:selectOptions>
+																			<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl02,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+																		</apex:selectList>
+																	</div>
+																</div>
+														</div>
+														</div>
+													<!-- <button type="button" onclick="event.preventDefault(); $( '#dialog' ).dialog( 'open' );">hola</button> -->
+
+
+
+
+													<!-- <div onmouseout="ffalse('fd002')" class="contenedorfiltros">
+														<apex:outputPanel id="fl02">
+															<div id="fd02" class="divfiltrolabel" onclick="ftrue('fd002');" >
+																{!IF(ofs=="true","Con Oferta",IF(ofs=="false","Sin Oferta","Todo"))}
+															</div>
+														</apex:outputPanel>
+
+
+
+												  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+												  
+											<apex:actionRegion >
+														<div id="fd002" class="divfiltrolista" onmouseover="ftrue('fd002');"> -->
+													
+
+
+  
+												<!-- 			<apex:selectList id="idoferta" styleClass="listadeseleccion" value="{!ofs}">
+
+																<apex:selectOptions value="{!oflst}"/>
+																<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl02,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+															</apex:selectList>
+ -->
+
+
+
+													
+														<!-- </div>
+														</apex:actionRegion>
+														</div> -->
+													
+												</th>
+											<!-- <apex:outputPanel rendered="{!!huboReferencia}" layout="none" > -->
+												<th data-campo='Estado'><font class="h5"><br/>Estado</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/estado.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Estado</font></section>
+
+													</div>
+												</th>
+										
+
+												<th data-campo='Ciudad'><font class="h5"><br/>Ciudad</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/ciudad.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Ciudad</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Colonia'><font class="h5"><br/>Colonia</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/colonia.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Colonia</font></section>
+													</div>
+												</th>
+											<!-- </apex:outputPanel> -->
+											<!-- <apex:outputPanel rendered="{!huboReferencia}" layout="none" >
+												<th data-campo='Ubicacion'><font class="h5"><br/>Ubicacion</font>
+													<div>
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/estado.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Ubicacion</font></section>
+														<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">FILTRA ESTADO</button>
+													</div>
+												</th>
+											</apex:outputPanel> -->
+
+												<th data-campo='Direccion'><font class="h5"><br/>Direccion</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/direccion.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Direccion</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Terr'><font class="h5">Terr <br/> m<sup>2</sup></font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/terreno.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Terr <br/> m<sup>2</sup></font></section>
+													</div>
+												</th>
+
+												<th data-campo='Cons'><font class="h5">Cons <br/> m<sup>2</sup></font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/construccion.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Cons <br/> m<sup>2</sup></font></section>
+													</div>
+												</th>
+
+												<th data-campo='Habs'><font class="h5"><br/>Habs</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/habitaciones.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Habs</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Banos'><font class="h5"><br/>Baños</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/banios.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Baños</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Escrituras'><font class="h5"><br/>Escrituras</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/escrituras.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Escrituras</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Invadida'><font class="h5">Estatus<br/>Invasion</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/estatus.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Estatus<br/>Invasion</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Valor'><font class="h5">Valor de <br/> referencia</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/valor-referencia.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Valor de <br/> referencia</font></section>
+													</div>
+												</th>
+												<!-- <th data-campo='Precio'><font class="h5">Precio <br/> venta</font>
+													<div>
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/precio-venta.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><h5>Precio <br/> venta</font></section>
+													</div>
+												</th> -->
+												<th data-campo='Precio'><font class="h5">Precio <br/> original</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/valor-referencia.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Precio <br/> original</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Rehabilitacion'><font class="h5"><br/> Rehabilitacion</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/rehabilitacion.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/> Rehabilitacion</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Revisado'><font class="h5"><br/>Revisado</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/revisado.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"><br/>Revisado</font></section>
+													</div>
+												</th>
+
+												<th data-campo='Dias'><font class="h5">Dias en <br/> stock</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/dias-stock.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Dias en <br/> stock</font></section>
+													</div>
+												</th>
+											<apex:outputPanel id="columnas" layout="none" >
+												<th data-campo='Inversor'><font class="h5"> <br/> Inversor</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/valor-referencia.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5"> <br/> Inversor</font></section>
+													</div>
+												</th>
+												<!-- <th data-campo='Campanas'>Campañas <br/> comerciales<div>Campañas <br/> comerciales</div></th> -->
+
+												<th data-campo='Revision'><font class="h5">Comentarios <br/> en revision</font>
+													<div class="divset">
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/comentarios.png')}" styleClass="imgth"/>
+														<br/>
+														<section class="sectioncabecera"><font class="h5">Comentarios <br/> en revision</font></section>
+													</div>
+												</th>
+												<!-- <th data-campo='Gerente'>Comentarios Gerente<div>Comentarios Gerente</div></th>
+												<th data-campo='Ejecutivo'>Comentarios Ejecutivo<div>Comentarios Ejecutivo</div></th> -->
+											</apex:outputPanel>
+											</tr>
+										</thead>
+										
+										<tbody>
+											<!-- <apex:repeat value="{!pag1}" rows="{!sizelist}">
+												<apex:variable var="npag2" value="{!npag2+1}"/><!-- aumenta 1 a la variable npag2 -->
+														 
+											<apex:repeat value="{!CASE(npag2,1,pag1,2,pag2,3,pag3,4,pag4,5,pag5,6,pag6,7,pag7,pag1)}" var="oferta">
+												<tr class="{!IF(oferta.boleano,'recientes','tds')}">
+													<td>
+														<!-- Columna para # ////////////////////////////////////////////////////////// -->
+														<apex:variable var="num" value="{!num+1}"/><!-- aumenta 1 a la variable npag-->
+														<apex:outputText value="{!num}"/>
+													</td>
+													<td>
+														<!-- Columna para folio Oferta ////////////////////////////////////////////////////////// -->
+														<apex:outputLink target="_blank" value="/{!oferta.registro.Id}">{!oferta.registro.Name}</apex:outputLink><br/>
+														<apex:commandButton onclick="ab('{!oferta.registro.Id}')" value="Ver Ficha" reRender="/" styleClass="botones" style="width: 70px !important; "/>
+														<apex:outputPanel layout="none" >
+															<apex:outputPanel layout="none">
+																<apex:actionRegion >
+																	<apex:image url="http://icon-icons.com/icons2/210/PNG/256/shopping-basket-add256_24909.png" styleClass="imagenCarrio" title="imgCarrit">
+																		<!-- <apex:actionSupport event="onclick" action="{!agregar}" rerender="cantidadDeCarritos">
+																			<apex:param name="registroid" assignTo="{!ofertaId}" value="{!oferta.registro.id}" />
+																			<!-- <apex:param name="comentarios2" assignTo="{!comentarios}" value="2"/> --
+																		</apex:actionSupport> -->
+																	</apex:image>
+																</apex:actionRegion>
+															</apex:outputPanel>
+
+															<apex:outputPanel layout="none">
+															<!-- rendered="{!x.active}" -->
+																	<apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+															</apex:outputPanel>
+														</apex:outputPanel>
+
+													</td>
+													<td>
+														<!-- Columna para plaza ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Plaza__c}"/>
+													</td>
+													<td> 
+														<!-- Columna para etapa ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!IF(oferta.registro.Etapa__c == 'Rehabilitación','E 10',IF(oferta.registro.Etapa__c == 'Compilación expediente cliente','E 9',IF(oferta.registro.Etapa__c == 'Escrituras en proceso registro','E 8',IF(oferta.registro.Etapa__c == 'Compra final','E 7',IF(oferta.registro.Etapa__c == 'Compilación expediente compra','E 6',IF(oferta.registro.Etapa__c == 'Aprobada internamente','E 5',IF(oferta.registro.Etapa__c == 'Antecedentes','E 4',oferta.registro.Etapa__c)))))))}"/>
+														<!-- <apex:outputText value="E 10" rendered="{!oferta.registro.Etapa__c == 'Rehabilitación'}"/>
+														<apex:outputText value="E 9" rendered="{!oferta.registro.Etapa__c == 'Compilación expediente cliente'}"/> 
+														<apex:outputText value="E 8" rendered="{!oferta.registro.Etapa__c == 'Escrituras en proceso registro'}"/> 
+														<apex:outputText value="E 7" rendered="{!oferta.registro.Etapa__c == 'Compra final'}"/> 
+														<apex:outputText value="E 6" rendered="{!oferta.registro.Etapa__c == 'Compilación expediente compra'}"/>
+														<apex:outputText value="E 5" rendered="{!oferta.registro.Etapa__c == 'Aprobada internamente'}"/>
+														<apex:outputText value="E 4" rendered="{!oferta.registro.Etapa__c == 'Antecedentes'}"/>
+														<apex:outputText value="Descartada" rendered="{!oferta.registro.Etapa__c == 'Descartada'}"/> -->
+													</td>
+													
+													<td class="{!IF(oferta.registro.Oferta_Cargada__c,'tdtrue','tdfalse')}">
+														<!-- Columna para Oferta Cargada ////////////////////////////////////////////////////////// -->
+														<!-- <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/tache.png')}" styleClass="imagestyle" rendered="{!oferta.registro.Oferta_Cargada__c == false}"/>
+														<apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/paloma.png')}" styleClass="imagestyle" rendered="{!oferta.registro.Oferta_Cargada__c == true}"/> -->
+														<apex:image value="{!IF(oferta.registro.Oferta_Cargada__c,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" styleClass="imagestyle"/>
+															
+													</td>
+													<!-- <apex:outputPanel layout="none" rendered="{!!huboReferencia}"> -->                                                                            
+														<td>
+																<!-- Columna para Estado ////////////////////////////////////////////////////////// -->
+																<apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+														</td>
+														<td>
+																<!-- Columna para ciudad ////////////////////////////////////////////////////////// -->
+																<apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+														</td>
+														
+														<td>
+																<!-- Columna para colonia ////////////////////////////////////////////////////////// -->
+																<apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/>
+														</td>
+													<!-- </apex:outputPanel> -->
+													<!-- <apex:outputPanel rendered="{!huboReferencia}" layout="none">
+														<td>
+															<!-- Columna para Estado ////////////////////////////////////////////////////////// -->
+															<!-- <apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+															<apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+															<apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/> --
+															<apex:outputText value="<b>Estado:</b>" escape="false"/><br/>
+															<apex:outputField value="{!oferta.registro.Estado__c}"/><br/><br/>
+															<apex:outputText value="<b>Ciudad:</b>" escape="false"/><br/>
+															<apex:outputField value="{!oferta.registro.Ciudad_Tabla__c}"/><br/><br/>
+															<apex:outputText value="<b>Colonia:</b>" escape="false"/><br/>
+															<apex:outputField value="{!oferta.registro.Colonia_busqueda__c}"/>
+														</td>
+													</apex:outputPanel> -->
+													<td>
+														<!-- Columna para direccion ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Direccion2__c}" escape="false"/>
+													</td>
+													<td>
+														<!-- Columna para terreno m2////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{0,number}">
+																<apex:param value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+														</apex:outputText>
+													</td>
+													<td>
+														<!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{0,number}">
+																<apex:param value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+														</apex:outputText>
+													</td>
+													<td>
+														<!-- Columna para numero de habitaciones ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+													</td>
+													<td>
+														<!-- Columna para numero de baños ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+													</td>
+													<td>
+														<!-- Columna para Escrituras ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Escritu__c}"/>
+													</td>
+													<td>
+														<!-- Columna para Invadida ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+														<!--<<apex:image value="{!$Resource.Fallo}" styleClass="imagestyle" rendered="{!oferta.registro.Estatus_de_Invasion__c != 'Invadida'}"/>
+														<apex:image value="{!$Resource.Acierto}" styleClass="imagestyle" rendered="{!oferta.registro.Estatus_de_Invasion__c == 'Invadida'}"/>-->
+													</td>
+													<td>
+														<!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+														<apex:outputText value="{0,number,###,###}">
+																<apex:param value="{!oferta.registro.ValorReferencia__c}"/>
+														</apex:outputText> 
+													</td>
+													<!-- <td>
+															<!-- Columna para Precio venta ////////////////////////////////////////////////////////// --     
+															<apex:outputText value="{0,number,###,###}">
+																	<apex:param value="{!oferta.registro.PrecioVenta__c}"/>
+															</apex:outputText>
+													</td> -->
+													<td>
+														<!-- Columna para Precio original ////////////////////////////////////////////////////////// -->     
+														<apex:outputText value="{0,number,###,###}">
+																<apex:param value="{!oferta.registro.Precio_Original__c}"/>
+														</apex:outputText>
+													</td>
+													<td class="{!IF(oferta.rehabilitada,'tdtrue','tdfalse')}">
+													<!-- Columna para rehabilitada ////////////////////////////////////////////////////////// -->
+														<apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+													</td>
+													<td class="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>','tdtrue','tdfalse')}">
+														<!-- Columna para revisado ////////////////////////////////////////////////////////// -->    
+														<apex:image value="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>',URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+													</td>
+													<td>
+														<!-- Columna para Dias en stock ////////////////////////////////////////////////////////// -->          
+														<apex:outputText value="{0,number}">
+																<apex:param value="{!oferta.registro.TiempoOferta__c}"/>
+														</apex:outputText>
+													</td>
+													<apex:outputPanel id="columnas2" layout="none" >
+														<td>
+															<!-- Columna para inversor ////////////////////////////////////////////////////////// -->          
+															<apex:outputText value="{!oferta.registro.Inversor2__c}"/>
+														</td>
+																	
+														<!-- <td>
+																<!-- Columna para campaña comercial ////////////////////////////////////////////////////////// --
+																<apex:outputText value="{!oferta.registro.Campa__c}"/>
+														</td> -->
+														<td>
+															<!-- Columna para comentarios en revision ////////////////////////////////////////////////////////// -->
+															<div style="max-height: 100px; overflow:auto;">     
+																<apex:outputText value="{!oferta.registro.Comentarios_en_revision__c}"/>
+															</div>
+															<center>
+															<div>
+																<apex:actionRegion >
+																	<apex:image url="{!$Resource.Comentarios_Gerente}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Gerentes">
+																		<apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+																			<apex:param name="registroid" assignTo="{!ofertaId}" value="{!oferta.registro.id}" />
+																			<apex:param name="comentarios1" assignTo="{!comentarios}" value="1"/>
+																		</apex:actionSupport>
+																	</apex:image>
+																</apex:actionRegion>
+																
+																&nbsp; &nbsp; 
+																<apex:actionRegion >
+																	<apex:image url="{!$Resource.Comentarios_Ejecutivo}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Ejecutivos">
+																		<apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+																			<apex:param name="registroid" assignTo="{!ofertaId}" value="{!oferta.registro.id}" />
+																			<apex:param name="comentarios2" assignTo="{!comentarios}" value="2"/>
+																		</apex:actionSupport>
+																	</apex:image>
+																</apex:actionRegion>
+															</div>
+															</center>
+														</td>
+													</apex:outputPanel>
+													<!-- <td>
+															<!-- Columna para Comentarios gerente ////////////////////////////////////////////////////////// --
+															<center>
+																	<div style="border:1px solid black;width:80%;max-height:90px;min-height:20px;padding:5px;border-radius:5px;text-align:left;overflow:auto;">
+																			<apex:outputText value="{!oferta.registro.Comentarios_Gerente__c}"/>
+																	</div>
+															</center>
+															<br/>
+															<center>
+																	<apex:actionRegion >
+																			<apex:image url="{!$Resource.Editar}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Gerente">
+																					<apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+																							<apex:param name="registroid" assignTo="{!ofertaId}" value="{!oferta.registro.id}" />
+																							<apex:param name="comentarios1" assignTo="{!comentarios}" value="1"/>
+																					</apex:actionSupport>
+																			</apex:image>
+																	</apex:actionRegion>
+															</center>
+													</td>
+													<td>
+															<!-- Columna para Comentarios Ejecutivo ////////////////////////////////////////////////////////// --
+															<center>
+																	<div style="border:1px solid black;width:80%;max-height:90px;min-height:20px;padding:5px;border-radius:5px;text-align:left;overflow:auto;">
+																			<apex:outputText value="{!oferta.registro.Comentarios_Ejecutivos__c}" id="comentsEjecutivos"/>
+																	</div>
+															</center>
+															<br/>
+															<center>
+																	<apex:actionRegion >
+																			<apex:image url="{!$Resource.Editar}" alt="Editar" styleClass="comentariosbotoneditar" >
+																					<apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+																							<apex:param name="registroid" assignTo="{!ofertaId}" value="{!oferta.registro.id}" />
+																							<apex:param name="comentarios2" assignTo="{!comentarios}" value="2"/>
+																					</apex:actionSupport>
+																			</apex:image>
+																	</apex:actionRegion>
+															</center>
+													</td> -->
+												</tr>
+											</apex:repeat>
+											<!-- </apex:repeat> -->
+										</tbody>
+											
+									</table>
+									<!-- <apex:actionFunction name="paso" reRender="xxx" action="{!agregar}">
+										<apex:param name="guardadoDeId2" assignTo="{!ofertaId}" value=""/>
+									</apex:actionFunction> -->
+								</div>
+
+							</apex:outputPanel>
+						</apex:actionRegion>
+					</section>
+						<!--Termina tabla html -->
+						
+				</div>
+
+				<div id="comentarios">
+					<apex:actionRegion >
+						<apex:outputPanel id="commentsContainer">
+						<!--  styleClass="comentarioscontainer" -->
+							<apex:outputPanel id="coments" style="vertical-align:top;" rendered="{!mostrarDialogoComentarios}">
+								<apex:repeat value="{!comentariosq}" var="comentario">
+									<apex:outputText value="Folio oferta: {!comentario.Name}" styleclass="comentarioslabel" />
+									<br/>
+									<div>
+										<apex:outputText value="<b>Comentarios Gerentes</b><br/>" rendered="{!comentarios==1}" styleclass="comentarioslabel" escape="false"/>
+										<apex:outputText value="<b>Comentarios Ejecutivos</b><br/>" rendered="{!comentarios==2}" styleclass="comentarioslabel" escape="false"/>
+										<br/>
+										<apex:inputTextarea value="{!comentario.Comentarios_Gerente__c}" rendered="{!comentarios==1}" styleClass="comentariostexto"/>
+										<apex:inputTextarea value="{!comentario.Comentarios_Ejecutivos__c}" rendered="{!comentarios==2}" styleClass="comentariostexto"/>
+									</div>
+								</apex:repeat>
+								<center>
+									<apex:image url="{!$Resource.boton_guardar}" alt="Guardar" styleClass="comentariosbotonguardar">
+											<apex:actionSupport event="onclick" action="{!guardarComentarios}" />
+									</apex:image>
+																			
+									<apex:image url="{!$Resource.boton_cancelar}" alt="Cancelar" styleClass="comentariosbotonguardar">
+											<apex:actionSupport event="onclick" action="{!cancelarComentarios}" rerender="commentsContainer"/>
+									</apex:image>
+								</center>
+								<br/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:actionRegion>
+				</div>
+				
+
+				<!-- Modales (INICIO) -->	
+				<!-- <div class="modal fade" id="myModal" role="dialog"  data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog">
+						<!-- Modal content--
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Modal Header</h4>
+							</div>
+							<div class="modal-body">
+								<apex:selectList id="idoferta" styleClass="listadeseleccion" value="{!ofs}">
+									<apex:selectOptions value="{!oflst}"/>
+									<apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl02,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+								</apex:selectList>
+								<apex:actionRegion >
+									<apex:commandButton id="b1" value="Ordenar a-z" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Oferta_Cargada__c',tipoDeOrden == 'asc'),true,false)}">
+										<apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+										<apex:param assignTo="{!campoOrden}" value="Oferta_Cargada__c"/>
+									</apex:commandButton>
+									<apex:commandButton id="b2" value="Ordenar z-a" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Oferta_Cargada__c',tipoDeOrden == 'desc'),true,false)}">
+										<apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+										<apex:param assignTo="{!campoOrden}" value="Oferta_Cargada__c" />
+									</apex:commandButton>
+								</apex:actionRegion>
+								
+								 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="refrescarConOrden()">OK</button>
+								<apex:actionFunction name="refrescarConOrden" action="{!llenadoPaginas}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="myModal2" role="dialog"  data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog">
+						<!-- Modal content--
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Modal Header</h4>
+							</div>
+							<div class="modal-body">
+								MODAL 2
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<!-- Modales (FIN) -->
+			
+			</apex:form>
+		
+		</apex:outputPanel>
+
+		<!-- <script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+		<script src="/resource/materialize/materialize/js/materialize.js"></script> -->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+       
+
+<!--                           <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="/resource/freeze/Simple-jQuery-Plugin-To-Freeze-Header-Row-In-Table-freezeheader/js/materialize.js"></script>
+  <script>
+  	$(document).ready(function () {
+            $(".table2").freezeHeader({ 'height': '300px' });
+        })
+  </script>
+	</body>
+
+	
+
+
+
+	
+	<b>Created by:</b>
+	<apex:image value="{!$Resource.logo_sistemas}" styleClass="imagensistemas"/>
+	
+	<script type="text/javascript">
+		function ocultar(v1,v2,c){
+		
+			var a=document.getElementById(v1);
+			var b=document.getElementById(v2);
+			
+			if(a.style.display == 'none'){
+				a.style.display = 'block';
+				b.style.display = 'block';
+				c.value = 'Ocultar filtros';
+
+			}else{
+				a.style.display = 'none';
+				b.style.display = 'none';
+				c.value = 'Mostrar filtros';
+			}
+		}
+			
+	</script>
+	<script type="text/javascript">
+		function detalles(obj){
+			var c=document.getElementById(obj);
+			
+			if(c.style.display == 'none'){
+				c.style.display = 'block';
+			}else{
+				c.style.display = 'none';
+			}
+		}
+	</script>
+		
+		
+</apex:page>

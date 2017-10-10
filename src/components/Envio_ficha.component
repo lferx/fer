@@ -1,0 +1,61 @@
+<apex:component >
+        <apex:attribute name="text2" type="String" description="El texto que se desplagara" />
+
+
+
+           
+
+                               
+    <body> 
+    
+       <div class="collection">
+       <center><p class="labelarg">Argumentos/ Objeciones</p></center> 
+    <a  class="collection-item" onclick="var $argumento = $('<span>Algun familiar cercano al que le podamos enviar la información<br/>1.- Liga por Mensaje de Texto<br/>2.- Ficha Técnica por Whatsapp</span>');
+   Materialize.toast($argumento, 50000);">No tengo correo</a>
+      <a  class="collection-item" onclick="var $argumento = $('<span>Revisemos otras opciones (Regresar a Stock)</span>');
+   Materialize.toast($argumento, 5000);">Las opciones que vio no le convencen</a>
+
+
+
+  </div>
+
+
+
+
+
+      
+
+    </body>
+<!--     <script>
+
+    $(document).ready(function(){
+        $(".obj_1").click(function(){
+            shoowme = false;
+            $(".msg_obj_1").prop('hidden', shoowme);
+         if(shoowme == false){
+            // $(".obj_1").css("max-width", "40%");
+            $(".obj_1").css("margin-bottom", "0px");
+            $(".obj_2").css("margin-top", "30px");
+            $('.msg_obj_2').prop('hidden',true);
+            $('.msg_obj_3').prop('hidden',true);
+
+         }
+        });
+    });
+
+    $(document).ready(function(){
+        $(".obj_2").click(function(){
+            shoowme = false;
+            $(".msg_obj_2").prop('hidden', shoowme);
+         if(shoowme == false){
+            $(".obj_2").css("margin-bottom", "0px");
+            $(".obj_2").css("margin-top", "30px");
+            $('.msg_obj_1').prop('hidden',true);
+            $('.msg_obj_3').prop('hidden',true);
+         }
+        });
+    });
+
+    </script> -->
+
+</apex:component>

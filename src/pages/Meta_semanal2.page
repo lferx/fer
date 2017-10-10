@@ -1,0 +1,60 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              table {
+                   width: 100%;
+                   border: 1px solid #000;
+                }
+                th, td {
+                   width: 25%;
+                   vertical-align: top;
+                   border: 1px solid #000;
+                   border-collapse: collapse;
+                   padding: 0.3em;
+                   
+                }
+             body {
+             
+                    background-image: url("{!URLFOR($Resource.meta_semanal2)}");
+                   position:absolute; z-index:1; 
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+            
+               .text_encima {
+                    position: fixed;
+                    top: 270px;
+                    margin-left: 100px;
+                    color: red;
+                    font-size:200px ;
+                    font-family: "Arial", Helvetica, sans-serif;
+                }
+             
+                element.style {
+                    padding-left: 10px;
+                    left: -60;
+                    left: -69;
+                    left: -68;
+                    left: -68px;
+                    width: 1120px;
+                    
+                }
+                element.style {
+                width: 320px;
+                
+                }
+            </style>
+
+            </head>
+ 
+            <body>
+
+              <span class="text_encima">      
+                           43
+              </span>
+              
+              
+            </body>
+            </html>
+            </apex:page>

@@ -1,0 +1,83 @@
+<apex:page controller="ProyectoFinalBackup">
+    <style type="text/css">       
+        .col1 {width:400px; text-align:left;}
+        .col2 {width:600px; text-align:left;} 
+        p { font-weight: bold; }
+                  
+    </style>
+    <apex:form id="theForm">
+            <apex:pageBlock id="mainblock">
+                
+                
+                <apex:pageBlockButtons >
+                  <apex:commandButton action="{!ExpRepEj2}" value="Stock Completo"/>
+                </apex:pageBlockButtons>
+                <apex:panelGrid columns="2">
+                
+                 <apex:outputLabel value="Estado:"/>
+                    <apex:selectList value="{!filterzone}" size="1">
+                        <apex:selectOptions value="{!listzoneoptions}"/>
+                    </apex:selectList>
+                    <apex:outputLabel value="Ciudad:"/>
+                    <apex:selectList value="{!filtergte}" size="1">
+                        <apex:selectOptions value="{!listgteoptions}"/>
+                    </apex:selectList>
+                    
+                    <apex:outputLabel value="Colonia:"/>
+                    <apex:selectList value="{!filterzone2}" size="1">
+                        <apex:selectOptions value="{!listzoneoptions2}"/>
+                    </apex:selectList>
+                    
+                    <apex:outputLabel value="Escritura:"/>
+                    <apex:selectList value="{!filterzone3}" size="1">
+                        <apex:selectOptions value="{!listzoneoptions3}"/>
+                    </apex:selectList>
+                    
+                    <apex:outputLabel value="Invadida:"/>
+                    <apex:selectList value="{!filterzone3}" size="1">
+                        <apex:selectOptions value="{!listzoneoptions3}"/>
+                    </apex:selectList>
+                      
+                </apex:panelGrid>
+            
+            </apex:pageBlock>
+        </apex:form>
+        
+         <apex:form > 
+       
+        
+               
+               <apex:pageBlock title="Stock">
+  <apex:pageBlockTable value="{!Etapas}" var="Oferta__c">
+ <!-- <apex:column value="{!Oferta__c.Etapa__c}"/>
+  <apex:column value="{!Oferta__c.Owner.Name}"/>
+  <apex:column value="{!Oferta__c.name}"/>
+  <apex:column value="{!Oferta__c.Plaza__c}"/>
+  <apex:column value="{!Oferta__c.Promotor__c}"/>
+  <apex:column value="{!Oferta__c.ValorReferencia__c}"/>
+  <apex:column value="{!Oferta__c.PrecioVenta__c}"/>-->
+  
+                   <apex:column value="{!Oferta__c.EtapaOferta__r.NumEtapa__c}" headerValue="Etapa"/>
+                   <apex:column value="{!Oferta__c.Owner.Name}" headerValue="Gerente"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.Plaza__c}" headerValue="Plaza"/>                    
+                   <apex:column value="{!Oferta__c.name}" headerValue="Folio Oferta"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.Tipo__c}" headerValue="Tipo"/>  
+                   <apex:column value="{!Oferta__c.Direccion2__c}" headerValue="Direcccion"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.Colonia__c}" headerValue="Colonia"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.Terreno_m2__c}" headerValue="Terreno m2"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.Construccion_m2__c}" headerValue="Construccion m2"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.N_de_Habitaciones__c}" headerValue="Habitaciones"/>
+                   <apex:column value="{!Oferta__c.Propiedad__r.N_de_Ba_os__c}" headerValue="Habitaciones"/>
+                   <apex:column value="{!Oferta__c.PrecioVenta__c}" headerValue="Precio Venta"/>
+                   <apex:column value="{!Oferta__c.ValorReferencia__c}" headerValue="Valor Referencia"/>
+  
+  
+  </apex:pageBlockTable>
+               
+       </apex:pageBlock> 
+       
+                   
+    </apex:form>
+       
+        
+        </apex:page>

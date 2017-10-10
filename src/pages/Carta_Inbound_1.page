@@ -1,0 +1,95 @@
+<apex:page controller="Carteo_Inbound_Controller" renderAs="pdf" applyBodyTag="false">
+<apex:repeat value="{!listaOfertas}" var="carta"> 
+<apex:outputPanel layout="none">
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.PDFNotificacionDesalojo_CSS, 'css/styles.css')}" />
+        <style type="text/css">
+             ul {      list-style-type: none; 
+             padding: 0;
+             margin: 0;
+             
+                }
+             
+        </style>
+
+    </head>
+        <body style="background-image:url('{!$Resource.PDFNotificacionDesalojo_BG}');
+                        background-repeat:no-repeat;
+                        background-attachment:fixed;
+                        background-position:center;
+                        margin: 0px 50px 0px 50px;
+                        padding: 0;
+                        page-break-after: always;">
+<table>
+
+<tbody>
+   
+ <tr><td height="125" style="text-align: right;font-size: 25px;font-weight: bold">{!carta.name}</td></tr>
+<tr>
+<td style="font-family:Arial,Helvetica,sans-serif; line-height:18px; text-align:justify">
+
+<div align="right">
+
+<span>México, a&nbsp;
+
+<apex:outputText value="{!(DAY(DATEVALUE(NOW())))}" /> 
+
+de&nbsp;
+                                
+<apex:outputText value="{!CASE(MONTH(DATEVALUE(NOW())),
+                                1, 'Enero',
+                                2, 'Febrero',
+                                3, 'Marzo', 
+                                4, 'Abril', 
+                                5, 'Mayo', 
+                                6, 'Junio',
+                                7, 'Julio',
+                                8, 'Agosto',
+                                9, 'Septiembre',
+                                10, 'Octubre',
+                                11, 'Noviembre',
+                                12, 'Diciembre',
+                                '-')}" />
+del&nbsp;
+
+<apex:outputText value="{!(YEAR(DATEVALUE(NOW())))}" /> 
+</span>
+
+</div>
+
+<p><strong>REVIMEX</strong></p>
+<p>Departamento de Recuperaci&oacute;n de Casas</p>
+<p>&nbsp;</p>
+<p>Estimado Sr/Sra:</p>
+<p><span>Por medio de la presente, le comunicamos que REVIMEX, empresa líder en
+recuperación de casas, ha <span><strong>adquirido</strong></span> de manera legal esta propiedad.</span></p>
+
+<p><span>Deseamos ponernos en contacto con <strong>usted</strong> para llegar a un <strong>acuerdo que le beneficie.</strong></span></p><br/>
+
+
+<p><span><strong>CONTAMOS CON MULTIPLES OPCIONES PARA OFRECERLE</strong></span></p><br/>
+
+<p><span>No se juegue su tranquilidad y la de su familia con un proceso legal y penal que puede llegar a afectarle de por vida.</span></p><br/>
+
+<p><span>¡Para nosotros usted cuenta!</span></p>
+
+<p><span>Contáctenos al:</span></p>
+
+<p style="text-align: left">Tel: 01 800 200 04 40 / opción 3<br/>
+Cel: 55 70 78 07 04<br/>
+Mail: recuperaciondecasas@revimex.mx</p>
+
+<p>&nbsp;</p>
+<p align="center">Atentamente</p>
+<p>&nbsp;</p>
+<p align="center">Departamento de Recuperaci&oacute;n de Casas</p>
+</td>
+</tr>
+
+</tbody>
+</table>
+        
+    </body>
+    </apex:outputPanel>
+    </apex:repeat>
+</apex:page>

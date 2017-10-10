@@ -1,0 +1,10 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="Account" 
+docType="html-5.0">
+    <html class="no-js" lang="es">
+    <head>
+        <meta http-equiv="Refresh" content="0;URL=http://www.google.com"/>   
+    </head>
+    <body>
+    </body>
+    </html>
+</apex:page>

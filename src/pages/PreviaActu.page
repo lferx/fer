@@ -1,0 +1,21 @@
+<apex:page controller="suma" >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+  <center><table border="2">
+      <thead>
+          <tr>
+              <th>Columna 1</th>
+              <th>Columna 1</th>
+          </tr>
+      </thead>
+      <apex:pageBlock >
+          <apex:pageBlockTable value="{!lista}" var="Impresion">
+              <apex:column value="{!Impresion.AhorradoIndicadorWeb__c}"/>
+              <apex:column value="{!Impresion.AliasCompanyTxt__c}"/>
+          </apex:pageBlockTable>
+     </apex:pageBlock>
+
+</table></center>
+</apex:page>

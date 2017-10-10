@@ -1,0 +1,71 @@
+<apex:component controller="TareasPorDocumento_Controller" access="global" allowDML="true">
+	<apex:attribute assignTo="{!docId}" access="global" name="documentoId" type="Id" description="id de documento"  required="true"/>
+	<apex:attribute assignTo="{!tareas}" access="global" name="tareasAtt" type="Task[]" description="id de documento"  required="false"/>
+	<style type="text/css">
+			.tablaResultados {
+				width: 100%; 
+				border: 1px solid black; 
+			}
+			.resultadosCells {
+				border: 1px solid black;
+			}
+	</style>
+	<apex:outputText value="No hay tareas registradas." rendered="{!tareas==null || tareas.size==0}" />
+	<apex:form id="tasksTable" rendered="{!tareas!=null && tareas.size>0}">
+	<apex:actionRegion >
+	<table class="tablaResultados">
+		<tr>
+			<th class="resultadosCells">
+				Asunto
+			</th>
+			<th class="resultadosCells">
+				Tipo
+			</th>
+			<th class="resultadosCells">
+				Fecha de Vencimiento
+			</th>
+			<th class="resultadosCells">
+				Prioridad
+			</th>
+			<th class="resultadosCells">
+				Estado
+			</th>
+			<th class="resultadosCells">
+				Dictamen
+			</th>
+			<th class="resultadosCells">
+				Comentarios
+			</th>
+		</tr>	
+	<apex:repeat value="{!tareas}" var="tarea">
+		<tr class="resultadosCells">
+			<td class="resultadosCells">
+				<apex:outputField value="{!tarea.Subject}" />
+			</td>
+			<td class="resultadosCells">
+				{!tarea.Asunto2__c}
+			</td>
+			<td class="resultadosCells">
+				{!tarea.ActivityDate}
+			</td>
+			<td class="resultadosCells">
+				{!tarea.Priority}
+			</td>
+			<td class="resultadosCells">
+				<apex:inputField value="{!tarea.Status}" onchange="guardadoAutomatico()"/>
+			</td>
+			<td class="resultadosCells">
+				<apex:inputField value="{!tarea.Comentarios__c}" />
+			</td>
+			<td class="resultadosCells">
+				<apex:inputField value="{!tarea.Description}" />
+			</td>
+		</tr>
+	</apex:repeat>
+	</table>
+
+	<apex:actionFunction name="guardadoAutomatico" action="{!guardar}" reRender="tasksTable"/>
+	</apex:actionRegion>
+	</apex:form>
+	
+</apex:component>

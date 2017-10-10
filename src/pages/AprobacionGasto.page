@@ -1,0 +1,5 @@
+<apex:page standardController="Gasto__c" extensions="AprobacionGastoController" action="{!revisaAprobacion}" >
+<apex:pagemessages />
+<br/>
+<button type="button" onClick="top.location.href='/{!Gasto__c.Id}'" value="Regresar al gasto">Regresar al gasto</button>
+</apex:page>

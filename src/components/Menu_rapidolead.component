@@ -1,0 +1,1749 @@
+<apex:component Controller="Menu_rapidoLead_Controller" access="global" allowDML="true">
+
+
+    <apex:attribute assignTo="{!idCuenta}" access="global" name="account" type="String" description="id de la cuenta" required="true"/>
+    <apex:attribute assignTo="{!actual}" access="global" name="visual" type="String" description="pagina actual" required="true"/>
+
+
+    <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resource/cssbootstrap/css/bootstrap.css" />
+    <script src="/resource/boot/js/bootstrap.min.js" ></script>
+    <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+    <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+    <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+    <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+    <script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+    <link rel="stylesheet" href="/resource/calendario/flatpickr-master/dist/flatpickr.min.css"/>
+    <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+
+
+        <title>Menu Rapido</title>
+<!--         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://use.fontawesome.com/47e1e9efe9.js"></script>
+-->
+
+   
+        <link rel="stylesheet" href="/resource/modal/Modaal-master/source/css/modaal.css" media="screen"/> 
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Poppins');
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+
+            /*
+            {
+                width:99%;
+                background-color: #fff;
+            }*/
+            .letter1{
+
+                font-size: 23px;
+                text-transform:uppercase;
+            }
+           /* h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+            }*/
+            .letter2{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            .letter3{
+                font-family: 'gotham-rounded-book';
+                font-weight: bold;
+                font-size: 11px;
+                color: #0C326B;
+                text-align:right;
+            }
+            /*h4{
+                font-size: 13px;
+                color: #0C326B;
+            }
+            h5{
+                font-size: 10px;
+                color: #fff;
+            }*/
+            /*h6{
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                color: #fff;
+            }
+            /*.header{
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                height: 800px ;
+            }
+            .table {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable tr{
+                width: auto;
+                height: auto;
+            }
+
+            .headertable2 {
+                background-color:#fff;
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable2 tr{
+                background-color:#fff;
+                width: auto;
+                height: auto;
+            }
+            .headertable2 tr td{
+                background-color:#fff;
+                height: auto;
+
+            }
+            .headertable3 {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 600px;
+            }
+            .headertable3 tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable3 tr td{
+                height: auto;
+                padding: 15px 40px 15px 40px;
+            }
+            .detallestabla4 td:first-child{
+                text-align: right;
+
+            }
+            .detallestabla4 td{
+
+                text-align: left;
+            }
+            .botones,.botonesfijar{
+                font-family: 'gotham-rounded-medium' !important;
+                font-size: 10px !important;
+                text-transform:uppercase !important;
+                display:block !important;
+                width:170px !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 3px 0px 3px 0px !important;
+                margin: 20px !important;
+            }
+            .botones {
+                background: #D1DA28 !important;
+                background-color: #D1DA28 !important;
+                color: #0C326B !important;
+            }
+            .botonesfijar{
+                background: #A37DB3 !important;
+                background-color: #A37DB3 !important;
+                color: #fff !important;
+            }
+            .botones:hover{
+                background: #A6AE1A !important;
+            }
+            .botones:active{
+                background: #C95A50 !important;
+            }
+            .botonesfijar:hover{
+                background:#672183 !important;
+            }
+            .botonesfijar:active{
+                background: #C95A50 !important;
+            }
+            .botonred{
+                 width: 40px;
+                 height: 40px;
+                 -moz-border-radius: 30%;
+                 -webkit-border-radius: 30%;
+                 border-radius: 50%;
+                 background: #FF0000;
+            }
+            .botonyellow{
+                width: 40px;
+                height: 40px;
+                -moz-border-radius: 30%;
+                -webkit-border-radius: 30%;
+                border-radius: 50%;
+                background: #FFE933;
+            }
+            .botongreen{
+                width: 40px;
+                height: 40px;
+                -moz-border-radius: 30%;
+                -webkit-border-radius: 30%;
+                border-radius: 50%;
+                background: #1D8348;
+            }
+            .botones2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #17202A !important;
+                display:block !important;
+                width 100px !important;
+                background: #4DB1E0 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones3{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width 100px !important;
+                background: #6C3483 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones3v2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                list-style-type: none;
+                color: #fff !important;
+                display:block !important;
+
+                background: #FF0000 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }*/
+            .botonesMenuRapido{
+                background-color: violet;
+                border-radius: 10px;
+                cursor: pointer;
+                padding: 5px;
+                margin: 20px;
+                display: block;
+            }
+            .botones3v3{
+                    font-family: 'gotham-rounded-book' !important;
+                    font-size: 10px  !important;
+                    text-transform:uppercase !important;
+                    color: #fff !important;
+                    display:block !important;
+                    width 100px !important;
+                    background: #FFE933 !important;
+                    border-radius: 10px !important;
+                    cursor: pointer !important;
+                    padding: 5px !important;
+                    margin: 20px !important;
+                }
+            .botones3v4{
+                    font-family: 'gotham-rounded-book' !important;
+                    font-size: 10px  !important;
+                    text-transform:uppercase !important;
+                    color: #fff !important;
+                    display:block !important;
+                    width 100px !important;
+                    background: #1D8348 !important;
+                    border-radius: 10px !important;
+                    cursor: pointer !important;
+                    padding: 5px !important;
+                    margin: 20px !important;
+                }
+            .botones4{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #4D5656 !important;
+                display:block !important;
+                width 100px !important;
+                background: #BDC3C7 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }/*
+            .botones2:hover{
+                background: #2A85AF !important;
+            }
+            .botones2:active{
+                background-color:#D1DA28 !important;
+            }
+            .contenedorfiltros{
+                width:200px;
+                height:auto;
+            }
+
+            .labelcontador{
+                font-family: "gotham-rounded-book" !important;
+                font-size: 20px  !important;
+                background: #0C326B;
+                border-radius: 60px;
+                padding: 10px 10px 10px 10px;
+                font-size: 16px;
+                color: white;
+                margin: 30px 30px !important;
+            }
+            .pagination {
+                display: inline-block;
+                background-color: #fff;
+            }
+            .pagination a {
+                font-family: "gotham-rounded-book" !important;
+                font-size: 14px  !important;
+                color: black;
+                float: left;
+                padding: 5px 10px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+            .pagination a.active {
+                background-color: #5A2A7E;
+                color: white;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+            .tdtrue{
+                background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+            }
+            .tdfalse{
+                background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;
+            }
+            .imagestyle{
+                width:30px;
+                filter: grayscale(30%);
+            }
+            .styledetalles{
+                display: none;
+                font-size:12px;
+                font-weight: normal;
+                max-width: 600px;
+            }
+            .imgth{
+                width: 30px;
+                height: 30px;
+            }
+            .sectioncabecera{
+                border-radius: 15px 15px 0px 0px;
+                background-color: #C95A50;
+                height: 40px;
+                padding: 7px 2px 0px 2px;
+                width: auto;
+            }
+            .section{
+                position: relative;
+                border: 1px solid #fff;
+                border-spacing: 2px;
+                padding-top: 90px;
+                background: #fff;
+                border-radius:10px;
+                width:100%;
+                height:100%;
+            }
+            .table2 {
+                border-spacing: 2px;
+                width:100%;
+            }
+            .table2 td,th {
+                border-bottom:1px solid #eee;
+                background: #fff;
+                color: #000;
+                padding: 3px 10px;
+                max-width:30%;
+                width:auto;
+                text-align: center;
+            }
+            .table2 th {
+                height: 0;
+                line-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                color: transparent;
+                border: none;
+                white-space: nowrap;
+                text-align: center;
+            }
+            .table2 th div{
+                position: absolute;
+                background: transparent;
+                color: #000;
+                padding: 2px 5px;
+                top:0;
+                margin-left: -10px;
+                line-height: normal;
+                border-left: 1px solid #C0C4C5;
+                text-align: center;
+                width: auto;
+            }
+            .table2 th:first-child div{
+                border: none;
+            }
+            .recientes td{
+                background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+            }
+            .imagensistemas{
+                width: 30px;
+                height: 30px;
+                border-radius:50%;
+                transition: 1s;
+                float: centre;
+                position: relative;
+                left: 5px;
+                bottom: -12px;
+            }
+            .imagensistemas:hover{
+                width: 90px;
+                height: 90px;
+                transition-timing-function: ease;
+                border-radius:0%;
+            }
+            .comentariosbotoneditar{
+                background-color: white;
+                position:relative;
+                padding:2px;
+                border: 1.5px solid #CED0D1;
+                height:21px;
+                width:20px;
+                border-radius:5px;
+                transition:0.2s;
+                box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+                filter: brightness(96.5%);
+            }
+            .comentariosbotoneditar:hover {
+                background-color: #DBF4FC;
+                color: white;
+                transition-timing-function:ease;
+                height:25px;
+                width:25px;
+            }
+            .comentarioscontainer{
+                background-image: url("{!$Resource.ventana_comentario}");
+                border-radius:20px;
+                position:absolute;
+                z-index:1000;
+                height:200px;
+                width:300px;
+                border: .5px solid #000;
+                top: calc(30% - 100px);
+                left: calc(75% - 150px);
+                filter: opacity(95%);
+            }
+            .comentarioslabel{
+                position:relative;
+                left: 88px;
+                top: 45px;
+            }
+            .comentariostexto{
+                position:relative;
+                align:center;
+                left: 50px;
+                top: 45px;
+                width:200px;
+                height:70px;
+            }
+            .comentariosbotonguardar{
+                position:relative;
+                background-size:cover;
+                width:85px;
+                top: 50px;
+                float: left;
+                margin: 0px 25px 0px 25px;
+            }
+            .filtrocaja1{
+                position: reltive;
+                width:auto;
+                height:18px;
+                float:left;
+            }
+            .filtrocaja2{
+                position: reltive;
+                width:auto;
+                height:18px;
+                z-index:1000;
+                background-color:#fff;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;
+            }
+            .filtrocaja2:hover{
+                height:auto;
+                max-height:500px;
+                overflow: auto;
+                display: inline-block;
+                position: relative;
+            }
+            .filtrolabel{
+                float:left;
+            }
+            .listadeseleccion{
+                cursor:pointer;
+                width:200px;
+            }
+            .menuArgumentosObservaciones{
+                         height: 500px;
+                         width: :300px;
+                         display:inline;
+                         align-content: center;
+                        }*/
+
+            .semaforo {
+                    width: 28%;
+                height: 55px;
+                -moz-border-radius: 30%;
+                -webkit-border-radius: 30%;
+                border-radius: 50%;
+            }
+
+            .separador-semaforo {
+                margin-top: 12%;
+            }
+
+            .icono-semaforo {
+                margin-top: 25%;
+
+            }
+            .semaforo:hover, .nuevo:hover, .btt:hover, .btt2:hover
+            {
+                transform: translate(7%,8%)scale(1.2);
+                background-size: 180%;
+                background-position: 60% 0%;
+                transition: all .15s ease-out;
+            }
+
+            .semaforo-rojo {
+                background-color:#FF0000;
+            }
+
+            .semaforo-amarillo {
+                background-color:#FFCC66;
+            }
+
+            .semaforo-verde {
+                background-color:#1D8348;
+            }
+
+            .semaforo-azul {
+                background-color:#0C326B;
+            }
+
+    .botonGuardarTarea{
+      width: 40px;
+    }
+ 
+    .botonReferido{
+      width: 60px;
+    }
+
+    .tablaTarea{
+          display: none;
+          padding: 15px;
+          border-radius: 15px;
+        
+          border: 1px solid black; 
+          margin-left: 20%; 
+          position: absolute;
+          top: 28%; 
+          vertical-align: middle; 
+          background: #fff; 
+          z-index: 100;
+          -webkit-box-shadow: -2px -2px 95px 35px rgba(0,0,0,0.75);
+          -moz-box-shadow: -2px -2px 95px 35px rgba(0,0,0,0.75);
+          box-shadow: -2px -2px 95px 35px rgba(0,0,0,0.75);
+    }
+    .botonTareaNueva{
+              width: 30px;
+          background: white;
+          border-radius: 100px;
+    }
+/*    .botonTareaNueva:hover{
+             width: 35%;
+          background: white;
+          border-radius: 100px;
+    }
+    .botonTareaNueva:active{
+              width: 35%;
+          background: white;
+          border-radius: 100px;
+    }*/
+    .botonCerrarTarea{
+          position: relative;
+          left: 96%;
+          top: -30px;
+          border: 2px solid #4DB1E0;
+          background: white;
+          border-radius: 10px;
+    }
+    .camposTarea{
+        border-radius: 10px;
+        background: #0C326B; 
+        color: white; 
+        border: none;
+        outline: none;
+        width: 40%;
+            margin-top: 1%;
+    }
+    .nuevo
+    {
+      /*  width: 40px;*/
+      width: 60px;
+    }
+            .botonRetroceder1{
+    left: 20%;
+    bottom: 1%;
+    position: absolute;
+            }
+            .botonRetroceder2{
+            left: 30%;
+            bottom:15px;
+            position: absolute;
+            }
+            .botonRetroceder3{
+            left: 95%;
+            bottom:5px;
+            position: absolute;
+            }
+            .botonAvanzar1{
+    right: 10%;
+    bottom: 1%;
+    position: absolute;
+            }
+            .botonAvanzar3{
+            left: 44%;
+            bottom:80px;
+            position: absolute;
+            }
+            .revimex
+{
+    float: right;
+    width: 9%;
+    right: 6%;
+    position: absolute;
+}
+.chip2 {
+display: inline-block;
+    font-size: 20px;
+    line-height: 250%;
+    border-radius: 16px;
+}
+
+.chip2 > img {
+  float: left;
+  margin: 0 8px 0 -12px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.chip2 .close {
+  cursor: pointer;
+  float: right;
+  font-size: 16px;
+  line-height: 32px;
+  padding-left: 8px;
+}
+
+            .error{
+            color: red;
+            }
+            .botonRetroceder1, .botonAvanzar2{
+    left: 20%;
+    bottom: 1.5%;
+    position: absolute;
+            }
+            .botonRetroceder2{
+            left: 30%;
+            bottom:15px;
+            position: absolute;
+            }
+
+            .botonAvanzar1{
+    right: 10%;
+    bottom: 1.5%;
+    position: absolute;
+            }
+
+            .circulo1
+{
+       width: 50px;
+       max-width: 50px;
+       min-width: 40px;
+}
+.circulo1:hover, .botonTareaNueva:hover, .botonGuardarTarea:hover,    .botonReferido:hover
+                {
+                transform: translate(7%,8%)scale(1.4);
+                background-size: 180%;
+                background-position: 60% 0%;
+                transition: all .15s ease-out;
+                }
+.revimex
+{
+    float: right;
+    width: 9%;
+
+    position: absolute;
+}
+.imgcancel
+{
+    bottom: 2%;
+    width: 2.9%;
+    right: 50%;
+    position: absolute;
+    
+}
+.argu
+{
+        font-size: 20px;
+}
+   .collection {
+  margin: 2rem 0 1rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+-webkit-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+-moz-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+  font-size: 1em;
+  text-align: center;
+}
+
+.collection .collection-item {
+background-color: #fff;
+line-height: 3rem;
+padding: 10px 20px;
+margin: 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.collection .collection-item.avatar {
+  min-height: 84px;
+  padding-left: 72px;
+  position: relative;
+}
+
+.collection .collection-item.avatar .circle {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  left: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.collection .collection-item.avatar i.circle {
+  font-size: 18px;
+  line-height: 42px;
+  color: #fff;
+  background-color: #999;
+  text-align: center;
+}
+
+.collection .collection-item.avatar .title {
+  font-size: 16px;
+}
+
+.collection .collection-item.avatar p {
+  margin: 0;
+}
+
+.collection .collection-item.avatar .secondary-content {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.collection .collection-item:last-child {
+  border-bottom: none;
+}
+
+.collection .collection-item.active {
+  background-color: #26a69a;
+  color: #eafaf9;
+}
+
+.collection .collection-item.active .secondary-content {
+  color: #fff;
+}
+
+.collection a.collection-item {
+display: block;
+transition: .25s;
+color: #777;
+text-decoration: none;
+}
+
+.collection a.collection-item:not(.active):hover {
+  background-color: #ddd;
+}
+
+.collection.with-header .collection-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+}
+
+.collection.with-header .collection-item {
+  padding-left: 30px;
+}
+
+.collection.with-header .collection-item.avatar {
+  padding-left: 72px;
+}      
+span.badge {
+  min-width: 3rem;
+  padding: 0 6px;
+  margin-left: 14px;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 22px;
+  height: 22px;
+  color: #757575;
+  float: right;
+  box-sizing: border-box;
+}
+
+span.badge.new {
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #fff;
+  background-color: #26a69a;
+  border-radius: 2px;
+}
+
+span.badge.new:after {
+  content: " new";
+}
+
+span.badge[data-badge-caption]::after {
+  content: " " attr(data-badge-caption);
+}
+
+nav ul a span.badge {
+  display: inline-block;
+  float: none;
+  margin-left: 4px;
+  line-height: 22px;
+  height: 22px;
+}
+
+.collection-item span.badge {
+  margin-top: calc(0.75rem - 11px);
+}
+
+.collapsible span.badge {
+  margin-top: calc(1.5rem - 11px);
+}
+
+.side-nav span.badge {
+  margin-top: calc(24px - 11px);
+}   
+            .menuArgumentosObservaciones2{
+
+display: grid;
+    align-content: center;
+    /* right: 0%; */
+    display: inline-table;
+    align-content: center;
+    width: 20%;
+    float: right;
+}
+.argumentos
+{
+        width: 20%;
+    float: right;
+    position: relative;
+}
+.nave
+{
+    width: 20%;
+    float: left;
+}
+.contenedor
+{
+        width: 60%;
+    display: inline-block;
+}
+.preca td
+{
+    padding: 2% 0% 0% 15%;
+}
+.izq
+{
+    float: left;
+    width: 33%;
+}
+.derecha
+{
+    float: right;
+    width: 33%;
+}
+.medio{
+    display: inline-block;
+    width: 33%;
+}
+.foot
+{
+    width: 100%;
+    position: relative;
+    margin-top: 1%;
+    margin-bottom: .5%;
+    display: inline-block;
+}
+.selects
+{
+    width: 90%;
+}
+.message
+{
+    /*white-space: nowrap;*/
+    border: none;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 72%, rgba(237,237,237,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    position: relative;
+    left: 30%;
+    width: 100% !important;
+}
+.labelarg
+{
+        font-size: 1em;
+    text-align: -webkit-center;
+    padding: 3%;
+    margin-top: 4%;
+}
+.collection-item:first-of-type {
+    border-top: 1px solid #d2cbcb;
+}
+td
+{
+
+    font-family: 'Poppins', sans-serif;
+
+}
+.nombrelead
+{
+    font-size: 18px;
+    text-align: center;
+}
+#toast-container {
+  display: block;
+  position: fixed;
+  z-index: 10000;
+}
+
+@media only screen and (max-width: 600px) {
+  #toast-container {
+    min-width: 100%;
+    bottom: 0%;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #toast-container {
+    left: 5%;
+    bottom: 7%;
+    max-width: 90%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  #toast-container {
+    top: 10%;
+    right: 7%;
+    max-width: 86%;
+  }
+}
+
+.toast {
+  border-radius: 2px;
+  top: 35px;
+  width: auto;
+  clear: both;
+  margin-top: 10px;
+  position: relative;
+  max-width: 100%;
+  height: auto;
+  min-height: 48px;
+  line-height: 1.5em;
+  word-break: break-all;
+  background-color: #323232;
+  padding: 10px 25px;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.toast .btn, .toast .btn-large, .toast .btn-flat {
+  margin: 0;
+  margin-left: 3rem;
+}
+
+.toast.rounded {
+  border-radius: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+  .toast {
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  .toast {
+    float: left;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .toast {
+    float: right;
+  }
+}
+.inp               {
+  font-size:18px;
+  padding:5px 5px 5px 5px;
+  display:block;
+  width:50%;
+  border:none;
+  border-bottom:1px solid #79c4de;
+}
+.inp4               {
+  font-size:18px;
+  padding:5px 5px 5px 5px;
+  display:block;
+  width:50%;
+  border:none;
+    border-bottom: 2px solid orange;
+}
+.inp2              {
+  font-size:18px;
+  padding:5px 5px 5px 5px;
+  width:50%;
+  border:none;
+  border-bottom:1px solid #79c4de;
+  outline: none;
+  margin-left: 6%;
+}
+.inp3               {
+  font-size:12px;
+background: none;
+outline: none;
+  width:50%;
+  border:none;
+  border-bottom:1px solid #79c4de;
+}
+.inlines
+{
+    display: inline-block;
+    width: 40%;
+}
+.selects
+{
+    width: 80%;
+}
+.group            { 
+
+  margin-bottom:1.5%;
+}
+
+.col-sm-offset-3 {
+    position: absolute;
+    float: left;
+
+}
+
+
+.col-sm-6 {
+    width: auto;
+}
+.button
+{
+  outline: none;
+    float: left;
+
+}
+.glyphicon, .glyphicon-download
+{
+    display: none;
+}
+.panel
+{
+    margin-bottom: 0;
+}
+.noSidebarCell, .sidebarCell .fixed {
+    padding: 0 10px 10px 10px;
+}
+#myModal {
+top:25%;
+outline: none;
+}
+.datePicker {
+    z-index: 1551;
+}
+.inlines2
+{
+    width: 40%;
+    display: inline-block;
+}
+.inlines3
+{
+    width: 25%;
+    display: inline-block;
+}
+.camp
+{
+    margin-bottom: 3%;
+}
+.ct2
+{
+    width: 50%;
+}
+.ct3
+{
+    width: 100%;
+}
+.lhe
+{
+    font-size: 14px !important;
+    line-height: 1.6;
+    text-transform: capitalize;
+}
+.llamada
+{
+    width: 80px;
+}
+.panel-body {
+    padding: 15px;
+    max-height: 15%;
+    overflow-y: auto;
+}
+.tmpick{
+    background: none;
+    border: none;
+    border-bottom: 1px solid #79c4de;
+    width: 32%;
+    outline: none;
+}
+p.nombrelead {
+    font-size: 17px !important;
+    line-height: 40px !important;
+}
+        </style>
+    </head>
+
+    <body>
+<script type="text/javascript">
+
+    var waitForFinalEvent = (function () {
+        var timers = {};
+        return function (callback, ms, uniqueId) {
+            if (!uniqueId) {
+                uniqueId = "Don't call this twice without a uniqueId";
+            }
+            if (timers[uniqueId]) {
+                clearTimeout(timers[uniqueId]);
+            }
+            timers[uniqueId] = setTimeout(callback, ms);
+        };
+    })();
+
+    $(document).ready(function()
+    {
+
+
+        var tooltip = new HTML5TooltipUIComponent;
+    var target = document.getElementById("semaforo-datosIniciales");
+
+    tooltip.set({
+      animateFunction: "spin",
+      color: "bamboo",
+      contentText: "Refresh",
+      stickTo: "right",
+      target: target
+    });
+
+    $('#semaforo-datosIniciales').addEventListener('mouseenter',function(){
+      tooltip.show();
+    });
+
+
+
+    });
+</script>
+<script >
+     $(document).ready(function()
+        {
+            $('.tpick').flatpickr({
+            enableTime:true,
+            NoCalendar:true,
+            dateFormat:'H:i'
+
+        });
+        });
+</script>
+
+<apex:actionFunction name="enviaancho" reRender="">
+<apex:param name="ancho" assignTo="{!ancho}" value="" />
+</apex:actionFunction>
+
+
+<script type="text/javascript">
+                    $( document ).ready(function() {
+                     var xd='{!presupuestoLead}';
+                    var x= (xd + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+                    if(x!=null&&x!='')
+                        {
+                        $( ".nombrelead" ).append( "<br/>Presupuesto: $"+x);
+                        }
+
+$('.collection-item').click(function(){
+var act="$('.toast').hide();";
+    var src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/VisualEditor_-_Icon_-_Close_-_white.svg/2000px-VisualEditor_-_Icon_-_Close_-_white.svg.png';
+                         $( ".toast" ).append( "<img class='cierramee' src="+src+" width='20' height='20' onclick="+act+" />");
+});
+                });
+</script>
+<script type="text/javascript"> 
+
+
+
+
+
+
+</script>
+
+  
+
+
+<!-- <apex:inputHidden id="enviate" value="{!ancho}" >
+<apex:actionSupport event="onchange" reRender="Object"/>
+</apex:inputHidden> -->
+
+        
+
+        <apex:outputPanel id="panelMenuRapido">
+            <table class="preca" align="center">
+                <tr>
+                    <td ><p style="    font-size: 18px;     width: 120%;">Menú Rápido</p><br/></td>
+                </tr>
+                <tr>
+                    <td style="    padding: 0 0 0 15%;">
+                        <div id="semaforo-datosIniciales">
+
+                            <apex:image id="datosIniciales" url="{!URLFOR($Resource.icomenu, '/lead.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Datos del Lead" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+               
+                               <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!datoslead}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <apex:outputPanel >
+                <tr>
+                    <td>
+                        <div id="semaforo-precalificacion" class="">
+
+                        
+                            <apex:image id="precalificacion" url="{!URLFOR($Resource.icomenu, '/preca.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Precalificación/ Forma de Pago" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!precalificacion}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                </apex:outputPanel>
+                <tr>
+                    <td>
+                        <div id="semaforo-stock" class="">
+                            <apex:image id="stock" url="{!URLFOR($Resource.icomenu, '/stock.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Stock" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!stock}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div id="semaforo-carrito" class="">
+                            <apex:image id="carrito" url="{!URLFOR($Resource.icomenu, '/envio.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Envío de Ficha" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!envioficha}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <apex:outputPanel >
+                <tr>
+                    <td >
+                        <div id="semaforo-cita" class="icono">
+                        
+                         <apex:image id="cita" url="{!URLFOR($Resource.icomenu, '/cita.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Cita" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!citalead}"/>
+                            </apex:image> 
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                <tr>
+                    <td >
+                        <div id="semaforo-autorizacion" class="">
+                            <apex:image id="autorizacion" url="{!URLFOR($Resource.icomenu, '/auth.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Ir a Autorización" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein"  styleClass="nuevo"  html-data-tooltip-stickto="right">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!autorizacion}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                </apex:outputPanel>
+                <tr>
+                    <td> 
+                        <apex:outputPanel rendered="{!idRegistro != NULL}">
+                        <a data-toggle="modal" data-target="#myModal">
+                        <apex:image value="{!$Resource.Finalizar_Llamada}" url="{!URLFOR($Resource.icomenu, '/icon-phone.svg')}" html-data-tooltip-delay="0" html-data-tooltip="Dictaminar" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" styleClass="nuevo llamada"  html-data-tooltip-stickto="right"/>
+                        </a>
+                        
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+        </apex:outputPanel>
+        <br/>
+        <br/>
+        <apex:pageMessages escape="false"/>
+
+
+        <!-- OLD <apex:outputPanel id="panelMenuRapido">
+            <table class="preca" align="center">
+                <tr>
+                    <td ><p style="    font-size: 20px;">Menú Rápido</p><br/></td>
+                </tr>
+                <tr>
+                    <td style="    padding: 0 0 0 15%;">
+                        <div id="semaforo-datosIniciales" class="">
+
+                            <apex:image id="datosIniciales" url="{!URLFOR($Resource.icof, '/user.svg')}" html-data-toggle="tooltip" html-data-placement="top" title="Ir a Datos Lead" styleClass="nuevo" >
+               
+                               <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!datoslead}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="semaforo-precalificacion" class="">
+
+                        
+                            <apex:image id="precalificacion" url="{!URLFOR($Resource.icof, '/money.png')}" html-data-toggle="tooltip" html-data-placement="top" title="Ir a Precalificación / Forma de pago" styleClass="nuevo">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!precalificacion}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="semaforo-stock" class="">
+                            <apex:image id="stock" url="{!URLFOR($Resource.icof, '/house.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Stock" styleClass="nuevo">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!stock}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div id="semaforo-carrito" class="">
+                            <apex:image id="carrito" url="{!URLFOR($Resource.icof, '/share.svg')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Envío Ficha" styleClass="nuevo">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!envioficha}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div id="semaforo-cita" class="icono">
+                        
+                         <apex:image id="cita" url="{!URLFOR($Resource.icof, '/date.svg')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Cita" styleClass="nuevo ">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!citalead}"/>
+                            </apex:image> 
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div id="semaforo-autorizacion" class="">
+                            <apex:image id="autorizacion" url="{!URLFOR($Resource.icof, '/signed.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Aut. Oferta / Cotizador" styleClass="nuevo">
+                                <apex:actionSupport immediate="{!IF(idCuenta == '' || idCuenta == null, false, true)}" event="onclick" action="{!autorizacion}"/>
+                            </apex:image>
+                        </div>
+                        <div class="separador-semaforo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <apex:outputPanel rendered="{!idRegistro != NULL}">
+                        <a data-toggle="modal" data-target="#myModal">
+                        <apex:image value="{!$Resource.Finalizar_Llamada}" styleClass="botonTareaNueva"/>
+                        </a>
+                        <br/>
+                        <font class="letter2" style="font-family: 'gotham-rounded-medium';font-size: 15px;">Finalizar llamada</font>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+        </apex:outputPanel> -->
+
+   <center>
+ <div class="modal fade" id="myModal" >
+    <div class="modal-dialog">
+    
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Crear una tarea</h4>
+        </div>
+        <div class="modal-body tareas">
+     
+                                <div class="camp">
+                                <div class="inlines2">
+                                    <h1 class="lhe">Asunto:</h1><br/>
+                                 <apex:inputField value="{!nuevaTarea.Subject}" styleClass="inp3"  /><br/>
+                                </div>
+                                <div class="inlines2">
+                                    <h1 class="lhe">Dictamen: </h1><br/>
+                                <apex:inputField value="{!nuevaTarea.Comentarios__c}" styleClass="inp3 ct2" /><br/>
+                                </div>
+                                </div>
+                                <div class="camp">
+                                <div class="inlines2">
+                                <h1 class="lhe">Fecha de Vencimiento:</h1><br/>
+                                <apex:inputField value="{!nuevaTarea.ActivityDate}" styleClass="inp3 ct2" />
+                                </div>
+                                <div class="inlines2">
+                                <h1 class="lhe">Hora de Vencimiento:</h1><br/>
+                                <!-- <apex:inputField value="{!nuevaTarea.hora_de_vencimiento__c}" styleClass="inp3 ct2 tpick" /> -->
+                                <apex:selectList id="horas" size="1" styleClass="tmpick" value="{!hrs}">
+                                    <apex:selectOptions value="{!horas}"/>
+                                </apex:selectList> 
+                                :
+                                <apex:selectList id="minutos" size="1" styleClass="tmpick" value="{!min}">
+                                    <apex:selectOptions value="{!minutos}"/>
+                                </apex:selectList> 
+                                </div>
+                                </div>
+                              <div class="camp">
+                              <div class="inlines2">
+                              <h1 class="lhe">Continua Interesado:</h1><br/>
+                                <apex:inputField value="{!nuevaTarea.Sigue_interesado__c}" styleClass="inp3 ct2" />    
+                              </div>
+                              <div class="inlines2">
+                              <h1 class="lhe">Comentarios:</h1><br/>
+                                <apex:inputtext value="{!nuevaTarea.Description}" styleClass="inp3 ct2" style="    width: 80%;"/>    
+                              </div>    
+                              </div>
+                
+                               
+                       
+                             
+                          
+                   <div class="camp">
+                    <div class="inlines2">
+                        <apex:image url="{!URLFOR($Resource.icof, '/reference.png')}" styleClass="botonReferido" html-data-tooltip="Referidos" html-data-tooltip-stickto="left" rendered="{!esCuentaPersonal}" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" onclick="refOcolgar();" /> <!-- var $target = $('.referidos'),
+                        $toggle = $(this);
+                        $target.slideToggle( 500, function () {
+                        $toggle.text(($target.is(':visible') ? 'Hide' : 'Show'));
+                        onclick=$('.imagenSS').disabled=true;
+                         $('.hola').attr('style','hidden:true');
+                         $('.referidos').attr('style','hidden:false');
+                        }); -->
+                        <script type="text/javascript">
+                        function refOcolgar (){
+                                
+                                
+                                    $('.referidos').toggle();
+                                    $('.hola').toggle();
+                                 
+                            // $('.hola').hide();$('.referidos').show();
+                        }
+
+                        </script>
+                    </div>
+                    <div class="inlines2 hola">
+
+                        <apex:image id="boton1" value="{!URLFOR($Resource.icof, '/phone-hang-up.png')}" styleClass="botonGuardarTarea imagenSS"  html-data-tooltip="Colgar"  html-data-tooltip-stickto="right" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" >
+                            <apex:actionSupport event="onclick" action="{!guardarTarea}"/>
+                        </apex:image>
+
+                    </div>
+                    
+                        
+                
+                   </div>
+                 <div class="referidos" hidden="true">               
+                    <div class="camp">                         
+                   
+                     <div class="inlines2">
+                     <h1 class="lhe">  Nombre:</h1><br/>
+                    <apex:inputText value="{!creaReferido.firstname}" styleClass="inp3"  />
+                    </div>
+                    <div class="inlines2 ">
+                     <h1 class="lhe">  Apellidos:</h1><br/>
+                    <apex:inputText value="{!creaReferido.lastname}" styleClass="inp3"  />
+                    </div>
+                    </div>
+                    <div class="camp">
+                    <h1 class="lhe"> Telefono:</h1><br/>
+                    <apex:inputField value="{!creaReferido.Phone}" styleClass="inp3" html-maxlength="10" style="width: 25%;" />
+                    <br/>
+                    <br/>
+                       <apex:image url="{!URLFOR($Resource.icof, '/phone-hang-up.png')}" styleClass="botonGuardarTarea" html-data-tooltip="Guardar Todo" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein">
+                              <apex:actionSupport event="onclick" action="{!guardarTodo}"/>
+                        </apex:image>
+                    </div>
+
+                                            
+                                      
+                                            <!-- <apex:commandButton action="{!guardarTodo}" value="Guardar Todo" id="botonGuardarTodo" ></apex:commandButton> -->
+
+                                        
+                    </div>   
+                            </div>
+                    
+             
+        </div>
+
+      </div>
+      
+    </div>
+  </center> 
+
+
+
+
+<!--         <div class="tablaTarea" id="tareaNueva">
+              <table style="width: 100%;" border="">
+                    <tr>
+                          <td colspan="2">
+                                <center>
+                                      <font class="letter1">Crear una tarea</font>
+                                </center>
+                                <input type="button" value="[X]"  class="botonCerrarTarea" id="cambio3" />
+                                <script>
+                                  $(document).ready(function(){
+                                      $("#cambio3").click(function(){
+                                          $("#tareaNueva").fadeOut(800);
+                                      });
+                                  });
+                                </script>
+                                <br/>
+                                <br/>
+                          </td>
+                    </tr>
+                    <tr>
+                          <td style="width: 60%; padding: 0 0 0 45%; text-align: center;font-family: 'gotham-rounded-medium';">
+                                Asunto: <apex:inputField value="{!nuevaTarea.Subject}" styleClass="camposTarea" />
+                          </td>
+                    </tr>
+                    <tr>
+                          <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                Dictamen: <apex:inputField value="{!nuevaTarea.Comentarios__c}" styleClass="camposTarea" />
+                          </td>
+                          <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                Fecha de Vencimiento: <apex:inputField value="{!nuevaTarea.ActivityDate}" styleClass="camposTarea" />
+                          </td>
+                    </tr>
+                    <tr>
+                          <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                Continua Interesado: <apex:inputField value="{!nuevaTarea.Sigue_interesado__c}" styleClass="camposTarea" />
+                          </td>
+                          <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                Comentarios: <apex:inputField value="{!nuevaTarea.Description}" styleClass="camposTarea" />
+                          </td>
+                    </tr>
+                    <tr>
+                          <td colspan="2" style="text-align: center;">
+                                <apex:image url="http://www.ingenierosdigitales.com/demos/adminte_iconos/set%205/5_agregar.png" styleClass="botonGuardarTarea" alt="Guardar" >
+                                      <apex:actionSupport event="onclick" action="{!guardarTarea}"/>
+                                </apex:image><br/>
+                                Guardar Tarea
+                          </td>
+                    </tr>
+                    <tr>                                         
+                          <td colspan="2" style="text-align: center;">
+                                <apex:image url="https://www.dinersclub.com.ec/portal/sites/default/files/media/images/servicios-beneficios/club-de-referidos.png" styleClass="botonReferido" alt="Guardar" onclick="ocultar('Mostrar_Tabla','Mostrar_Tabla1',this)"  >
+                                      <apex:actionSupport event="onclick"  />
+                                </apex:image><br/>
+                                Referidos
+
+                          </td>
+                    </tr>
+                    <tr >  
+                        <td colspan="2">
+                            <div id="Mostrar_Tabla" style="display: none;"> 
+                                
+                            
+                             <table style="width: 100%"  align="center" border="">
+                                <tr>
+                                      <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                            Nombre:<apex:inputText value="{!creaReferido.firstname}" styleClass="camposTarea"  /><br/><br/><br/><br/>
+                                            Apellidos: <apex:inputText value="{!creaReferido.lastname}" styleClass="camposTarea"  />
+                                             
+                                      </td>
+                               
+                                    
+                                        
+                                   
+                                
+                                      
+                                      <td style="width: 50%; padding: 10px; text-align: center;font-family: 'gotham-rounded-medium';">
+                                            Telefono: <apex:inputField value="{!creaReferido.Phone}" styleClass="camposTarea" />
+                                      </td>
+                                </tr>
+                                <tr>
+                                        <td colspan="2">
+                                          <center>
+                                            <apex:commandButton action="{!guardaClienteReferido}" value="Guardar Referido" id="botonReferido" ></apex:commandButton>
+                                            <apex:commandButton action="{!guardarTodo}" value="Guardar Todo" id="botonGuardarTodo" ></apex:commandButton>
+                                          </center> 
+                                        </td>
+                                </tr>
+                            </table>
+                            </div>
+                        </td>
+                    </tr>
+              </table>
+        </div> -->
+
+<!--         <script>
+            var semaforos = {};
+
+            inicializarSemaforos = function() {
+                semaforos.datosIniciales = '{!estadoMenuRapido.Semaforo_Datos_Iniciales__c}';
+                semaforos.precalificacion = '{!estadoMenuRapido.Semaforo_Precalificacion__c}';
+                semaforos.stock = '{!estadoMenuRapido.Semaforo_Stock__c}';
+                semaforos.carrito = '{!estadoMenuRapido.Semaforo_Carrito__c}';
+                semaforos.cita = '{!estadoMenuRapido.Semaforo_Cita__c}';
+                semaforos.autorizacion = '{!estadoMenuRapido.Semaforo_Autorizacion__c}';
+            }
+
+            actualizarSemaforos = function() {
+                
+                $.each(semaforos, function(clave, color) {
+                    var semaforoCss = 'semaforo';
+                    if (color == 'Rojo') {
+                        semaforoCss+= ' semaforo-rojo';
+                    }
+                    if (color == 'Amarillo') {
+                        semaforoCss+= ' semaforo-amarillo';
+                    }
+                    if (color == 'Verde') {
+                        semaforoCss+= ' semaforo-verde';
+                    }
+                    $('#semaforo-' + clave).removeClass().addClass(semaforoCss);
+                });
+            };
+
+            mostrarSemaforos = function() {
+                $('.semaforo').show();
+            };
+
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                inicializarSemaforos();
+                actualizarSemaforos();
+                mostrarSemaforos();
+            });
+       </script> -->
+
+       <script type="text/javascript">
+            function ocultar(e,f,b){
+            
+                var a=document.getElementById(e);
+                var c=document.getElementById(f);
+                
+                if(a.style.display == 'none'){
+                    a.style.display = 'block';
+                    c.style.display = 'none';
+                    b.value = 'Ocultar HISTORIAL';
+                    
+                }else{
+                    a.style.display = 'none';
+                    c.style.display = 'block';
+                    b.value = 'Mostrar HISTORIAL';
+
+                }
+
+            }
+            
+        </script>
+        <script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $('.modaal-confirm').modaal({
+            type: 'confirm',
+            accessible_title: 'Cancelar',
+            confirm_button_text: 'Confirmar',
+            cancel_button_text:'Cancelar',
+            confirm_title: 'Confirma',
+            confirm_content: '<p>Cancelar Creación e Ir a Cuentas</p>',
+            confirm_callback: function() {
+                
+                
+            },
+            confirm_cancel_callback: function() {
+            }
+        });
+
+
+    </script>
+
+        <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+       
+   </body>
+</apex:component>

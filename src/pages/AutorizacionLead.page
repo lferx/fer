@@ -1,0 +1,1376 @@
+<apex:page controller="ferc" sidebar="false">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!--              <apex:includeScript value="{!URLFOR($Resource.jQuery, '/jquery-1.8.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, '/postmessage/jquery.ba-postmessage.js')}"/> -->
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+
+        <script src="/resource/tabs/jquery-hash-tabs-master/dist/jquery.hash-tabs.min.js"></script>
+        <script src="/resource/tabs/jquery-hash-tabs-master/dist/jquery.min.js"></script>
+                <script src="/resource/tabs/pwstabs-master/assets/jquery.hash-tabs.js"></script>
+
+
+<link type="text/css" rel="stylesheet" href="/resource/tabs/pwstabs-master/assets/jquery.pwstabs.css"/>
+<script src="/resource/tabs/pwstabs-master/assets/jquery.pwstabs.js"></script>
+            <script>
+
+                $(document).ready(function(){ 
+
+/*                    $('#xt').click(function() {
+                        var rad = $('.form input:radio');
+                        var sel = rad.index(rad.filter(':checked'));
+                        sel += 1;
+
+                    });
+
+                    $('#xt').click(function() {
+                        var rad = $('.form input:radio');
+                        var sel = rad.index(rad.filter(':checked'));
+
+                        sel += 2;
+                       
+                        $('.form input[type="radio"]:nth-of-type(' + sel + ')').prop('checked', true);
+                           if ($('#two').prop('checked'))
+                        {
+                           
+                            $('#dx').prop('hidden', false); 
+
+                        } 
+                            });*/
+                        $('#xd').click(function()
+                        {
+                            $('#three').prop('checked',true);
+                            $('#xd').prop('hidden', true);
+                            $('#dx').prop('hidden', true);
+                            $('#xp').prop('hidden', false);
+                                              
+                        });
+                        $('#xt').click(function()
+                        {
+                            $('#two').prop('checked');
+                            $('#xt').prop('hidden', true);
+                            $('#xd').prop('hidden', false);
+                            $('#myf2').prop('display',block);                      
+                        });
+                        $('#dx').click(function()
+                        {
+                            $('#one').prop('checked');
+                            $('#send').prop('hidden', true);
+                        if ($('#one').prop('checked',true))
+                        {
+                            $('#dx').prop('hidden', true); 
+                        }
+                         if ($('#one').prop('checked'))
+                        {
+                            $('#xd').prop('hidden', true);
+                            $('#xt').prop('hidden', false); 
+
+                        } 
+                       
+                        });
+                         $('#xp').click(function()
+                        {   $('#send').prop('hidden', true);
+                            $('#two').prop('checked');
+                            $('#xd').prop('hidden', false);
+                            $('#vpre').prop('hidden', true);
+                            if ($('#two').prop('checked',true))
+                        {
+                            $('#xp').prop('hidden', true); 
+                        }
+                        if ($('#two').prop('checked'))
+                        {
+                            $('#dx').prop('hidden', false);
+                        } 
+                        });
+
+  
+                    $('#titulo').toggleClass('active').next('#contenido').slideToggle(600);
+                    $('#titulo').click(function(e) {
+                    e.preventDefault();
+                    var x = $('.active').not(this);
+                    x.toggleClass('active').next('#contenido').slideToggle(600);
+                     $(this).toggleClass('active').next().slideToggle("fast");
+                    });
+           $('#cerrar').click(function() {
+          $( this ).dialog( "cerrar" );
+                                        });
+                      
+ $( function() {
+    $( "#dialog" ).dialog({
+      autoOpen: false,
+      resizable: false, 
+width: 160, 
+height: 144, 
+autoResize: true, 
+modal: true, 
+draggable: false,
+show: {
+effect: "fade",
+        duration: 500
+      },
+      hide: {
+        effect:"drop", duration: 600
+        // effect: "transfer", to: "#send", className: "ui-effects-transfer",
+        // duration: 100
+      }
+    });
+
+    $( "#send" ).on( "click", function() {
+      $( "#dialog" ).dialog( "open" );
+    });
+    });
+
+
+      $( function() {
+    $( document ).tooltip();
+
+      
+  });
+
+    });
+                    
+            </script>
+            <script type="text/javascript">
+            function lck(y)
+            {
+                if (y.selectedIndex >0)
+                {
+                    $('#xt').prop('disabled', false);
+                }
+                if (y.selectedIndex ==0)
+                {
+                $('#xt').prop('disabled', true);
+                // $('#xt').attr('title', 'Tienes que seleccionar un tipo');
+                }
+                if (y.selectedIndex >1)
+                {
+                    $('#xd').prop('disabled', false); 
+                }
+                if (y.selectedIndex ==1)
+                {
+                    $('#xd').prop('disabled', true); 
+                }
+                if (y.selectedIndex ==3)
+                {
+                    $('#xd').prop('disabled', true); 
+                }
+            }
+            function blk(x)
+            {
+                if (x.value.length>0)
+                {
+                    $('#xd').prop('disabled', false); 
+                }
+                else
+                {
+                    $('#xd').prop('disabled', true); 
+                }
+            }
+            function ulk(z)
+            {
+                if (z.value.length>0)
+                {
+                    $('#xd').prop('disabled', false); 
+                }
+                else
+                {
+                    $('#xd').prop('disabled', true); 
+                }
+            }
+                function pdf()
+                {
+                    abrir();
+                }
+                    function modal()
+                    {
+                        alert('hola');
+                    }
+
+                function guardar()
+                {        
+                guardar();
+
+                abrir();  
+
+                }
+         
+                    function guardartipo()
+                    {
+                         guardartipo();
+                    }
+                function cerrar()
+                {
+                opener.location.reload();
+                window.close();
+                }
+                    function generar() 
+                    {
+                       genera();
+                        $('#vpre').prop('hidden', false);  
+                        $('#cbro').prop('hidden', false);
+                        $('#send').prop('hidden', false);         
+                    }
+                function enviar()
+                {
+                    pendiente();
+                }
+
+            </script>
+            <script>
+                 $('.clase').click(function()
+                        {
+                            $('#cauth').hide();
+                                              
+                        });
+                            $('#tabsx').on('change', function()
+                        {
+                            $('#cauth').hide();
+                                              
+                        });
+
+
+            </script>
+
+<link href="https://fonts.googleapis.com/css?family=Hind+Vadodara|Maven+Pro|Quicksand" rel="stylesheet"/> 
+
+<style type="text/css">
+                @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+
+.ui-effects-transfer { border: 2.5px dotted gray; }
+.stages {
+    font-size: 0;
+    text-align: justify;
+    position: absolute;
+}
+/*  label {
+    font-family: "Bebas-Neue";
+    display: inline-block;
+    width: 5em;
+    font-size: 3em;
+  }*/
+
+.stages:after {
+    content: '';
+    display: inline-block;
+    font-size: 0;
+    text-align: justify;
+    width: 100%;
+}
+
+input[type="radio"] {
+    display: none;
+
+}
+
+.stages label {
+    background: #ffffff;
+    border: solid 5px #c0c0c0;
+    border-radius: 1%;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0;
+    font-weight: 700;
+    height: 120px;
+    width: 120px;
+    line-height: 50px;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    
+    z-index: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*.stages label:after {
+
+    content: '\2713';
+    color: #02B7EE;
+
+    font-size: 16px;
+}*/
+
+
+
+
+#one:checked ~ .stages label[for="one"],
+#two:checked ~ .stages label[for="two"],
+#three:checked ~ .stages label[for="three"] {
+    border-color: #c0c0c0;
+}
+
+.stages label.active{
+    border-color: purple !important;
+}
+
+#one:checked ~ .stages label:after,
+#two:checked ~ .stages label[for="one"] ~ label:after,
+#three:checked ~ .stages label[for="two"] ~ label:after,
+#four:checked ~ .stages label[for="three"] ~ label:after {
+    display: none;
+}
+#three:checked ~ .stages label[for="two"]
+{
+    color: white;
+}
+.progress > span {
+    background: #c0c0c0;
+    display: inline-block;
+    height: 5px;
+    transform: translateY(-2.75em);
+    transition: 0.4s;
+    width: 0;
+}
+
+#two:checked ~ .progress span {
+    width: calc(100% / 2 * 1);
+}
+
+#three:checked ~ .progress span {
+    width: calc(100% / 2 * 2);
+}
+
+.panels div {
+    display: none;
+}
+
+#one:checked ~ .panels [data-panel="one"],
+#two:checked ~ .panels [data-panel="two"],
+#three:checked ~ .panels [data-panel="three"]{
+    display: block;
+}
+
+#collapsable {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0; }
+  #collapsable label {
+    color: #000000;
+    cursor: pointer;
+    font-size: 1.2em;
+    flex: 1; }
+  #collapsable [type="radio"],
+  #collapsable [type="checkbox"] {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid rgba(239, 237, 239, 0.2);
+    cursor: pointer;
+    transform: rotate(0);
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; }
+    #collapsable [type="radio"]:hover, #collapsable [type="radio"]:focus,
+    #collapsable [type="checkbox"]:hover,
+    #collapsable [type="checkbox"]:focus {
+      border-top: 8px solid #02B7EE; }
+    #collapsable [type="radio"]:checked,
+    #collapsable [type="checkbox"]:checked {
+      border-top: 8px solid #02B7EE;
+      transform: rotate(-180deg); }
+    #collapsable [type="radio"]:checked + div,
+    #collapsable [type="checkbox"]:checked + div {
+      max-height: 200px; }
+    #collapsable [type="radio"] + div,
+    #collapsable [type="checkbox"] + div {
+      flex: 0 0 100%;
+      height: auto;
+      overflow: hidden;
+      max-height: 0;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
+      #collapsable [type="radio"] + div > *,
+      #collapsable [type="checkbox"] + div > * {
+        font-size: 0.9em;
+        padding: 0 2rem 0 0; }
+
+
+body {
+/*    background-color: #02B7EE;*/
+    background-color: white;
+    margin: 0;
+    padding: 0 1em;
+
+}
+
+}
+h2 {
+
+    font-family: 'Maven Pro', sans-serif;
+    margin-top: 0;
+    font-size:9px;
+}
+#dialog {
+        font-family: 'Maven Pro', sans-serif;
+
+    font-size:12px;
+}
+h2 {
+
+    font-family: 'Maven Pro', sans-serif;
+    margin-top: 0;
+    font-size:13px;
+}
+h3 {
+
+    font-family: 'Maven Pro', sans-serif;
+    text-align: center;
+    font-size:16px;
+}
+.form {
+    background: #ffffff;
+    margin: 1em;
+    max-width: 100%;
+    min-width: 480px;
+    padding: 1em;
+        font-family: 'Maven Pro', sans-serif;
+}
+h6 {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: 'Maven Pro', sans-serif;
+}
+ h5 {
+    
+    font-size: 14px;
+    font-family: 'Maven Pro', sans-serif;   
+    font-weight:bold;
+
+}
+    h1{
+    font-family: 'Bebas-Neue';
+    font-size: 23px;
+    text-transform:uppercase;
+    }
+
+.panels div {
+    border-top: solid 1px #c0c0c0;
+    margin: 1em 0 0;
+    padding: 1em 0 0;
+}
+.fer, #tipof
+{
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border-bottom: 0.05px inset #9e9e9e;
+    outline: none;
+    height: 1.8rem;
+    line-height: 1rem;
+    width: 100%;
+    font-size: 12px;
+    margin: 5px 0 16px 0;
+    padding: 0;
+    border-color: #E6E5E5;
+    font-family: 'Maven Pro', sans-serif;
+}
+.fer4
+{
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border-bottom: 0.05px inset #9e9e9e;
+    outline: none;
+    height: 1.8rem;
+    line-height: 1rem;
+    width: 96%;
+    font-size: 12px;
+    margin: 5px 0 16px 0;
+    padding: 0;
+    border-color: #E6E5E5;}
+    #primero
+    {
+        margin-top: -35px;
+    }
+
+.fer:focus{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #81F7BE;
+    outline: none;
+}
+.fer:active{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #81F7BE;
+    outline: none;
+}
+.fer:hover{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #02B7EE;
+    outline: none;
+}
+#gpv{
+font-family: 'Poppins', sans-serif;
+background: #D1DA28;
+    font-size: 12px;
+    padding: 5% 10%;
+        color: #100925;
+            border: 0;
+    border-radius: 20px;
+}
+#vpre, #vcarta, #vgastos, #back{
+border: none;
+color: white;
+
+    background: #02B7EE;
+    font-size: 12px;
+    padding: 5% 10%;
+    border-radius: 20px;
+
+}
+#gpv:hover,#vpre:hover, #vcarta:hover, #vgastos:hover, #back:hover{
+  transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);
+}
+#vcarta
+{
+    margin-bottom: 6px;
+    margin: auto;
+    float: center;
+}
+#xd, #dx, #xp, #send, #xt{
+    padding: 5% 10%;
+    color: #fffefe;
+    background: #FA5858;
+    border-radius: 20px;
+    border: #FA5858;
+
+}
+#xd:hover,#xp:hover,#dx:hover,#send:hover, #xt:hover {
+  transform: translate(7%,8%)scale(1.1);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);
+}
+
+#titulo:hover
+{
+    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #02B7EE;
+    outline: none;
+}
+
+#contenido {
+    color: #015ba7;
+    margin-top: -40px;
+    font-size: 13px;
+    display: none;
+    border: none;
+    font-family: 'Hind Vadodara', sans-serif;
+     font-weight: bold;
+}
+
+#contenido p {
+    font-size: 12px; 
+        margin-top: -30px;
+            font-family: 'Hind Vadodara', sans-serif;
+
+}
+    
+#ok{
+
+    width: 38px;
+    height: 38px;
+
+      margin: -5px 5px 0px 0;
+}
+a.active {
+    font-weight: bold;
+}
+
+#titulo {
+    font-family: 'Hind Vadodara', sans-serif;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+    line-height: 29px;
+    padding: 25px,25px;
+    display: block;
+    border: 1px solid #d0d0d0;
+    margin-top: 13px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #02B7EE;
+    outline: none;
+    display: none;
+}
+
+#contenido p {
+  margin: 25px;
+  padding-bottom: 10px;
+}
+.fer2
+{
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border-bottom: 0.3px inset #9e9e9e;
+    outline: none;
+    height: 1rem;
+    width: 100%;
+    font-size: 12px;
+    margin: 5px 5px 5px 0;
+    padding: 0;
+    display: block;
+    border-color: #E6E5E5;
+    font-family: 'Maven Pro', sans-serif;
+
+}
+.feroferta
+{
+    transition: all .3s ease-in-out;
+    color: #000;
+    text-align: center;
+    background: #f1f1f1;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    border-radius: 15px;
+    border: solid 1.5px #f0f0f3;     
+}
+.ferofertax
+{
+    transition: all .3s ease-in-out;
+    color: #000;
+    text-align: center;
+    background: #d1da28;    margin-bottom: 0.5em;
+    border-radius: 15px;
+    border: solid 1.5px #d1da28;    
+}
+.fer5
+{
+
+    border: none;
+    width: 96%;
+    font-size: 12px;
+    margin: 5px 5px 10px 0;
+    border-color: #E6E5E5;
+    font-family: 'Maven Pro', sans-serif;
+}
+.fer3
+{
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border-bottom: 0.5px inset #9e9e9e;
+    outline: none;
+    height: 1rem;
+    width: 96%;
+    font-size: 12px;
+    margin: 10px 10px 14px 0;
+    padding: 0;
+    border-color: #E6E5E5;
+    font-family: 'Maven Pro', sans-serif;
+}
+.feroferta:focus, .ferofertax:focus,.feroferta:hover, .ferofertax:hover, .ferofertax:active{
+    border-color: #79c4de;
+    outline: none;
+    background: white;
+}
+
+.fer2:focus, .fer3:focus, .fer4:focus, .fer5:focus{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #81F7BE;
+    outline: none;
+}
+.fer2:active, .fer3:active, .fer4:active, .fer5:active{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #81F7BE;
+    outline: none;
+}
+.fer2:hover, .fer3:hover, .fer4:hover, .fer5:hover{    box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    -webkit-box-shadow: inset 0 1px 6px rgba(0,0,0,0.1),0 0 10px rgba(20, 197, 255, 0.3);
+    border-color: #02B7EE;
+    outline: none;
+}
+#ofertac 
+{
+    width: 100%;
+    font-family: 'Maven Pro', sans-serif;
+}
+#ofertac p
+{
+    margin-top: 1px;
+    margin-bottom: -1em;
+    text-align: center;
+}
+#pv 
+{
+    font-weight: bold;
+    font-size: 14px;
+}
+#ofertac
+{
+
+}
+#ofertac tr td
+{
+}
+#f
+{
+   
+}
+#fgo, #f, #fg
+{
+    margin-top: 5px;
+}
+
+.three
+{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+    #luno
+{
+color: #02B7EE;
+font-size: 2rem;
+box-shadow: 0px 18px 1px -6px #02B7EE;
+    text-align: center;
+        line-height: 1.4;
+        position: relative;
+            width: 150px;
+    height: 150px;
+}
+.ferxx
+{
+    cursor: pointer;
+    border: none;
+    height: 2rem;
+    width: 25%;
+    font-size: 12px;
+    border-color: #E6E5E5;
+    font-family: 'Maven Pro', sans-serif;
+    text-indent: 40%;
+
+}
+#cauth
+{
+    max-width: 82%;
+    text-align: center;
+}
+#tb
+{
+    width:40%;
+     z-index: 0;
+   border: 1px;
+   margin-top: 10%;
+}
+
+#tb td
+{
+  font-size: 13px;
+  line-height: 13px;
+  margin-top: 10em;
+  border: 3px solid #f7a631;
+  outline: none;
+  background-color: #fff;
+  max-width: 35em;
+  width: 20em;
+  padding: 24px 48px;
+  color: #F9BB62;
+  text-transform: uppercase;
+  @include transition(all, .3s);
+
+}
+#tb td:hover
+{
+    @include transition(all, .3s);
+        background-color: #F9BB62;
+    cursor: pointer;
+    color: white;
+}
+#w
+{
+        position: absolute;
+    
+    margin-left: 25%;
+}
+.message2
+{
+    width: 50%;
+    border: none;
+background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 72%, rgba(237,237,237,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(246,246,246,1) 72%,rgba(237,237,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+.fv
+{
+    background-color: #f1f1f1;
+    border-radius: 10px 10px 10px 10px;
+    background-size: 200px;
+    padding: 4px 15px 4px 15px;
+        font-weight: normal;
+    color: #353434;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+#tablita
+{
+    text-transform: uppercase;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+        line-height: 210%;
+        font-size: 14px;
+
+}
+td 
+{
+    font-family: 'Poppins', sans-serif;
+    color: #0C326B;
+}
+.feroferta2
+{
+    transition: all .3s ease-in-out;
+    color: #000;
+    text-align: center;
+    background: #f1f1f1;
+    line-height: 300%;
+    border-radius: 15px;
+    border: solid 1.5px #f0f0f3;  
+        padding: 4px 15px 4px 15px;   
+}
+.feroferta3
+{
+    transition: all .3s ease-in-out;
+    color: #fff;
+    text-align: center;
+    background: #733986;
+    line-height: 300%;
+    border-radius: 15px;
+    border: solid 1.5px #733986;
+        padding: 4px 15px 4px 15px;   
+}
+
+#tablita tr:first-child {
+    background: linear-gradient(to bottom, rgba(125,185,232,0) 98%,rgba(125,185,232,1) 99%,rgba(125,185,232,1) 100%,rgba(125,185,232,1) 102%);
+}
+.ffa
+{
+font-size: 10px;
+}
+.ffa2
+{
+    font-size: 11px;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    border: none;
+    color: white;
+    background: #02B7EE;
+    font-size: 14px;
+    padding: .8% .8%;
+    border-radius: 20px;
+    outline: none;
+}
+.btn.focus, .btn:focus, .btn:hover {
+    color: #fff;
+    text-decoration: none;
+    border-color: #02B7EE;
+    outline: none;
+    background: #02B7EE;
+      transform: translate(7%,8%)scale(1.1);
+  transition: all .15s ease-out;
+box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);
+}
+
+#qwe img:hover
+{
+  transform: translate(7%,8%)scale(1.4);
+  background-size: 180%;
+  background-position: 60% 0%;
+  transition: all .15s ease-out;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    /* border: 1px solid #003eff; */
+
+    font-weight: normal;
+text-align: center;
+    background: #02B7EE;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+    border: solid 1.5px #02B7EE;
+    }
+  
+  
+    .header{
+    background-color: #fff;
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+
+    
+    }
+
+    .pws_tabs_list {
+
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 0px 0px 50px 50px;
+}
+.pws_tabs_container{
+    margin-top: 4%;
+}
+#tabs p {
+    margin: 2% 10% 2% !important;
+    text-align: justify;
+        line-height: 200%;
+        font-size: 14px;
+}
+#tabsx br:after {
+    content: ', ';
+}
+/*#tabsx br:last-child:after { content: "."; }*/
+
+#tabsx br {
+    content: '';
+}
+#qwe
+{
+    display: inline-block;
+    position: absolute;
+
+    bottom: -10%;
+    right: 0;
+    border: .05vh solid #54c0eb;
+    padding: .5%;
+    border-radius: 50%;
+}
+</style>
+</head>
+
+
+<!--   <script>
+  $( function() {
+    $( "#tabs" ).tabs({
+      collapsible: true
+    });
+    $( "#tabs" ).css({
+
+   'max-width': '50%',
+   'overflow': 'auto'});
+  } );
+  </script> -->
+    <script>
+             $.noConflict();
+jQuery(document).ready(function($){
+   $('#tabsx').pwstabs({
+         effect: 'slidetop',
+        defaultTab: 1,
+        containerWidth: '70%',
+        theme:'pws_theme_purple'
+   });   
+       $('.pws_tabs_controll').click(function()
+    {
+      $('#cauth').hide();
+    });     
+});
+  </script>
+    <script>
+    $('.pws_tabs_controll').on('click',function()
+    {
+        $('#cauth').hide();
+    });
+
+    $('.pws_tabs_controll').click(function()
+    {
+      $('#cauth').hide();
+    });
+    function broke(x)
+    {
+        var y=x.value;
+        $('[Id*="broke"]').html('hola');
+        if(y>0.1)
+        {
+            $('[Id*="broke"]').val(y/100);
+        }
+    }
+</script>
+
+<!--     <div class="hello_world">
+
+   <div data-pws-tab="anynameyouwant1" data-pws-tab-name="Tab Title 1">Our first tab</div>
+   <div data-pws-tab="anynameyouwant2" data-pws-tab-name="Tab Title 2">Our second tab</div>
+   <div data-pws-tab="anynameyouwant3" data-pws-tab-name="Tab Title 3">Our third tab</div>
+
+</div> -->
+<apex:form >
+<div class="TaskSearch">
+          <c:TaskSearch />
+        </div>
+<center>
+<img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="revimex" />
+                      <div class="chip2 cabecera">
+    <img class="fotito" src="{!Photolink}" />
+    Bienvenido {!$User.FirstName}
+<center><p class="nombrelead">Nombre Lead: {!datoslead.name} </p></center>
+  </div> 
+</center>
+
+ 
+                <div class="nave">
+                        <apex:variable value="autorizacionlead" var="pagina"/>
+                      <c:Menu_rapidolead account="{!nuevoLead.Id}" visual="{!pagina}" />
+                </div>
+           
+    
+
+                <div class="argumentos">
+             
+                </div>
+</apex:form>
+
+
+<div class="contenedor">
+<center>
+
+    <apex:repeat value="{!carrito}" var="m"> 
+       <div id="tabs">
+<!--           <ul > -->
+            <apex:repeat value="{!mapC[m.id]}" var="temp">  
+<!-- 
+            <li onclick="$('#cauth').hide();" ><a href="#{!temp.oferta__r.id}" >{!temp.oferta__r.name}</a></li> -->
+
+            </apex:repeat>  
+            
+<!--           </ul> -->
+
+           <div id="tabsx">
+            <apex:repeat value="{!mapC[m.id]}" var="temp">  
+
+<!--               <div id="{!temp.oferta__r.id}"> -->
+              
+            <li class="clase" data-pws-tab="{!temp.oferta__r.name}" data-pws-tab-name="{!temp.oferta__r.name}">
+            <p><strong>Detalles</strong></p>
+
+            <p><apex:outputText value="{!temp.oferta__r.Direccion2__c}" escape="false" /></p>
+
+       <apex:variable value="{!temp.oferta__c}" var="myv" />
+        <span id="qwe">
+            <apex:image value="https://image.flaticon.com/icons/svg/234/234715.svg" width="45" height="45" onclick="render('{!myv}'); $('#cauth').show();" title="Generar Autorización" />
+        </span>
+
+</li>
+           <script>
+  
+
+    $('.pws_tabs_controll').click(function()
+    {
+      $('#cauth').hide();
+    })
+
+
+</script>
+
+
+<!--   </div> -->
+            </apex:repeat>  
+            </div>
+
+            </div>
+
+
+
+    </apex:repeat> 
+
+ <apex:form >
+    
+    <apex:actionFunction name="render" action="{!render}" reRender="generada">
+    <apex:param name="myv" assignTo="{!ofertalead}" value=""/>
+    </apex:actionFunction>
+
+        <apex:actionFunction immediate="true" action="{!cancelarlead}" name="cancelarlead"/>
+
+    
+
+    
+</apex:form>
+
+<br/><br/> 
+    
+</center>
+
+<center><apex:pageMessages id="showmsg" escape="false" ></apex:pageMessages></center>
+<br/>
+
+<center>
+        <div id="cauth" hidden="true">
+            <a id="titulo" title="Pulsa para desplegar"><h2>Gastos Considerados</h2></a>
+            <div id="contenido">
+            <apex:outputPanel id="generada">
+
+            <apex:form rendered="{!if(tipoo='Ofertas', true, false)}">
+            <apex:iframe scrolling="true" id="fgo" height="420" title="Vista Previa" html-hidden="hidden"/>
+            
+             <br/>
+             <span id="info">
+             <table id="tablita" cellpadding="0"  width="100%">
+             <tr>
+                 <td width="20%" height="90px">
+                Precio de venta <br/>
+
+                <apex:inputText value="{!pv}" styleClass="ferofertax" title="Ingresa el Monto Ofertado"/>
+                  
+
+                 </td><td width="20%">
+                Saneamiento<br/><apex:outputText value="${0, number, 0,000}" styleClass="fv">
+                            <apex:param value="{!acct.Saneamiento__c}"/>
+                          </apex:outputText>
+                          </td>
+                          <td width="20%">
+                              Tipo de Oferta:<br/> <apex:outputText value="{!tp}" styleClass="fv ffa"/>
+                          </td>
+                          <td width="20%">Gastos <br/><apex:outputPanel id="gastos"><apex:outputText value="${0, number, 0,000}" styleClass="fv">
+                            <apex:param value="{!gastos.costos__c}"/>
+                          </apex:outputText></apex:outputPanel></td>
+                          <td width="20%">Ingreso Neto<br/><apex:outputPanel id="ine"><apex:outputText value="${0, number, 0,000}" styleClass="fv" >
+                            <apex:param value="{!ine}"/>
+                          </apex:outputText></apex:outputPanel></td>
+             </tr>
+              <tr>
+                 <td>Adeudos compra<br/><apex:outputPanel id="aco">
+                 <apex:inputField value="{!acct.CosteAdeudos__c}"  styleClass="feroferta" /></apex:outputPanel></td>
+                 <td>Adeudos Venta<br/><apex:outputPanel id="ave"><apex:inputField value="{!acct.CosteAdeudosVenta__c}"  styleClass="feroferta" /></apex:outputPanel></td>
+                 <td>Hon. Notaría<br/><apex:outputPanel id="hon"><apex:inputField value="{!acct.CosteHonorariosNotaria__c}"  styleClass="feroferta" /></apex:outputPanel></td>
+                 <td>Com. Broker<br/><apex:outputPanel id="cbro"><apex:outputtext value="${0, number, 0,000}"  styleClass="feroferta2"  >
+                                        <apex:param value="{!gastos.comisioncomercial__c}" /> </apex:outputtext></apex:outputPanel></td>
+                 <td>V.Referencia<br/><apex:outputtext value="${0, number}"  styleClass="feroferta2" >
+                                        <apex:param value="{!acct.ValorReferencia__c}" /> </apex:outputtext></td>
+             </tr>
+             <tr>
+                 <td>Impuestos Notaría<br/><apex:outputPanel id="ino"><apex:inputField value="{!acct.CosteImpuestosNotaria__c}"  styleClass="feroferta" /></apex:outputPanel></td>
+                 <td>Adeudos Desalojo<br/><apex:outputPanel id="ade"><apex:inputtext value="{!costo}" styleClass="feroferta" /></apex:outputPanel></td>
+                 <td>Rehabilitación<br/><apex:outputPanel id="reh"><apex:inputField value="{!acct.CosteRehabilitacion__c}"  styleClass="feroferta" /></apex:outputPanel></td>
+                 <td><apex:outputPanel rendered="{!tp=='Crédito Infonavit'}">P. Original<br/><apex:outputText value="${0, number}"  styleClass="feroferta2"><apex:param value="{!acct.Precio_Original__c}"/></apex:outputText></apex:outputPanel> </td>
+                 <td>Margen Estimado<br/><apex:outputPanel id="mes"> <apex:outputtext value="{0, number}%"  styleClass="feroferta2" >
+                                        <apex:param value="{!gastos.margenneto__c}" /> </apex:outputtext></apex:outputPanel></td>
+             </tr>
+             <tr>
+                 <td>Plus Venta<br/><apex:inputText value="{!plus}"  styleClass="feroferta" /></td>
+                 <td>Com. Revimex<br/><apex:inputText value="{!comisiongerente}"  styleClass="feroferta" /></td>
+                 <td>Com. Broker %<br/><apex:inputText value="{!broker}"  styleClass="feroferta" id="broke" onkeyup="broke(this);"/></td>
+                 <td>Beneficio<br/><apex:outputPanel id="ben"><apex:outputtext value="${0, number,0,000}"  styleClass="feroferta3" >
+                                        <apex:param value="{!gastos.Beneficio__c}" /> </apex:outputtext></apex:outputPanel></td>
+                <td>
+                    Margen Referencia<br/><apex:outputPanel id="mre"><apex:outputtext value="{0, number}%"  styleClass="feroferta2" >
+                                        <apex:param value="{!gastos.margenreferencia__c}" /> </apex:outputtext></apex:outputPanel>
+                </td>
+             </tr>
+                 
+<!--  <tr>
+<td ><apex:outputPanel id="gen">
+<table width="100%"><tr><td width="50%">Gastos:</td><td width="50%"> <apex:outputText value="${0, number, 0,000}" styleClass="fv">
+<apex:param value="{!gastos.costos__c}"/>
+</apex:outputText></td></tr></table></apex:outputPanel>
+</td>
+</tr>-->
+<!--<tr>
+<td>
+<apex:outputPanel id="gen2"> <table width="100%"><tr><td width="50%">
+Ingreso Neto:  </td><td width="50%"> <apex:outputText value="${0, number, 0,000}" styleClass="fv" >
+<apex:param value="{!ine}"/>
+</apex:outputText></td></tr></table></apex:outputPanel>
+</td>
+</tr> 
+-->
+                       </table>
+                            </span>
+                            <br/>
+               <table cellpadding="0" border="0" width="100%"> 
+<tr>
+               <td width="20%"></td>
+               <td width="20%"><button id="send" type="button" hidden="hidden" onclick="enviar(); $( '#dialog' ).dialog( 'open' ); $('#vpre').prop('hidden',true); $('#back').prop('hidden',true);" title="Enviar y Guardar Autorización">Enviar</button></td>
+               <td width="20%">                            <apex:commandLink action="{!abrir}" target="fgo"> 
+
+                        <button id="vpre" hidden="hidden" type="button" onclick="$('#vpre').prop('hidden',true); $('#pan').prop('hidden',true); $('#ofertac').prop('hidden',true); $('#fgo').prop('hidden',false);
+                            $('#back').prop('hidden',false); $('#gpv').prop('hidden',true); $('#info').prop('hidden',true);">V. Previa</button></apex:commandLink>
+
+                                                    <button id="back" hidden="hidden" type="button" onclick="$('#back').prop('hidden',true); $('#vpre').prop('hidden',false); $('#fgo').prop('hidden',true); 
+                        $('#oo').prop('hidden',false); $('#pan').prop('hidden',false); $('#ofertac').prop('hidden',false);
+                        $('#info').prop('hidden',false); $('#gpv').prop('hidden',false);
+                        $('#send').prop('hidden',true);
+                        ">Editar</button>
+                            </td>
+               <td width="20%"><button id="gpv" type="button" onclick="generar();">Calcular</button></td>
+               <td width="20%"></td>    
+               </tr>
+               </table>
+               
+     
+<!--Precio de venta: &nbsp;&nbsp; &nbsp; <apex:outputText value="${0, number, 0,000}" >
+<apex:param value="{!pv}"/>
+</apex:outputText>&nbsp;&nbsp;&nbsp; &nbsp;  Saneamiento: <apex:outputText value="${0, number, 0,000}" >
+<apex:param value="{!acct.Saneamiento__c}"/>
+</apex:outputText>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo de Oferta: {!acct.TipoOferta__c}&nbsp; &nbsp; &nbsp;{!acct.name} <br/>
+<apex:outputPanel id="gen">
+Gastos: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;<apex:outputText value="${0, number, 0,000}" >
+<apex:param value="{!gastos.costos__c}"/>
+</apex:outputText><br/>
+Ingreso Neto:  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <apex:outputText value="${0, number, 0,000}" >
+<apex:param value="{!ine}"/>
+</apex:outputText> <br/>
+</apex:outputPanel> -->
+<!-- Precio de Compra:  &nbsp;&nbsp;${!acct.PrecioCompra__c} <br/> -->
+<!--<apex:outputPanel id="cont">
+<table id="ofertac" cellspacing="0" >
+<tr>
+<td width="35%"><p>Adeudos compra:</p><apex:inputField value="{!acct.CosteAdeudos__c}"  styleClass="feroferta" /></td>    
+<td><p>Comisión Plus: <apex:inputText value="{!plus}"  styleClass="feroferta" /></p></td>
+<td width="30%"><p>V. Referencia:<br/><apex:outputField value="{!acct.ValorReferencia__c}"  styleClass="feroferta" /></p></td>
+</tr>
+<tr>
+<td><p>Adeudos Venta:</p><apex:inputField value="{!acct.CosteAdeudosVenta__c}"  styleClass="feroferta" /></td>  
+<td width="35%"><p>Comisión Revimex:</p><apex:inputText value="{!comisiongerente}"  styleClass="feroferta" /></td>
+<td><p>Margen Estimado:<br/><apex:outputPanel id="marg"><apex:outputField value="{!gastos.margenneto__c}"  styleClass="feroferta" />%</apex:outputPanel></p></td> 
+</tr>
+<tr>
+<td><p>Honorarios Notaría:</p><apex:inputField value="{!acct.CosteHonorariosNotaria__c}"  styleClass="feroferta" /></td>
+<td><p>Comisión Broker %:</p><apex:inputText value="{!broker}"  styleClass="feroferta" /></td>
+<td><p>Margen Referencia<br/><apex:outputPanel id="marg2"><apex:outputField value="{!gastos.margenreferencia__c}"  styleClass="feroferta" />%</apex:outputPanel></p></td> 
+</tr>
+<tr>
+<td><p>Impuestos Notaría:</p><apex:inputField value="{!acct.CosteImpuestosNotaria__c}"  styleClass="feroferta" /></td> 
+<td><p id="cbro" >Comisión Broker:<br/><apex:outputPanel id="com"><apex:outputField value="{!gastos.comisioncomercial__c}"  styleClass="feroferta" /></apex:outputPanel></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p>Adeudos Desalojo:</p><apex:inputField value="{!acct.CosteDesalojo2__c}"  styleClass="feroferta" /></td> 
+</tr>
+<tr>
+<td><p>Rehabilitación:</p><apex:inputField value="{!acct.CosteRehabilitacion__c}"  styleClass="feroferta" /></td> 
+<td><p>Beneficio:&nbsp;&nbsp;&nbsp;&nbsp; <apex:outputPanel id="ben"> <apex:outputField value="{!gastos.Beneficio__c}"/></apex:outputPanel></p></td> 
+<td><center>&nbsp;</center></td>
+</tr>
+</table></apex:outputPanel><br/> -->
+
+          <apex:actionFunction action="{!validar}" name="genera" reRender="gastos,ine,showmsg,cbro,mes,ben,mre,ave,ade,ino,hon,aco,reh" >
+                </apex:actionFunction>
+                <apex:actionFunction action="{!estatus}" name="pendiente" reRender="generada" >
+                </apex:actionFunction>
+                <apex:actionFunction action="{!abrir}" name="abrir" reRender="false" >
+          </apex:actionFunction>   
+
+                        <apex:actionFunction immediate="true" action="{!cancelarlead}" name="cancelarlead"/>
+         </apex:form>
+     </apex:outputPanel>  
+
+</div>
+
+</div>
+</center>
+
+  <div id="dialog" title="Enviar">
+  <p>Envíado, Autorización Pendiente</p>
+  <center>
+      <img id="ok" src="https://www.cnt.gob.ec/telefonia/wp-content/themes/cnt-theme/assets/images/all_ok.png" onclick="$('#dialog').dialog( 'close' );" />
+
+  </center>
+  </div>
+
+
+
+
+</div>
+  <div class="foot">
+          
+                         <div class="izq">
+                         <center>
+                             <a href="{!URLFOR('/apex/cita_leads?id=')}{!idcarrito}"><apex:image url="{!URLFOR($Resource.icof, '/left.png')}" styleClass="circulo1">
+                    
+                 </apex:image></a>
+                        </center> 
+                        </div>
+                        <div class="medio">
+                        <center>
+                         <apex:image url="{!URLFOR($Resource.icof, '/cancela.png')}"  styleClass="circulo1 modaal-confirm"/> 
+                        </center>
+                        </div>
+                        <div class="derecha">
+                        <center>
+                           
+                        </center>
+                        </div>
+                                
+                 
+              
+</div>
+                <script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $('.modaal-confirm').modaal({
+            type: 'confirm',
+            accessible_title: 'Cancelar',
+            confirm_button_text: 'Confirmar',
+            confirm_cancel_button_text: 'Cancelar',
+            confirm_title: 'Confirma',
+            confirm_content: '<p>Cancelar Creación e Ir a Inicio</p>',
+            confirm_callback: function() {
+                cancelarlead();
+                
+            },
+            confirm_cancel_callback: function() {
+            }
+        });
+
+    </script>
+                        <script>
+    
+        $( document ).ready(function() {
+
+            $('.message').first().remove();
+            $('.message').addClass('message2');
+            $('.message2').RemoveClass('message');
+ 
+  });
+    
+
+
+
+
+    </script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</apex:page>

@@ -1,0 +1,41 @@
+<apex:page standardController="Oferta__c" extensions="PropiedadImagesController" showHeader="false">
+    <style type="text/css">
+    .foto-container {
+        width: 150px;
+        height: 170px;
+        float: left;
+        display: inline-block;
+        position: relative;
+    }
+    .btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        float: left;
+    }
+    </style>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        
+                    </div>
+                    <div class="panel-body">
+                        <apex:form styleClass="form-horizontal">
+                            <apex:repeat rendered="{!fotos.size>0}" value="{!fotos}" var="foto">
+                                <div class="foto-container">
+                                    <apex:image width="150" value="/servlet/servlet.FileDownload?file={!foto.Id}"></apex:image>
+                                    <apex:outputLink target="_parent" styleClass="btn" value="/{!foto.Id}">
+                                        Ir al registro
+                                    </apex:outputlink> 
+                                </div>
+                            </apex:repeat>
+                            <apex:outputText rendered="{!NOT(fotos.size>0)}" value="Sin fotos" />
+                        </apex:form>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:page>

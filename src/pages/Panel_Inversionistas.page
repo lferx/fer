@@ -1,0 +1,174 @@
+<apex:page controller="Panel_Inversionistas_Controller">
+
+        <style type="text/css">
+                @font-face {
+            font-family: 'gotham-rounded-medium';
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+        }
+                .tabla{
+                        width: 100%;
+                        text-align: center;
+                        vertical-align: middle;
+                        font-family: 'gotham-rounded-medium';
+                        font-size: 16px;
+                }
+                .tabla th{
+                        text-align: center;
+                        vertical-align: middle;
+                        border: 2px solid black;
+                        border-bottom: none;
+                        border-radius: 10px 10px 0px 0px;
+                        background: #f7f7f7;
+                }
+                .tabla tr{
+                        border: 2px solid black;
+                }
+                .tabla tr td{
+                        text-align: center;
+                        vertical-align: middle;
+                        border: 2px solid black;
+                        border-radius: 10px;
+                        font-family: 'gotham-rounded-medium';
+                        font-size: 14px;
+                }
+                .color{
+                        background: #f1f4f5;
+                }
+                .guardar{
+                        width: 30px;
+                }
+                .guardar:hover{
+                        width: 35px;
+                }
+                .guardar:active{
+                        width: 30px;
+                }
+        </style>
+        <center>
+        <FONT style="font-size: 35px; font-family: 'gotham-rounded-medium';">PANEL DE INVERSIONISTAS</FONT>
+        </center>
+        <br/>
+        <apex:variable value="{!0}" var="num"/>
+        
+        <apex:form id="tablaCompleta">
+        <h1 style="width: 16px;">Registros Restantes: {!totalInversionistas}</h1> <br/><br/>
+        <div>
+                <apex:repeat value="{!totalPaginas}" var="pag">
+                        <apex:actionStatus id="ProcesoEliminar">
+                <apex:facet name="stop">
+                    <apex:commandButton value="Pagina {!pag+1}" action="{!cambiarPagina}" reRender="tablaCompleta" status="ProcesoEliminar">
+                                                <apex:param name="Valor" value="{!pag}" assignTo="{!pagina}"/>
+                                        </apex:commandButton>
+                </apex:facet>
+                <apex:facet name="start">
+                    <apex:image url="http://orig06.deviantart.net/df77/f/2013/094/8/d/loading_logofinal_by_zegerdon-d60eb1v.gif" style="width: 30px;"/>
+                </apex:facet>
+            </apex:actionStatus>
+            &nbsp;&nbsp;
+                </apex:repeat>
+        </div>
+                <table class="tablaOperaciones" style="width: 100%; border: 1px solid black; border-radius: 10px;">
+                        <thead>
+                                <th style="font-size: 16px; font-weight: bold;"><center>FUSIONAR</center></th>
+                        </thead>
+                        <tbody>
+                                <apex:actionRegion >
+                                <tr>
+                                        <td style="width: 25%; vertical-align: middle; text-align: center;">
+                                                <div class="operaciones">
+                                                        ID Cuenta Maestra: <apex:inputText styleClass="input" value="{!idPrimeraCuenta}" /><br/>
+                                                        ID cuenta a fusionar: <apex:inputText styleClass="input" value="{!idSegundaCuenta}" />
+                                                        <br/>
+                                                        <apex:commandButton value="Fusionar" action="{!combinar}" />
+                                                </div>
+                                                <!-- <div class="operaciones" style="text-align: left;">
+                                                        <apex:image url="https://maxcdn.icons8.com/Share/icon/Editing//merge_files1600.png" alt="COMBINAR" styleClass="boton3">
+                                                                <apex:actionSupport event="onclick" action="{!combinar}" reRender="tablaCompleta">
+                                                                </apex:actionSupport>
+                                                        </apex:image>
+                                                </div> -->
+                                        </td>
+                                </tr>
+                                </apex:actionRegion>
+                        </tbody>
+                </table>
+                <table class="tabla" >
+                <thead>
+                        <th style="border: 0px solid black;">
+                                <table style="width: 100%;">
+                                        <thead><th style="width: 33%; background: #e5ebee;">Nombre</th><th style="width: 33%; background: #e5ebee;">Telefono</th><th style="width: 33%; background: #e5ebee;">Email</th></thead>
+                                </table>
+                        </th>
+                        <th style="border: 0px solid black;">
+                                <table style="width: 100%;">
+                                        <thead><th style="width: 50%; background: #e5ebee;">Oferta</th><th style="width: 50%; background: #e5ebee;">Estatus</th></thead>
+                                </table>
+                        </th>
+                        <th style="border: 0px solid black;">
+                                <table style="width: 100%;">
+                                        <thead><th style=" background: #e5ebee;">Paquetes</th></thead>
+                                </table>
+                        </th>
+                        <th style="background: #e5ebee;">
+                                
+                        </th>
+                </thead>
+                <tbody>
+                <apex:repeat value="{!listaWrapper}" var="row">
+                        <tr class="{!IF(num == 0,'color','falso')}">
+                                <td style="vertical-align: middle; width: 30%; border-right: none; border-radius: 10px 0px 0px 10px;">
+                                        <table class="tabla" style="position: relative; height: 100%;">
+                                                <tbody>
+                                                        <apex:repeat value="{!row.cuenta}" var="rowCuenta">
+                                                                <tr>
+                                                                        <td style="width: 33%; border: none;">
+                                                                                <apex:outputLink value="/{!rowCuenta.id}" target="_blank" >{!rowCuenta.name}</apex:outputLink>
+                                                                                <!-- <apex:outputField value="{!rowCuenta.name}" /> -->
+                                                                        </td>
+                                                                        <td style="width: 33%; border: none;">
+                                                                                <apex:outputField value="{!rowCuenta.phone}" />
+                                                                                <!-- <apex:commandButton value="Guardar" onclick="pasar('{!row.index}')" id="saveButton" /> -->
+                                                                                <apex:inlineEditSupport event="ondblClick" />
+                                                                        </td>
+                                                                        <td style="width: 33%; border: none;">
+                                                                                <apex:outputField value="{!rowCuenta.Email__c}" />
+                                                                        </td>
+                                                                </tr>
+                                                        </apex:repeat>
+                                                </tbody>
+                                        </table>
+                                </td>
+                                <td style="border-left: none; border-right: none; border-radius: 0px 0px 0px 0px;">
+                                        <table style="width: 100%"> 
+                                        <tbody>
+                                                <apex:repeat value="{!row.ofertas}" var="registro">
+                                                        <tr>
+                                                                <td style="width: 50%; border: 1px solid black; border-left: none; border-right: none;"><apex:outputLink value="/{!registro.Oferta__c}" target="_blank">{!registro.Oferta__r.name}</apex:outputLink><br/></td>
+                                                                <td style="width: 50%; border: 1px solid black; border-left: none; border-right: none;"><apex:outputText value="{!registro.Estatus2__c}" /></td>
+                                                        </tr>
+                                                </apex:repeat>
+                                        </tbody>
+                                        </table>
+                                </td>
+                                <td style="border-left: none; border-radius: 0px 10px 10px 0px;">
+                                        <apex:repeat value="{!row.paquete}" var="paq">
+                                                <apex:outputText value="{!paq}" />
+                                                <br/>
+                                        </apex:repeat>
+                                </td>
+                                <td>
+                                        <apex:image url="https://openclipart.org/image/2400px/svg_to_png/19804/andrea-S-checkmark-on-circle-2.png" alt="Revisado" id="saveButton" onclick="pasar('{!row.index}')" styleClass="guardar"/>
+                                        <br/>
+                                        REVISADO
+                                </td>
+                        </tr>
+                        <apex:variable value="{!IF(num == 0,num+1,num-1)}" var="num"/>
+                </apex:repeat>
+                </tbody>
+        </table>
+        <apex:actionFunction name="pasar" action="{!guardar}" reRender="tablaCompleta">
+                <apex:param name="ind" assignTo="{!ind}" value=""/>
+        </apex:actionFunction>
+        </apex:form>
+        
+</apex:page>

@@ -1,0 +1,560 @@
+<apex:page Controller="CockpitOfertasController" >
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <style type="text/css">
+    .actionCol {
+            width: 16px;
+    }
+    .deleteRow {
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAAOCAYAAAB6pd+uAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAACz1JREFUeNokyXk81HkDB/Dv65nXa/OUJGW0Q4dm2rTRpCWS1b1FbbWuhHEzfiJH0eV4ZFZWGEPkaNC4CkM5UpIGw2TkytjcEyM1rJltn2f/e3Y/zx/P+983US5/IFPqGVIpqyQ/N6Wwc9uz+MIegaJanq+uluerhT0CRW57Fv/nphR2laySTKlnyIflD2RJOUs+T06Q3lIheXojjt12h8eX3k1TvM3OUr/NzlJL76Yp2u7w+E9vxLF7S4Xk8+QkWZqdJW/G+kjnUDdJfpBMfJI82WF3g/gxeYGKW0Ku+paQq465F6gIuxvE5yR5spOLk0nncDeRjfURRW8vGZJISFH8LZLk6szO8OPwi3w5iopAf3VFoL+6wJejyPDj8BNdndlF8bfIUKeEjMl6CVnQfCQTn6ZpD7qKqZLeDG3PXDlG1FXo/1QM+adiDKurIP1QjpKeDK2wq5ia+DRN+6j5SFYWVGRxYpwmuSegZKnJWrWoFH9UifAfUQn+LSrBlyoRPotKIUtN1kruCajFiQnaysICGZwcIpLBbtr1e7FUhMBTm14fhuzmS7gj9kGq2Af8xkv4pTYM4QJP7bW8WEoy1E0bmBwmEwMDZFAioeVGRVJ5bi7aNooLaVgoerjBkHKDIQkLRSvFxT13F21uVCQ12CmhTQ4OENI/+5Y0jzRSxb0JeP0hGy9mUiFWJKBmOA01Q2moG03E8+lUdCizUShNQPPIU2pAOUhm++VkqK6Wkl2/CjU/HbPXoqG6EQt1SiI+pyRi7kYspq9F4xM/HbLrVzFUV0NN9b0h9Z1PSJ44lwrOOI3ECk9cL3NBdOFZJJQFIr40EFH3z+JaiQsSyj0RlHEaeQ25lLijnryqqSH1/CxK4PgDGi64ofz4EdSdOoEW53Nocj6Hx6dOoOz4EYg93MB3/AFifhbV/vgRIQ86hRYZ7dEa8a838OhdLMS/XkXRm2iMf5zE+MdJFMpiUDd2FdUjsagbu4G7L6M05b0VLOmDYlZ7WIhmJi4aY5dC8Db1NoZjIjAfHoK58BAMxUSgP/U23l0KwWRcNNrDQjQd+fdYV3OusDxv/6CJyHdEeJ4jLt8/ieAsR7xVDKBfMYDgTEdE5J/Epdz/v1fKKc3luxGsdIrL4h07rCk5eQwFRw+hlOJCePYMHh3+HtWHv0fx2TMoobjIP3oIRSeP4faxI5o7Af4WJKc9LZvfxUHJQAiEb/1RNsxBTrc/Vr5osPJFA0G3P0oHOXjQHwDh2xBkdnKQL+HzOn7m8Xo8nNHvdh6ypFvQajSY7+/DGy93vPF2x3x/H7QaDXqTbqHP7TykHq5ou53EixRQPPdkawRlHkZgpj0C+Tbg3HGA4v0YFO/HwLnjgIAsWwRk2CMo4zDckm1x6W4wL92Pw0v9bi/u7rNAnq83plQqdLU0g2+7H1m2+9HV0owplQq5vt5I22eBlO8skXrRI5vE1HiMZ3a64pdXrkht80BauztSWn2hWprH/NI8Ulp9ceelO1JfXETaK1ekd7oiuvKistLljLLnrCO6HY/hlYczlPI+/A1gprsLM9Iu/A1AKe9Du4cLJI7H0H3OEaLzTsrzVxyUF25/hwtJ1nBPPIAL/7KBe6IDOro60NHVAfeEQ3D/lw3cEw7ALckabklWOB1lr4y0tVLy9logZfdO8OwPoE1ci1n1EppEIjSJRJhVL6FNXIvb9geQvHsnki0tEGO9b5z4lNkv3XzmgNvPvDA8PYKPnxehXJyFVquFVquFcnEWHz8vYnh6BMktXoh75gCf3APIt7FA+yE7tNnvx4tvmWjYuwvjr17iTwB/Ahh/9RL1e3fhxbdMPLffj7bDB5FrZY5DfiycusaCR7wDquur0db+Es0vmtEt7Ua3tBvNL5rR1v4S1fXVcI93wMmrLNj5MuG33RjxZjsQv5OJm0YbcHULAzWFBRhUjGFQoUBtYQGubGHgmtEG3NrJxI1dOxC81XiJuBZZLgVWf4OYOicMTAxhflGF6fkpLP+2jOXfljE9P4W5RRUGJoYQVeMEn6qdcOezkWtuinozJuqYJhDT9fDYbDvG2p7jy1//xZe//sJY23M8NtuOOroeapkmqNvFhODbbbDjbIbdJTp+vGIFUY0ILa0tqG8So/3VS7S/eon6JjGaW1sgqhHhdIwVbCk6rD03w9dkI6IZdETRDRC1ZhUuM+ioyMmGVC6HVC5HRU42Ihh0XF6zCpF0A1xm0BGwaeMS8Sl1GL9YyoSPyAJBFbYIrtqHsKrjeD/7Hu+V7xFadRyBlfsQILKFd5kFXEtY8H9wRFl20FpZaWyIiq8N8Gi/JUZfd+APAO9an+Fd6zP8AWD0dQeq9++F6GsDlJvQIbSxVB4P36u0DjLEQa4JDoUxcejSNhyPMEdVbSWqaitxPNwcDmHb4BDKhF2ICawC6DgSaqGM2MVSUvq6CNVbjcssU5TmCCCR90GYmQ5hZjok8j6U5ggQzjJFiN5qhOjr4vIO03FypzU2+8f7DFwUmsNbtAPe5SbwE+3DxMwkJmYm4SfaB8+Hm+FZtgPuxeZwymcgsyOJJ4mN5T3U/yeK6OtQ6+kG1coKhtvb8NBsOx6abcdwextUKyuo8XRFAV0PZQar8SImkkdlBfB2e+vCNmgzbLl02HD1YR+6FeVVlaioroQ9dytsQvRhE0zH/gBj7PZai6A0L166mysvaNU/4Kerg6uHv4e4qQlFmRngMgzBZRiiKDMD9U1NuHL4e3B0dRC4iobUs2eySUl3oQWnzFJz7v42OBey4Sb8Bp4PbCAdlkI6LIXnAxu4Fn+Dn/LZOJO3Dd5llppKuYjVV1jIqtm1XVNK10OBKQOPPFxQZs3Gw036KNukjzJrNqo9XJBvykAJXQ+1u1marrwcVmzeFZZd6BYNm2MAK/8tsA40woEgFvgFfPDv82EbyIJVgBG+890Ccy8D2FFbNVFZ4awsbjDrCsNIE7jmK/gYrkeUw0GEMrcieK0OgtfqgMvciiiHg+AYrkfAmq8QY2ykSffzsSDDc+9Iw6CIcik2xtkCUzjlmONM7h74FJ2CT9EpnM7dA0eBOX7MM4VzsTHqh0TUO9UY+TAyTIaFRdRjQz2IjPQhMNRDHsMARUwTFDFNkMcwQLahHh4a6eOxoR5GhMWUcmiANEpbSHZtGsX2X4u9vhvA9jYB23szHILYcAhiY4/3ZuzxMgGbswFsv7UQ1P5CPe1qJJKGBtLwM4+KXP0VuLo68NDVgfe6NfA3XA9/w/XwWrcGHro64OrqIHL1V6hP5VGvxWJC1L+vkLnlRdr91+mUXwVb6166Gc6FLJzMMcXJHFP8VMCCe8lm+JWztfcl6dTc8iJN/ftvRLO8RD6rVLTOlGTqidl2bYOhHh5toUPENIaIaYxHW+hoMNTDE7Pt2s6UZEq9oKJplpbIyIyC9IzKaTGCMMqOYmitg9djn78RdnttwG6vDbD0N4JV0HrYUQxtjCCM6h2V095Nj5Gp0VEy8kZGyw0JpK4ZbdDGrdVBhIEeQg3XI9RwPSIM9BC3VgfXjDZoc0MCqZE3MtrU6CghqpVFMre8SCp6S0l8Qzg7sZHih1TZKjgiMzVHZKYOqbJVJD6l+PEN4ewKWSmZW14kCyuLZPnjAvmsUhFZQT5pDPJjPwvg8BstzRVPTL9WPzH9Wt1oaa54FsDhNwb5sWUF+US9oCLLCyrSPz5AekblJKkonrjedGJfSHDiH4lkKQ5Qm9QHqE3qI5EsxYUEJ77rTSd2UlE86R2Vk/73g+TX/n4yIpOR4utxJPHEUTbvxDF+wjYTxc2N69Q3N65TJ2wzUfBOHOMnnjjKLr4eR0ZkMvJrfz/53wDmshER4m3GjgAAAABJRU5ErkJggg==) no-repeat -14px 0%;
+        width: 14px;
+        height: 14px;
+        margin-left:-2px;
+        display: inline-block; 
+        }
+        
+    .deleteRow:hover {
+            background-position: -42px 0%;
+        }
+    .requeridoTest{
+        border-left: medium solid #ff0000;
+    }
+    body .bPageTitle{
+        padding: 4px 0 0;
+    }
+    .hide{
+        visibility:hidden;
+    }
+    </style>
+    <apex:outputPanel id="panelScript">
+    <script>
+       $(document).ready(function() {
+             $("#modalDetalleDoc").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargar();}
+                    });
+               
+           
+        });
+            
+        function openModalDetalleDoc(idDocumento, docsem){
+            var iframeDetalleDoc = $('<iframe />').attr('src', encodeURI('../apex/CockpitDetalleDoc?idoc='+ idDocumento + '&docsem=' + docsem));
+            iframeDetalleDoc.attr('width','800px');
+            iframeDetalleDoc.attr('height','500px');
+            iframeDetalleDoc.attr('scrolling','true');
+            iframeDetalleDoc.attr('frameborder' ,'0');
+            //document.getElementById('theIframe').src= encodeURI('../apex/CockpitDetalleDoc?idoc='+ idDocumento + '&docsem=' + docsem);  
+            $("#modalDetalleDoc").html(iframeDetalleDoc);
+            $("#modalDetalleDoc").dialog("open");
+        }
+        
+        
+        function colocaTransparencia(){
+            //alert('comienza');
+            $("body").css("cursor", "progress");
+        }
+        
+        function retiraTransparencia(){
+            //alert('termina');
+            $("body").css("cursor", "default");
+        }
+        
+        
+        
+                
+    </script>
+    </apex:outputPanel>
+    
+        <apex:form id="theForm">
+            <apex:actionStatus id="stCargando" onstart="colocaTransparencia();" onstop="retiraTransparencia();"></apex:actionStatus>
+            <apex:actionFunction action="{!Recarga}"  name="recargar" rerender="Etapa1, Etapa2, Etapa3, Etapa4, Etapa5, Etapa6, Etapa7, Etapa8, Etapa9, Etapa101, Etapa10, Etapa11, Etapa12, Etapa13" status="stCargando"></apex:actionFunction>
+            <apex:panelGrid columns="2">
+                <apex:outputLabel value="Ver en Status:"/>
+                <apex:selectList value="{!filterst}" size="1">
+                    <apex:actionSupport event="onchange" action="{!loadinfo}" rerender="Etapa1, Etapa2, Etapa3, Etapa4, Etapa5, Etapa6, Etapa7, Etapa8, Etapa9, Etapa101, Etapa10, Etapa11, Etapa12, Etapa13"/>
+                    <apex:selectOptions value="{!listviewoptions}"/>
+                </apex:selectList>
+                <apex:outputLabel value="Plaza:"/>
+                <apex:selectList value="{!filterzone}" size="1">
+                    <apex:actionSupport event="onchange" action="{!loadinfo}" rerender="Etapa1, Etapa2, Etapa3, Etapa4, Etapa5, Etapa6, Etapa7, Etapa8, Etapa9, Etapa101, Etapa10, Etapa11, Etapa12, Etapa13"/>
+                    <apex:selectOptions value="{!listzoneoptions}"/>
+                </apex:selectList>
+                <apex:outputLabel value="Gerente:"/>
+                <apex:selectList value="{!filtergte}" size="1">
+                    <apex:actionSupport event="onchange" action="{!loadinfo}" rerender="Etapa1, Etapa2, Etapa3, Etapa4, Etapa5, Etapa6, Etapa7, Etapa8, Etapa9, Etapa101, Etapa10, Etapa11, Etapa12, Etapa13"/>
+                    <apex:selectOptions value="{!listgteoptions}"/>
+                </apex:selectList>
+            </apex:panelGrid>
+            <apex:pageBlock >
+                <apex:pageBlockButtons >   
+                      <apex:commandButton value="Administrar Ofertas" action="{!adminOfertas}" />                   
+                      <apex:commandButton value="Cerrar" action="{!cerrar}" />
+                </apex:pageBlockButtons>
+                <apex:panelGrid >
+                     13. Cierre oferta
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa13" var="d13" value="{!ldoc13}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d13.nombre}" headerValue="Documento/Paso" rendered="{!d13.nombre != null}"/>                      
+                    <apex:column headervalue="Estatus" rendered="{!d13.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d13.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d13.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d13.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d13.nombre != null}">
+                         {!d13.irojos}
+                         <br/>
+                         
+                         {!d13.iamarillos}
+                         <br/>
+                         
+                         {!d13.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d13.nombre != null}" style="align:right">
+                         {!d13.pctjeRojos}
+                         <br/>
+                         
+                         {!d13.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d13.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     12. Expediente aprobado
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa12" var="d12" value="{!ldoc12}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d12.nombre}" headerValue="Documento/Paso" rendered="{!d12.nombre != null}"/>                      
+                    <apex:column headervalue="Estatus" rendered="{!d12.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d12.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d12.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d12.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d12.nombre != null}">
+                         {!d12.irojos}
+                         <br/>
+                         
+                         {!d12.iamarillos}
+                         <br/>
+                         
+                         {!d12.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d12.nombre != null}" style="align:right">
+                         {!d12.pctjeRojos}
+                         <br/>
+                         
+                         {!d12.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d12.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     11. Compilación expediente crediticio
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa11" var="d11" value="{!ldoc11}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d11.nombre}" headerValue="Documento/Paso" rendered="{!d11.nombre != null}"/>                      
+                    <apex:column headervalue="Estatus" rendered="{!d11.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d11.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d11.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d11.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d11.nombre != null}">
+                         {!d11.irojos}
+                         <br/>
+                         
+                         {!d11.iamarillos}
+                         <br/>
+                         
+                         {!d11.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d11.nombre != null}" style="align:right">
+                         {!d11.pctjeRojos}
+                         <br/>
+                         
+                         {!d11.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d11.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     10. Rehabilitación y Desalojo
+                            Desalojo
+                </apex:panelGrid>        
+                <apex:pageBlockTable id="Etapa101" var="d101" value="{!ldoc101}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d101.nombre}" headerValue="Documento/Paso" rendered="{!d101.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d101.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d101.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d101.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d101.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d101.nombre != null}">
+                         {!d101.irojos}
+                         <br/>
+                         
+                         {!d101.iamarillos}
+                         <br/>
+                         
+                         {!d101.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d101.nombre != null}">
+                         {!d101.pctjeRojos}
+                         <br/>
+                         
+                         {!d101.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d101.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                            Rehabilitación 
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa10" var="d10" value="{!ldoc10}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d10.nombre}" headerValue="Documento/Paso" rendered="{!d10.nombre != null}"/>                      
+                    <apex:column headervalue="Estatus" rendered="{!d10.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d10.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d10.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d10.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d10.nombre != null}">
+                         {!d10.irojos}
+                         <br/>
+                         
+                         {!d10.iamarillos}
+                         <br/>
+                         
+                         {!d10.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d10.nombre != null}">
+                         {!d10.pctjeRojos}
+                         <br/>
+                         
+                         {!d10.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d10.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     9. Compilación expediente cliente
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa9" var="d9" value="{!ldoc9}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d9.nombre}" headerValue="Documento/Paso" rendered="{!d9.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d9.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d9.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d9.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d9.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d9.nombre != null}">
+                         {!d9.irojos}
+                         <br/>
+                         
+                         {!d9.iamarillos}
+                         <br/>
+                         
+                         {!d9.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d9.nombre != null}">
+                         {!d9.pctjeRojos}
+                         <br/>
+                         
+                         {!d9.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d9.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     8. Escrituras proceso de registro
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa8" var="d8" value="{!ldoc8}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d8.nombre}" headerValue="Documento/Paso" rendered="{!d8.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d8.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d8.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d8.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d8.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No"  rendered="{!d8.nombre != null}">
+                         {!d8.irojos}
+                         <br/>
+                         
+                         {!d8.iamarillos}
+                         <br/>
+                         
+                         {!d8.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d8.nombre != null}">
+                         {!d8.pctjeRojos}
+                         <br/>
+                         
+                         {!d8.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d8.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     7. Compra final
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa7" var="d7" value="{!ldoc7}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d7.nombre}" headerValue="Documento/Paso" rendered="{!d7.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d7.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d7.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d7.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d7.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d7.nombre != null}">
+                         {!d7.irojos}
+                         <br/>
+                         
+                         {!d7.iamarillos}
+                         <br/>
+                         
+                         {!d7.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d7.nombre != null}">
+                         {!d7.pctjeRojos}
+                         <br/>
+                         
+                         {!d7.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d7.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     6. Compilación expediente compra
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa6" var="d6" value="{!ldoc6}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d6.nombre}" headerValue="Documento/Paso" rendered="{!d6.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d6.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d6.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d6.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d6.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d6.nombre != null}">
+                         {!d6.irojos}
+                         <br/>
+                         
+                         {!d6.iamarillos}
+                         <br/>
+                         
+                         {!d6.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d6.nombre != null}">
+                         {!d6.pctjeRojos}
+                         <br/>
+                         
+                         {!d6.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d6.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                
+                <apex:panelGrid >
+                     5. Aprobada internamente
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa5" var="d5" value="{!ldoc5}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d5.nombre}" headerValue="Documento/Paso" rendered="{!d5.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d5.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d5.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d5.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d5.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d5.nombre != null}">
+                         {!d5.irojos}
+                         <br/>
+                         
+                         {!d5.iamarillos}
+                         <br/>
+                         
+                         {!d5.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d5.nombre != null}">
+                         {!d5.pctjeRojos}
+                         <br/>
+                         
+                         {!d5.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d5.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     4. Antecedentes
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa4" var="d4" value="{!ldoc4}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d4.nombre}" headerValue="Documento/Paso" rendered="{!d4.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d4.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d4.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d4.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d4.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d4.nombre != null}">
+                         {!d4.irojos}
+                         <br/>
+                         
+                         {!d4.iamarillos}
+                         <br/>
+                         
+                         {!d4.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d4.nombre != null}">
+                         {!d4.pctjeRojos}
+                         <br/>
+                         
+                         {!d4.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d4.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     3. Oferta aprobada
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa3" var="d3" value="{!ldoc3}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d3.nombre}" headerValue="Documento/Paso" rendered="{!d3.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d3.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d3.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d3.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d3.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d3.nombre != null}">
+                         {!d3.irojos}
+                         <br/>
+                         
+                         {!d3.iamarillos}
+                         <br/>
+                         
+                         {!d3.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d3.nombre != null}">
+                         {!d3.pctjeRojos}
+                         <br/>
+                         
+                         {!d3.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d3.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     2. Oferta en Proceso
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa2" var="d2" value="{!ldoc2}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d2.nombre}" headerValue="Documento/Paso" rendered="{!d2.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d2.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d2.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d2.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d2.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d2.nombre != null}">
+                         {!d2.irojos}
+                         <br/>
+                         
+                         {!d2.iamarillos}
+                         <br/>
+                         
+                         {!d2.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d2.nombre != null}">
+                         {!d2.pctjeRojos}
+                         <br/>
+                         
+                         {!d2.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d2.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:panelGrid >
+                     1. Oferta
+                </apex:panelGrid>     
+                <apex:pageBlockTable id="Etapa1" var="d1" value="{!ldoc1}" columnsWidth="40%,30%,15%,15%"> 
+                    <apex:column value="{!d1.nombre}" headerValue="Documento/Paso" rendered="{!d1.nombre != null}"/>                        
+                    <apex:column headervalue="Estatus" rendered="{!d1.nombre != null}">
+                         <apex:image id="bRoja" onclick="openModalDetalleDoc('{!d1.docid}', 'Rojo');" value="{!$Resource.BarraRoja}" height="10"/>
+                         <br/>
+                         <apex:image id="bAmarilla" onclick="openModalDetalleDoc('{!d1.docid}', 'Amarillo');" value="{!$Resource.BarraAmarilla}" height="10"/>
+                         <br/>
+                         <apex:image id="bVerde" onclick="openModalDetalleDoc('{!d1.docid}', 'Verde');" value="{!$Resource.BarraVerde}" height="10"/>
+                    </apex:column>
+                    <apex:column headervalue="No" rendered="{!d1.nombre != null}">
+                         {!d1.irojos}
+                         <br/>
+                         
+                         {!d1.iamarillos}
+                         <br/>
+                         
+                         {!d1.iverdes}
+                    </apex:column>
+                    <apex:column headervalue="%" rendered="{!d1.nombre != null}">
+                         {!d1.pctjeRojos}
+                         <br/>
+                         
+                         {!d1.pctjeAmarillos}
+                         <br/>
+                         
+                         {!d1.pctjeVerdes}
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+         
+            <apex:outputPanel id="seccionDet">
+                <div id="modalDetalleDoc" title="Detalle Documentos">
+                     <!--<iframe src="#"  scrolling="true" id="iFrameDetalleDoc" frameborder="0" width="800px" height="500px"/>-->
+                </div>
+            </apex:outputPanel>
+            
+        </apex:form>
+    
+</apex:page>

@@ -1,0 +1,114 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" >
+   <html>
+        <head>
+            <style>
+              .outBorder {
+                 background-color: #EEEEEE;
+                 border:1px outset black;
+                
+             }
+               .inBorder{
+                font-family:Verdana, Geneva, sans-serif;
+                font-size:8px;
+                text-align: center;
+                background-color: #fff;
+                border-top: 1px outset black;
+                border-left:1px outset black;
+                border-bottom:1px outset black;
+                border-right:1px outset black;
+             }
+             
+             h2 {
+                  color:#fb7f05;
+                  text-align: center;
+                }
+            p {
+                  color:#fb7f05;
+                  text-align: center;
+            } 
+             
+            </style>
+            
+            <script>
+            
+                objetivo = 40;
+                real= 6;
+                
+                
+                function cambia() {
+                
+                if (real>=11 && real<=15){
+
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                }
+                else if (real>=6 && real<=10){
+
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                }
+                else if (real<=5){
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                }
+                } 
+            
+              function inicio() {
+                setInterval(cambia, 1000);
+                }
+                window.onload=inicio;
+            </script>
+            </head>
+ 
+         <body>
+            <center>
+                <table cellPadding="3" border="1" styleClass="outBorder">
+
+                                            <tr>
+                          <td>
+                               <p>Objetivo</p>
+                          </td>
+                          <td>
+                           <p>Alcance Real</p>
+                         </td>
+                         <td>
+                           <p>semaforo</p>
+                         </td>
+                      </tr>
+                      
+                      <tr>
+                      
+                       <td>
+                       <center>
+                           <script type="text/javascript">   
+                             document.write(objetivo);
+                             </script> 
+                             </center>
+                       </td>
+                          
+                          <td>
+                          <center>
+                             <script type="text/javascript">   
+                             document.write(real);
+                             </script> 
+                             </center>
+                         </td>
+                         
+                         <td>
+                          <img id="fotocambia" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="100%" height="80%"/>
+                         </td>
+                      </tr>
+              </table>
+         </center>
+         
+       <!-- <DIV>    
+                <img src="{!URLFOR($Resource.semaforo,'rojo.png')}"/>
+              </div>
+            <DIV>    
+                <img src="{!URLFOR($Resource.semaforo,'amar.png')}"/>
+              </div>
+             <DIV>    
+                <img src="{!URLFOR($Resource.semaforo,'verde.png')}"/>
+              </div>
+              -->
+            
+</body>
+</html>
+</apex:page>

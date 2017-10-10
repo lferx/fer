@@ -1,0 +1,1972 @@
+<apex:page controller="ConsolaComercialController" action="{!llenadoPaginas}" sidebar="false" standardStylesheets="false" showChat="false">
+<!--
+color azul fuerte: #0C326B
+COLOR AZUL CLARO: #4DB1E0
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+color gris:  #cfcfcf
+mnmorado claro: A37DB3;
+morado fuerta: 672183;
+COLOR AZUL CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(77,177,244,1),rgba(77,177,224,0));
+COLOR VERDE CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0));
+COLOR NARANJA DEGRADADO: background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+
+-->
+<head>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> 
+        <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+ -->
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+    @font-face {
+    font-family: 'Bebas-Neue';
+    src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+    }
+    @font-face {
+    font-family: 'gotham-rounded-book';
+    src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+    }
+    @font-face {
+    font-family: 'gotham-rounded-medium';
+    src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+    }
+    body{
+    width:99%;
+    background-color: #fff;
+    height: 100vh;
+    }
+    a{
+        color: #fff;
+    }
+    h1{
+        font-family: 'Bebas-Neue';
+        font-size: 24px;
+        text-transform:uppercase;
+    }
+    h2{
+        font-family: 'gotham-rounded-medium';
+        font-weight: bold;
+        font-size: 13px !important;
+        text-transform:uppercase;
+        color: white !important;
+    }
+    h3, h4 , h5{
+        font-family: 'gotham-rounded-book';
+        /*     text-transform:uppercase;*/
+    }
+    h3{
+        font-weight: bold;
+        font-size: 13px;
+        color: #0C326B;
+        text-align:right;
+    }
+    h4{
+        font-size: 13px;
+        color: #000;
+    }
+    h5{
+        font-size: 11px;
+        color: #fff !important;
+    }
+
+    th {
+        text-align: center !important;
+    }
+
+    .botones,.botonesfijar{
+        font-family: 'gotham-rounded-medium' !important;
+        font-size: 10px !important;
+        text-transform:uppercase !important;
+        display:block !important;
+        width:170px !important;
+        border-radius: 10px !important;
+        cursor: pointer !important;
+        padding: 3px 0px 3px 0px !important;
+        margin: 20px !important;
+    }
+    .botones {
+        background: #D1DA28 !important;
+        background-color: #D1DA28 !important;
+        color: #0C326B !important;
+    }
+    .botonesfijar{
+        background: #A37DB3 !important;
+        background-color: #A37DB3 !important;
+        color: #fff !important;
+    }
+    .botones:hover{
+        background: #A6AE1A !important;
+    }
+    .botones:active{
+        background: #C95A50 !important;
+    }
+    .botonesfijar:hover{
+        background:#672183 !important;
+    }
+    .botonesfijar:active{
+        background: #C95A50 !important;
+    }
+
+   .divfiltrolabel{
+        cursor:pointer;
+        background: url('{!URLFOR($Resource.consolas, 'recursos/icons/flecha-boton.png')}') top right no-repeat;
+        background-size: 10% 100%;
+        background-color:#cfcfcf;
+        color:#0C326B;
+        position: reltive;
+        width:200px;
+        height:18px;
+        z-index:1000;
+
+        overflow-wrap: break-word;
+        overflow: auto;
+        border-radius: 40px;
+        font-family: 'gotham-rounded-book';
+        font-size: 12px;
+    }
+    .divfiltrolista{
+        display:none;
+        background-color:red;
+        width:auto;
+        min-width:200px;
+        height:auto;
+        position: absolute;
+        z-index:1000;
+        border:1px solid #000;
+        overflow-wrap: break-word;
+        overflow: auto;
+        border-radius: 7px;
+        max-height:500px;
+    }
+    .labelcontador{
+        font-family: "gotham-rounded-book" !important;
+        font-size: 15px  !important;
+        background: #0C326B;
+        border-radius: 60px;
+        padding: 5px 5px 5px 5px;
+        font-size: 16px;
+        color: white;
+
+    }
+
+    .pagination {
+        display: inline-block;
+        background-color: #fff;
+    }
+
+    .pagination a {
+        font-family: "gotham-rounded-book" !important;
+        font-size: 14px  !important;
+        color: black;
+        float: left;
+        padding: 5px 10px;
+        text-decoration: none;
+        transition: background-color .3s;
+    }
+
+    .pagination a.active {
+        background-color: #5A2A7E;
+        color: white;
+    }
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+    .tdtrue{
+        background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+    }
+    .tdfalse{
+        background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;
+    }
+    .imagestyle{
+        width:30px;
+        filter: grayscale(30%);
+    }
+    .styledetalles{
+        display: none;
+        font-size:12px;
+        font-weight: normal;
+        max-width: 600px;
+
+    }
+    .imgth{
+        width: 30px;
+        height: 30px;
+    }
+    .sectioncabecera{
+        border-radius: 15px 15px 0px 0px;
+        background-color: #C95A50;
+        height: 40px;
+        padding: 7px 2px 0px 2px;
+        width: auto;
+
+    }
+    .section{
+        position: relative;
+        border: 1px solid #fff;
+        border-spacing: 2px;
+        padding-top: 90px;
+        background: #fff;
+        border-radius:10px;
+        width:100%;
+        height:100%;
+
+    }
+    .containercentro {
+        margin-right: none !important;
+        margin-left: none !important;
+        padding-left: none !important;
+        padding-right: none !important;
+
+        position: relative;
+        display:block;
+        min-height: 150px;
+        max-height: calc(100vh - 520px);
+        /*height: 100%;*/
+        overflow-y: auto;
+        width:auto;
+        left: 50px;
+    }
+    
+    .recientes td{
+        background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+    }
+    .imagensistemas{
+        width: 30px;
+        height: 30px;
+        border-radius:50%;
+        transition: 1s;
+        float: centre;
+        position: relative;
+        left: 5px;
+        bottom: -12px;
+    }
+    .imagensistemas:hover{
+        width: 90px;
+        height: 90px;
+        transition-timing-function: ease;
+        border-radius:0%;
+    }
+    .dialog{
+        background-color: white;
+        position:relative;
+        padding:2px;
+        border: 1.5px solid #CED0D1;
+        height:21px;
+        width:20px;
+        border-radius:5px;
+        transition:0.2s;
+        box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+        filter: brightness(96.5%);
+
+    }
+    .comentariosbotoneditar:hover {
+        background-color: #DBF4FC;
+        color: white;
+        transition-timing-function:ease;
+        height:25px;
+        width:25px;
+    }
+    .comentarioscontainer{
+        background-image: url("{!$Resource.ventana_comentario}");
+        border-radius:20px;
+        position:absolute;
+        z-index:1000;
+        height:200px;
+        width:300px;
+        border: .5px solid #000;
+        top: calc(30% - 100px);
+        left: calc(75% - 150px);
+        filter: opacity(95%);
+    }
+    .comentarioslabel{
+        position:relative;
+        left: 88px;
+        top: 45px;
+    }
+    .comentariostexto{
+        position:relative;
+        align:center;
+        left: 50px;
+        top: 45px;
+        width:200px;
+        height:70px;
+    }
+    .comentariosbotonguardar{
+        position:relative;
+        background-size:cover;
+        width:85px;
+        top: 50px;
+        float: left;
+        margin: 0px 25px 0px 25px;
+    }
+    .filtrocaja1{
+        position: reltive;
+        width:auto;
+        height:18px;
+        float:left;
+    }
+    .filtrocaja2{
+        position: reltive;
+        width:auto;
+        height:18px;
+        z-index:1000;
+        background-color:#fff;
+        border:1px solid #000;
+        overflow-wrap: break-word;
+        overflow: auto;
+        border-radius: 7px;
+    }
+    .filtrocaja2:hover{
+        height:auto;
+        max-height:500px;
+        overflow: auto;
+        display: inline-block;
+        position: relative;
+    }
+    .filtrolabel{
+        float:left;
+    }
+    .listadeseleccion{
+        cursor:pointer;
+        width:200px;
+    }
+
+    .iframe-infonavit{
+        position: relative;
+        top: -150px;
+    }
+
+    .infona{
+        background: #3498db;
+        background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+        background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+        background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+        background-image: -o-linear-gradient(top, #3498db, #2980b9);
+        background-image: linear-gradient(to bottom, #3498db, #2980b9);
+        -webkit-border-radius: 14;
+        -moz-border-radius: 14;
+        border-radius: 14px;
+        font-family: Arial;
+        color: #ffffff;
+        font-size: 20px;
+        padding: 10px 20px 10px 20px;
+        text-decoration: none;
+
+    }
+            /* estilo para el boton del carrito*/
+    .botonCarro{
+        position: relative;
+
+
+
+    }
+    .botonCarro{
+        font-family: 'gotham-rounded-book' !important;
+        font-size: 11px  !important;
+        text-transform:uppercase !important;
+        color: #fff !important;
+        display:block !important;
+        width:180px !important;
+        background: #4DB1E0 !important;
+        border-radius: 10px !important;
+        cursor: pointer !important;
+        /*padding: 5px !important;
+        margin: 20px !important;*/
+    }
+    .botonCarro:hover{
+        background: #2A85AF !important;
+    }
+    .botonCarro:active{
+        background-color:#D1DA28 !important;
+    }
+
+
+    .listadeseleccion{
+        cursor:pointer;
+        width:200px;
+    }
+    .ajustarIzquierda{
+        display:inline;
+        width:auto;
+        margin: 50px auto;
+        padding: 50px;
+        text-align:left;
+    }
+    .ajustarDerecha{
+        display:inline;
+        width:auto;
+        margin: 50px auto;
+        padding: 50px;
+        text-align:right;
+    }
+
+    .menuRapido{
+        height: 500px;
+        width:300px;
+        padding:1px 50px;
+        display:inline;
+    }
+
+
+    .botonPreca {
+        background-color:#44c767;
+        -moz-border-radius:28px;
+        -webkit-border-radius:28px;
+        border-radius:28px;
+        border:1px solid #18ab29;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:15px;
+        padding:10px 20px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #2f6627;
+    }
+    .botonPreca:hover {
+        background-color:#5cbf2a;
+    }
+    .botonPreca:active {
+        position:relative;
+        top:1px;
+    }
+    .botonNSS {
+        background-color:#f24537;
+        -moz-border-radius:28px;
+        -webkit-border-radius:28px;
+        border-radius:28px;
+        border:1px solid #d02718;
+        display:inline-block;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:15px;
+        padding:10px 20px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #810e05;
+    }
+    .botonNSS:hover {
+        background-color:#c62d1f;
+    }
+    .botonNSS:active {
+        position:relative;
+        top:1px;
+    }
+
+    .cajafolio{
+        width: 150px;
+    }
+    .cajas{
+        width: 55px;
+
+    }
+    .tablastyle{
+        width:30%;
+    }
+    .carrin tr th{
+        min-width:20px;
+        background-color:#C7E4E1;
+        color: #070010;
+        text-align:center;
+        border-radius: 5px;
+        letter-spacing: 3px;
+        padding: 0 22px;
+        border: 2px solid #001210;
+
+    }
+    .carrin tr th#c01{
+        min-width:15px;
+        width:auto;
+        background-color:#efefef;
+        text-align:center;
+        border-radius: 5px;
+    }
+    .carrin tr td{
+        background-color: #FFEAC1;
+        text-align:center;
+        width:80px;
+    }
+    .botonEliminar{
+        width: 15px;
+    }
+    .botonEliminar:hover{
+        width: 18px;
+    }
+    .botonEliminar:active{
+        width: 15px;
+    }
+    .divtam{
+        width: 2px;
+    }
+
+    /*cancelar*/
+    .botonRetroceder1{
+        left: 48%;
+        bottom:25px;
+        position: absolute;
+    }
+    /*precalificacion*/
+    .botonAvanzar2{
+        left: 20%;
+        bottom:25px;
+        position: absolute;
+    }
+/*  envio ficha*/
+    .botonAvanzar1{
+        right: 20%;
+        bottom:25px;
+        position: absolute;
+    }
+    /*estilo para la tabla de propiedades */
+    .tablabusca{
+            position: relative;
+
+    }
+    .tablabusca thead{
+
+    }
+    .tablabusca tr th{
+
+        background-color: #4DB1E0;
+        border-radius: 16px 16px 0px 0px;
+        -moz-border-radius: 16px 16px 0px 0px;
+        -webkit-border-radius: 16px 16px 0px 0px;
+        border: 1px solid white;
+        height: 35px;
+        width: 40px;
+
+
+    }
+    .tablabusca tr td{
+        background-color: #0C326B;
+        border-width: 1px;
+        border: 2px solid white;
+
+
+    }
+
+    .vercarroimagen{
+        width: 30px;
+        height: 30px;
+
+    }
+    .vercarroimagen:hover{
+        width: 35px;
+        height: 35px;
+
+    }
+
+    .vercarroimagen:active{
+        width: 30px;
+        height: 30px;
+
+    }
+    .agregacarroimagen{
+        width: 30px;
+        height: 30px;
+
+
+    }
+    .agregacarroimagen:hover{
+        width: 35px;
+        height: 35px;
+
+    }
+
+    .agregacarroimagen:active{
+        width: 30px;
+        height: 30px;
+
+    }
+    .opaca  {
+        filter:alpha(opacity=50);
+        -moz-opacity: 0.5;
+        opacity: 0.5;}
+
+    .opaca:hover{
+        filter:alpha(opacity=100)3000;
+        -moz-opacity: 0.5;
+        opacity: 0.5;
+    }
+    #carri thead {
+        display:block;
+    }
+    #carri tbody {
+        display:block;
+        height:10em; /* 5 times the equivalent of a text "size". */
+        overflow-y:scroll;
+    }
+
+    #carri thead tr th:nth-child(1) { /* column 1 ! */
+        width:20em;
+    }
+    #carri thead tr th:nth-child(2) { /* column 2 */
+        width:20em;
+    }
+    #carri tbody tr:first-child td:nth-child(1) { /* column 1 ! */
+        width:20em;
+    }
+    #carri tbody tr:first-child td:nth-child(2) { /* column 2 */
+        width:20em;
+    }
+
+    #tdBoton{
+        background-color:white ;
+    }
+
+
+    .botonesEnvioFicha{
+        font-family: 'gotham-rounded-book';
+        font-size: 11px ;
+        text-transform: uppercase;
+        color: #fff ;
+        display: block ;
+        width: 109px;
+        background: #C95A50;
+        border-radius: 10px;
+        cursor: pointer;
+        padding: 5px;
+        outline: none;
+    }
+    .botonesEnvioFicha:hover, .searchh:hover{
+        transform: translate(7%,8%)scale(1.2);
+        background-size: 180%;
+        background-position: 60% 0%;
+        transition: all .15s ease-out; /*color al pasar el mouse*/
+    }
+    .botonesEnvioFicha:active{
+        background-color:#C95A50; /*color al dar click*/
+    }
+    .colorRecomendado td{
+        background-color: #C95A50;
+    }
+/*  .inpx{
+        font-size: 16px;
+        padding: 15px 0px 0px 5px;
+        display: inline-block;
+        width: 60%;
+        border: none;
+        border-bottom: 2px solid #79c4de;
+        outline: none;
+    }*/
+
+/*
+    .args
+    {
+        font-size: 13px;
+        text-align: left;
+        padding-top: 21%;
+        margin-left: 20%;
+        margin-bottom: -20%;
+    }
+    .argsc
+    {
+        font-size: 15px;
+        margin-top: 32%;
+        text-align: left;
+        margin-left: 13%;
+    }
+    .argsr
+    {
+      font-size: 16px;margin-top: 40%; text-align: left; margin-left: 2%;     margin-top: -40%;
+    }
+    .argsc2
+    {
+      font-size: 14px;margin-top: 45%; text-align: left; margin-left: 2%;
+    } */
+    .feroferta
+    {
+        transition: all .3s ease-in-out;
+        color: #000;
+        text-align: center;
+        background: #f1f1f1;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        border-radius: 15px;
+        border: solid 1.5px #f0f0f3;
+        margin-left: 2%;
+    }
+    .feroferta:focus, .ferofertax:focus,.feroferta:hover, .ferofertax:hover, .ferofertax:active{
+        border-color: #79c4de;
+        outline: none;
+        background: white;
+    }
+
+    thead{
+        background-color: #EEEEEE;
+        position:static;
+        top:0;
+        /*width:100%;*/
+        z-index:100;
+    }
+
+    th{
+        border: 1px solid black;
+        text-align: center;
+        font-style: italic;
+    }
+
+    .stockTable{
+        /*margin-left: 200px !important;*/
+        background-color: gray;
+        font-size: 12px;
+    }
+
+    .smallColumn {
+       /* width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;*/
+        text-align: center;
+        
+    }
+    /*width:{widthSmall}px;*/
+    .mediumColumn {
+        /*width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;*/
+        text-align: center;
+        /*width:{widthMedium}px;*/
+    }
+
+    .largeColumn {
+        /*width: 150px !important;
+        min-width: 150px !important;
+        max-width: 150px !important;
+        word-wrap:*/
+        text-align: center;
+        /*width:{widthLarge}px;*/
+    }
+
+    tbody{
+        /*overflow-y: scroll;*/
+    }
+
+    td{
+        word-wrap: break-word;
+    }
+    .noSidebarCell, .sidebarCell .fixed{
+        padding: 0px;
+    }
+
+    .detailsTable{
+        display: none;
+        position: absolute;
+        z-index: 80;
+        border-radius: 15px 0px 15px 15px;
+        background-color: #fff;
+        padding: 12px;
+        box-shadow: 0 0px 15px 0px black;
+    }
+
+    .detailField{
+        display: block;
+    }
+
+    .detailFieldName{
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    .filtroHidden{
+        display: none;
+        position: absolute;
+        border-radius: 0px 15px 15px 15px;
+        background-color: #D5D5D5;
+        padding: 6px;
+        box-shadow: 0 0px 15px 0px black;
+    }
+    select{
+        width: auto;
+        cursor:pointer;
+    }
+    .glyphicon {
+        font-size: 15px;
+        padding-left: 2px;
+    }
+
+    .glyphicon, .glyphicon-download{
+        display: initial !important;
+    }
+
+    .mostrarFiltro img{
+        display: block;
+        margin: auto;
+    }
+
+    .tableBod tr:nth-child(even) {
+        background: rgb(251, 251, 251);
+    }
+
+    .tableBod tr:nth-child(odd) {
+        background:rgb(235, 235, 235);
+    }
+
+    .carrito:hover{
+        width: 30px;
+        height: 30px;
+        transition: 1s;
+    }
+
+    .centrado{
+        text-align: center;
+    }
+
+
+    .argumentos{
+        width: 15% !important;
+    }
+
+    .nave
+    {
+        /*width: 15%!important;*/
+    }
+    .contenedorfiltros{
+        position: absolute;
+        margin-left: 10%;
+        margin-top: 150px;
+        width: 300px;
+        z-index:1000; 
+    }
+    .buscador{
+        margin-left: 65%;
+        margin-top: -9%;
+    }
+
+
+    .correos{
+        padding-left: 30%;
+        margin-left: 50px;
+    }
+    .botonesCorreos{
+        border-radius: 4px !important;
+        background: #C95A50 !important;
+        box-shadow: none !important;
+        color: #fff !important;
+        outline: none!important;
+            border: none!important;
+    }
+
+    .botonesCorreos:hover{
+        transform: translate(7%,8%)scale(1.1) !important;
+        background-size: 180% !important;
+        background-position: 60% 0% !important;
+        transition: all .15s ease-out !important; /*color al pasar el mouse*/
+    }
+    .preca{
+        margin-left: 0px !important;
+        margin-right: 0px !important; 
+    }
+
+    a{
+        color: #0f2dff;
+    }
+    .container-argumentos{
+        float: right;
+        position: absolute;
+    }
+
+    .stockTable th{
+        padding-right: 1.2% !important;
+        padding-left: 1.2% !important;
+    }
+
+</style>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"/>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+<apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jQuery UI Tooltip - Default functionality</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<link rel="stylesheet" href="/resources/demos/style.css"/>
+ -->
+
+
+
+<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" /-->
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/> -->
+
+    <script>
+        function ftrue(z){
+            document.getElementById(z).style.display = 'block';
+        }
+        function ffalse(y){
+            document.getElementById(y).style.display = 'none';
+        }
+        function deslizar(varid){
+          var objeto = document.getElementById(varid);
+
+          objeto.style.display = 'block';
+        }
+
+        
+
+
+        // $('#myButton').on('click', function () {
+        //             var $btn = $(this).button('dissabled')
+
+        //             $btn.button('reset');
+        // });
+
+    </script>
+    <script>
+
+        var waitForFinalEvent = (function () {
+            var timers = {};
+            return function (callback, ms, uniqueId) {
+                if (!uniqueId) {
+                    uniqueId = "Don't call this twice without a uniqueId";
+                }
+                if (timers[uniqueId]) {
+                    clearTimeout(timers[uniqueId]);
+                }
+                timers[uniqueId] = setTimeout(callback, ms);
+            };
+        })();
+
+        $( function() {
+            $( "#dialog" ).dialog({
+                autoOpen: false,
+                title: 'Comentarios',
+                resizable: false, 
+                width: 720, 
+                height: 600, 
+                autoResize: true, 
+                modal: true, 
+                draggable: true,
+                show: {
+                    effect: "fade",
+                    duration: 500
+                },
+                hide: {
+                    effect:"explode", duration: 600
+                }
+    
+            });
+
+            $( ".dialog" ).on( "click", function() {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+
+        function setTableColSize(){
+
+            waitForFinalEvent(function () {
+                var containerWidth = $('.contenedor').width();
+                //$('.smallColumn').css({'width':containerWidth*.05, 'max-width':containerWidth*.05});
+                //$('.mediumColumn').css({'width':containerWidth*.08, 'max-width':containerWidth*.08});
+                //$('.largeColumn').css({'width':containerWidth*.1, 'max-width':containerWidth*.1});
+
+                //$('th .smallColumn').width((containerWidth*.05)-2);
+                //$('th .mediumColumn').width((containerWidth*.08)-2);
+                //$('th .largeColumn').width((containerWidth*.1)-2);
+
+                //$('td .smallColumn').width((containerWidth*.05)+2);
+                //$('td .mediumColumn').width((containerWidth*.08)+2);
+                //$('td .largeColumn').width((containerWidth*.1)+2);
+
+                enviaancho2(containerWidth);
+
+            }, 200, "functioncols");
+        }
+
+        function setTablePos(){
+
+             waitForFinalEvent(function () {
+                var heeadhigh = window.getComputedStyle($('#tableHeader')[0]).height;
+                var $el = $('#tableHeader');
+                var isPositionFixed = ($el.css('position') == 'fixed');
+
+                if ($(this).scrollTop() > 380 && !isPositionFixed){
+                    $('#tableHeader').css({'position': 'fixed', 'top': '0px'});
+                    $('#tableHeader').css({'box-shadow': '0px 23px 27px -20px #373737'});
+                    $('.stockTable').css({'margin-top':heeadhigh});
+                    $('#tableHeader').css({'transform': 'scale(.975)'});
+                }
+                if ($(this).scrollTop() < 380 && isPositionFixed){
+                    $('#tableHeader').css({'position': 'static', 'top': '116px'});
+                    $('.stockTable').css({'margin-top':'0px'});
+                    $('#tableHeader').css({'box-shadow': 'none'});
+                    $('#tableHeader').css({'transform': 'scale(1)'});
+                }
+
+                var scroll = $(this).scrollLeft() - ($('div.nave').width()-3);
+                var separacion = window.getComputedStyle($('.stockTable')[0]).marginLeft;
+                separacion = separacion.substring(0, separacion.length - 2);
+                separacion = parseInt(separacion);
+
+                if(scroll <= 10){
+                    separacion += 10;
+                    scroll = separacion - scroll;
+                } else {
+                    scroll = '-'+(scroll);
+                }
+
+                var pixleft = scroll +'px';
+                $('#tableHeader').css({'left': pixleft});
+            }, 50, "functionpos");
+        }
+    </script>
+
+</head>
+<body>
+
+    <apex:form >
+        <div class="TaskSearch"><c:TaskSearch /> </div>
+        <center>
+            <img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="revimex" />
+            <div class="chip2 cabecera">
+                <img class="fotito" src="{!Photolink}" />Bienvenido {!$User.FirstName}
+                <p class="nombrelead">Nombre Lead: {!nombre} </p>
+            </div>
+        </center>
+
+            <div class="nave">
+            <apex:variable value="ConsolaComercial" var="pagina"/>
+            <c:Menu_rapidolead account="{!idReferencia}" visual="{!pagina}" />
+        </div>
+                    <div class="argumentos"><c:Stock /></div>
+        <script>
+            $('.nave').css({'width':'12%'});    
+        </script>
+    </apex:form>
+<!-- //////////////////////////////////// FORM DE LA TABLA  //////////////////////////////////////-->
+<apex:form >
+            <!-- //////////////////    COMIENZA DIV HERDAR   ////////////////////////// -->
+
+
+
+    <apex:actionFunction immediate="true" action="{!cancelarlead}" name="cancelarlead"/>
+
+</apex:form>
+<!-- //////////////////////////////// FORM QUE RENDEREA LA TABLA ///////////////////////-->
+<div class="contenedor">
+
+    <apex:form id="formid">
+
+
+<div class="arriba">
+<center>
+<div class="alineame" >
+        <apex:outputText value="Buscar ID: "/>
+        <apex:inputText value="{!folioOferta}" styleClass="feroferta" id="yobusco" />
+        <apex:image id="imagencilla" value="{!URLFOR($Resource.icof, '/search.png')}" width="18" height="18" title="Buscar" styleClass="searchh">
+        <apex:actionSupport action="{!buscar}" event="onclick" />
+        </apex:image>
+        <br/>
+    </div>
+<div class="alineame">
+<apex:commandButton action="{!exportar}" value="Exportar" styleClass="botonesCorreos" style="margin-right: 10px;" reRender="/"/>
+<apex:commandButton action="{!enviarexcel}" value="Enviar Excel" status="sendEmailEdgar" reRender="MisMensajes,areaDeMensajes" styleClass="botonesCorreos" />
+<apex:actionStatus id="sendEmailEdgar">
+    <apex:facet name="start">
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+            &nbsp;
+        </div>
+        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 20% 42%">
+            <img src="{!URLFOR($Resource.consolas, 'recursos/animaciones/email_animacion.gif')}" style="max-width: 200px;max-height: 200px; width: 100%;height:auto;"  />
+        </div>
+    </apex:facet>
+</apex:actionStatus>
+<apex:outputPanel id="camposEmail">
+    <div style="display: inline-table;">
+        <apex:inputText value="{!email01}" label="Correo 1" id="correo1" styleClass="etiketacorreo feroferta"/>
+        <apex:outputPanel rendered="{!aumentarCampo > 1}">
+            <br/>
+            <apex:inputText value="{!email02}" label="Correo 2" id="correo2" styleClass="etiketacorreo feroferta"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!aumentarCampo > 2}">
+            <br/>
+            <apex:inputText value="{!email03}" label="Correo 3" id="correo3" styleClass="etiketacorreo feroferta" />
+        </apex:outputPanel>
+    </div>
+    <div style="display: inline-table;">
+        <apex:commandButton style="height: 25px !important;padding: 0px 3px 0px 3px" value="+" action="{!aumentarcampos}" rendered="{!aumentarCampo<3}" rerender="camposEmail" />
+    </div>
+    <apex:commandButton style="margin-left: 20px;" accesskey="l" value="Limpiar Filtros" action="{!Reset}" styleClass="botonesCorreos"/>
+</apex:outputPanel>
+</div>
+<div style="max-width: 400px">
+    <apex:pageMessages escape="false" id="areaDeMensajes" />
+</div>
+
+<div class="alineame">
+                        <!-- INICIA BOTONES PARA PAGINACION -->
+                            <apex:outputPanel id="paginacion">
+                                <apex:outputText rendered="{!!paginasBoolean}">Presiona "Actualizar" para refrescar los registros</apex:outputText>
+                                <div class="pagination">
+                                    <apex:commandLink accesskey="e" action="{!previous}" rendered="{!IF(AND(npag2 > 1,paginasBoolean),true,false)}" >&laquo; Anterior</apex:commandLink>
+                                    <apex:repeat var="a" value="{!sizelistarray}" rendered="{!IF(paginasBoolean,true,false)}">
+                                        <apex:commandLink value="{!a}" action="{!llenadoPaginas}" styleClass="{!IF(npag2==a,'active','false')}" >
+                                            <apex:param name="pagin" assignTo="{!npag2}" value="{!a}"/>
+                                            <apex:param name="pagin2" assignTo="{!num2}" value="{!(a-1)*300}"/>
+                                        </apex:commandLink>
+                                    </apex:repeat>
+
+                                    <apex:commandLink accesskey="e" action="{!next}" rendered="{!IF(AND(npag2 < sizelist,paginasBoolean),true,false)}">Siguiente &raquo;</apex:commandLink>
+                                </div>
+                            </apex:outputPanel>
+                        <!-- TERMINA BOTONES PARA PAGINACION -->
+                        </div>
+<div class="alineame"><apex:outputLabel styleclass="labelcontador" >Total de registros: {!n}</apex:outputLabel></div>
+                        </center>
+</div>
+    <table class="stockTable" border="0">
+        <thead id="tableHeader">
+            <tr>
+            <!-- ////////////////////////////////////HEADER NÚMERO /////////////////////////-->
+                <th class="mediumColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/020-price-tag.png')}" />
+                <div>Folio <br />Oferta</div>
+                </th>
+                <!-- //////////////////////////////////// HEADER ESTADO /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/016-mexican-republic-map-black-shape.png')}" />
+                        Estado
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idestado" html-class="listaSeleccion" value="{!EstadoSelec}"  multiselect="True">
+                            <apex:selectOptions value="{!edoLst}"/>
+                            <apex:actionSupport action="{!actualizar}" event="onchange" reRender="lista,idusuario,idoferta,idescrituras,idprecio,iddias,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid"/>
+                        </apex:selectList>
+                         <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b1" value="Ordenar a-z" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b2" value="Ordenar z-a" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER CIUDAD /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/015-neighborhood.png')}" />
+                        Ciudad
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idciudad" html-class="listaSeleccion" value="{!CiudadSelec}" multiselect="True">
+                            <apex:selectOptions value="{!cdLst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl07,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b3" value="Ordenar a-z" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b4" value="Ordenar z-a" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER COLONIA /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/014-two-houses.png')}" />
+                        Colonia
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idcolonia" html-class="listaSeleccion" value="{!ColoniaSelec}" multiselect="True">
+                            <apex:selectOptions value="{!colLst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl08,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b5" value="Ordenar a-z" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b6" value="Ordenar z-a" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER DIRECCION /////////////////////////-->
+                <th class="largeColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/013-placeholder.png')}" /><div>Direccion</div></th>
+                <!-- //////////////////////////////////// HEADER TERRENO M2 /////////////////////////-->
+                <!--th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/012-school-material.png')}" />
+                        Terr m<sup>2</sup>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idmetros2" html-class="listaSeleccion" value="{!trn}">
+                            <apex:selectOptions value="{!trnlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="idusuario,idmetros2,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                    </div>
+                </th-->
+                <!-- //////////////////////////////////// HEADER CONS M2 /////////////////////////-->
+                <!--th class="mediumColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/011-helmet.png')}" /><div>Cons m<sup>2</sup></div>
+                    <div class="filtroHidden">
+                        filtro
+                    </div>
+                </th-->
+                <!--///////////////////////////////////HABITACIONES//////////////////////////////->
+                <th class="smallColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/010-open-exit-door.png')}" />
+                        Habs<br/>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idhabitaciones" html-class="listaSeleccion" value="{!nhs}">
+                            <apex:selectOptions value="{!nhlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!--BAÑOS////////////////////////////////////////////////////////////////////////////////->
+                <th class="smallColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/009-toilet.png')}" /><div>Baños</div>
+                    <div class="filtroHidden">
+                        filtro
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// ESCRITURAS /////////////////////////-->
+                <th class="smallColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/008-file.png')}" />
+                        Escrituras<br/>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idescrituras" html-class="listaSeleccion" value="{!ess}">
+                            <apex:selectOptions value="{!eslst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl03,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b7" value="Ordenar a-z" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b8" value="Ordenar z-a" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!--////////////////////////////////////// ESTATUS DE INVASIÓN //////////////-->
+                <th class="mediumColumn">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/007-locked.png')}" />
+                        <div>Estatus de <br/> invasion</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idinvasion" styleClass="listadeseleccion" value="{!InvasionSelec}" multiselect="True">
+                            <apex:selectOptions value="{!inlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl09,idescrituras,idestado,idciudad,idcolonia,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b9" value="Ordenar a-z" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b10" value="Ordenar z-a" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                    
+                </th>
+                <!-- //////////////////////////////////// VALOR DE REFERENCIA /////////////////////////-->
+                <th class="mediumColumn">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/006-money.png')}" />
+                        <div>Valor de <br/>referencia</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idprecio2" html-class="listaSeleccion"  value="{!prs2}">
+                            <apex:selectOptions value="{!prlst2}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                            <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+
+                        </apex:selectList>
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b11" value="Ordenar a-z" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b12" value="Ordenar z-a" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// PRECIO ORIGINAL /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                <div class="mostrarFiltro">
+                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/006-money.png')}" />
+                    <div>Precio <br/> original</div>
+                    <span class="glyphicon glyphicon-download" id="icono"></span>
+                </div>
+                <div class="filtroHidden">
+                    <apex:selectList id="idprecio" html-class="listaSeleccion"  value="{!prs}">
+                        <apex:selectOptions value="{!prlst}"/>
+                        <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                    </apex:selectList>
+                    <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                    <br/>
+                    <apex:actionRegion >
+                        <apex:commandButton id="b13" value="Ordenar a-z" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'asc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                            <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c"/>
+                        </apex:commandButton>
+                        <apex:commandButton id="b14" value="Ordenar z-a" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'desc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                            <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c" />
+                        </apex:commandButton>
+                    </apex:actionRegion>
+                    <br/>
+                    <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                </div>
+                </th>
+                <!-- //////////////////////////////////// DÍAS EN STOCK /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/003-calendar.png')}" />
+                        <div>Días en <br/> stock</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="iddias" html-class="listaSeleccion" value="{!dis}">
+                            <apex:selectOptions value="{!dilst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl05,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo" />
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b15" value="Ordenar a-z" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b16" value="Ordenar z-a" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// DETALLES /////////////////////////-->
+                <th class="smallColumn">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/005-construction-1.png')}" />
+                        <div>Rehab.</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idrehabilitacion" styleClass="listadeseleccion" value="{!rehas}">
+                            <apex:selectOptions value="{!rehalst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl11,idescrituras,idestado,idciudad,idcolonia,idinvasion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                        </apex:selectList>
+                        <br/>
+                         <!-- <apex:actionRegion >
+                            <apex:commandButton id="b15" value="Ordenar a-z" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b16" value="Ordenar z-a" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/> -->
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// AGREGAR AL CARRITO /////////////////////////-->
+                <th class="mediumColumn">
+                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" />
+                    <div>Agregar al <br/>carrito</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tableBod">
+            <apex:variable value="{!num2}" var="Contador" />
+            <apex:repeat value="{!CASE(npag2,1,pag1,2,pag2,3,pag3,4,pag4,5,pag5,6,pag6,7,pag7,pag1)}" var="oferta">
+                <tr class="{!IF(oferta.boleano,'recientes','tds')}">
+                    <td class="mediumColumn">
+                        <apex:outputLink target="_blank" value="/{!oferta.registro.Id}">{!oferta.registro.Name}</apex:outputLink>
+                        <br />
+                        <apex:image value="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>',URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                        <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/004-eye-open.png')}" styleClass="vercarroimagen" onclick="ab('{!oferta.registro.Id}')" />
+                    </td>
+                        <!-- <apex:outputPanel layout="none" rendered="{!!huboReferencia}"> -->
+                    <td class="mediumColumn">
+                            <!-- Columna para Estado ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+                    </td>
+                    <td class="mediumColumn">
+                            <!-- Columna para Ciudad ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+                    </td>
+
+                    <td class="mediumColumn">
+                            <!-- Columna para colonia ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/>
+                    </td>
+                    <td class="largeColumn">
+                        <!-- Columna para direccion ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{!oferta.registro.Direccion2__c}" escape="false"/>
+                    </td>
+                    <!--td class="mediumColumn">
+                        <!-- Columna para terreno m2////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{0,number}">
+                                <apex:param value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                        </apex:outputText>
+                    </td-->
+                    <!--td class="mediumColumn">
+                        <!-- Columna para Construcción m2 ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{0,number}">
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                        </apex:outputText>
+                    </td->
+                    <td class="smallColumn">
+                        <!-- Columna para numero de habitaciones ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                    </td>
+                    <td class="smallColumn">
+                        <!-- Columna para numero de baños ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                    </td-->
+                    <td class="smallColumn">
+                        <!-- Columna para Escrituras ////////////////////////////////////////////////////////// -->
+                        <apex:image value="{!IF(oferta.registro.Escritu__c == 'Con Escrituras', URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}"/>
+                        <!--apex:outputText value="{!oferta.registro.Escritu__c}"/-->
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para Estatus ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.ValorReferencia__c}"/>
+                        </apex:outputText>
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para Precio original ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.Precio_Original__c}"/>
+                        </apex:outputText>
+                    </td>
+                    <td class="mediumColumn">
+                    <!-- Columna para dias en stock  ////////////////////////////////////////////////////////// -->
+                    <apex:outputText value="{0,number}">
+                        <apex:param value="{!oferta.registro.TiempoOferta__c}"/>
+                    </apex:outputText>
+                    </td>
+                    <td class="smallColumn">
+                        <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                    </td>
+                    <td class="mediumColumn">
+                        <apex:actionRegion >
+                            <apex:outputPanel id="imagenCarrito" rendered="{!!oferta.active}">
+                                <div>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" styleClass="agregacarroimagen" onclick="cambiarimagen(this);agregar('{!oferta.registro.Id}');">
+                                    </apex:image>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" style="width: 40px;height: 40px; display: none" styleClass="opaca"/>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!oferta.active}">
+                                <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+                                <!-- <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/> -->
+                            </apex:outputPanel>
+                        </apex:actionRegion>
+                        <br/><!--////////////////////////////BOTON DE DETALLES//////////////////////////////////-->
+                        <apex:commandButton styleClass="botonesCorreos" style="position: relative; left: -6px; padding: 2px" value="Detalles" onclick="showDetails(this)" reRender="Object" />
+                        <div class="detailsTable"  onmouseleave="hideDiv('detailsTable');">
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/018-footprints.png')}" />
+                                    <span>Etapa</span>
+                                </div>
+                                <apex:outputText value="{!IF(oferta.registro.Etapa__c == 'Rehabilitación','E 10',IF(oferta.registro.Etapa__c == 'Compilación expediente cliente','E 9',IF(oferta.registro.Etapa__c == 'Escrituras en proceso registro','E 8',IF(oferta.registro.Etapa__c == 'Compra final','E 7',IF(oferta.registro.Etapa__c == 'Compilación expediente compra','E 6',IF(oferta.registro.Etapa__c == 'Aprobada internamente','E 5',IF(oferta.registro.Etapa__c == 'Antecedentes','E 4',oferta.registro.Etapa__c)))))))}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/017-alert.png')}" />
+                                    <span>Oferta Cargada</span>
+                                </div>
+                                <apex:image value="{!IF(oferta.registro.Oferta_Cargada__c,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" styleClass="imagestyle"/>
+                            </div>
+                            <!--div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/007-locked.png')}" />
+                                    <span>Estatus de Invasion</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                            </div>
+                            <!--div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/004-eye-open.png')}" />
+                                    <span>Revisado</span>
+                                </div>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/005-construction-1.png')}" />
+                                    <span>Rehab</span>
+                                </div>
+                                <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                            </div-->
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/012-school-material.png')}" />
+                                    <span>Terreno m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/011-helmet.png')}" />
+                                    <span>Cons m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/010-open-exit-door.png')}" />
+                                    <span>Habs</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/009-toilet.png')}" />
+                                    <span>Baños</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                            </div>
+                        </div>
+
+                         <!--apex:actionRegion >
+                                                                <apex:outputPanel rendered="{!IF(x.active,false,true)}">
+
+                                                                    <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" styleClass="agregacarroimagen" >
+                                                                        <apex:actionSupport event="onclick" action="{!agregar}" reRender="tablabusca87"> <!-- antes tabladeresultados ->
+                                                                            <apex:param name="hola" value="{!x.oferta.Id}" assignTo="{!ofertaId}"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!x.active}">
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+                                                                </apex:outputPanel>
+                                                            </apex:actionRegion-->
+                    </td>
+                </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+
+    <apex:actionFunction name="agregar" action="{!agregar}" reRender="/" >
+        <apex:param name="hola" value="" assignTo="{!ofertaId}"/>
+    </apex:actionFunction>
+    <script type="text/javascript">
+
+        $('.contenedor').css({'width':'70%'});
+
+        function cambiarimagen(e){
+            var f= $(e).siblings();
+            console.log(f);
+            f.css("display","block");
+            e.style="display:none";
+        }
+
+        //setTableColSize();
+        //setTablePos();
+    </script>
+<!-- //////////////////////////////////// ESTE SCRIPT DEBE IR AQUÍ NO MOVER /////////////////////////-->
+<script>
+
+    $(window).scroll(function(e){
+        //setTableColSize();
+        setTablePos();
+    });
+
+    $(window).resize(function(e){
+        //setTableColSize();
+        setTablePos();
+
+
+    });
+
+    function showDetails(element){
+        var $detailpanel = $(element).siblings('.detailsTable');
+        $detailpanel.toggle();
+        var width = $detailpanel.width();
+        var totalWidth = $(window).width();
+        $detailpanel.css({'left':totalWidth-(width*2)})
+    }
+
+    $(document).ready(function(event){
+        $('.mostrarFiltro').each(function(index){
+            $(this).on('click', function(e){
+                showFilter(this);
+            });
+        });
+        //setTableColSize();
+        setTablePos();
+    });
+
+    $(document).ready(function(event){
+            $('.listaSeleccion').each(function(index){
+                $(this).on('click', function(e){
+                        showFilter(this);
+                });
+            });
+    });
+
+    $('#botonEnviarCorreo').on('click', function () {
+        /*var c1 = $('#Correo1')[0];
+        var c2 = $('#Correo2')[0];
+        var c3 = $('#Correo3')[0];
+
+        c1.value = " ";*/
+        alert('Hola');
+    });
+
+    function showFilter(element) {
+        console.log(element);
+        var $filtro = $(element).siblings('.filtroHidden');
+            $filtro.toggle();
+    }
+
+    function hideDiv(clase){
+        $( "."+clase+"" ).css( "display", "none" );
+        cargar();
+    }
+
+    $( document ).ready(function() {
+        // $("input").removeClass('btn');
+        $('.message').first().remove();
+        $('[id*="yobusco"]').keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                $('[id*="imagencilla"]').click();
+
+            }
+        });
+    });
+
+
+</script>
+<apex:actionFunction name="cargar" action="{!llenadoPaginas}" reRender="" />
+<!--Esto estaba arriba reRender="formid" -->
+</apex:form>
+</div>
+   <apex:form >
+
+        <apex:actionFunction name="enviaancho" reRender="">
+            <apex:param name="ancho" assignTo="{!ancho}" value="" />
+        </apex:actionFunction>
+
+        <apex:actionFunction name="enviaancho2" oncomplete="calcwidth();" reRender="">
+            <apex:param name="newWidth" assignTo="{!newWidth}" value=""/>
+        </apex:actionFunction>
+
+        <!-- <apex:actionFunction action="{!reCalcWidths}" name="calcwidth"/> -->
+
+            <div class="foot">
+
+             <div class="izq">
+             <center>
+                <apex:image url="{!URLFOR($Resource.icof, '/left.png')}"   title="Ir a Stock" styleClass="circulo1" >
+                     <apex:actionSupport event="onclick" action="{!precalificacion}"/>
+
+                </apex:image>
+            </center>
+            </div>
+            <div class="medio">
+            <center>
+            <apex:image url="{!URLFOR($Resource.icof, '/cancela.png')}" styleClass="circulo1 modaal-confirm" title="Cancelar" />
+            </center>
+            </div>
+            <div class="derecha">
+            <center>
+                <apex:image url="{!URLFOR($Resource.icof, '/right.png')}" styleClass="circulo1" title="Cita" >
+               <apex:actionSupport event="onclick" action="{!envioficha}"/>
+                </apex:image>
+            </center>
+            </div>
+            </div>
+
+   </apex:form>
+
+               <!--  <script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script> -->
+    <script type="text/javascript">
+
+        $('.modaal-confirm').modaal({
+            type: 'confirm',
+            accessible_title: 'Cancelar',
+            confirm_button_text: 'Confirmar',
+            confirm_cancel_button_text: 'Cancelar',
+            confirm_title: 'Confirma',
+            confirm_content: '<p>Cancelar Creación e Ir a Inicio</p>',
+            confirm_callback: function() {
+                cancelarlead();
+
+            },
+            confirm_cancel_callback: function() {
+            }
+        });
+
+
+</script>
+                      <!--   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+                        <script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+<script src="/resource/materialize/materialize/js/materialize.js"></script> -->
+
+
+
+<style type="text/css">
+.btt
+{
+    cursor: pointer;
+    display: inline-block;
+    background: #ed2553;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 3px 4px;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    outline: none;
+    width: 30%;
+    display: inline-block;
+    margin-left: 10px;
+}
+    #notifications-bottom-right {
+    position: absolute;
+    width: 18%;
+    right: 1%;
+    bottom: 20%;
+    border: 1px solid #dfdfdf;
+    box-shadow: black;
+    /* margin: 2rem 0 1rem 0; */
+    border: 1px solid #e0e0e0;
+    /* border-radius: 2px; */
+    /* overflow: hidden; */
+    /* position: relative; */
+    -webkit-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    -moz-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    font-size: 1em;
+
+    /* text-align: center; */
+}
+#notifications-bottom-right-tab-close {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    color: #cccccc;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    opacity: 1;
+}
+#notifications-bottom-right-tab-close:hover
+{
+        color: black;
+}
+
+#notifications-bottom-right-tab-avatar {
+    float: left;
+    height: 100px;
+    width: 70px;
+    margin-left: 20px;
+}
+#notifications-bottom-right-tab-avatar img {
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+    -khtml-border-radius: 50% 50% 50% 50%;
+    float: left;
+    margin-top: 15px;
+}
+#notifications-bottom-right-tab-right {
+    float: left;
+        width: 60%;
+    margin-bottom: 3%;
+
+}
+#notifications-bottom-right-tab-right-title span {
+    color: #e91e63;
+    font-size: 15px;
+    text-transform: uppercase;
+
+}
+#notifications-bottom-right-tab-right-title {
+    color: #252525;
+    font-weight: 600;
+     padding-top: 4%;
+}
+
+
+</style>        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript">
+        
+            function ab(h) {
+                var x = '{!URLFOR("/apex/FichaTecnica?id=")}';
+                console.log(x+h);   
+                $( '<div> </div>').html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="yes" />')
+                .dialog({
+                    autoOpen: true,
+                    title: 'Ficha Técnica',
+                    resizable: true, 
+                    width: 700, 
+                    height: 600, 
+                    autoResize: true, 
+                    modal: true, 
+                    draggable: true,
+                    show: {
+                        effect: "fade",
+                        duration: 500
+                    },
+                    hide: {
+                        effect:"drop",
+                        duration: 300
+                    },
+                    open: function(){
+                        $('body').addClass('stop-scrolling');
+                    },
+                    close: function(){
+                        $('body').removeClass('stop-scrolling');
+                    }
+                });
+                
+            }
+
+        </script>
+    </body>
+<script type="text/javascript">
+    function calculos(x,y,d,w)
+    {
+        $('#notifications-bottom-right-tab-right-title span').html(x);
+        // alert(x+y+d+w);
+        y=parseInt(y);
+        d=parseInt(d);
+        w=parseInt(w);
+
+        $('#toc').html(y);
+        $('#toc2').html(d);
+        $('#refe').html(w);
+
+    }
+    function calculos2()
+    {
+
+        var ofe=$('#ofertado').val();
+        var des=$('#toc').html();
+        var reh=$('#toc2').html();
+        var refere=$('#refe').html();
+        var r=parseInt(refere);
+        var g=parseInt(des);
+        var o=parseInt(ofe);
+        var rh=parseInt(reh);
+        if (ofe!=null&&ofe!='')
+        {
+        var margen=((o-(g+rh))/r)*100;
+        margen = parseInt(margen);
+        $('#margen').html(margen);
+        $('#margenp').show();
+        }
+        if(ofe==null||ofe=='')
+        {
+            $('#margenp').hide();
+        }
+    }
+
+</script>
+
+
+    <script type="text/javascript">
+        function ocultar(e){
+
+            var a=document.getElementById(e);
+            var b=document.getElementById('boton');
+
+            if(a.style.display == 'none'){
+                a.style.display = 'block';
+                b.value = 'Ocultar filtros';
+            }else{
+                a.style.display = 'none';
+                b.value = 'Mostrar filtros';
+            }
+
+
+        }
+
+    </script>
+
+
+
+
+
+
+
+</apex:page>

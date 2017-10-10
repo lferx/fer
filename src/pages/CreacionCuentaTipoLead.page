@@ -1,0 +1,1104 @@
+<apex:page controller="Crear_Lead_controller" sidebar="false" showChat="false">
+
+		<head>
+		<script>
+			var nombre = 0;
+			if('{!nombre}' != null){
+				nombre = 1;
+			}
+			var apellido = 0;
+			if('{!apellido}' != null){
+				apellido = 1;
+			}
+			var telefono = 0;
+			var correo = 0;
+		</script>
+
+<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+<link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+<script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+
+				<style type="text/css">
+						@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+						@font-face {
+								font-family: "Bebas-Neue";
+								src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+						}
+						@font-face {
+								font-family: "gotham-rounded-book";
+								src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+						}
+						@font-face {
+								font-family: "gotham-rounded-medium";
+								src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+						}
+
+
+														.ui-widget.ui-widget-content {
+	 border: 1px solid #36a0fe;
+	border: none;
+		border-top: none;
+				z-index: 1551;
+}
+#toast-container {
+	display: block;
+	position: fixed;
+	z-index: 10000;
+}
+
+@media only screen and (max-width: 600px) {
+	#toast-container {
+		min-width: 100%;
+		bottom: 0%;
+	}
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+	#toast-container {
+		left: 5%;
+		bottom: 7%;
+		max-width: 90%;
+	}
+}
+
+@media only screen and (min-width: 993px) {
+	#toast-container {
+		top: 10%;
+		right: 7%;
+		max-width: 86%;
+	}
+}
+
+.toast {
+	border-radius: 2px;
+	top: 35px;
+	width: auto;
+	clear: both;
+	margin-top: 10px;
+	position: relative;
+	max-width: 100%;
+	height: auto;
+	min-height: 48px;
+	line-height: 1.5em;
+	word-break: break-all;
+	background-color: #323232;
+	padding: 10px 25px;
+	font-size: 1.5rem;
+	font-weight: 300;
+	color: #fff;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+			-ms-flex-align: center;
+					align-items: center;
+	-webkit-justify-content: space-between;
+			-ms-flex-pack: justify;
+					justify-content: space-between;
+}
+
+.toast .btn, .toast .btn-large, .toast .btn-flat {
+	margin: 0;
+	margin-left: 3rem;
+}
+
+						.contenedorDatosPrincipales2{
+
+						display:inline;
+						width:auto;
+						padding-left: 70px;
+						}
+
+@media only screen and (max-width: 600px) {
+	.toast {
+		width: 100%;
+		border-radius: 0;
+	}
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+	.toast {
+		float: left;
+	}
+}
+
+@media only screen and (min-width: 993px) {
+	.toast {
+		float: right;
+	}
+}
+														.ui-widget.ui-widget-content {
+
+		border-top: none;
+				z-index: 1551;
+}
+* { box-sizing:border-box; }
+
+
+.inp:focus         { outline:none; }
+
+
+label                {
+color: #0C326B;
+		font-size: 21px;
+		font-weight: normal;
+		pointer-events: none;
+		transition: 0.2s ease all;
+		-moz-transition: 0.2s ease all;
+		-webkit-transition: 0.2s ease all;
+}
+
+
+.inp:focus ~ label, .inp:valid ~ label        {
+	top:-20px;
+	font-size:14px;
+	color:#5264AE;
+}
+
+input:focus, .fotito:hover {
+		transform: translate(7%,8%)scale(1.2);
+
+		transition: all .15s ease-out;
+}
+
+.html5tooltip-text {
+		background-color: inherit;
+		border-radius: inherit;
+		color: inherit;
+		font-family: inherit;
+		font-size: 12px;
+		font-weight: inherit;
+		padding: 7px 9px;
+		position: relative;
+		font-family: 'gotham-rounded-medium';
+
+}
+.user
+{
+		background-image: url("{!URLFOR($Resource.icof, '/client.png')}");
+background-repeat: no-repeat;
+background-position: right;
+background-size: 30px;
+}
+.locate
+{
+		background-image: url("{!URLFOR($Resource.icof, '/loc.png')}");
+background-repeat: no-repeat;
+background-position: right;
+background-size: 30px;
+}
+.mail
+{
+		background-image: url("{!URLFOR($Resource.icof, '/email.png')}");
+background-repeat: no-repeat;
+background-position: right;
+background-size: 30px;
+}
+.phonee, .phonee1
+{
+		background-image: url("{!URLFOR($Resource.icof, '/phone2.png')}");
+background-repeat: no-repeat;
+background-position: right;
+background-size: 30px;
+}
+.tablaDeDuplicados th{
+	border: 1px solid #d1edf5;
+	padding: 5px;
+	font-size: 14px;
+	font-family: 'gotham-rounded-medium';
+}
+.tablaDeDuplicados tr td{
+	border: 1px solid #d1edf5;
+	padding: 5px;
+	font-size: 14px;
+	font-family: 'gotham-rounded-medium';
+}
+.req
+{
+
+		position: relative;
+		display: flex;
+		left: 25%;
+		font-weight: bold;
+
+
+}
+.req0
+{
+
+		position: relative;
+		display: flex;
+		left: 20%;
+		font-weight: bold;
+
+
+}
+.req2
+{
+				position: relative;
+		display: flex;
+		left: 0%;
+		font-weight: bold;
+}
+.plus {
+width: 15px;
+		/* height: 15px; */
+		/* margin-top: -5%; */
+		float: left;
+	}
+.tel22
+{
+		width: 100%;
+		/* border: 1px solid black; */
+		position: relative;
+		display: inline-block;
+		/* height: 20px; */
+		margin-bottom: 2%;
+		margin-top: -2%;
+}
+.sugestions{
+	width: 96%;
+}
+.sugestions td{
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+.sugestions tr:hover{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	background: rgba(255,255,255,1);
+	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,1)), color-stop(83%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+	background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+	border-radius: 5px;
+}
+.contenedorSugerencias{
+	max-height: 400px;
+	overflow-y: scroll;
+	width: 50%;
+	border-top: 1px solid #79c4de;
+	border-bottom: 1px solid #79c4de;
+	display: none;
+}
+
+				</style>
+
+
+
+
+				<script type="text/javascript">
+						$(document).ready(function(){
+
+								var x='{!insertado}';
+								var t2=$('[Id*="tel2"]').val();
+							 var src = 'https://image.flaticon.com/icons/svg/143/143505.svg';
+								if (t2!=null&&t2!='')
+								{
+									$('.t2').removeAttr('hidden');
+									$('.plus').attr('src', src);
+									$('.tel22').css({
+										'margin-top':'0'
+									});
+								}
+								if (x=='true')
+								{
+									$('.req0,.req,.req2').hide();
+							 $('.muestrame').removeAttr('hidden');
+							 //$('.derecha').show();
+					 }
+
+					 if (x=='false')
+					 {
+						$('.preca img').removeAttr('onclick');
+						$('[Id*="tipoleadd"]').prop('selectedIndex', 0);
+					 }
+
+
+
+						});
+
+
+				</script>
+	<script>
+
+		/*var availableTags = [
+"EL MARQUES","SAN FRANCISCO DE LOS ROMO","VILLA DE ALVAREZ","ARANDAS","SILAO DE LA VICTORIA","SAN NICOLAS DE LOS GARZA","NEXTLALPAN","TEXCOCO","TEPOZTLAN","CHAPULTEPEC","ECATEPEC DE MORELOS","METEPEC","TECAMAC","NEZAHUALCOYOTL","TEMOAYA","SAN FRANCISCO COACALCO","JALTENCO ZUMPANGO","TULTEPEC","CHICOLOAPAN","TULTITLAN","LERMA","CIUDAD DELICIAS","IXTAPALUCA","ZINACANTEPEC","COACALCO DE BERRIOZABAL","MELCHOR OCAMPO","TENANGO DEL VALLE","CUAUTITLAN","SAN JOSE DEL CABO","SAN VICENTE  CHICOLOAPAN","ACOLMAN","CABO SAN LUCAS","HUEHUETOCA","TLALNEPANTLA DE BAZ","NICOLAS ROMERO","VALLE DE CHALCO SOLIDARIDAD","SAN RAFAEL COACALCO","ATLIXCO","TEZIUTLAN","SAN MARTIN TEXMELUCAN","SAN PEDRO CHOLULA","MAGDALENA CONTRERAS","ALMOLOYA","GUSTAVO A. MADERO","TETLA","GUANAJUATO","QUERETARO","TLAXCALA","TEHUACAN","TONALA","CHIAPAS","RAMOS ARIZPE","APODACA","TARIMBARO","AHOME","PUERTO PENASCO","CAJEME","GUERRERO","NAVA","ZAPOPAN","EMPALME","CIUDAD JUAREZ","GOMEZ PALACIO","TLAJOMULCO DE ZUÃ‘IGA","NOGALES","CIUDAD ACUNA","MICHOACAN","JUAREZ","SABINAS","MORELOS","TORREON","GUAYMAS","BAHIA DE BANDERAS","TLAQUEPAQUE","BENITO JUAREZ","SOLEDAD DE GRACIANO SANCHEZ","YAUHQUEMEHCAN","XOCHIMILCO","MIXQUIHUALA","CUAUTEPEC","GUADALUPE VICTORIA","MIGUEL HIDALGO","IZUCAR DE MATAMOROS","CANATLAN","GENERAL ESCOBEDO","ACTOPAN","HEROICA MATAMOROS","SAN ANDRES CHOLULA","SAN VICENTE","AZCAPOTZALCO","ALVARO OBREGON","APIZACO","IZTACALCO","IZTAPALAPA","VENUSTIANO CARRANZA","MATEHUALA","TLAHUAC","CUAUHTEMOC","CHIAUTEMPAN","HUAMANTLA","TULA DE ALLENDE","CIUDAD VALLES","MINERAL DE LA REFORMA","CUAUTITLAN IZCALLI","PARAISO","NACAJUCA","TENOSIQUE","VILLAHERMOSA","CIUDAD OBREGON","TEAPA","BALANCAN","COZUMEL","FRESNILLO","GUAMUCHIL","CUAUTLA","XALAPA","CATEMACO","TAMPICO","GUASAVE","NAVOJOA","PATZCUARO","URUAPAN","CIUDAD VICTORIA","MATEHUALA","MERIDA","CUERNAVACA","ALTAMIRA","CIUDAD MADERO","BOCA DEL RIO","ZITACUARO","CORDOBA","CHETUMAL","PLAYA DEL CARMEN","ORIZABA","SALINA CRUZ","MINATITLAN","MARAVATIO","LA PIEDAD","APATZINGAN","DOLORES HIDALGO","SAN JUAN DE LOS LAGOS","NAUCALPAN","HIDALGO DEL PARRAL","SAN MIGUEL DE ALLENDE","TAXCO","ZIHUATANEJO","IXMIQUILPAN","CIUDAD GUZMAN","CHILPANCINGO","SALAMANCA","PALENQUE","MANZANILLO","ATOTONILCO","TEQUILA","SAN MATEO ATENCO","TAPACHULA","SAN CRISTOBAL DE LAS CASAS","TEPEJI DEL RIO","TIZAYUCA","HUIXQUILUCAN","CHALCO","XONACATALN","CHIMALHUACAN","LAGOS DE MORENO","TUXTLA GUTIERREZ","RINCON DE ROMOS","COSIO","ASIENTOS","TODOS SANTOS","PLAYAS DE ROSARITO","SAN IGNACIO","SAN FELIPE","COMITAN DE DOMINGUEZ","JESUS MARIA","HEROICA MULEGE","CHIAPA DE CORSO","LORETO","PUERTO ADOLFO LOPEZ MATEOS","HUIXTLA","TEPEZALA","CIUDAD CONSTITUCION","GUERRERO NEGRO","CALVILLO","PABELLON ARTEAGA","CIUDAD DEL CARMEN","CANDELARIA","TECATE","CORREGIDORA","SAN JUAN DEL RIO","COSOLEACAQUE","MAZATLAN","CULIACAN","ACAPULCO","AGUASCALIENTES","CANCUN","CELAYA","CHIHUAHUA","COATZACOALCOS","COLIMA","ENSENADA","GUADALAJARA","HERMOSILLO","IRAPUATO","LA PAZ","LOS MOCHIS","MEXICALI","MONCLOVA","MONTERREY","MORELIA","NUEVO LAREDO","OAXACA","PACHUCA","PIEDRAS NEGRAS","PUEBLA","PUERTO VALLARTA","REYNOSA","SALTILLO","SAN LUIS POTOSI","TEPIC","TIJUANA","TOLUCA","TULANCINGO","VERACRUZ","ZACATECAS","LEON","LERDO"
+		];*/
+
+		/*var PLACEHOLDER = 'Inserte una ciudad';
+		var cityObject;
+		var queryTerm;
+
+		$("[Id$=completeCity]").autocomplete({
+			source: function(request,response){
+				queryTerm = request.term;
+				Crear_Lead_controller.autocompleteCiudades(request.term, function(result, event){
+					if(event.type == 'exception') {
+						alert(event.message);
+					} else {
+						console.log(cityObject);
+						cityObject = result;
+						response(cityObject);
+					}
+				});
+			}
+		});
+				*/
+
+	
+	</script>
+				<script type="text/javascript">
+
+				function mostrarplaza(valor){
+				var apellidos= valor.value;
+				var apellidosnull= apellidos.length;
+
+				if(apellidosnull>0){
+				$('#idplazaint').prop('hidden',false);
+				}
+				else{
+				$('#idtipolead').prop('hidden',true);
+				$('#idplazaint').prop('hidden',true);
+				$('#idorigen').prop('hidden',true);
+				$('#idsuborigen').prop('hidden',true);
+				// $('#idtelefono').prop('hidden',true);
+				$('#idTelefono2').prop('hidden',true);
+				$('#idemail').prop('hidden',true);
+				}
+
+				}
+				</script>
+
+				<script type="text/javascript">
+
+				function mostrartipolead(valor){
+				var plaza= valor.value;
+
+				if(plaza!=null){
+				$('#idtipolead').prop('hidden',false);
+				}
+				if(plaza==''){
+				$('#idtipolead').prop('hidden',false);
+				}
+
+				}
+				</script>
+
+				<script type="text/javascript">
+
+				function mostrarorigen(valor){
+				var origen= valor.selectedIndex;
+
+				if(origen!=0){
+				$('.origen').show();
+				}
+				else{
+	$('.origen').hide();
+				}
+				}
+				</script>
+
+<script type="text/javascript">
+		function validatelefono(x)
+{
+
+
+
+		if(x.value.length!=10){
+
+			//$('.derecha').hide();
+			$('.phonee1').css({
+'border-bottom': '1px solid #FA5858'});
+
+		}
+		else {
+				//$('.derecha').show();
+			$('.phonee1').css({
+'border-bottom': '1px solid #79c4de'
+		});
+			calcularSemaforos();
+
+}}
+		function validatelefono2(x)
+{
+
+
+
+		if(x.value.length!=10){
+
+	//$('.derecha').hide();
+			$('.phonee').css({
+'border-bottom': '1px solid #FA5858'});
+if(x.value.length==0)
+		{
+			 //$('.derecha').show();
+			 $('.phonee').css({
+'border-bottom': '1px solid #79c4de'
+		});
+
+		}
+		}
+
+		else {
+			//$('.derecha').show();
+			$('.phonee').css({
+'border-bottom': '1px solid #79c4de'
+		});
+calcularSemaforos();
+}}
+
+
+
+
+
+
+
+
+function validamail(x) {
+
+	var email = x.value;
+	correo = 0;
+	if (email.length>0){
+		if (validateEmail(email)) {
+			$('.mail').css({'border-bottom': '1px solid #79c4de'});
+			//$('.derecha').show();
+				correo = 1;
+				console.log('correo correcto');
+				calcularSemaforos();
+				
+			} else {
+				$('.mail').css({'border-bottom': '1px solid #FA5858'});
+				//$('.derecha').hide();
+				correo = 0;
+				console.log('correo correcto');
+				calcularSemaforos();
+			}
+			return false;
+		}
+		// if (email.length==0){
+		//   $('.mail').css({'border-bottom': '1px solid #79c4de'});
+		// }
+		//$('.derecha').show();
+	}
+
+	function validateEmail(email) {
+
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+	colsole.log(re);
+}
+</script>
+
+
+
+ <!--        <script>
+
+				document.getElementById("mensajeAlerta").addEventListener("click",pum);
+
+				function pum(){
+
+				var newClass = '';
+				var total = 0;
+				var suma = 0;
+
+
+				$.each($('.validated'),function(index, value){
+				if($(this)[0].value!=''){
+				suma += 1;
+				}
+				total += 1;
+				});
+
+
+				var percent = (suma/total)*100;
+				if(percent<100){
+				alert("CAMPOS INCOMPLETOS");
+				}
+
+				}
+				</script> -->
+
+				<script type="text/javascript">
+
+				function ftrue(z){
+				document.getElementById(z).style.display = 'block';
+				}
+				function ffalse(y){
+				document.getElementById(y).style.display = 'none';
+				}
+
+				/*style="border-width: 4px; border-style: solid; border-color: #5A2A7E; padding-left: 35%; padding-right: 35%; */
+
+				</script>
+
+
+
+		</head>
+		<body>
+
+				<apex:form >
+				<div class="TaskSearch">
+					<c:TaskSearch />
+				</div>
+		<div class="grande">
+<script>
+		$(document).ready(function()
+		{
+				$('.tooltipped').tooltip({delay: 50});
+			 	//var nombreLead= $('[id*="nombre"]').val();
+				//soloNombre(nombrelead);
+				//soloApellido($('[id*="apellido"]'));
+		});
+
+</script>
+
+
+
+<center>
+
+						<apex:outputPanel styleClass="error" rendered="{!errorMsg != null && errorMsg != ''}">
+										<apex:outputText value="{!errorMsg}" />
+								</apex:outputPanel>
+							<br/>
+
+								<img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="revimex" />
+
+
+
+
+											<div class="chip2 cabecera">
+		<img class="fotito" src="{!Photolink}" />
+		Bienvenido {!$User.FirstName}<br/>
+		<apex:outputText value="Recomendado por: {!nuevoLead.Recomendado_por__c}" style="color: #9B0300; font-weight: bold;" rendered="{!nuevoLead.Recomendado_por__c != NULL}"/>
+										<apex:outputPanel rendered="{!duplicados != NULL}" >
+												<div><h2 align="center" style="color: #a20404; font-size: 15px">SE HAN ENCONTRADO REGISTROS DUPLICADOS</h2></div>
+												<div align="center" style="color: #a20404; font-size: 13px">Seleccione un registro para continuar o elija un tipo de lead diferente</div>
+												<table class="tablaDeDuplicados" align="center">
+													 <thead >
+														<tr >
+																<th style="border-radius: 10px 0px 0px 0px;"><center>Nombre</center></th>
+																<th><center>Teléfono</center></th>
+																<th><center>Email 1</center></th>
+																<th><center>Email 2</center></th>
+																<th><center>Propietario</center></th>
+																<th style="border-radius: 0px 0px 0px 10px;"><center>Fecha de Última Modificación</center></th>
+														</tr>
+												 </thead>
+														<apex:repeat value="{!duplicados}" var="dup">
+														<tr>
+																<td><apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!dup.Id}">{!dup.Name}</apex:outputLink></td>
+																<td>{!dup.phone}</td>
+																<td>{!dup.PersonEmail}</td>
+																<td>{!dup.Email__c}</td>
+																<td>{!dup.Owner.name}</td>
+																<td style="text-align: center;">
+																	<apex:outputText value="{0,date,dd/MM/yyyy HH:mm}">
+																			<apex:param value="{!dup.CreatedDate}" />
+																	</apex:outputText>
+																</td>
+														</tr>
+														</apex:repeat>
+												</table>
+										</apex:outputPanel>
+	</div>
+
+
+							<br/>
+							<center>
+							<apex:outputText value="{!mensage}" style="font-weight: bold; color: red; font-size: 15px;" />
+							</center>
+							<br/>
+
+
+
+								<div class="nave">
+												<apex:variable value="CreacionCuentaTipoLead" var="pagina"/>
+											<c:Menu_rapidolead account="{!nuevoLead.Id}" visual="{!pagina}" />
+								</div>
+
+
+
+								<div class="argumentos">
+								<c:Menu_argumentospreca />
+								</div>
+
+
+
+							<br/>
+							 </center>
+<div class="contenedor">
+<center>
+
+
+								
+										<div class="nombres">
+												<div id="nombre" class="group">
+													<h1 align="center" >NOMBRE(S)</h1><br/>
+													<apex:inputText id="nombre" styleClass=" datoSemaforo inp user" value="{!nombre}" html-data-tooltip="Nombre del Lead" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="right" onkeyup="validarOtro();calcularSemaforos();palomita(this.value,'nombreLead');verificarTamano(this.value);soloNombre(this);"/>
+													<script>
+														function soloNombre(campo){
+															if(campo.length > 2){
+																nombre = 1;
+																console.log('nombre valido');
+																calcularSemaforos();
+															}else{
+																nombre = 0;
+															}
+															
+														}
+														function soloApellido(campo){
+															if(campo.value.length > 2){
+																apellido = 1;
+																console.log('apellido valido');
+																calcularSemaforos();
+															}else{
+																apellido = 0;
+															}
+														}
+													</script>
+
+													<label class="req0 nombreLead">
+														<img src="{!$Resource.noCompletado}" style="width: 17px;height: 17px;"/>
+													</label>
+
+													<div class="contenedorSugerencias">
+														<apex:outputPanel id="tablita">
+																<table class="sugestions">
+																	<tbody>
+																		<apex:repeat value="{!sugerencias}" var="registro">
+																		<tr>
+																			<td style="width: 25%;word-break: break-all;">
+																				<apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!registro.Id}">{!registro.Name}</apex:outputLink>
+																			</td>
+																			<td style="width: 25%;word-break: break-all;">
+																				<apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!registro.Id}">{!registro.phone}</apex:outputLink>
+																			</td>
+																			<td style="width: 25%;word-break: break-all;">
+																				<apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!registro.Id}" rendered="{!registro.isPersonAccount}">{!registro.personEmail}</apex:outputLink>
+																				<apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!registro.Id}" rendered="{!!registro.isPersonAccount}">{!registro.Email__c}</apex:outputLink>
+																			</td>
+																			<td style="width: 25%;word-break: break-all;">
+																				<apex:outputLink value="/apex/CreacionCuentaTipoLead?id={!registro.Id}">{!registro.type}</apex:outputLink>
+																			</td>
+																		</tr>
+																		</apex:repeat>
+																	</tbody>
+																</table>
+														</apex:outputPanel>
+												</div>
+
+												<script>
+													function verificarTamano(nombre){
+														if(nombre.length > 2){
+															autoCompletar(nombre);
+															$(".contenedorSugerencias").css({'display': 'block'});
+														}
+														else{
+															clear();
+															$(".contenedorSugerencias").css({'display': 'none'});
+														}
+													}
+													function ocultarSugerencias(){
+														$(".contenedorSugerencias").css({'display': 'none'});
+													}
+
+												</script>
+												<apex:actionFunction name="autoCompletar" action="{!autoComplete}" reRender="tablita">
+													<apex:param name="nombre" assignTo="{!nombreDeLead}" value=""/>
+												</apex:actionFunction>
+
+												<apex:actionFunction name="clear" action="{!limpiarSugerencias}" reRender="tablita"/>
+											<br/>
+											</div>
+
+												<apex:outputPanel rendered="{!esCuentaPersonal}">
+													<div id="apellido" class="group">
+														<h1 align="center" >APELLIDO(S)</h1><br/>
+														<apex:inputText id="apellido" styleClass="datoSemaforo inp user" value="{!apellido}" onkeyup="validarOtro();mostrarplaza(this); $('#idtipolead').show();calcularSemaforos();palomita(this.value,'apellidoLead');soloApellido(this);" onfocus="ocultarSugerencias();"  html-data-tooltip="Apellido del Lead" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" />
+														<label class="req0 apellidoLead">
+															<img src="{!$Resource.noCompletado}" style="width: 17px;height: 17px;"/>
+														</label> <br/>
+													</div>
+												</apex:outputPanel>
+										</div>
+										
+
+<!--           <apex:outputPanel id="prueba2">
+							<table class="ajustarIzquierda2" align="center" border="">
+									<td colspan="4" align="center">
+											<div class="divTableCell"></div><br/>
+											<div class="divTableCell"></div><br/>
+									</td>
+							</table>
+					</apex:outputPanel><br/> -->
+
+
+							<div class="plaza muestrame" id="idplazaint" hidden="hidden">
+								<apex:outputPanel rendered="{!esCuentaPersonal}">
+									<h1>CIUDAD DE INTERES:</h1><br/>
+									<apex:inputText id="completeCity" styleClass="inp  tags locate" value="{!nuevoLead.Ciudad_Plaza__c}"  html-data-tooltip="Plaza de Interés" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" onchange="mostrartipolead(this);" onfocus="ocultarSugerencias();" html-data-tooltip-stickto="right" />
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!AND(!esCuentaPersonal,nuevoLead.Plaza__c != null)}">
+									<h1>PLAZA 1:</h1><br/>
+									<apex:inputText styleClass="inp  tags locate" value="{!nuevoLead.Plaza__c}"  html-data-tooltip="Plaza de Interés" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" onchange="mostrartipolead(this);" onfocus="ocultarSugerencias();" html-data-tooltip-stickto="right" />
+								</apex:outputPanel>
+								<br/>
+								<apex:outputPanel rendered="{!AND(!esCuentaPersonal,nuevoLead.Plaza_2__c != null)}">
+									<h1>PLAZA 2</h1><br/>
+									<apex:inputText styleClass="inp  tags locate" value="{!nuevoLead.Plaza_2__c}"  html-data-tooltip="Plaza de Interés" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" onchange="mostrartipolead(this);" onfocus="ocultarSugerencias();" html-data-tooltip-stickto="right" />
+								</apex:outputPanel>
+								<br/>
+								<apex:outputPanel rendered="{!AND(!esCuentaPersonal,nuevoLead.Plaza_3__c != null)}">
+									<h1>PLAZA 3</h1><br/>
+									<apex:inputText styleClass="inp  tags locate" value="{!nuevoLead.Plaza_3__c}"  html-data-tooltip="Plaza de Interés" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" onchange="mostrartipolead(this);" onfocus="ocultarSugerencias();" html-data-tooltip-stickto="right" />
+								</apex:outputPanel>
+								<!-- <apex:inputHidden id="cityId" value="{!nuevoLead.Ciudad_Plaza__c}" /> -->
+								<br/>
+								<br/>
+						
+							</div>
+
+
+							<div class="muestrame" id="idtipolead" hidden="hidden">
+								<h1>TIPO DE LEAD:</h1><br/><br/>
+
+											<apex:inputField styleclass="inp" value="{!nuevoLead.Type}"  html-data-tooltip="Tipo de Cuenta Para Prospecto" html-data-tooltip-color="black" id="tipoleadd" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="right" onchange="validarOtro();mostrarorigen(this); palomita(this.selectedIndex,'tipoLead');" style="width: 40%;"/>
+											<label class="req tipoLead">
+												<img src="{!$Resource.noCompletado}" style="width: 17px;height: 17px;"/>
+											</label>
+										<br/><br/>   </div>
+
+						<div class="origen muestrame"  hidden="hidden">
+						<div class="inlines"><h1>SUB-ORIGEN:</h1><br/><br/>
+						<apex:inputField styleClass="inp  selects" value="{!nuevoLead.Origen__c }"  html-data-tooltip="Origen del Prospecto" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="left"/></div>
+						<div class="inlines"><h1>ORIGEN:</h1><br/><br/>
+						<apex:inputField styleClass="inp  selects" value="{!nuevoLead.SubOrigen__c}"  html-data-tooltip="Suborigen" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="right"/>
+						</div></div>
+
+
+
+
+									<div class="muestrame" >
+									<div class="inlines"><br/>
+																<h1>TELÉFONO:</h1><br/><br/>
+
+								 <apex:inputField styleClass="inp datoSemaforo selects phonee1" value="{!nuevoLead.Phone}" onkeyup="validarOtro();this.value = this.value.replace(/[^0-9]/g,''); validatelefono(this); palomita(this.value,'telefonoLead');" onfocus="ocultarSugerencias();" html-data-tooltip="Número de teléfono para contacto 10 Digitos" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="top" html-maxlength="10"/>
+							 <div style="    width: 5%;
+		position: relative;
+		display: inline-block;
+		float: left;
+		margin-bottom: 5%;">  <label class="req2 telefonoLead" >
+										<img src="{!$Resource.noCompletado}" style="width: 17px;height: 17px; display: inline-block; margin-top: -10px;"/>
+									</label>
+								</div>
+							<!--    <label class="req2">*</label> -->
+
+<!-- <apex:image url="{!URLFOR($Resource.icof, '/plus.png')}" width="10px" html-data-placement="right" title="Agregar un teléfono adicional" onclick="$('#idTelefono2').show();"/> -->
+
+<!--                                      <apex:image onclick="$('.todo').blur(); teladicional();" url="{!URLFOR($Resource.consolas, 'recursos/imagenes/signs.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Agregar un teléfono adicional"></apex:image> -->
+							 <!--             <br/>
+													 <br/> -->
+										</div>
+
+
+
+
+									 <div class="inlines">
+								 <br/>
+										 
+
+														<h1>EMAIL:</h1><br/><br/>
+														<apex:inputField styleClass="inp  selects mail" value="{!nuevoLead.PersonEmail}" html-data-tooltip="Correo de contacto" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="bottom" onkeyup="validarOtro();validamail(this)" onfocus="ocultarSugerencias();" rendered="{!esCuentaPersonal}"/>
+														<apex:inputField styleClass="inp  selects mail" value="{!nuevoLead.Email__c}" html-data-tooltip="Correo de contacto" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="bottom" onkeyup="validarOtro();validamail(this)" onfocus="ocultarSugerencias();" rendered="{!IF(esCuentaPersonal,false,true)}"/>
+<!-- <label class="req2 telefonoLead">
+										<img src="{!$Resource.noCompletado}" style="width: 17px;height: 17px; display: none;"/>
+									</label> -->
+							 <!--              <br/>
+										<br/>
+ -->
+										</div>
+
+
+									</div>
+									<div class="tel22">
+ <div class="inlines">
+ <center>
+													<img src="https://image.flaticon.com/icons/svg/143/143506.svg" class="plus" onclick="$('.t2').toggle();  var origsrc = $(this).attr('src');
+				var src = '';
+				if (origsrc == 'https://image.flaticon.com/icons/svg/143/143506.svg') src = 'https://image.flaticon.com/icons/svg/143/143505.svg';
+				if (origsrc == 'https://image.flaticon.com/icons/svg/143/143505.svg') src = 'https://image.flaticon.com/icons/svg/143/143506.svg';
+			 
+				$(this).attr('src', src);"  />
+				</center>
+												 <div class="inlines">
+													 
+												 </div>
+										</div>
+										</div>
+
+
+
+									<div class="t2" hidden="hidden">
+									<div class="inlines" style="width: 100%; transition: 1s; " >
+									<div id="idTelefono2" class="inlines full" >
+														 <h1>Teléfono 2:</h1><br/><br/>
+														 <apex:inputField id="tel2" styleClass="inp selects phonee" value="{!nuevoLead.Telefono_2__c}" onkeyup="this.value = this.value.replace(/[^0-9]/g,''); validatelefono2(this);" onfocus="ocultarSugerencias();" html-data-tooltip="Número alternativo para contacto 10 digitos" html-data-tooltip-color="black" html-data-tooltip-animate-function="scalein" html-data-tooltip-stickto="right" html-maxlength="10" />
+
+									</div>
+									 <div class="inlines"></div>
+									</div>
+								 </div>
+
+
+
+
+
+
+
+				<apex:actionFunction immediate="true" action="{!cancelarlead}" name="cancelarlead"/>
+
+
+
+
+
+
+
+
+						<script>
+
+						$(document).ready(function(){
+							
+							$('[data-toggle="tooltip"]').tooltip();
+
+							var PLACEHOLDER = 'Inserte una ciudad';
+							var cityObject;
+							var queryTerm;
+
+							$("[Id$=completeCity]").autocomplete({
+								source: function(request,response){
+									queryTerm = request.term;
+									Crear_Lead_controller.autocompleteCiudades(request.term, function(result, event){
+										if(event.type == 'exception') {
+											alert(event.message);
+										} else {
+											console.log(cityObject);
+											cityObject = result;
+											response(cityObject);
+										}
+									});
+								}
+							});
+
+						});
+
+					 // $('#myModal2').on('shown.bs.modal', function () {
+					 //     //$('#myInput').focus()
+					 // })
+
+					 // $('#myModal3').on('shown.bs.modal', function () {
+					 //     $('#myInput').focus()
+					 // })
+
+					 // $('#myModal4').on('shown.bs.modal', function () {
+					 //     $('#myInput').focus()
+					 // })
+
+					 // $('#myModal5').on('shown.bs.modal', function () {
+					 //     $('#myInput').focus()
+					 // })
+
+					 // $('#myModal6').on('shown.bs.modal', function () {
+					 //     $('#myInput').focus()
+					 // })
+					 // $('#myModal7').on('shown.bs.modal', function () {
+					 //     $('#myInput').focus()
+					 // })
+
+
+						calcularSemaforos = function() {
+								var totalCampos = 0;
+								var camposllenos = 0;
+								$('.datoSemaforo').each(function (i) {
+										var e = $(this);
+										if (e.val() != null && e.val() != '') {
+												camposllenos++;
+										}
+										totalCampos++;
+								});
+								camposllenos += correo;
+								if((nombre == 0 || apellido == 0) && {!esCuentaPersonal}){
+									camposllenos = 0;
+									console.log('nombre y apellido son obligatorios para cuentas personales');
+								}
+								if (camposllenos > 2 && {!esCuentaPersonal}) {
+								 //$('.derecha').show();
+								 console.log('entro al primeo');
+
+								}else if(camposllenos > 1 && {!!esCuentaPersonal}){
+									// $('.derecha').show();
+									console.log('entro al segundo');
+								}
+								else if(camposllenos < 3)
+								 {
+									//console.log('entro al 3');
+										//$('.derecha').hide();
+								 }   
+								 // console.log('hola1 '+{!esCuentaPersonal});
+								 // console.log('hola2 ' +'{!esCuentaPersonal}');
+								 // console.log('hola3 ' +"{!esCuentaPersonal}");
+				 
+						}
+
+						function palomita(valor,clase){
+							var src = $('.'+clase+' img').attr('src');
+							var info = '{!$Resource.noCompletado}';
+							var paloma = '{!$Resource.completado}';
+							if(clase == 'nombreLead' || clase == 'apellidoLead'){
+								if(valor.length > 2){
+									if (src == info){
+										src = paloma;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+								else{
+									if (src == paloma){
+										src = info;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+							}
+
+							if(clase == 'tipoLead'){
+								if(valor != 0){
+									if (src == info){
+										src = paloma;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+								else{
+									if (src == paloma){
+										src = info;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+							}
+
+							if(clase == 'telefonoLead'){
+								if(valor.length > 9){
+									if (src == info){
+										src = paloma;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+								else{
+									if (src == paloma){
+										src = info;
+									} 
+									$('.'+clase+' img').attr('src',src);
+								}
+							}
+
+						}
+						// calcularSemaforos = function() {
+						//     var totalCampos = 0;
+						//     var camposLlenos = 0;
+						//     $('.datoSemaforo').each(function (i) {
+						//         var e = $(this);
+						//         if (e.val() != null && e.val() != '') {
+						//             camposLlenos++;
+						//         }
+						//         totalCampos++;
+						//     });
+
+						//     var porcentajeLLenado = 0;
+						//     if (totalCampos > 0) {
+						//         porcentajeLLenado = (camposLlenos/totalCampos) * 100;
+						//     }
+
+						//     if (porcentajeLLenado < 75.0) {
+						//         semaforos.datosIniciales = 'Rojo';
+						//     } else if (porcentajeLLenado >= 75.0 && porcentajeLLenado < 100.0) {
+						//         semaforos.datosIniciales = 'Amarillo';
+						//     } else if (porcentajeLLenado >= 100.0) {
+						//         semaforos.datosIniciales = 'Verde';
+						//     }
+						//     actualizarSemaforos();
+
+						//     $('#semaforo-datosIniciales').val(semaforos.datosIniciales);
+						// };
+					 </script>
+
+
+	</center>
+</div>
+
+
+			</div>
+
+	<div class="foot">
+
+												 <div class="izq">
+												 <center>
+														 <apex:image url="{!URLFOR($Resource.icof, '/cancela.png')}"  title="Cancelar" styleClass="circulo1 modaal-confirm"/> 
+										 
+														
+												</center>
+												</div>
+												<div class="medio">
+
+												</div>
+												<!-- <div class="derecha" hidden="hidden">
+												<center>
+														<apex:image url="{!URLFOR($Resource.icof, '/right.png')}" styleClass="circulo1" title="Precalificación">
+																<apex:actionSupport event="onclick" action="{!irPrecalificacion}"/>
+														</apex:image>
+												</center>
+												</div> -->
+												<apex:actionFunction name="validarOtro" action="{!validaSiguiente}" reRender="avanzar"/>
+												<apex:outputPanel styleClass="derecha" layout="block" id="avanzar">
+
+												<center>
+														<apex:image rendered="{!avanzar}" url="{!URLFOR($Resource.icof, '/right.png')}" styleClass="circulo1" title="Precalificación">
+																<apex:actionSupport event="onclick" action="{!irPrecalificacion}"/>
+														</apex:image>
+												</center>
+												</apex:outputPanel>
+
+
+
+</div>
+</apex:form>
+				<script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script>
+		<script type="text/javascript">
+
+				$('.modaal-confirm').modaal({
+						type: 'confirm',
+						accessible_title: 'Cancelar',
+						confirm_button_text: 'Confirmar',
+						confirm_cancel_button_text: 'Cancelar',
+						confirm_title: 'Confirma',
+						confirm_content: '<p>Cancelar Creación e Ir a Inicio</p>',
+						confirm_callback: function() {
+								cancelarlead();
+								
+						},
+						confirm_cancel_callback: function() {
+						}
+				});
+
+		</script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+<script src="/resource/materialize/materialize/js/materialize.js"></script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	 </body>
+
+</apex:page>
+<!-- http://lukyvj.github.io/menu-to-cross-icon/ -->

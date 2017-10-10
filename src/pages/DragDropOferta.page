@@ -1,0 +1,58 @@
+<apex:page standardController="Oferta__c" extensions="PropiedadDragDropControllerOferta" showHeader="false">
+    <apex:form >
+        <apex:pageMessages />
+        <apex:outputPanel rendered="{!bRedirect}">
+            <script type="text/javascript">
+                window.top.location.href = '{!redirectUrl}';
+            </script>
+        </apex:outputPanel>
+        <style>
+            html, body, #map-canvas {
+                height: 500px;
+                margin: 0px;
+                padding: 0px
+            }
+        </style>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script>
+            var map;
+            function initialize() {
+                var latLng = new google.maps.LatLng({!plat}, {!plng});
+                
+                var options = {
+                  zoom: 15,
+                  center: latLng,
+                  scrollwheel: false,
+                  disableDoubleClickZoom: true,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP,
+                  zoomControl: true,
+                }
+                map = new google.maps.Map(document.getElementById('map-canvas'), options);
+                var marker = new google.maps.Marker({
+                  position: latLng, 
+                  map: map, 
+                  draggable: true
+                });
+                google.maps.event.addListener(marker, 'drag', function(event) {
+                  console.debug('new position is '+event.latLng.lat()+' / '+event.latLng.lng()); 
+                });
+                 
+                google.maps.event.addListener(marker, 'dragend', function(event) {
+                    $('.lat').val(event.latLng.lat());
+                    $('.lng').val(event.latLng.lng());
+                  console.debug('final position is '+event.latLng.lat()+' / '+event.latLng.lng()); 
+                });
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+        </script>
+        Latitud: 
+        <apex:inputText value="{!lat}" styleClass="lat"/>
+        Longitud:
+        <apex:inputText value="{!lng}" styleClass="lng"/>
+        <apex:commandLink value="Guardar" action="{!refreshLL}" target="_parent" />
+        <div id="map-canvas"></div>
+    </apex:form>
+</apex:page>

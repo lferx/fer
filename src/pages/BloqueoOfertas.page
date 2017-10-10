@@ -1,0 +1,66 @@
+<apex:page Controller="BloqueoOfertasController">
+    <apex:form id="formaprincipal">
+         <apex:PageMessages />
+         <apex:panelGrid columns="2">              
+                <apex:outputLabel value="Oferta:"/>
+                <apex:inputtext value="{!filterofta}" size="30" >
+                    <apex:actionSupport event="onchange" action="{!cargainfo}" rerender="mainblock"/>
+                </apex:inputtext>  
+         </apex:panelGrid>
+         <apex:pageBlock id="mainblock">
+                <!--  <apex:pageBlockButtons>                       
+                      <apex:commandButton value="Cerrar" action="{!cancel}" />
+                </apex:pageBlockButtons>-->
+                <apex:repeat value="{!mdocs}" var="of">
+                    <li> <b>Oferta : </b> {!of.name}</li>
+                    <li> <b>Gerente : </b> {!of.Owner.Name}</li>
+                    <li> <b>Desbloqueado Hasta : </b> {!of.Fecha_Desbloqueo__c}</li>
+                    <apex:commandLink value="Desbloquear" action="{!Desbloquear}" style="font-size:10pt;color:blue;" >
+                         <apex:param name="idLnSelect" assignTo="{!idLnSelect}" value="{!of.id}"/>
+                    </apex:commandLink> 
+                    <apex:pageBlockTable var="doc" value="{!mdocs[of]}" id="Documents">             
+                        <apex:column value="{!doc.EtapaOferta__r.NumEtapa__c}" headervalue="Etapa" />
+                        <apex:column value="{!doc.DocumentoEtapa__r.Orden__c}" headervalue="Orden" />
+                        <apex:column value="{!doc.Name}" headervalue="Documento" />
+                        <apex:column value="{!doc.Fecha_Inicio__c}" headervalue="Fecha Inicio" />
+                        <apex:column value="{!doc.Fecha_Com_Controller__c}" headervalue="Fecha Compromiso" />
+                        <apex:column value="{!doc.Tiempo_Restante__c}" headervalue="Retraso"/>
+                        <apex:column value="{!doc.DocumentoEtapa__r.Obligatorio__c}" headervalue="Obligatorio?"/>
+                        
+                    </apex:pageBlockTable>
+                 </apex:repeat>
+               <apex:outputPanel >
+                    <table width="1100px" border="0">
+                        <tr >
+                            <td width="20%" align="left" style="font-size: 9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {!((ofertasXhoja * hojasActual)-ofertasXhoja)+1} - {!(ofertasXhoja * (hojasActual - 1)) + mapsize} of {!iofertasTotal}
+                            </td>
+                            <td width="60%" align="center">
+                                <apex:commandLink action="{!Anterior}" rendered="{!offset>0}" reRender="mainblock"
+                                          style="font-size: 9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;">
+                                        ◄ ◄ ◄  Previous
+                                   
+                                </apex:commandlink> 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <apex:commandLink action="{!Siguiente}" rendered="{!mapsize==ofertasXhoja}" reRender="mainblock"
+                                                  style="font-size:9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;">
+                                        Next ► ► ►  
+                                    
+                                </apex:commandlink>
+                            </td>
+                            <td width="20%" align="right" style="font-size: 9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;">
+                                <apex:commandLink value="Page / go" action="{!NumPaginaActual}" reRender="mainblock"
+                                                  style="font-size:9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;"/> &nbsp;&nbsp;
+                                <apex:inputText style="width:18px;font-size:9.0pt;font-family: Arial,sans-serif;font-weight:normal;color:black;" value="{!hojasActual}" id="pageNum"/>
+                                 / {!numHojas}
+                            </td>
+                        </tr>
+                    </table> 
+               </apex:outputPanel>
+              
+            </apex:pageBlock>
+    </apex:form>
+
+
+</apex:page>

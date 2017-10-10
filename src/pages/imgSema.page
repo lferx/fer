@@ -1,0 +1,163 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" >
+   <html>
+        <head>
+            <style>
+              .outBorder {
+                 background-color: #EEEEEE;
+                 border:1px outset black;
+                
+             }
+               .inBorder{
+                font-family:Verdana, Geneva, sans-serif;
+                font-size:8px;
+                text-align: center;
+                background-color: #fff;
+                border-top: 1px outset black;
+                border-left:1px outset black;
+                border-bottom:1px outset black;
+                border-right:1px outset black;
+             }
+             
+             h2 {
+                  color:#fb7f05;
+                  text-align: center;
+                }
+            p {
+                  color:#fb7f05;
+                  text-align: center;
+            } 
+             
+            </style>
+            
+            <script>
+            
+                var cont=0;
+                
+                function cambia() {
+                
+                cont = cont % 4;
+                
+                if (cont==1){
+                
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                
+                }
+                
+                if (cont==2){
+                
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'amar.png')}";
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                
+                }
+                if (cont==3){
+                
+                document.getElementById("fotocambia").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                document.getElementById("fotocambia2").src="{!URLFOR($Resource.semaforo,'rojo.png')}";
+                document.getElementById("fotocambia3").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                document.getElementById("fotocambia4").src="{!URLFOR($Resource.semaforo,'verde.png')}";
+                
+                }
+                
+                cont++;
+                
+                }
+                function inicio() {
+                
+                setInterval(cambia, 2000);
+                
+                }
+                
+                window.onload=inicio;
+            
+            </script>
+            
+            </head>
+ 
+    <body>
+            <center>
+            
+                    
+                <table cellPadding="3" border="1" styleClass="outBorder">
+                      <tr>
+                          <td>
+                               <p>Objetivo</p>
+                          </td>
+                          <td>
+                           <p>Alcance Real</p>
+                         </td>
+                         <td>
+                           <p>semaforo</p>
+                         </td>
+                      </tr>
+                      <tr>
+                      
+                       <td>
+                           <h2>7</h2>
+                          </td>
+                          <td>
+                           <h2>8</h2>
+                         </td>
+                         <td>
+                           <img id="fotocambia" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="100%" height="80%"/>
+                           
+                         </td>
+                        
+                      </tr>
+                     
+                      <tr>
+                      <center>
+                       <td>
+                           <h2>7</h2>
+                          </td>
+                          <td>
+                           <h2>8</h2>
+                         </td>
+                         <td>
+                           
+                            <img id="fotocambia2" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="100%" height="80%"/>
+                             
+                         </td>
+                         </center>
+                      </tr> 
+                      <tr>
+                      <center>
+                       <td>
+                           <h2>7</h2>
+                          </td>
+                          <td>
+                           <h2>8</h2>
+                         </td>
+                         <td>
+                           
+                             <img id="fotocambia3" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="100%" height="80%"/>
+                         </td>
+                         </center>
+                      </tr> 
+                      <tr>
+                      <center>
+                       <td>
+                           <h2>7</h2>
+                          </td>
+                          <td>
+                           <h2>8</h2>
+                         </td>
+                         <td>
+                           
+                             <img id="fotocambia4" src="{!URLFOR($Resource.semaforo,'grises.png')}"  alt="Revimex" width="100%" height="80%"/>
+                         </td>
+                         </center>
+                      </tr> 
+                      
+                      </table>
+                           
+                     
+               
+         </center>
+</body>
+</html>
+</apex:page>

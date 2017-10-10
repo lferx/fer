@@ -1,0 +1,845 @@
+<apex:page Controller="ferc" renderAs="pdf" applyBodyTag="false">
+    <head>
+        <link rel="stylesheet" href="/resource/mtzauth/materializenew/css/materialize.css"/>
+        <style> 
+              body { font-family: 'Arial Unicode MS'; font-size: 14px; }
+            body img {
+
+    display: block;
+    margin: auto;
+    width: 30%;
+    height: 25%;
+    float: right;
+}
+
+table {
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 3.5px;
+}
+
+
+
+/*thead th {
+
+  text-align: center;
+  background: #8a97a0;
+  color: #FFF;
+}*/
+
+/*tr {*/
+/*  background: #f4f7f8;*/
+/*background: #9da1a2;
+}
+*/
+thead th {
+
+  text-align: center;
+  background: #8a97a0;
+  color: #FFF;
+}
+
+tr {
+  background: #f4f7f8;
+}
+
+
+th {
+  text-align: left;
+  padding: 6px;
+}
+td {
+  text-align: left;
+  padding: 4px;
+}
+#dos tr, td, th 
+{
+  text-align: center;
+}
+#uno, #dos, #tres
+{
+    font-size: 13px;
+}
+footer
+{
+    color: #848484;
+}
+
+
+#ofertas{margin: auto;}
+
+.pricing-table {
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
+}
+.pricing-table .heading{
+    color: #9C9E9F;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-size: 20px;
+}
+
+
+.gastos {
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
+
+}
+.estatus {
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
+
+}
+.gastos .headinggastos{
+    color: #9C9E9F;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-size: 18px;
+
+}
+.headinggastos
+{
+  margin-bottom: -1%;
+}
+
+.blockg{
+margin: auto;
+    color: #fff;
+    width: 70%; 
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+   } 
+
+.personalg .titleg{        
+    background: #FAAC58; 
+}
+.personalg .contentg,.personalg  .pt-footer{
+    background: #FAAC58;
+}
+.contentg{
+margin-top: -2px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+
+.priceg       {
+    font-weight: bold;
+        line-height: 1.1;
+        font-size: 15px;
+}
+
+.estatus .headingf{
+    color: #9C9E9F;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-size: 16px;
+
+}
+.headingf
+{
+  margin-bottom: -1%;
+}
+
+.blockf{
+margin: auto;
+    color: #fff;
+    width: 90%; 
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+   } 
+
+.personalf .titlef{        
+    background: #A4A4A4; 
+}
+.personalf .contentf,.personalf  .pt-footer{
+    background: #A4A4A4;
+}
+.contentf{
+margin-top: -2px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 8px;
+}
+
+
+.pricef      {
+    display: inline-block;
+    font-weight: bold;
+        line-height: 1.1;
+        font-size: 15px;
+}
+
+
+.block{
+    width: 70%;   
+    margin: auto;
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;    
+}
+.title,.pt-footer{
+  font-size: 15px;
+    color: #FEFEFE;
+    line-height: 2.5;
+    position: relative;
+    font-weight: bold;
+
+}
+.titleg ,.titlef{
+    font-size: 17px;
+    line-height: 1.9;
+    position: relative;
+    font-weight: bold;
+
+
+}
+.content{
+    position: relative;
+    color: #FEFEFE;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.price{
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+   
+.hint{
+    font-style: italic;
+    font-size: 0.9rem;
+}
+.features{
+    list-style-type: none;    
+    background: #FFFFFF;
+    text-align: left;
+    color: #9C9C9C;
+    font-size: 16px;
+    margin-right: 40px;
+}
+.features li{
+    padding:5px;
+    width: 100%;
+}
+.features li span{
+}
+.pt-footer{
+    font-size: 0.95rem;
+    text-transform: capitalize;
+    margin-bottom: -17px;
+
+}
+
+.personal .title{        
+    background: #53CFE9; 
+}
+.personal .content,.personal .pt-footer{
+    background: #53CFE9;
+}
+
+.professional .title{
+    background: #A4A4A4;
+}
+.professional .content,.professional .pt-footer{
+    background: #A4A4A4;
+}
+
+.fl{ float:left; }
+.fr{ float: right; }
+ .x{line-height: 0.2;}
+.fe {
+    float: left;
+    width: 50%;
+    color: #9C9E9F;
+    font-size: 16px;
+}
+.fx {
+  font-size: 14px;
+}
+.o {font-size: 15px;}
+.w {font-size: 17px;}
+.rehab
+{
+  font-size: 12px;
+}
+.rehab table tr
+{
+background-color: white;
+text-align: left;
+}
+.rehab table thead
+{
+  background-color: #f2f2f2;
+  text-align: center;
+  color: black;
+  font-weight: lighter;
+}
+</style>
+    </head>
+    <body>
+    <apex:image value="{!$Resource.logorevi}"/><br/><br/><br/>
+
+    <apex:outputPanel id="ofertas" rendered="{!if(tipoo='Ofertas', true, false)}">
+    
+   <p style="text-align: right; font-size: 14.5px;
+    color: #827E7E;">Fecha: 
+    <apex:outputText value="{0,date, d/MM/yyyy}">
+    <apex:param value="{!myf}"/>
+    </apex:outputText>
+    </p>
+        <div class="pricing-table group">
+            <h1 class="heading">
+               Oferta {!acct.name} {!acct.TipoOferta__c} por:
+            </h1>
+            <div class="block personal ">
+
+                <div class="content">
+                    <p class="price">
+                    Precio de Venta: $
+                    <span><apex:outputPanel rendered="{!if(pv>0, true, false)}">
+                    <apex:outputText value="{0, number, 000,000.00}" >
+                    <apex:param value="{!pv}"/>
+                    </apex:outputText>
+                    </apex:outputPanel>
+                    </span>
+                    </p>
+
+                </div>
+
+                <ul class="features">
+                    <li>
+                <div class="pt-footer w"><center>
+                        Gastos Incluidos:  
+                        <apex:outputText value=" ${0, number, 0,000.00}" >
+                          <apex:param value="{!gastos.costos__c}"/>
+                        </apex:outputText> </center>
+                        </div><br/>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(acct.CosteAdeudos__c>0, true, false)}">
+                          Adeudos Compra: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!acct.CosteAdeudos__c}"/>
+                          </apex:outputText> 
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(acct.CosteAdeudosVenta__c>0, true, false)}">
+                          Adeudos de Venta: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!acct.CosteAdeudosVenta__c}"/>
+                          </apex:outputText>
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(acct.CosteRehabilitacion__c>0, true, false)}">
+                          Rehabilitación: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!acct.CosteRehabilitacion__c}"/>
+                          </apex:outputText>
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(acct.CosteDesalojo2__c>0, true, false)}">
+                          Desalojo: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!acct.CosteDesalojo2__c}"/>
+                          </apex:outputText> 
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(comisiongerente>0, true, false)}">
+                          Comisión Revimex: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!comisiongerente}"/>
+                          </apex:outputText>
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(broker!=null, true, false)}">
+                          Comisión Promotor:  
+                          <apex:outputText value="{0, number, 0.00}" >
+                            <apex:param value="{!broker}"/>
+                          </apex:outputText>% 
+                                <apex:outputText value="  ${0, number, 0,000.00}" >
+                                  <apex:param value="{!gastos.comisioncomercial__c}"/>
+                                </apex:outputText>
+                        </apex:outputPanel>
+                    </li>
+                    <li>
+                        <apex:outputPanel rendered="{!if(plus>0, true, false)}">
+                          Plus de Venta: $ 
+                          <apex:outputText value="{0, number, 0,000.00}" >
+                            <apex:param value="{!plus}"/>
+                          </apex:outputText>
+                        </apex:outputPanel>
+                    </li>
+                </ul>
+                <div class="pt-footer">
+                          Beneficio:
+                          <apex:outputText value="${0, number, 0,000.00}" >
+                            <apex:param value="{!gastos.Beneficio__c}"/>
+                          </apex:outputText>
+                </div><br/>
+                <div class="pt-footer">
+                        Margen Neto Estimado:  
+                        <apex:outputText value="{0, number, 0.00}" >
+                          <apex:param value="{!gastos.margenneto__c}"/>
+                        </apex:outputText> %
+                        </div><br/>
+                <div class="pt-footer">
+                        <apex:outputPanel rendered="{!if(gastos.margenreferencia__c>0, true, false)}">
+                          Margen de Referencia:
+                          <apex:outputText value="{0, number, 0.00}" >
+                            <apex:param value="{!gastos.margenreferencia__c}"/>
+                          </apex:outputText> %
+                        </apex:outputPanel>
+                </div><br/>
+                <div class="pt-footer">
+                    Días en Stock:  {!ef.TiempoOferta__c}
+                </div>
+
+            </div>
+<!--             <div class="block professional fl">
+                <h2 class="title">Estatus Financiero</h2>
+                <div class="content">
+
+                </div>
+
+                <div class="content">
+                    <p class="price">
+                    Precio Original: $
+                    <span>
+                    <apex:outputText value="{0, number, 00,000.00}" >
+                    <apex:param value="{!ef.Precio_Original__c}"/>
+                    </apex:outputText>
+                    </span>
+                    </p>
+                </div>
+
+                <ul class="features">
+                    <li>
+                      <center>Información {!acct.name}:</center><br/>
+                    </li>
+                    <li>Precio de Compra:  
+                          <apex:outputText value="${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.PrecioCompra__c}"/>
+                          </apex:outputText>
+                                            
+                    </li>
+                    <li>
+                    Estatus de Invasión:  {!ef.Estatus_de_Invasion__c}                        
+                    </li>
+                    <li>
+                    Estado:  {!edo}                        
+                    </li>
+                    <li>
+                    Plaza:  {!ef.Plaza__c}                        
+                    </li>
+                </ul>
+                <div class="pt-footer">
+                    Margen Neto:  
+                        <apex:outputText value="{0, number, 0.00}" >
+                          <apex:param value="{!ef.margenneto__c}"/>
+                        </apex:outputText>%
+                </div><br/>
+                <div class="pt-footer">
+                    Días en Stock:  {!ef.TiempoOferta__c}
+                </div>
+            </div> -->
+
+
+
+    </div>
+ 
+
+    </apex:outputPanel>
+
+    <apex:outputPanel id="carta" rendered="{!if(tipoo='Carta de Instrucción', true, false)}">
+    <p style="font-size: 14px; text-align: right;">Ciudad de México a
+    <apex:outputText value="{0,date, d/MM/yyyy}">
+    <apex:param value="{!myf}"/>
+    </apex:outputText>
+    </p>
+    <p style="font-size: 14px; text-align: left;">
+        At´n Lic. {!dnotaria.Representante__c}  <br/>
+        {!dnotaria.name}
+    </p>
+    <p style="font-size: 14px; text-align: justify;">
+        Por este medio, en carácter de representante de {!empresa} autorizo a {!apo}, para que en nuestro nombre y representación comparezca a la firma del instrumento de compra venta del inmueble que se describe a continuación:
+        
+    </p>
+        <table id="uno">
+      <thead>
+        <tr>
+          <th scope="col">No. de Referencia</th>
+          <th scope="col">Vendedor</th>
+          <th scope="col">Ciudad</th>
+          <th scope="col">Ubicación</th>
+        </tr>
+      </thead>
+     
+      <tbody>
+        <tr>
+          <th scope="row">{!acct.name}</th>
+          <td>{!empresa}</td>
+          <td>{!cd}, {!edo}</td>
+          <td>
+            <apex:outputText value="{!acct.Direccion2__c}" escape="false"/>
+           </td>
+        </tr>
+      </tbody>  
+    </table>
+
+    <table id="tres">
+      <thead>
+        <tr>
+          <th scope="col">Forma de venta</th>
+          <th scope="col">Monto de Operación</th>
+          <th scope="col">Comprador</th>
+        </tr>
+      </thead>
+     
+      <tbody>
+        <tr>
+          <th scope="row"><apex:outputText value="{!ef.TipoOferta__c}" escape="false"/></th>
+          <td>
+          <apex:outputText value="${0, number, 000,000}" >
+              <apex:param value="{!monto}"/>
+          </apex:outputText>
+          </td>
+          <td>{!cliente}</td>
+        </tr>
+      </tbody>  
+    </table>
+
+        <table id="dos">
+      <thead>
+        <tr>
+          <th scope="col" >Entidad Financiera</th>
+          <th scope="col">Cuenta</th>
+          <th scope="col">CLABE</th>
+          <th scope="col">Titular</th>
+        </tr>
+      </thead>
+     
+      <tbody>
+        <tr>
+          <th scope="row">{!banco}</th>
+          <td>{!cuenta}</td>
+          <td style="font-size: 12px;">{!clabe}</td>
+          <td style="font-size: 12px;">{!titular}</td>
+        </tr>
+      </tbody>  
+    </table>
+    <p>Sin más por el momento le agradezco su atención, enviándole un cordial saludo.</p><br/>
+    <center><p style="letter-spacing: 4px; font-size: 15px;">Atentamente</p>
+    <br/>
+    <p style="font-size: 15px;">Joan Vidal Pahissa <br/>Administrador Único</p>
+    </center><br/><br/>
+    <footer>
+    _________________________________________________________________________________________________________________ 
+    Av. Santa Fé 505, Cuajimalpa, Cruz Manca, Contadero, Ciudad de México, CP 05349 Teléfono 01 800 200 0440
+    
+    </footer>
+    </apex:outputPanel>
+ 
+    <apex:outputPanel id="gastos" rendered="{!if(tipoo=='Gastos', true, false)}">
+    <p style="text-align: right; font-size: 14.5px;
+    color: #827E7E;">Fecha: 
+    <apex:outputText value="{0,date, d/MM/yyyy}">
+    <apex:param value="{!myf}"/>
+    </apex:outputText>
+    </p>
+
+    <div class="gastos">
+            <h1 class="headinggastos">
+               Solicitud de Gasto {!acct.name} por:
+            </h1>
+            <div class="blockg personalg flg">
+                <h2 class="titleg">                    Monto:
+                    <span><apex:outputPanel rendered="{!if(montogastos>0, true, false)}">
+                    <apex:outputText value="${0, number, 0,000.00}" >
+                    <apex:param value="{!montogastos}"/>
+                    </apex:outputText>
+                    </apex:outputPanel>
+                    </span></h2>
+
+                <div class="contentg">
+                    <p class="priceg">
+                        {!cname}
+                    </p>
+
+                </div>
+                <ul class="features o">
+                    <li>
+                      <center>Detalles:</center><br/>
+                    </li>
+
+                    <li>
+                    Descripción: {!comentariosgasto}
+                    </li>
+                </ul>
+              
+                <div class="pt-footer x">
+                <br/>
+                </div>
+          </div>
+    </div>
+    <br/><br/>
+    <div class="estatus">
+            <h1 class="headingf">
+               Estatus Financiero
+            </h1>
+            <div class="blockf personalf flf">
+                <h2 class="titlef"> {!acct.name}</h2>
+
+
+                <div class="fe">
+                <ul class="features fx">
+                    <li>
+                    Precio de Compra:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.PrecioCompra__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Adeudos Compra:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteAdeudos__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Adeudos Venta:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteAdeudosVenta__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Honorarios Notaría:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteHonorariosNotaria__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Impuestos Notaría:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteImpuestosNotaria__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Adeudos Desalojo:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteDesalojo2__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Coste Rehabilitación: 
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.CosteRehabilitacion__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Presupuesto Rehabilitación:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.PresupuestoRehabilitacion__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Total Costo:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.TotalCosto__c}"/>
+                          </apex:outputText>
+                    </li>
+                    <li>
+                    Margen Bruto: {!ef.MargenBruto__c}%
+                    </li>
+                    <li>
+                    Margen Neto: {!ef.MargenNeto__c}%
+                    </li>
+                    <li>
+                    Días en Stock:  {!ef.TiempoOferta__c}
+                    </li>
+                    <li>
+                    Total cobrado:  
+                          <apex:outputText value=" ${0, number, 0,000.00}" >
+                            <apex:param value="{!ef.Total_cobrado__c}"/>
+                          </apex:outputText>
+                    </li>
+
+                </ul>
+                </div>
+                <div class="fe">
+                <ul class="features fx">
+                    <li>
+                    Precio Original:  
+                      <apex:outputText value="{0, number, 00,000.00}" >
+                        <apex:param value="{!ef.Precio_Original__c}"/>
+                      </apex:outputText>
+                    </li>
+                    <li>
+                    Precio de Venta:  
+                      <apex:outputText value="{0, number, 00,000.00}" >
+                        <apex:param value="{!ef.PrecioVenta__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Precio Original:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Precio_Original__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Monto Crédito:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.MontoCredito__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Anticipo:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Anticipo__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Monto Contado:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.MontoContado__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Total Pagado:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Total_pagado__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Devolución Cliente:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Devolucion__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Devolución Plus Venta:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Devoluci_n_plus_venta__c}"/>
+                      </apex:outputText>
+                    </li><li>
+                    Liquidación Pendiente:  
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.LiquidacionPendiente__c}"/>
+                      </apex:outputText>
+                    </li>
+                    <li>
+                    Margen Bruto con Rehabilitación: {!ef.Precio_Original__c}%
+                    </li>
+                    <li>
+                    Comisión Comercial:
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.ComisionComercial__c}"/>
+                      </apex:outputText>
+                    </li>
+                    <li>
+                    Saneamiento:
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.Saneamiento__c}"/>
+                      </apex:outputText>
+                    </li>
+                    <li>
+                    Beneficio Neto:
+                      <apex:outputText value="{0, number, 0,000.00}" >
+                        <apex:param value="{!ef.BeneficioNeto__c}"/>
+                      </apex:outputText>
+                    </li>                 
+                </ul>
+                </div>
+                <div class="pt-footer x">
+                <br/>
+                </div>
+          </div>
+    </div>
+    </apex:outputPanel>
+    <apex:outputPanel id="rehabilitación" rendered="{!if(tipoo=='Rehabilitación', true, false)}" layout="block" styleClass="rehab">
+        <div class="gastos">
+            <center>
+              <h2>
+                 Solicitud de Rehabilitación {!acct.name} por:
+                 <apex:outputText value="${0, number, 0,000}" rendered="{!if(recentRh.Total__c!=null, true, false)}">
+                    <apex:param value="{!recentRh.Total__c}"/>
+                </apex:outputText>
+              </h2>
+            </center>
+            <div class="">
+
+                <center><h2>Gastos Excedentes</h2></center>
+                <table>
+                <thead style="border-bottom: 2px solid #e1e1e1 ;">
+                  <th>Concepto</th>
+                  <th>$ Unitario/Unidades</th>
+                  <th>Total</th>
+                  <th>Comentarios</th>
+                </thead>
+                  <apex:repeat value="{!listLimits}" var="l">
+                <tr>
+                  <td width="20%">
+                    <apex:outputText value="{!l.Name}"/>
+                  </td>
+                  <td>
+                    $<apex:outputText value="{!FLOOR(l.Precio_Unitario__c)}"/>/<apex:outputText value="{!FLOOR(l.Unidades__c)}" style="color: {!IF(CEILING(l.Unidades__c)>CEILING(l.Promedio_Unidades__c) ,'red','')}"/>
+                  </td>
+                  <td>
+                    $<apex:outputText value="{!CEILING(l.Total__c)}"/>
+                  </td>
+                 <!--  <td>
+                    $<apex:outputText value="{!l.Limite__c}" style="color: {!IF(CEILING(l.Limite__c)>2 ,'red','')}"/>/<apex:outputText value="{!CEILING(l.Promedio_Unidades__c)}"/>
+                  </td>
+                  <td>
+                    <apex:outputText value="{!l.Comentarios__c}"/>
+                  </td> -->
+                  <td>
+                    
+                  </td>
+                </tr>
+                  </apex:repeat>
+                </table>
+                <apex:outputPanel rendered="{!if(!vistaReh.empty, true, false)}" ><h2>Gastos Extraordinarios</h2></apex:outputPanel>
+                <table>
+                  <thead>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </thead>
+                  <apex:repeat value="{!vistaReh}" var="xt">
+                    <tr>
+                      <td width="20%">
+                        <apex:outputText value="{!xt.Name}" />
+                      </td>
+                      <td>
+                        $<apex:outputText value="{!CEILING(xt.Precio_Unitario__c)}"/>/<apex:outputText value="{!CEILING(xt.Unidades__c)}"/>
+                      </td>
+                      <td>
+                        $<apex:outputText value="{!CEILING(xt.Total__c)}"/>
+                      </td>
+                    </tr>
+                  </apex:repeat>
+                </table>
+
+
+
+              
+          </div>
+    </div>
+
+    </apex:outputPanel>
+    </body>
+</apex:page>

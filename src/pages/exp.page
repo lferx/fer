@@ -1,0 +1,81 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <style>
+
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none; }
+
+.collapsable {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(239, 237, 239, 0.2);
+  padding: 1rem 0; }
+  .collapsable label {
+    color: #efedef;
+    cursor: pointer;
+    font-size: 1.2em;
+    flex: 1; }
+  .collapsable [type="radio"],
+  .collapsable [type="checkbox"] {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid rgba(239, 237, 239, 0.2);
+    cursor: pointer;
+    transform: rotate(0);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; }
+    .collapsable [type="radio"]:hover, .collapsable [type="radio"]:focus,
+    .collapsable [type="checkbox"]:hover,
+    .collapsable [type="checkbox"]:focus {
+      border-top: 8px solid #fd264f; }
+    .collapsable [type="radio"]:checked,
+    .collapsable [type="checkbox"]:checked {
+      border-top: 8px solid #fd264f;
+      transform: rotate(-180deg); }
+    .collapsable [type="radio"]:checked + div,
+    .collapsable [type="checkbox"]:checked + div {
+      max-height: 200px; }
+    .collapsable [type="radio"] + div,
+    .collapsable [type="checkbox"] + div {
+      flex: 0 0 100%;
+      height: auto;
+      overflow: hidden;
+      max-height: 0;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
+      .collapsable [type="radio"] + div > *,
+      .collapsable [type="checkbox"] + div > * {
+        font-size: 0.9em;
+        padding: 0 2rem 0 0; }
+  </style>
+ <h1>
+    Collapsable section<br/>
+    with checkboxes
+</h1>
+<div class="collapsable">
+    <label for="cc-1">Something</label>
+    <input id="cc-1" type="checkbox"/>
+    <div class="collapsable-content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam leo diam, ultrices malesuada sapien at, tincidunt malesuada eros. Vivamus varius, neque quis congue euismo.</p>
+    </div>
+</div>
+
+<div class="collapsable">
+    <label for="cc-2">Something else</label>
+    <input id="cc-2" type="checkbox" checked="checked"/>
+    <div class="collapsable-content">
+        <p>Nullam a elementum dui, quis euismod nisl. Cras tempor metus ac auctor condimentum. Nunc mattis lobortis neque in blandit. Nam id nibh ante. Cras porta, sapien eget porttitor varius, urna est tempor odio, id porta erat orci a tellus. Morbi ornare nunc quis lorem tincidunt tincidunt. Morbi eget aliquet augue, vitae volutpat eros. Sed quis ligula nulla. Proin turpis tellus, egestas et orci malesuada, egestas lacinia leo. Proin sollicitudin lacus iaculis, lobortis erat in, auctor ligula.</p>
+    </div>
+</div>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page Controller="GenEtapaMigracion" >
+    <apex:form id="formaprincipal">
+         <apex:pageBlock >
+                <apex:pageBlockButtons >   
+                      <apex:commandButton value="Abrir" action="{!procesa}" />                  
+                      <apex:commandButton value="Cerrar" action="{!cierraproceso}" />
+                      <apex:commandButton value="No Iniciado" action="{!sininiciar}" />
+                      <apex:commandButton value="Abrir Desalojo" action="{!abredes}" /> 
+                      <apex:commandButton value="Crear Pasos" action="{!creaPasos}" /> 
+                      <apex:commandButton value="CheckBox Invadida" action="{!CheckBoxI}" />
+                      <apex:commandButton value="Proceso Invadidas" action="{!EtapasInv}" rendered="{!bDes}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Abre Etapa" columns="2">
+                      <apex:inputText label="Etapa: " value="{!sNumEtapa}" />
+                      <apex:inputText label="Oferta: " value="{!ofta}" required="true"/>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:component controller="ReporteVencimientoConsola_controller" access="global">
+Propietario,Nombre de Documento,Oferta,Fecha de Vencimiento,Dias Retrasados,Dictamen,Comentarios,Proximo Recordatorio
+<apex:repeat value="{!vencimientos}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+</apex:component>

@@ -1,0 +1,151 @@
+<apex:page standardController="SolicitudPago__c" extensions="SolicitudPagoController">
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <script type="text/javascript">
+        $j = jQuery.noConflict();
+        $j(document).ready(function() {
+            $j("#modalArchivos").dialog({ 
+                    autoOpen: false, 
+                    modal: true,   
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind"
+            });
+        }); 
+        function abrirModalArchivos(idPadre,tipo,isGasto){
+            if(isGasto){
+                document.getElementById('theIframe').src='../apex/GastosArchivos?gastoId=' + idPadre + '&tipo=' + tipo; 
+            }else{          
+                document.getElementById('theIframe').src='../apex/GastosArchivos?solicitudId=' + idPadre + '&tipo=' + tipo;             
+            }
+            $j("#modalArchivos").dialog("open");
+      }
+    </script>
+     <style>
+      .msgError{
+         font-size:10px;
+         color: red !important;
+      }
+      .orange{
+          background-color:#FECE27;
+          tex-align:center;
+      }
+      .bold{
+        font-weight:bold;
+      }
+      .button-adjuntar{
+        width:100px;
+        text-align:center;
+      }
+    </style>
+    <apex:outputPanel id="opPrincipal">
+    <apex:sectionHeader title="Solicitud pago" subtitle="{!SolicitudPago__c.Name}"></apex:sectionHeader>
+    <apex:detail subject="{!SolicitudPago__c.Id}" relatedList="false" title="false" 
+                 inlineEdit="true" showChatter="false" relatedListHover="true" />
+    </apex:outputPanel>
+    <apex:facet name="header">Gastos</apex:facet>
+    <apex:pageBlock id="pbGastos" mode="maindetail" >
+         <apex:form >
+             <apex:pageMessages />
+             <apex:pageBlockTable value="{!solicitudesPago}" var="sw">
+                  <apex:column headerValue="Solicitud pago" style="min-width:200px">
+                      <apex:outputField value="{!sw.solicitud.Name}"/>
+                      <hr></hr>
+                     <apex:outputField value="{!sw.solicitud.Datos_bancarios__c }"/>
+                  </apex:column>
+                  <apex:column headerValue="Importe final">
+                          <apex:outputField value="{!sw.solicitud.ImporteFinal__c}"/>
+                      </apex:column>
+                 <apex:column headerValue="Documentos">
+                          <table>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Solicitud',false);" >Solicitud</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Comprobante pago',false);" >Comprobante pago</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <button type="button" class="button-adjuntar" onclick="abrirModalArchivos('{!sw.solicitud.Id}','Comprobante fiscal',false);" >Comprobante fiscal</button>
+                                </td>
+                              </tr>
+                          </table>
+                 </apex:column>
+                 <apex:column >
+                          <apex:facet name="header">
+                              <apex:outputPanel >
+                                    <apex:commandButton value="Desagrupar" onclick="if(!confirm('¿Realmente deseas desagrupar los gastos seleccionados?')){return false;}" 
+                                                        action="{!desagruparGasto}" rerender="opPrincipal,pbGastos" rendered="{!usuario.PermisoGasto__c}"/>
+                                    Gastos agrupados
+                              </apex:outputPanel>
+                          </apex:facet>
+                          <apex:facet name="footer">
+                              <apex:outputPanel >
+                                    <apex:commandButton value="Desagrupar" onclick="if(!confirm('¿Realmente deseas desagrupar los gastos seleccionados?')){return false;}" 
+                                                        action="{!desagruparGasto}"  rerender="opPrincipal,pbGastos" rendered="{!usuario.PermisoGasto__c}"/>
+                              </apex:outputPanel>
+                          </apex:facet>
+                          <apex:pageBlockTable value="{!sw.gastos}" var="wg" id="pbtGastos" columnsWidth="4%,4%,4%,8%,20%,20%,15%,15%,10%">
+                            <apex:column headerValue="Selccionar" rendered="{!usuario.PermisoGasto__c}">
+                                <apex:inputCheckbox value="{!wg.selected}"/>
+                            </apex:column>
+                            <apex:column headerValue="Aprobar" rendered="{!usuario.PermisoGasto__c}">
+                                <apex:inputField value="{!wg.gasto.Process__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Gasto">
+                                <a href="/{!wg.gasto.Id}"><apex:outputField value="{!wg.gasto.Name}"/></a>
+                            </apex:column>
+                            <apex:column headerValue="Oferta">
+                                <apex:outputField value="{!wg.gasto.Oferta__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Concepto">
+                                <apex:outputField value="{!wg.gasto.Concepto__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Importe" rendered="{!usuario.PermisoGasto__c}">
+                                <apex:inputField value="{!wg.gasto.Importe__c }"/>
+                                <div>
+                                   <apex:outputLabel value="Aplicar IVA 16%"></apex:outputLabel>
+                                   <apex:inputCheckbox value="{!wg.gasto.AplicarIVA__c}"/>
+                                </div>
+                            </apex:column>
+                             <apex:column headerValue="Importe" rendered="{!NOT(usuario.PermisoGasto__c)}">
+                                <apex:outputField value="{!wg.gasto.Importe__c }"/>
+                            </apex:column>
+                             <apex:column headerValue="Importe final">
+                                <apex:outputField value="{!wg.gasto.ImporteFinal__c }"/>
+                            </apex:column>
+                            <apex:column headerValue="Comentarios">
+                                <apex:inputField value="{!wg.gasto.Comentario__c }" rendered="{!usuario.PermisoGasto__c}"/>
+                                <apex:outputField value="{!wg.gasto.Comentario__c }" rendered="{!NOT(usuario.PermisoGasto__c)}"/>
+                            </apex:column>
+                            <apex:column headerValue="Mensajes validación">
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.ErrorDuplicado__c)),'1. ','')} {!wg.gasto.ErrorDuplicado__c}</div>
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError1__c)),'2. ','')} {!wg.gasto.MensajeError1__c}</div>
+                                  <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError2__c)),'3. ','')} {!wg.gasto.MensajeError2__c}</div>
+                                  <!-- <div class="msgError">{!IF(NOT(ISBLANK(wg.gasto.MensajeError3__c)),'3. ','')} {!wg.gasto.MensajeError3__c}</div> -->
+                            </apex:column>
+                            <apex:column headerValue="GLA" rendered="{!usuario.PermisoGasto__c}">
+                                <apex:inputField value="{!wg.gasto.GLA__c }"/>
+                            </apex:column>
+                            <apex:column headerValue="Pagado">
+                                <apex:outputField value="{!wg.gasto.Pagado__c }"/>
+                            </apex:column>
+                          </apex:pageBlockTable>
+                 </apex:column>
+             </apex:pageBlockTable>
+            <apex:commandButton value="Guardar" action="{!saveSolicitudes}" rerender="opPrincipal,pbGastos" rendered="{!usuario.PermisoGasto__c}"/>
+             <apex:outputPanel id="seccionCargaDocumentos">
+                <div id="modalArchivos" title="Carga de documentos">
+                    <iframe src=""  scrolling="true" id="theIframe" frameborder="0" width="800px" height="500px"/>
+                </div>
+           </apex:outputPanel>
+         </apex:form>
+    </apex:pageBlock>
+</apex:page>

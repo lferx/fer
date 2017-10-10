@@ -1,0 +1,26 @@
+<apex:page Controller="ExRepEjExcelController" >
+    
+        <apex:form id="theForm">
+            <apex:pageBlock id="mainblock">
+                <apex:pageBlockButtons >
+                  <apex:commandButton action="{!ExpRepEj}" value="Ejecutar"/>
+                </apex:pageBlockButtons>
+	            <apex:panelGrid columns="2">
+	                
+	                <apex:outputLabel value="Plaza:"/>
+	                <apex:selectList value="{!filterzone}" size="1">
+	                    <apex:selectOptions value="{!listzoneoptions}"/>
+	                </apex:selectList>
+	                <apex:outputLabel value="Gerente:"/>
+	                <apex:selectList value="{!filtergte}" size="1">
+	                    <apex:selectOptions value="{!listgteoptions}"/>
+	                </apex:selectList>
+	                  
+	            </apex:panelGrid>
+            
+                
+            </apex:pageBlock>
+            
+        </apex:form>
+    
+</apex:page>

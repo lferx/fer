@@ -1,0 +1,36 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ImageController" readOnly="true">
+ 
+<apex:sectionHeader subtitle="SOQL Offset Example" title="Square Root Table"/>
+ 
+<apex:pageBlock >   
+   <apex:pageBlockButtons location="top" >
+   <apex:outputPanel id="myButtons">
+   <apex:form >
+        <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>
+        <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>        
+        <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="myPanel,myButtons"/>
+        <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="myPanel,myButtons"/>        
+   </apex:form>
+   </apex:outputPanel>
+   </apex:pageBlockButtons>
+ 
+   <apex:pageBlockSection columns="1">
+       <p>This Visualforce Page demonstrates the usage of the "OFFSET" clause in a SOQL SELECT statement.  You can "Paginate" through 
+       a large result set quickly.  This example allows a user to paginate up and down through a result set 20 records at a time.  
+       Using the "VCR" buttons above, you can also quickly skip to the end or the beginning of the set.</p>
+       <p>The accompanying code can be viewed here:  <a href="http://blog.redpointsolutions.com/bid/182738/Add-Pagination-to-your-Visualforce-Pages-using-the-SOQL-OFFSET-Clause" target="_blank">RedPoint Solutions BLOG</a></p>
+   </apex:pageBlockSection>
+ 
+   <apex:pageBlockSection title="Numbers and their Square Roots (Total List Size: {!total_size})" collapsible="false">
+   <apex:outputPanel id="myPanel">
+   <apex:pageMessages id="theMessages" />
+   <apex:pageBlockTable value="{!numbers}" var="n" align="center">
+        <apex:column ><apex:image value="https://c.na15.content.force.com/servlet/servlet.FileDownload?file={!n}" /></apex:column>
+        <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+   </apex:pageBlockTable>
+   </apex:outputPanel>
+   </apex:pageBlockSection>
+ 
+</apex:pageBlock>
+ 
+</apex:page>

@@ -1,0 +1,1802 @@
+<apex:page controller="Consola_Pendientes_Controller" showHeader="true" sidebar="false" action="{!ajustarTiempo}">
+    <head>
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resource/cssbootstrap/css/bootstrap.css" />
+    <script src="/resource/boot/js/bootstrap.min.js" ></script>
+    <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+    <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+    <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.css" />
+    <link rel="stylesheet" type="text/css" href="/resource/tips/html5tooltipsjs-master/html5tooltips.animation.css" />
+    <link rel="stylesheet" href="/resource/calendario/flatpickr-master/dist/flatpickr.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    
+
+
+    <style type="text/css"> 
+    @import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Indie+Flower|Kumar+One|Molle:400i|Overpass|Poiret+One|Righteous|Rubik');
+    @font-face {
+        font-family: "Bebas-Neue";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+    }
+    @font-face {
+        font-family: "gotham-rounded-book";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+    }
+    @font-face {
+        font-family: "gotham-rounded-medium";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+    }
+
+
+    .cajas{
+        width: 150px;
+    }
+    .retrazadas td{
+        background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+        text-align:center;
+        color: #0C326B;
+        vertical-align: middle;
+    }
+    .conRecordatorio td{
+        background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+        border: 3px solid #FFBF00;
+        text-align:center;
+        color: #0C326B;
+        vertical-align: middle;
+    }
+    .conRecordatorio2 td{
+        background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+        border: 3px solid #FFBF00;
+        text-align:center;
+        color: #0C326B;
+        vertical-align: middle;
+    }
+    .tablas{
+        position: relative;
+        width:100%;
+        background: #fff;
+        border-radius: 5px;
+        z-index: 10;
+    }
+    .tablas tr th{
+        min-width:80px;
+        background: #C95A50;
+        color: white;
+        text-align:center;
+        border-radius: 15px 15px 0px 0px;
+    }
+    .normal td{
+        background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+        text-align:center;
+        color: #0C326B;
+        vertical-align: middle;
+    }
+    .bitacoras{
+        font-family: 'gotham-rounded-book', cursive;
+        border: 2px solid #cfcfcf;
+        width: 100%; 
+        border-radius: 15px;
+        background: white;
+        -webkit-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+        -moz-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+        box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    }
+    .tituloBitacora{
+        font-size: 25px; 
+        border: 1px solid #3EB2D2; 
+        border-radius: 10px;
+        background: rgba(255,255,255,1);
+        background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 14%, rgba(238,246,248,1) 52%, rgba(216,235,240,1) 100%);
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(14%, rgba(255,255,255,1)), color-stop(52%, rgba(238,246,248,1)), color-stop(100%, rgba(216,235,240,1)));
+        background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 14%, rgba(238,246,248,1) 52%, rgba(216,235,240,1) 100%);
+        background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 14%, rgba(238,246,248,1) 52%, rgba(216,235,240,1) 100%);
+        background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 14%, rgba(238,246,248,1) 52%, rgba(216,235,240,1) 100%);
+        background: radial-gradient(ellipse at center, rgba(255,255,255,1) 14%, rgba(238,246,248,1) 52%, rgba(216,235,240,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d8ebf0', GradientType=1 );
+    }
+    .bitacoras td{
+        width: 20%;
+        background: white;
+        font-family: 'gotham-rounded-medium', cursive;
+        color: #0C326B;
+        vertical-align: top;
+    }
+    .botonEspera{
+        height: 30px; 
+        border-radius: 5px;
+        position: relative; 
+        left: 0px; 
+        top:1px;"
+    }
+    .botonEspera:hover{
+        height: 35px; 
+        border-radius: 5px;
+        position: relative; 
+        left: 0px; 
+        top:1px;"
+    }
+    .botonEspera:active{
+        height: 30px; 
+        border-radius: 5px;
+        position: relative; 
+        left: 0px; 
+        top:1px;"
+    }
+    .botonGuardar{
+        height: 50px; 
+        border-radius: 5px;
+        position: relative; 
+        left: 0px; 
+        top:1px;"
+    }
+    .botonGuardar:hover{
+        height: 55px; 
+        box-shadow: -1px 1px 4px black;
+        border-radius: 4px;
+    }
+    .botonGuardar:active{
+        height: 45px;
+        transition-timing-function: ease;
+    }
+    .botonOk{
+        background: #D1DA28;
+        border-radius: 18px;
+        color: #0C326B;
+        width: 100px;
+        text-align: center;
+        vertical-align: middle;
+        font-family: 'gotham-rounded-book', cursive;
+    }
+    .botonOk:hover{
+        background: #4DB1E0;
+        border-radius: 18px;
+        color: #0C326B;
+        width: 100px;
+        text-align: center;
+        vertical-align: middle;
+        font-family: 'gotham-rounded-medium', cursive;
+    }
+    .botonOk:active{
+        background: #C95A50;
+        border-radius: 18px;
+        color: white;
+        width: 80px;
+        text-align: center;
+        vertical-align: middle;
+        font-family: 'gotham-rounded-medium', cursive;
+    }
+    .espera{
+        width: 100%;
+        height: 27px;
+        border-radius: 18px;
+        font-family: 'gotham-rounded-book', cursive;
+        font-size: 18px; 
+        background: #4DB1E0;
+        color: #0C326B;
+        text-align: center;
+    }
+    .espera:hover{
+        width: 100%;
+        border-radius: 18px;
+        font-family: 'gotham-rounded-medium', cursive;
+        font-size: 18px; 
+        background: #D1DA28;
+        color: #0C326B;
+        text-align: center;
+        
+    }
+    .espera:active{
+        width: 100%;
+        border-radius: 18px;
+        font-family: 'gotham-rounded-medium', cursive;
+        font-size: 18px; 
+        background: #C95A50;
+        color: #0C326B;
+        text-align: center;
+    }
+    .tablaEspera{
+        width: 35%;
+        position: relative; 
+        left: 65%; 
+    }
+    .tablaEspera th{
+        font-family: 'gotham-rounded-medium', cursive;
+        background: #0C326B;
+        color: white;
+        text-align:center;
+        border-radius: 18px;
+    }
+    .tablaEspera td{
+        font-family: 'gotham-rounded-medium', cursive;
+        background: #4DB1E0;
+        color: white;
+        text-align:center;
+        border-radius: 18px;
+        vertical-align: middle;
+    }
+    .tablaEsperaCarga{
+        font-family: 'gotham-rounded-medium', cursive;
+        background: #cfcfcf;
+        color: #0C326B;
+        text-align:center;
+        border-radius: 18px;
+        vertical-align: middle;
+        width: 100%;
+    }
+    .tablaEsperaCarga:hover{
+        font-family: 'gotham-rounded-book', cursive;
+        background: #858DA6;
+        color: #0C326B;
+        text-align:center;
+        border-radius: 18px;
+        vertical-align: middle;
+        width: 100%;
+    }
+    .avance{
+        width: 40%;
+        border-radius: 18px;
+        position: absolute;
+        font-family: 'gotham-rounded-book', cursive;
+        font-size: 18px; 
+        background: #4DB1E0;
+        color: #0C326B;
+        text-align: center;
+    }
+    .buscador{
+        position: relative;
+        bottom: 210px;
+        max-height: 280px;
+        overflow-y: auto;
+
+    }
+    .buscadorAdmin{
+        position: relative;
+        bottom: 0px;
+        max-height: 280px;
+        overflow-y: auto;
+
+    }
+    .botonBuscador{
+        position: relative;
+        top: -15px;
+        z-index: 11;
+        font-family: 'gotham-rounded-book', cursive;
+        border: 0px solid #D1DA28; 
+        border-radius: 30px;
+        font-size: 20px; 
+        width: 20%;
+        height: 40px;
+        background: #D1DA28;
+    }
+    .botonBuscador:hover{
+        font-family: 'gotham-rounded-medium', cursive;
+        border: 0px solid #D1DA28; 
+        border-radius: 30px;
+        font-size: 20px; 
+        width: 20%;
+        background: #D1DA28;
+    }
+    .tablaBusqueda{
+        width: 75%;
+        position: relative; 
+    }
+    .tablaBusqueda th{
+        background: #C95A50;
+        text-align:center;
+        border-radius: 30px;
+        color: white;
+        font-family: 'gotham-rounded-book', cursive;
+    }
+    .tablaBusqueda td{
+        text-align:center;
+        color: #0C326B;
+        font-family: 'gotham-rounded-book', cursive;
+    }
+    .admin{
+        border-radius: 5px;
+        background-image: url('http://k46.kn3.net/taringa/D/2/5/C/9/F/luismi222222/04C.jpg');
+        -webkit-box-shadow: -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+        -moz-box-shadow:    -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+        box-shadow:         -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+    }
+    .admin2{
+        border-radius: 5px;
+        background-image: url('http://k46.kn3.net/taringa/D/2/5/C/9/F/luismi222222/04C.jpg');
+        -webkit-box-shadow: -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+        -moz-box-shadow:    -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+        box-shadow:         -9px 5px 5px 0px rgba(50, 50, 50, 0.75);
+    }
+    .seccionesAdmin{
+        position: relative;
+        font-size: 12px; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        width: 25%; 
+        border: 1px solid #032A4D;
+        border-radius: 5px;
+        padding: 15px;
+        height: 120px;
+        -webkit-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+        -moz-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+        box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+    }
+    .cajaSeleccion{
+        width: auto;
+        font-size: 12px;
+        font-family: 'Righteous', cursive; 
+    }
+    .simple {
+        border: 1px solid #032A4D;
+    }
+    .simpleSeccion{
+        border: 1px solid #032A4D;
+    }
+
+    .tablaSimplePrincipal{
+        width: 100%;
+        height: auto;
+        background: rgba(255, 255, 255, 0.62);
+        font-family: 'gotham-rounded-book', cursive;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+    .tablaSimplePrincipal tr td{
+        font-family: 'gotham-rounded-book', cursive;
+        padding: 12px;
+    }
+    .cambiaVista{
+        color: #0C326B; 
+        border-radius: 18px; 
+        width: 250px; 
+        font-size: 18px; 
+        background: #cfcfcf; 
+        font-family: 'gotham-rounded-book', cursive;
+        box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+    }
+    .cambiaVista:hover{
+        color: #0C326B;  
+        border-radius: 18px; 
+        width: 250px; 
+        font-size: 18px; 
+        background: #858DA6; 
+        font-family: 'gotham-rounded-book', cursive;
+        box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+    }
+    .cambiaVista:active{
+        color: #0C326B; 
+        border-radius: 18px; 
+        width: 250px; 
+        font-size: 18px; 
+        background: #4DB1E0; 
+        font-family: 'gotham-rounded-book', cursive;
+        box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.76);
+    }
+    .etiqueta{
+        border-radius: 25px;
+        background: #0C326B;
+        width: 100%;
+        color: white;
+    }
+    .btnRegresar{
+        font-size: 20px; 
+        width: 40%; 
+        background: #D1DA28; 
+        border-radius: 20px; 
+        color: #0C326B; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        height: 30px; 
+        vertical-align: middle;
+    }
+    .btnRegresar:hover{
+        font-size: 20px; 
+        width: 40%; 
+        background: #4DB1E0; 
+        border-radius: 20px; 
+        color: #0C326B; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        height: 30px; 
+        vertical-align: middle;
+    }
+    .btnRegresar:active{
+        font-size: 20px; 
+        width: 40%; 
+        background: #C95A50; 
+        border-radius: 20px; 
+        color: #0C326B; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        height: 30px; 
+        vertical-align: middle;
+    }
+    .tablaTarea{
+        width:70%; 
+        height: auto; 
+        text-align: center; 
+        background: white;
+        border-radius: 10px;
+        -webkit-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+        -moz-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+        box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    }
+    .tablaTarea tr td{
+        font-family: 'gotham-rounded-book', cursive;
+        color: #0C326B;
+        font-size: 16px;
+    }
+    .btnTareaCompletar{
+        border-radius: 30px; 
+        font-size: 20px; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        width: 100%; 
+        height: 50px; 
+        background: #D1DA28; 
+        float: right;
+        -webkit-box-shadow: 10px 10px 23px 4px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 23px 4px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 23px 4px rgba(0,0,0,0.75);
+    }
+    .btnTareaCompletar:hover{
+        border-radius: 30px; 
+        font-size: 20px; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        width: 100%; 
+        height: 50px; 
+        background: #4DB1E0; 
+        float: right;
+        -moz-box-shadow: 10px 10px 23px 4px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 23px 4px rgba(0,0,0,0.75);
+    }
+    .btnTareaCompletar:active{
+        border-radius: 30px; 
+        font-size: 20px; 
+        font-family: 'gotham-rounded-medium', cursive; 
+        width: 100%; 
+        height: 50px; 
+        background: #C95A50; 
+        float: right;
+    }
+    .botonFotos{ 
+        border-radius: 20px; 
+        width: 100%; 
+        height: 100%;
+    }
+    .botonesBuscador{
+        width: 60px;
+    }
+    .botonesBuscador:hover{
+        width: 65px;
+    }
+    .botonesBuscador:active{
+        width: 60px;
+    }
+
+
+
+
+
+    .w3-button{
+        border:none;
+        display:inline-block;
+        outline:0;
+        padding:8px 16px;
+        vertical-align:middle;
+        overflow:hidden;
+        text-decoration:none;
+        color:inherit;
+        background-color:inherit;
+        text-align:center;
+        cursor:pointer;
+        white-space:nowrap
+    }
+    .w3-black{
+      background-color: rgba(201, 200, 200, 0.5);
+    }
+    .w3-display-left{
+        position:absolute;
+        top:50%;
+        left:0%;
+        transform:translate(0%,-50%);
+        -ms-transform:translate(-0%,-50%)
+    }
+    .w3-display-right{
+        position:absolute;top:50%;
+        right:0%;
+        transform:translate(0%,-50%);
+        -ms-transform:translate(0%,-50%);
+    }
+    .w3-display-container{
+      position:relative;
+    }
+    .w3-display-container:hover{
+      display:block;
+    }
+    .w3-text-white{
+        color:#fff !important;
+    }
+    .w3-container:after,.w3-container:before{
+        content:"";
+        display:table;
+        clear:both;
+    }
+    .w3-container{
+        padding:0.01em 16px;
+    }
+    .mySlides{
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+    }
+
+    
+    .rp_sep_shadows3 {
+        border: none;
+        height: 20px;
+        width: 100%;
+        height: 50px;
+        margin-top: 0;
+        margin:30px 0;
+        border-bottom: 1px solid #1f1209;
+        box-shadow: 0 20px 20px -20px #333;
+        margin: -50px auto 10px;
+    }
+    .contenedorHead{
+
+    }
+    .titulo{
+        font-size: 59px;
+        color: #698d9e;
+        letter-spacing: 2px;
+        font-family: 'Poiret One';
+        font-weight: bolder;
+    }
+    .binevenida{
+        position: relative;
+        color: #8E8E8E;
+        font-family: 'gotham-rounded-book';
+        font-weight: bolder;
+        letter-spacing: -2px;
+    }
+    .contenedor{
+        position: relative;
+        width: 100%;
+        max-height: 700px;
+        overflow: auto;
+        border-radius: 16px;
+        border-top: 1px solid #8aa5a7;
+        border-bottom: 1px solid #8ea8aa;
+    }
+
+    .contenedor:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        height: 100%;
+        top: 0; right: 0; left: 0;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+    }
+
+    .contenedorHeader{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        position: sticky;
+        top: 0px;
+        z-index: 500;
+    }
+
+    .contenedorDatos{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+    .columnaHeader{
+        text-align: center;
+        font-weight: bolder;
+        font-size: 1em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 2px 0px 0.5px rgba(0,0,0,0.15);
+        color: #878d90;
+        border-top: 1px solid #ffffff;
+        font-family: 'gotham-rounded-medium';
+        padding: 4%;
+        background: linear-gradient(to bottom, rgb(245, 252, 255) 0%, rgb(239, 250, 255) 48%, rgb(214, 242, 252) 85%, rgb(250, 254, 255) 100%);
+        word-break: break-all;
+    }
+    .columna{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'gotham-rounded-book';
+        padding: 2%;
+        color: #0b0c0c;
+        word-break: break-all;
+    }
+    .retraso {
+        position: relative;
+        background: rgba(250, 252, 255, 0.4);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+
+    .enTiempo {
+        position: relative;
+        background: rgba(250, 252, 255, 0.4);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .retrasoRow {
+        position: relative;
+        background: rgba(230,240,255,0.4);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .retrasoRow:hover{
+        position: relative;
+        background: rgb(255, 213, 213);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .enTiempoRow{
+        position: relative;
+        background: rgba(230,240,255,0.4);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .enTiempoRow:hover{
+        position: relative;
+        background: rgba(153, 244, 255, 0.43);
+        box-shadow: 0px 0px 18.5px -2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .modal.in .modal-dialog {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        width: 60%;
+    }
+    .modal-content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        box-shadow: 0 5px 15px #36a0fe;
+        background-color: rgba(255, 255, 255, 0.72);
+    }
+    .modal-body {
+        position: relative;
+        padding: 15px;
+        max-height: 800px;
+        overflow: auto;
+    }
+    .campana{
+        width: 40%;
+        outline: none;
+        animation: mover 3s infinite;
+    }
+    @keyframes mover {
+        0%   {transform: rotate(20deg);}
+        25%  {transform: rotate(-20deg);}
+        50%  {transform: rotate(20deg);}
+        75% {transform: rotate(-20deg);}
+        100%  {transform: rotate(20deg);}
+    }
+    .campana:hover{
+        width: 44%;
+        outline: none;
+        animation: moverH 1s infinite;
+    }
+    @keyframes moverH {
+        0%   {transform: rotate(10deg);}
+        25%  {transform: rotate(-10deg);}
+        50%  {transform: rotate(10deg);}
+        75% {transform: rotate(-10deg);}
+        100%  {transform: rotate(10deg);}
+    }
+    .campana:active{
+        width: 40%;
+        outline: none;
+        animation: moverH 1s infinite;
+    }
+    .botones{
+        width: 40%;
+        outline: none;
+        /*box-shadow: -1px 1px 4px black;*/
+    }
+    .botones:hover{
+        width: 42%;
+        outline: none;
+        box-shadow: -1px 1px 4px black;
+    }
+    .botones:active{
+        width: 40%;
+        outline: none;
+    }
+    iframe {
+        position: relative !important;
+        top: 25% !important;
+    }
+    .modal.fade .modal-dialog {
+        transform: scale(0.1);
+        top: 300px;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+
+    .modal.fade.in .modal-dialog {
+        transform: scale(1);
+        transform: translate3d(0, -300px, 200px);
+        opacity: 1;
+    }
+
+    .nuevoRecordatorio{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+    .nuevaTarea{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        align-items: center;
+    }
+    .elementBitacoras{
+        overflow: auto;
+        font-family: 'gotham-rounded-book';
+    }
+    .contenedorNotificaciones{
+        display: grid;
+        grid-template-columns: 1fr;
+        max-height: 250px;
+        overflow: auto;
+    }
+    .recordatorio tr th{
+        border-radius: 2px;
+        background: #5b5f65;
+        color: #fafcff;
+        width: 100px;
+        text-align: center;
+        font-family: 'gotham-rounded-medium', cursive;
+    }
+    .recordatorio tr:hover{
+        background: rgba(0, 254, 255, 0.82);
+    }
+    .recordatorio tr td{
+        position: relative;
+        background: rgba(250, 254, 255, 0.82);
+        box-shadow: 0px 0px 12.5px -2px rgba(0,0,0,0.5);
+        border-radius: 2px;
+        text-align: center;
+        font-family: 'gotham-rounded-book';
+    }
+    .recordatorio:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        height: 100%;
+        top: 0; right: 0; left: 0;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+    }
+    .botOk{
+        width: 10%;
+    }
+    .botOk:hover{
+        box-shadow: -1px 1px 4px black;
+        border-radius: 4px;
+        width: 11%;
+    }
+    .botOk:active{
+        width: 10%;
+    }
+    .historicoButton{
+        width: 6%;
+        position: relative;
+        left: -45%;
+        margin-top: 4%;
+        margin-bottom: 1%;
+    }
+    .historicoButton:hover{
+        width: 6.5%;
+        box-shadow: -1px 1px 4px black;
+        border-radius: 4px;
+    }
+    .historicoButton:active{
+        width: 6%;
+    }
+    .historial{
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    border-radius: 15px;
+    background: white;
+    -webkit-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    -moz-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    font-family: 'gotham-rounded-book', cursive;
+    text-align: center;
+    padding: 10px;
+    }
+    .historial th{
+        border-radius: 15px;
+        background: #0C326B;
+        color: white;
+        text-align: center;
+        font-family: 'gotham-rounded-book', cursive;
+    }
+    .historial tr td{
+        border-radius: 5px;
+        background: #4DB1E0;
+        color: white;
+        font-family: 'gotham-rounded-book', cursive;
+    }
+    .taskContainer{
+        display: flex;
+        align-items: center;
+        background: white;
+    }
+    .muestraTareas{
+        width: 4%;
+        border-radius: 4px;
+        border: 1px solid rgba(188, 191, 197, 0.51);
+        box-shadow: -1px 1px 4px black;
+    }
+    .muestraTareas:hover{
+        box-shadow: -1px 1px 4px black;
+        border-radius: 4px;
+        width: 4.2%;
+    }
+    .muestraTareas:active{
+        width: 4%;
+        border-radius: 4px;
+        border: 1px solid rgba(188, 191, 197, 0.51);
+        box-shadow: -1px 1px 4px black;
+    }
+    .botonesEspera{
+        width: 15%;
+        outline: none;
+        /*box-shadow: -1px 1px 4px black;*/
+    }
+    .botonesEspera:hover{
+        width: 16%;
+        outline: none;
+        box-shadow: -1px 1px 4px black;
+    }
+    .botonesEspera:active{
+        width: 15%;
+        outline: none;
+    }
+
+    </style>
+    
+    <script type="text/javascript">
+        
+    </script>
+
+    <script type="text/javascript">
+
+        var eliminateRowClass = '';
+        var posicionIndex = '';
+
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover(); 
+        });
+            
+           //para mostrar la alerta de "ID no encontrado" 
+           function validateOferta(mostrar){
+                if(mostrar){
+                      alert('              No se encontraron documentos de tu consola, verifica el ID \n(Si selecciona "evitar que esta pagina cree dialogos adicionales"\n              esta advertencia no se mostrara mas...)');
+                      return true;
+               }
+           }
+
+          //para "deslizar" la seccion de documentos en espera
+          function deslizar(varid){
+              var objeto = document.getElementById(varid);
+              if(objeto.style.height == '28px'){
+                  objeto.style.height = '200px';
+                  objeto.style.maxHeight = '200px';
+                  objeto.style.transition = '1s';
+              }else{
+                  objeto.style.height = '28px'
+              }
+              
+          }
+
+          //para "deslizar" la seccion del buscador
+          function deslizar2(varid){
+              var objeto = document.getElementById(varid);
+              if(objeto.style.bottom == '210px'){
+                  objeto.style.bottom = '0px';
+                  objeto.style.transition = '1s';
+              }else{
+                  objeto.style.bottom = '210px'
+              }
+          }
+
+          
+          function mostrar(varid,varid2){
+              var objeto = document.getElementById(varid);
+              var objeto2 = document.getElementById(varid2);
+              if(objeto.style.display == 'block'){
+                  objeto.style.display = 'none';
+                  objeto2.style.display = 'none';
+              }else{
+                  objeto.style.display = 'block';
+              }
+              
+          }
+
+         
+          
+    </script>
+
+    <script>
+        var check = true;
+        var check2 = true;
+        $(document).ready(function(){
+
+            $("#cambio").click(function(){
+                if(check){
+                  $("#ventanaTarea").fadeOut(500);
+                  $("#vistaSimple").fadeOut(1000);
+                  $("#vistaCompleta").delay(700).fadeIn();
+                  check = false;
+                }
+                else{
+                  $("#vistaCompleta").fadeOut(1000);
+                  $("#vistaSimple").delay(700).fadeIn();
+                  check = true;
+                }
+            });
+        });
+
+        
+    </script>
+
+    </head>
+    <body>
+
+
+    <apex:variable value="{!$User.Id}" var="usuario"/>
+
+    <!-- <apex:form rendered="{!usuario == '005i0000001W2vNAAS' || usuario == '00531000007dOl3AAE' || usuario == '00531000006vpJwAAI' || usuario == '005310000082ip0AAA'}">
+        <div style="font-size: 15px; font-family: 'gotham-rounded-medium', cursive; ">
+            Seleccione un Gerente:
+            <apex:selectList id="idusuario" value="{!vuser}" size="1">
+                <apex:actionSupport event="onchange" action="{!cambioGerente}" >
+                    <apex:param assignTo="{!vfolio}" value="{!''}"/>
+                </apex:actionSupport>
+                <apex:selectOptions value="{!User}"/>
+            </apex:selectList>
+        </div>
+    </apex:form> -->
+
+
+    <div id="encabezado" class="contenedorHead" style="font-family: 'Bebas-Neue'; font-size: 20px;">
+        <center>
+            <div class="titulo">
+                <apex:outputText value="CONSOLA OPERATIVA"/> 
+            </div>
+            <div>
+                <apex:image value="{!fotoUsuario}" width="50" height="50" style="border-radius: 50%;"/>&nbsp;
+                <apex:outputText value="Bienvenid@ {!vuser}" styleClass="binevenida"/> 
+            </div>
+        </center>
+        <apex:outputPanel id="horaActual" style="position:absolute; right: 20px; top: 5px; font-size: 15px;">
+            {!hoyString}
+        </apex:outputPanel>
+        <div style="float: right;">
+            
+        </div>
+        <br/>
+        <div class="rp_sep_shadows3"></div>
+    </div>
+
+    <div class="taskContainer">
+        <apex:image url="http://www.jadecapital.com.au/wp-content/uploads/2015/12/075950-3d-transparent-glass-icon-business-calendar.png" html-data-tooltip="Mostrar tareas" html-data-tooltip-stickto="right" styleClass="muestraTareas" onclick="showTasks()" />
+
+        <div id="tareasNot" style="display: none;">
+            <div id="contNot" class="contenedorNotificaciones">
+                <div>
+                    <!--COMIENZA SECCION RECORDATORIOS-->
+                    <apex:actionRegion >
+                    <apex:outputPanel id="recordatorios">
+                        <apex:form >
+                            <table class="recordatorio" id="tabRec" >
+                                <caption style="font-weight: bolder; font-size: 20px; font-family: 'gotham-rounded-book', cursive;">
+                                    Actividades Pendientes
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>Acividad a realizar:</th>
+                                        <th>Tipo de Actividad:</th>
+                                        <th>Del Documento:</th>
+                                        <th>Para el dia:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!tareas}" var="act">
+                                    <apex:actionRegion >
+                                        <tr>
+                                            <td>
+                                                <apex:outputText value="{!act.Description}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!act.Subject}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!act.What.Name}" /><br/>
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!act.Recordatorio_Tarea__c}" />
+                                                <!--apex:outputText value="{0,date,yyyy/MM/dd hh:mm a}"> <apex:param value="{! rec.Recordatorio__c}" /></apex:outputText-->
+                                            </td>
+                                            <td id="boton" style="width: 20%" >
+                                                <apex:actionStatus id="cerrando">
+                                                    <apex:facet name="start">
+                                                        <apex:image url="{!$Resource.cargando}" style="width: 10%;"/>
+                                                    </apex:facet>
+                                                    <apex:facet name="stop">
+                                                        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-symbols-shapes/016904-3d-transparent-glass-icon-symbols-shapes-check-mark8-sc44.png" alt="ATENDER" styleClass="botOk">
+                                                            <apex:actionSupport event="onclick" action="{!completa}" reRender="recordatorios,todo" status="cerrando" oncomplete="senialar('{!act.WhatId}')" />
+                                                        </apex:image>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                                <br/>
+                                                Atender
+                                            </td>
+                                        </tr>
+                                        </apex:actionRegion>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                         </apex:form>
+                     </apex:outputPanel>
+                     </apex:actionRegion>
+                </div>     
+                    <!--TERMINA SECCION RECORDATORIOS--> 
+            </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/3d-transparent-glass-icons-business/076009-3d-transparent-glass-icon-business-document9.png" html-data-tooltip="Documentos en Espera" html-data-tooltip-stickto="right" styleClass="muestraTareas" onclick="showWait()" />
+
+        <!--COMIENZA SECCION DOCUMENTOS EN ESPERA--> 
+            <div id="enEspera" style="display: none;">
+                <apex:form id="onWait">
+                <table class="recordatorio" id="tabRec" >
+                    <caption style="font-weight: bolder; font-size: 20px; font-family: 'gotham-rounded-book', cursive;">
+                        Documentos en Espera
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Direccion</th>
+                            <th>Documento</th>
+                            <th>Oferta</th>
+                            <th>Carga</th>
+                            <th>Liberar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!documentosEspera}" var="esp">
+                            <apex:actionRegion >
+                            <tr>
+                                <td>
+                                    <apex:outputField value="{!esp.Oferta__r.Direccion2__c}" />
+                                </td>
+                                <td>
+                                    <apex:outputLink target="_blank" value="/{!esp.id}">{!esp.Name}</apex:outputLink>
+                                </td>
+                                <td>
+                                    <apex:outputLink target="_blank" value="/{!esp.Oferta__r.id}">{!esp.Oferta__r.Name}</apex:outputLink>
+                                </td>
+                                <td>
+                                    <center>
+                                        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/076004-3d-transparent-glass-icon-business-document4.png" styleClass="botonesEspera img-responsive img-rounded" onclick="openModalArchivosEsp('{!esp.EtapaOferta__c}','{!esp.DocumentoEtapa__r.Tipo__c}','{!esp.DocumentoEtapa__c}');" html-data-toggle="modal" html-data-target="#modalArchivosEsp" id="btnCargaEsp" />
+                                    </center>
+                                </td>
+                                <td>
+                                    <apex:actionStatus id="cerrandoEspera">
+                                        <apex:facet name="start">
+                                            <apex:image url="{!$Resource.cargando}" style="width: 10%;"/>
+                                        </apex:facet>
+                                        <apex:facet name="stop">
+                                            <apex:image url="http://liberargratis.cotelia.com/index_files/MobxoxK.png" alt="Liberar" styleClass="botonGuardar">
+                                                <apex:actionSupport event="onclick" action="{!liberar}" reRender="onWait" status="cerrandoEspera">
+                                                    <apex:param name="regid" assignTo="{!docId}" value="{!esp.ID}" />
+                                                </apex:actionSupport>
+                                            </apex:image>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                </td>
+                            </tr>
+                            </apex:actionRegion>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+                </apex:form>
+            </div>
+        <!--TERMINA SECCION DOCUMENTOS EN ESPERA--> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/076087-3d-transparent-glass-icon-business-magnifying-glass-ps.png" html-data-tooltip="Buscador" html-data-tooltip-stickto="right" styleClass="muestraTareas" onclick="showSearch()" />
+
+        <div id="search" style="display: none;" >
+            
+            <!--COMIENZA SECCION BUSCADOR--> 
+            <div id="buscar">
+                <h3 style="font-weight: bolder; font-size: 20px; font-family: 'gotham-rounded-book', cursive;">
+                    Buscador
+                </h3>
+                <apex:form style="font-weight: bolder;">
+                    Oferta:&nbsp;&nbsp; <apex:inputText value="{!folio}" onkeyup="verificarTamano(this.value)" onkeydown="submitListener(event,this);"/>
+                </apex:form>
+                <br/>
+                <apex:form id="buscador">
+
+                    <div style="max-height: 250px;overflow: auto;">
+                        <table class="recordatorio" id="tablaBuscador">
+                            <thead>
+                                <tr>
+                                    <th>Direccion</th>
+                                    <th>Documento</th>
+                                    <th>Oferta</th>
+                                    <th>Gerente Operativo</th>
+                                    <th>Etapa</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Compromiso</th>
+                                    <th>Tiempo Proceso</th>
+                                    <th>Tiempo Restante</th>
+                                    <th>Instrucciones</th>
+                                    <th>Carga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!listaBusqueda}" var="resul">
+                                <apex:actionRegion >
+                                <apex:variable value="{!resul.id}" var="id"/>
+                                    <tr>
+                                        <td><apex:outputText value="{!resul.Oferta__r.Direccion2__c}" escape="false" /></td>
+                                        <td><apex:outputText value="{!resul.name}" /></td>
+                                        <td><apex:outputLink target="_blank" value="https://na25.salesforce.com/{!resul.Oferta__r.id}">{!resul.Oferta__r.name}</apex:outputLink></td>
+                                        <td><apex:outputText value="{!resul.Oferta__r.Gerente_Operativo__r.name}" /></td>
+                                        <td><apex:outputText value="{!resul.DocumentoEtapa__r.Etapa__r.name}" /></td>
+                                        <td><apex:outputText value="{0,date,yyyy/MM/dd}"><apex:param value="{!resul.Fecha_Inicio__c}"/></apex:outputText></td>
+                                        <td><apex:outputText value="{0,date,yyyy/MM/dd}"> <apex:param value="{!resul.Fecha_Com_Controller__c}" /></apex:outputText></td>
+                                        <td><apex:outputText value="{!resul.DocumentoEtapa__r.Tiempo_Proceso__c}" /></td>
+                                        <td><apex:outputText value="{!resul.Tiempo_Restante__c}" /></td>
+                                        <td><apex:outputText value="{!resul.DocumentoEtapa__r.Instrucciones__c}" /></td>
+                                        <td>
+                                            <apex:outputPanel > 
+                                                <center>
+                                                    <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/076004-3d-transparent-glass-icon-business-document4.png" styleClass="botonesEspera img-responsive img-rounded" onclick="openModalArchivosEsp('{!resul.EtapaOferta__c}','{!resul.DocumentoEtapa__r.Tipo__c}','{!resul.DocumentoEtapa__c}');" html-data-toggle="modal" html-data-target="#modalArchivosEsp" id="btnCargaEsp" />
+                                                </center>
+                                            </apex:outputPanel> 
+                                            
+                                            <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/075948-3d-transparent-glass-icon-business-cabinet.png" alt="En Espera" styleClass="botonGuardar esperaBtn" rendered="{!resul.name = 'CLG'}" html-data-dismiss="modal">
+                                                <apex:outputText value="Poner en Espera" rendered="{!resul.name = 'CLG'}" styleClass="esperaBtn"/> &nbsp;&nbsp;
+                                                <apex:actionSupport event="onclick" action="{!esperaSearch}" reRender="onWait,todo,buscador">
+                                                    <apex:param name="registroid" assignTo="{!docId}" value="{!resul.ID}" />
+                                                </apex:actionSupport>
+                                            </apex:image>
+                                        </td>
+                                    </tr>
+                                    </apex:actionRegion>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <apex:actionFunction action="{!espera}" name="metodoEspera" reRender="todo,onWait">
+                        <apex:param name="id" assignTo="{!docId}" value="" />
+                    </apex:actionFunction>
+                    
+                    <apex:actionFunction name="buscar" action="{!llenalista}" reRender="buscador">
+                        <apex:param name="docName" assignTo="{!folio}" value=""/>
+                    </apex:actionFunction>
+
+                    <apex:actionFunction name="clear" action="{!limpiar}" reRender="buscador"/>
+
+                </apex:form>
+
+            </div>
+            <!--TERMINA SECCION BUSCADOR--> 
+
+        </div>
+    </div>
+    <br/>
+
+
+    <!--INICIA VENTANA DE CARGA DE DOCUMENTOS-->
+        <div id="modalArchivosEsp" class="modal fade" title="Documentos">
+            <div class="modal-content" style="width: 45%;left: 30%;top: 20%;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">CARGA DE DOCUMENTOS</h4>
+                </div>
+                <div id="contenidoCargaEsp" class="modal-body">
+                </div>
+            </div>
+        </div>
+    <!--TERMINA VENTANA DE CARGA DE DOCUMENTOS-->
+
+
+
+    <apex:form >
+        <apex:actionFunction name="recargar" action="{!cargaLista}" reRender="tablaPrincipal" />
+        <apex:actionPoller action="{!consultaRecordatorios}" reRender="recordatorios,horaActual,scripts" interval="5"/><!-- oncomplete="dibujaRecordatorios();" interval="5"/>-->
+    </apex:form>
+
+
+<apex:outputPanel id="todo">
+
+    <apex:outputPanel rendered="{!error}">
+        <center>
+            <apex:outputText value="{!mensaje}" style="font-size: 15px;font-weight: bolder;color: #A62525;"/>
+        </center>
+    </apex:outputPanel>
+
+    <div class="contenedor">
+        <apex:variable value="{!0}" var="num"/>
+        <div class="contenedorHeader">
+            <div class="columnaHeader">Estatus</div>
+            <div class="columnaHeader">Bitácora</div>
+            <div class="columnaHeader">Direccion</div>
+            <div class="columnaHeader">Documento</div>
+            <div class="columnaHeader">Oferta</div>
+            <!-- <div class="columnaHeader">Gerente<br/>Operativo</div> -->
+            <div class="columnaHeader">Etapa</div>
+            <div class="columnaHeader">Fecha<br/>Inicio</div>
+            <div class="columnaHeader">Fecha<br/>Compromiso</div>
+            <!-- <div class="columnaHeader">Tiempo<br/>Proceso</div> -->
+            <div class="columnaHeader">Tiempo<br/>Restante</div>
+            <div class="columnaHeader">Instrucciones</div>
+            <div class="columnaHeader">Comentarios</div>
+            <div class="columnaHeader">Contacto 1</div>
+            <!-- <div class="columnaHeader">Contacto 2</div> -->
+            <div class="columnaHeader">Carga</div>
+            <div class="columnaHeader">Detalles<br/>Oferta</div>
+        </div>
+        
+        
+        <apex:repeat value="{!listaTiempoDocumentos}" var="registro" rows="{!IF(usuario == '005i0000001W2vNAAS' || usuario == '00531000007dOl3AAE' || usuario == '00531000006vpJwAAI' || usuario == '005310000082ip0AAA' || usuario == '005i0000001W2vN',40,8)}">
+            <div id="{!registro.docs.id}" class="columna{!num} contenedorDatos {!IF(registro.retraso,"retrasoRow","enTiempoRow")}">
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}">
+                    <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-culture/022060-3d-transparent-glass-icon-culture-bell5-solid-sc48.png" styleClass="campana" rendered="{!AND(!registro.recordatorio,registro.ultimaBitacora != null)}" html-data-container="body" html-data-toggle="popover" title="Tu ultimo recordatorio:" html-data-placement="rigth" html-data-content="{!registro.ultimaActividad}"/>
+                    
+                    <apex:image url="https://i1.wp.com/www.pivotel.net/wp-content/uploads/2017/01/075968-3d-transparent-glass-icon-business-clock2.png?ssl=1" html-data-tooltip="El documento presenta retraso" html-data-tooltip-stickto="right" styleClass="img-responsive img-rounded" width="40%" rendered="{!IF(registro.retraso,true,false)}"/>
+                </div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}">
+                    <input type="image" src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-signs/089098-3d-transparent-glass-icon-signs-first-aid.png" class="botones img-responsive img-rounded" value="Actividades" data-toggle="modal" data-target="#bitacorasNuevas{!num}" onclick="recargarBitacoras('{!registro.docs.id}')" />
+                </div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.Oferta__r.Direccion2__c}" escape="false"/></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputLink target="_blank" value="https://na25.salesforce.com/{!registro.docs.id}">{!registro.docs.name}</apex:outputLink></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputLink target="_blank" value="https://na25.salesforce.com/{!registro.docs.Oferta__r.Id}">{!registro.docs.Oferta__r.name}</apex:outputLink></div>
+                <!-- <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.Oferta__r.Gerente_Operativo__r.name}" /></div> -->
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.DocumentoEtapa__r.Etapa__r.name}" /></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{0,date,yyyy/MM/dd}"><apex:param value="{!registro.docs.Fecha_Inicio__c}"/></apex:outputText></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{0,date,yyyy/MM/dd}"> <apex:param value="{!registro.docs.Fecha_Com_Controller__c}" /></apex:outputText></div>
+                <!-- <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.DocumentoEtapa__r.Tiempo_Proceso__c} Dias" /></div> -->
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.Tiempo_Restante__c} Dias" /></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.docs.DocumentoEtapa__r.Instrucciones__c}"/></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputText value="{!registro.ultimaBitacora}"/></div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputLink target="_blank" value="/{!registro.idCuenta}">{!registro.tipoCuenta}<br/>{!registro.nombreCuenta}<br/>{!registro.telefonoCuenta}</apex:outputLink></div>
+                <!-- <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}"><apex:outputLink target="_blank" value="/{!registro.idCuenta2}">{!registro.tipoCuenta2}<br/>{!registro.nombreCuenta2}<br/>{!registro.telefonoCuenta2}</apex:outputLink></div> -->
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}">
+                    <input type="image" src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/076004-3d-transparent-glass-icon-business-document4.png" class="botones img-responsive img-rounded" onclick="openModalArchivos('{!registro.docs.EtapaOferta__c}','{!registro.docs.DocumentoEtapa__r.Tipo__c}','{!registro.docs.DocumentoEtapa__c}',this,'{!registro.docs.id}');" data-toggle="modal" data-target="#modalArchivos" id="btnCarga" />
+
+                    <!--INICIA VENTANA DE CARGA DE DOCUMENTOS-->
+                        <div id="modalArchivos" class="modal fade" title="Documentos">
+                            <div class="modal-content" style="width: 45%;left: 30%;top: 20%;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">CARGA DE DOCUMENTOS</h4>
+                                </div>
+                                <div id="contenidoCarga" class="modal-body">
+                                </div>
+                            </div>
+                        </div>
+                    <!--TERMINA VENTANA DE CARGA DE DOCUMENTOS-->
+                </div>
+                <div class="columna{!num} {!num} columna {!IF(registro.retraso,"retraso","enTiempo")}">
+                    <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/076054-3d-transparent-glass-icon-business-home7.png" onclick="llamaDetalles('{!registro.docs.Oferta__r.id}');desaparece(this);" StyleClass="botones img-responsive img-rounded" id="btnDetalles"/>
+                    <apex:image url="{!$Resource.cargando}" style="width: 40%; display: none;"/>
+                </div>
+
+
+
+                <div id="bitacorasNuevas{!num}" class="modal fade" style="left: 27%;top: 15%;width: 50%;text-align: center;" role="dialog">
+                    
+                    <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.94);">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="modal-title">Reagendar Documento</h2>
+                        </div>
+                        
+                        <apex:form >
+                            <apex:actionRegion >
+                            <div id="diver{!num}" class="nuevoRecordatorio"> 
+                                
+                                    <div class="elementBitacoras">
+                                        Motivo:<br/>
+                                        <apex:inputField label="Dictamen" value="{!bitacora.Dictamen_Consola__c}" style="width: 70%;" />
+                                    </div>
+                                    
+                                    <div class="elementBitacoras">
+                                        Detalles:<br/>
+                                        <apex:inputField label="Comentarios" value="{!bitacora.Comentarios__c}" />
+                                    </div>
+                                
+                            </div>
+                            <br/>
+                            <div>
+                                <h3>Proxima Actividad</h3>
+                            </div>
+                            <div class="nuevaTarea">
+                                <div class="elementBitacoras">
+                                    Tipo de Actividad:<br/>
+                                    <apex:inputField label="Comentarios" value="{!nuevaTarea.Subject}" />
+                                </div>
+                                <div class="elementBitacoras">
+                                    Actividad a realizar:<br/>
+                                    <apex:inputField label="Comentarios" value="{!nuevaTarea.Description}" />
+                                </div>
+                                <div class="elementBitacoras">
+                                    Fecha para seguimiento:<br/>
+                                    <apex:inputText value="{!fechaString}" styleClass="tpick"/>
+                                </div>
+                                <div class="columna{!num} elementBitacoras">
+                            
+                                        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/075998-3d-transparent-glass-icon-business-diskette-save.png" alt="GUARDAR" styleClass="botonGuardar guardaBtn" html-data-dismiss="modal" onmousemove="ocutaEspera();" onmouseout="muestraBtns()">
+                                            <apex:outputText value="Guardar" styleClass="guardaBtn"/>&nbsp;&nbsp;
+                                            <apex:actionSupport event="onclick" action="{!guardar}" oncomplete="bajar(this)" reRender="">
+                                                <apex:param name="registroid" assignTo="{!docId}" value="{!registro.docs.ID}" />
+                                            </apex:actionSupport>
+                                        </apex:image>
+                                        <br/>
+                                        
+                                        <apex:image url="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-business/075948-3d-transparent-glass-icon-business-cabinet.png" alt="En Espera" styleClass="botonGuardar esperaBtn" rendered="{!registro.docs.name = 'CLG'}" html-data-dismiss="modal" onmousemove="ocutaGuarda();" onmouseout="muestraBtns()">
+                                            <apex:outputText value="Poner en Espera" rendered="{!registro.docs.name = 'CLG'}" styleClass="esperaBtn"/> &nbsp;&nbsp;
+                                            <apex:actionSupport event="onclick" action="{!espera}" reRender="onWait,todo">
+                                                <apex:param name="registroid" assignTo="{!docId}" value="{!registro.docs.ID}" />
+                                            </apex:actionSupport>
+                                        </apex:image>
+
+                                </div>
+                            </div>
+                        </apex:actionRegion>
+                            <div>
+                                <apex:image url="http://www.iconhot.com/icon/ico/glass-folder/history-folder.ico" id="MuestraHist" styleClass="historicoButton" html-data-tooltip="Mostrar Historial" html-data-tooltip-stickto="right" onclick="cargaHist(this);mostrarHistory('{!registro.docs.ID}')"/>
+                                <apex:image url="{!$Resource.cargando}" style="width: 8%; display: none;margin-top: 4%;margin-bottom: 1%"/>
+                            </div>
+
+                            <div class="{!registro.docs.ID}" style="display: none;">
+                                <apex:outputPanel id="historySecction">
+                                    <table class="recordatorio" style="width: 100%;">
+                                    <thead>
+                                      <th>FOLIO</th>
+                                      <th>NOTAS</th>
+                                      <th>FECHA DE CREACION</th>
+                                      <th>DICTAMEN</th>
+                                    </thead>
+                                    <tbody>
+                                      <apex:repeat value="{!listaBitacoras}" var="bitacora" rows="25">
+                                        <tr>
+                                          <td><apex:outputLink target="_blank" value="https://cs17.salesforce.com/{!bitacora.ID}">{!bitacora.Name}</apex:outputLink></td>
+                                          <td><apex:outputField value="{!bitacora.Comentarios__c}" rendered="{!bitacora.Comentarios__c != NULL}"/> <apex:outputField value="{!bitacora.Notas__c}" rendered="{!bitacora.Notas__c != NULL}"/></td>
+                                          <td><apex:outputField value="{!bitacora.CreatedDate}"/></td>
+                                          <td><apex:outputField value="{!bitacora.Dictamen_Consola__c}" rendered="{!bitacora.Dictamen_Consola__c != NULL}"/> <apex:outputField value="{!bitacora.Dictamen__c}" rendered="{!bitacora.Dictamen__c != NULL}"/></td>
+                                        </tr>
+                                      </apex:repeat>
+                                    </tbody>
+                                  </table>
+                                </apex:outputPanel>
+                            </div>
+                            
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+            <apex:variable var="num" value="{!num+1}"/> 
+        </apex:repeat>
+
+        <apex:form >
+            <apex:actionFunction name="llamaDetalles" action="{!llenaVistaSimple}" oncomplete="$('#myModal').modal('show')" reRender="tablaSimple" >
+                <apex:param name="idDocOfer" assignTo="{!idDocumentoOferta}" value=""/>
+            </apex:actionFunction>
+
+            <apex:actionFunction name="repintar" reRender="todo,buscador"/>
+
+            <apex:actionFunction name="cerrado" action="{!verificayReacrga}" oncomplete="borraRow()" reRender="scripts" >
+                <apex:param name="documentId" assignTo="{!documentId}" value=""/>
+            </apex:actionFunction>
+
+            <apex:actionFunction name="mostrarHistory" action="{!traeBitacoras}" reRender="historySecction,scripts" oncomplete="finCargaHist();toggleHistory()">
+                <apex:param name="bitacoraId" assignTo="{!docBitacoraId}" value=""/>
+            </apex:actionFunction>
+
+             <apex:actionFunction name="recargarBitacoras" action="{!traeBitacoras}" reRender="historySecction,scripts"  onbeforedomupdate="hideHistory()">
+                <apex:param name="bitacoraId" assignTo="{!docBitacoraId}" value=""/>
+            </apex:actionFunction>
+
+            <apex:actionFunction name="refrescar" action="{!refrescar}"/>
+
+        </apex:form>
+        
+        
+    </div>
+
+    
+    
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">DETALLES DE LA OFERTA</h4>
+                </div>
+                <div class="modal-body" >
+                    <apex:variable value="{!8}" var="etap"/>
+                    <div id="vistaSimple">
+                        <apex:form id="tablaSimple">
+                            <table class="tablaSimplePrincipal">
+                                <tr>
+                                    <td rowspan="2" style="text-align: center; width: 300px; height: 300px;">
+                                        <div class="etiqueta">  
+                                            FOTOS
+                                        </div>
+                                        <div class="w3-display-container w3-text-white">
+                                          <apex:repeat value="{!listaFotos}" var="foto">
+                                            <img src="{!foto.url}" style="max-width: 100%" class="mySlides" />
+                                          </apex:repeat>
+                                          <div class="w3-display-left w3-container"><p class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</p></div>
+                                          <div class="w3-display-right w3-container"><p class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</p></div>
+                                        </div>
+                                        <script>
+                                            var slideIndex = 1;
+                                            showDivs(slideIndex);
+
+                                            function plusDivs(n) {
+                                              showDivs(slideIndex += n);
+                                            }
+
+                                            function showDivs(n) {
+                                              var i;
+                                              var x = document.getElementsByClassName("mySlides");
+                                              if (n > x.length) {slideIndex = 1}    
+                                              if (n < 1) {slideIndex = x.length}
+                                              for (i = 0; i < x.length; i++) {
+                                                 x[i].style.display = "none";  
+                                              }
+                                              x[slideIndex-1].style.display = "block";  
+                                            }
+                                        </script>
+                                    </td>
+                                    <td colspan="2" style="text-align: center">
+                                        <div class="etiqueta"> 
+                                            OFERTA
+                                        </div>
+                                        <div style="padding: 30px 0px 30px 0px;">
+                                            <br/>
+                                            <apex:outputLink target="_blank" value="https://na25.salesforce.com/{!simpleOferta.id}">{!simpleOferta.name}</apex:outputLink>
+                                        </div>
+                                    </td>
+                                    <td rowspan="2">
+                                        <div class="etiqueta" style="text-align: center"> 
+                                            RESUMEN OPERATIVO
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <div style="width: 50%; float: left;">
+                                            Etapa :&nbsp;<apex:outputField value="{!simpleOferta.Etapa__c}"/><br/><br/>
+                                            Oferta Cargada:&nbsp; <apex:outputField value="{!simpleOferta.Oferta_Cargada__c}"/><br/><br/>
+                                            Escrituras:&nbsp;<apex:outputField value="{!simpleOferta.Escritu__c}"/><br/><br/>
+                                            Fecha Prevista Escrituras:&nbsp;<apex:outputField value="{!simpleOferta.Fecha_Prevista_Desalojo__c}"/><br/><br/>
+                                            Estatus de Invasion :&nbsp;<apex:outputField value="{!simpleOferta.Estatus_de_Invasion__c}"/>
+                                        </div>
+                                        <div style="width: 50%; float: right;">
+                                            Plaza :&nbsp;<apex:outputField value="{!simpleOferta.Plaza__c}"/><br/><br/>
+                                            Estado :&nbsp;<apex:outputField value="{!simpleOferta.Estado__c}"/><br/><br/>
+                                            Ciudad :&nbsp;<apex:outputField value="{!simpleOferta.Ciudad_Tabla__c}"/><br/><br/>
+                                            Colonia :&nbsp;<apex:outputField value="{!simpleOferta.Colonia_busqueda__c}"/>
+                                        </div>
+                                    </td>
+                                    <td rowspan="2">
+                                        <div class="etiqueta" style="text-align: center"> 
+                                            RESUMEN FINANCIERO
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        Precio de Compra:&nbsp;<apex:outputField value="{!simpleOferta.PrecioCompra__c}"/><br/><br/>
+                                        Costo Total:&nbsp;<apex:outputField value="{!simpleOferta.TotalCosto__c}"/><br/><br/>
+                                        Precio de Venta:&nbsp;<apex:outputField value="{!simpleOferta.PrecioVenta__c}"/><br/><br/>
+                                        Margen Bruto:&nbsp;<apex:outputField value="{!simpleOferta.MargenBruto__c}"/><br/><br/>
+                                        Margen Neto:&nbsp;<apex:outputField value="{!simpleOferta.MargenNeto__c}"/><br/><br/>
+                                        Precio Original:&nbsp;<apex:outputField value="{!simpleOferta.Precio_Original__c}"/><br/><br/>
+                                        Beneficio Neto:&nbsp;<apex:outputField value="{!simpleOferta.BeneficioNeto__c}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center">
+                                        <div class="etiqueta"> 
+                                            DIRECCION
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <apex:outputText value="{!simpleOferta.Direccion2__c}" escape="false"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <div style="border-radius: 20px; background: #4DB1E0; float: left; width: 49%;">
+                                        <table style="width:100%; height: auto;">
+                                            <apex:repeat value="{!simpleEtapa}" var="x" rows="2">
+                                                <tr>
+                                                    <td style="width: 50%; text-align: center; vertical-align: middle; background: white; color: #0C326B; border-radius: 20px; border: 5px solid #4DB1E0;">
+                                                        <div>
+                                                            Etapa {!etap}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <apex:repeat value="{!simpleEtapa}" var="etapa" >
+                                                                <apex:outputPanel rendered="{!etap == etapa.EtapaOferta__r.NumEtapa__c}">
+                                                                    <div style="float: left; border: 1px solid #4DB1E0; width: 85%; border-radius: 20px; text-align: center; background: #0C326B; color: white;">
+                                                                        <apex:outputField value="{!etapa.name}"/>
+                                                                    </div>
+                                                                    <div style="float: left; border-radius: 20px; text-align: center; vertical-align: middle; background: white; width: 14%;">
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/icons/paloma2.png')}" style="width: 20px;" rendered="{!etapa.Cerrado__c}"/>
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/icons/tache2.png')}" style="width: 20px;" rendered="{!!etapa.Cerrado__c}"/>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                            </apex:repeat>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <apex:variable var="etap" value="{!etap+1}"/>     
+                                            </apex:repeat>
+                                        </table>
+                                        </div>
+                                        <div style="border-radius: 20px; background: #4DB1E0; float: right; width: 49%;">
+                                        <table style="width:100%; height: auto; border-radius: 20px; font-family: 'gotham-rounded-book', cursive;">
+                                            <apex:repeat value="{!simpleEtapa}" var="x" rows="4">
+                                                <tr>
+                                                    <td style="width: 50%; text-align: center; vertical-align: middle; background: white; color: #0C326B; border-radius: 20px; border: 5px solid #4DB1E0;">
+                                                        <div>
+                                                            Etapa {!etap}
+                                                        </div>
+                                                    </td>
+                                                    <td> 
+                                                        <div>
+                                                            <apex:repeat value="{!simpleEtapa}" var="etapa" >
+                                                                <apex:outputPanel rendered="{!etap == etapa.EtapaOferta__r.NumEtapa__c}">
+                                                                    <div style="float: left; border: 1px solid #4DB1E0; width: 85%; border-radius: 20px; text-align: center; background: #0C326B; color: white;">
+                                                                        <apex:outputField value="{!etapa.name}"/>
+                                                                    </div>
+                                                                    <div style="float: left; border-radius: 20px; text-align: center; vertical-align: middle; background: white; width: 14%;">
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/icons/paloma2.png')}" style="width: 20px;" rendered="{!etapa.Cerrado__c}"/>
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/icons/tache2.png')}" style="width: 20px;" rendered="{!!etapa.Cerrado__c}"/>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                            </apex:repeat>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <apex:variable var="etap" value="{!etap+1}"/>     
+                                            </apex:repeat>
+                                            <apex:variable value="{!8}" var="etap"/>
+                                        </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <apex:outputPanel id="scripts">
+        <script>
+            
+
+            //"action:status" manual al mostrar los detalles de la oferta
+            $('#myModal').on('show.bs.modal',function(){
+                //alert('perro');
+                $("[id*=btnDetalles]").show();
+                $("[id*=btnDetalles]").siblings().hide();
+            });
+            function desaparece(boton){
+                $(boton).hide();
+                $(boton).siblings().show();
+            }
+
+            //se llama cuando el modal se cierra
+            $('#modalArchivos').on('hidden.bs.modal',function(event){
+                cerrado(documentId);
+            }); 
+
+            $('#modalArchivosEsp').on('hidden.bs.modal',function(event){
+                refrescar();
+            }); 
+
+            function borraRow(){
+
+                var docEstaCerrado = '{!documentoCerrado}';
+                if(docEstaCerrado == 'true'){
+                    $( "."+eliminateRowClass).animate({opacity: '0.0',left: '1500px'},500,repintar());
+                    eliminateRowClass = '';
+
+                }
+            }
+
+            function bajar(element){
+                eliminateRowClass = $(element).parent().attr('class').split(' ')[0];
+                $( "."+eliminateRowClass).animate({opacity: '0.0',top: '1500px'},600,repintar());
+                eliminateRowClass = '';
+            }
+
+            function toggleHistory(){
+                $('.'+'{!docBitacoraId}').toggle(500);
+            }
+            function hideHistory(){
+                $('.'+'{!docBitacoraId}').hide();
+                
+            }
+
+            function ocutaEspera(){
+                $('.esperaBtn').hide();
+                $('.guardaBtn').show();
+            }
+            function ocutaGuarda(){
+                $('.esperaBtn').show();
+                $('.guardaBtn').hide();
+            }
+            function muestraBtns(){
+                $('.esperaBtn').show();
+                $('.guardaBtn').show();
+            }
+
+            function cargaHist(boton){
+                $(boton).hide();
+                $(boton).siblings().show();
+            }
+            function finCargaHist(){
+                $("[id*=MuestraHist]").show();
+                $("[id*=MuestraHist]").siblings().hide();
+            }
+
+            function senialar(marcado){
+                $('#tareasNot').toggle(500);
+                $("#"+marcado).css({'background-color': 'rgb(185, 255, 191)'});
+            }
+
+            $(document).ready(function(){
+                $('[data-toggle="popover"]').popover(); 
+            });
+
+            function showTasks(){
+                $('#tareasNot').toggle(500);
+                $('#enEspera').hide(500);
+                $('#search').hide(500);
+            }
+            function showWait(){
+                $('#enEspera').toggle(500);
+                $('#tareasNot').hide(500);
+                $('#search').hide(500);
+            }
+            function showSearch(){
+                $('#search').toggle(500);
+                $('#enEspera').hide(500);
+                $('#tareasNot').hide(500);
+            }
+        </script>
+    </apex:outputPanel>
+
+    <apex:outputpanel id="scriptRecordatorio">
+        <script>
+
+            $('.tpick').flatpickr({
+                enableTime:true,
+                dateFormat:"d/m/Y h:i K",
+                minDate: "today"
+            });
+
+        </script>
+    </apex:outputpanel>
+</apex:outputPanel>
+        
+    <script>
+ 
+
+        //funciones para mostrar la ventana de carga de documentos
+        function openModalArchivos(idEtapaOferta,tipo,idDocumento,element,idDocument){
+
+            console.log($(element.offsetParent));
+
+            eliminateRowClass = $(element).parent().attr('class').split(' ')[0];
+
+            documentId = idDocument;
+
+            var iframeArchivos = $('<iframe />').attr('src', encodeURI('../apex/etapaEntregableArchivos?parentField=EtapaOferta__c&parentId=' + idEtapaOferta + '&parentField2=DocumentoEtapa__c&parentId2='+ idDocumento + '&tipo=' + tipo));
+            iframeArchivos.attr('width','100%');
+            iframeArchivos.attr('height','500px');
+            iframeArchivos.attr('scrolling','true');
+            iframeArchivos.attr('frameborder' ,'0');
+            $("#contenidoCarga").html(iframeArchivos);
+            $("#modalArchivos").dialog("open");
+        }
+
+        function openModalArchivosEsp(idEtapaOferta,tipo,idDocumento){
+
+            var iframeArchivos = $('<iframe />').attr('src', encodeURI('../apex/etapaEntregableArchivos?parentField=EtapaOferta__c&parentId=' + idEtapaOferta + '&parentField2=DocumentoEtapa__c&parentId2='+ idDocumento + '&tipo=' + tipo));
+            iframeArchivos.attr('width','100%');
+            iframeArchivos.attr('height','500px');
+            iframeArchivos.attr('scrolling','true');
+            iframeArchivos.attr('frameborder' ,'0');
+            $("#contenidoCargaEsp").html(iframeArchivos);
+            $("#modalArchivosEsp").dialog("open");
+        }
+
+        function verificarTamano(oferta){
+            if(oferta.length > 2){
+                buscar(oferta);
+                $("#tablaBuscador").css({'display': 'block'});
+            }
+            else{
+                clear();
+                $("#tablaBuscador").css({'display': 'block'});
+            }
+        }
+
+        function submitListener(e, element){
+            var keynum = 0;
+            if (window.event){
+                keynum = window.event.keyCode;
+            }
+            else if (e.which){
+                keynum = e.which;
+            }
+
+            // Here we check whether the Enter button was pressed
+            console.log(keynum);
+            if (keynum == 13){
+                //buscar(value);
+                element.blur();
+            }
+        }
+
+        $(document).ready(function(){
+            $('.tpick').flatpickr({
+                enableTime:true,
+                dateFormat:"d/m/Y h:i K",
+                minDate: "today"
+            });
+        });
+
+    </script>
+
+
+
+
+       
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resource/tips/html5tooltipsjs-master/html5tooltips.js"></script>
+    <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+
+    </body>
+</apex:page>

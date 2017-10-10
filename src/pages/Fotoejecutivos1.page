@@ -1,0 +1,81 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              table {
+                   width: 100%;
+                   border: 1px solid #000;
+                }
+                th, td {
+                   width: 25%;
+                   vertical-align: top;
+                   border: 1px solid #000;
+                   border-collapse: collapse;
+                   padding: 0.3em;
+                   
+                }
+              body {
+             
+                    background-image: url("{!URLFOR($Resource.imagen_ejecutivos1)}");
+                    position:absolute; z-index:1; width:200%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             .text_encima {
+                    position: absolute;
+                    margin-top: 330px;
+                    margin-buttom: ;
+                    margin-left: 85px;
+                    margin-right: 10px;
+                    padding-buttom: 0px;
+                    padding-top: ;
+                    padding-left: ;
+                    padding-right: 5px;
+                    color: #000;
+                    font-size:100px ;
+                    font-family: "Arial", Helvetica, sans-serif;
+                }
+              .text_encima2 {
+                    position: absolute;
+                    margin-top: 560px;
+                    margin-buttom: ;
+                    margin-left: 110px;
+                    margin-right: 10px;
+                    padding-buttom: 0px;
+                    padding-top: ;
+                    padding-left: ;
+                    padding-right: 5px;
+                    color: #000;
+                    font-size:100px ;
+                    font-family: "Arial", Helvetica, sans-serif;
+                }
+                element.style {
+                    padding-left: 10px;
+                    left: -60;
+                    left: -69;
+                    left: -68;
+                    left: -68px;
+                    width: 1120px;
+                    
+                }
+                element.style {
+                width: 320px;
+                
+                }
+               
+            </style>
+            </head>
+ 
+            <body>
+                            <figure>     
+                           <span class="text_encima">      
+                           29
+                           </span>
+                           <span class="text_encima2" >      
+                           8
+                           </span>
+             </figure>   
+            
+            </body>
+            </html>
+            </apex:page>

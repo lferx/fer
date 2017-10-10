@@ -1,0 +1,28 @@
+<apex:page standardController="Account" extensions="PropiedadesSearch">  
+    <apex:form >
+       <apex:pageBlock >
+
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!back}" value="Retroceder"/>
+                <apex:commandButton action="{!sendpdffinal}" value="Enviar Email"/> 
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+
+            <apex:pageBlockSection title="Resultados seleccionados" columns="9">
+                <apex:pageBlockTable value="{!selectedResults}" var="p">
+                    <apex:column value="{!p.prop.Name}"/>
+                    <apex:column value="{!p.prop.N_de_Habitaciones__c}"/>
+                    <apex:column value="{!p.prop.Plaza__c}" headerValue="Plaza"/>
+                    <apex:column value="{!p.prop.Niveles_Plantas__c}"/>
+                    <apex:column value="{!p.prop.Tipo__c}"/>
+                    <apex:column value="{!p.prop.N_de_Ba_os__c}"/> 
+                    <apex:column value="{!p.prop.Colonia__c}"/>
+                    <apex:column value="{!p.prop.Municipio__c}"/>
+                    <apex:column value="{!p.prop.CP__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>           
+
+
+        </apex:pageBlock>   
+    </apex:form>
+</apex:page>

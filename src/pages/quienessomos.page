@@ -1,0 +1,698 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" controller="PropiedadesController" 
+            extensions="SitioHomePageController">
+    <html class="no-js" lang="es">
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="es"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="es"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="es"> <![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content=""/>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+    
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+    
+        <title>Revimex</title>
+         <!--Start of Zopim Live Chat Script-->
+            <script type="text/javascript">
+            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+            d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+            _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?3ihiLjWyaiZHOzH5z1eFEtaAop6zlLTy";z.t=+new Date;$.
+            type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+            </script>
+        <!--End of Zopim Live Chat Script-->
+        <style>
+            <!--RJP Pedir modificacion en la hoja de estilos-->
+            #home-statistics article strong.big-font {
+                font-family: 'CalibriBold', sans-serif;
+                font-size: 27px;
+                line-height: 50px;
+                padding: 0 5px 0 0;
+                }
+                <!--a.participa {
+                    position: absolute;
+                    width: 400px;
+                    height: 110px;
+                    bottom: 0;
+                    top: 405px;
+                    left: 15px;
+                    z-index: 300;
+                }-->
+                
+                a.participa {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 400px;
+                    height: 110px;
+                    
+                    
+                    left: 15px;
+                    z-index: 6;
+                }<!--
+                
+                a.encuentra {
+                    width: 400px;
+                    height: 110px;
+                    position: absolute;
+                    top: 337px;
+                    right: 57px;
+                    z-index: 200;
+                }-->
+                a.segob1 {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 200px;
+                    height: 70px;
+                    z-index: 999;
+                }
+                <!--a.segob2 {
+                    position: absolute;
+                    bottom: 234px;
+                    right: 0;
+                    width: 250px;
+                    height: 70px;
+                    z-index: 999;
+                }
+                a.segob3 {
+                    position: absolute;
+                    bottom: 234px;
+                    right: 0;
+                    width: 250px;
+                    height: 70px;
+                    z-index: 999;
+                }-->
+                #img2 { 
+                width: 32px; 
+                height: 32px; 
+              }
+                .selectfield-100 {
+                    background: #fff;
+                    border: none;
+                    box-sizing: border-box!important;
+                    color: #000;
+                    font-size: 15px;
+                    height: 24px;
+                    margin: 0 -5px 5px 0 !important;
+                    overflow: hidden;
+                    padding: 0 0 0 6px;
+                    text-transform: uppercase;
+                    width: 100%;
+                    -webkit-border-radius: 0px;
+                }
+                /* Tiny Carousel */
+            .suggestion {
+                cursor: pointer;
+            }
+            .slider-wrapper {
+                padding: 0 15px;
+            }
+            #slider1 {
+                height: 1%;
+                margin: 30px 0 0;
+                overflow: hidden;
+                position: relative;
+                padding: 10px 50px 10px;
+            }
+
+            #slider1 .viewport {
+                height: 240px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            #slider1 .buttons {
+                background: #1C79A7;
+                border-radius: 35px;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 35px;
+                height: 35px;
+                color: #fff;
+                font-weight: bold;
+                text-align: center;
+                line-height: 35px;
+                text-decoration: none;
+                font-size: 22px;
+            }
+
+            #slider1 .next {
+                right: 0;
+                left: auto;
+                top: 50%;
+            }
+            #cashback {
+                background: #fff;
+            }
+
+            #slider1 .buttons:hover {
+                color: #1C79A7;
+                background: #fff;
+                border: 1px solid #1C79A7;
+            }
+
+            #slider1 .disable {
+                visibility: hidden;
+            }
+
+            #slider1 .overview {
+                list-style: none;
+                position: absolute;
+                padding: 5px;
+                margin: 0;
+                width: 240px;
+                left: 0;
+                top: 0;
+                height: 225px;
+                overflow: hidden;
+            }
+
+            #slider1 .overview li {
+                float: left;
+                margin: 0 20px 0 0;
+                padding: 1px;
+                height: 225px;
+                width: 236px;
+                border: 1px solid #dcdcdc;
+                background-color: #fff;
+             }
+             #slider1 .overview li:hover {
+                -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+             }
+             
+             body {
+             
+                    background-image: url("{!URLFOR($Resource.fondonuevo2,'fondonuevo2.jpg')}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             
+             
+             button:before {
+                 content:'';
+                 position: absolute;
+                 top: 0px;
+                 left: 0px;
+                 width: 0px;
+                 height: 42px;
+                 background: url("{!URLFOR($Resource.quienessomos)}");
+                
+                 
+                 border-radius: 5px;
+                 transition: all 2s ease;
+              }
+
+              button:hover:before {
+                 width: 100%;
+              }
+              
+              #title {
+                opacity:0.6;
+                filter:alpha(opacity=60);
+              }
+              
+              #search-box form {
+                box-sizing: border-box;
+                    margin: 40px 0 0 0;
+                    padding: 0 20px;
+                    position: relative;
+                    text-align: left;
+                    z-index: 2;
+              }
+              
+              .secction1{
+                 margin:0px auto;
+                 height:70px;
+                 padding:0px;
+                 width:0px;
+                 text-align:center;
+                 display:inline-block;
+              }
+              .secction2{
+              margin:0px auto;
+                 height:70px;
+                 padding:0px;
+                 width:0%;
+                 text-align:center;
+                 display:inline-block;
+              }
+              
+              h2 {
+             
+             text-align: justify;
+             color:#ABABAB;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              }   
+              
+                  h1 {
+             text-align:;
+             color:black;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:36px;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              }  
+              
+               #cashback2 {
+                width: 80%; 
+                height: auto;
+                
+            }
+                          h3 {
+             
+             text-align: justify;
+             color:#FFFFFF;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              } 
+             h4 {
+             
+             text-align: justify;
+             color:#2E9AFE;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:35px;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              }
+              
+              
+              <meta name="viewport" content="width=device-width, minimum-scale=0.1">
+               <title>bannernuevo</title>
+             </meta>
+    
+                        </style>
+            <script>
+           
+                      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                      ga('create', 'UA-71967023-1', 'auto');
+                      ga('send', 'pageview');
+
+                </script> 
+                  
+                  
+
+<style type="text/css">
+              .text_encima{
+              position: absolute;
+              margin-top:;
+              margin-buttom:;
+              margin-left:;
+              margin-right:;
+              padding-buttom:0px;
+              padding-top:170px;
+              padding-left:40px;
+              padding-right:0px;
+              color: #FFFFFF;
+              font-size: 25px;
+              font-family:"Arial", Helvetica, sans-serif;
+              }
+              
+              .text_encima2{
+              position: absolute;
+              margin-top:;
+              margin-buttom:;
+              margin-left:;
+              margin-right:;
+              padding-buttom:0px;
+              padding-top:170px;
+              padding-left:40px;
+              padding-right:0px;
+              color: #FFFFFF;
+              font-size: 25px;
+              font-family:"Arial", Helvetica, sans-serif;
+              }
+              .text_encima3{
+              position: absolute;
+              margin-top:;
+              margin-buttom:;
+              margin-left:;
+              margin-right:;
+              padding-buttom:0px;
+              padding-top:170px;
+              padding-left:40px;
+              padding-right:0px;
+              color: #FFFFFF;
+              font-size: 25px;
+              font-family:"Arial", Helvetica, sans-serif;
+              }
+              
+              .social {         
+    position: fixed; <!-- Hacemos que la posición en pantalla sea fija para que siempre se muestre en pantalla-->
+    left: 0;top: <!-- Establecemos la barra en la izquierda -->
+    top: 150px;  <!-- Bajamos la barra 200px de arriba a abajo -->
+    z-index: 2000; <!-- Utilizamos la propiedad z-index para que no se superponga algún otro elemento como sliders, galerías, etc -->
+
+    }
+ 
+    .social ul {
+        list-style: none;       
+        padding-left: 15px;
+
+        
+    }
+ 
+    .social ul li a {
+        display: inline-block;
+        left: 0;
+        color:#fff;
+        background: #ffffff;
+        padding: 10px 10px;
+        width: 40px;
+        height: 40px;
+        overflow:hidden;
+        text-decoration: none;
+        
+        -webkit-transition:all 500ms ease;
+        -o-transition:all 500ms ease;
+        transition:all 500ms ease; <!-- Establecemos una transición a todas las propiedades -->
+    }
+    
+ 
+    .social ul li .icon-ejecutivo1 {background:#1C79A7;} <!-- Establecemos los colores de cada red social, aprovechando su class -->
+    .social ul li .icon-ejecutivo2 {background:#5CA3C6;}
+    .social ul li .icon-ejecutivo3 {background:#1C79A7;}
+    .social ul li .icon-ejecutivo4 {background:#5CA3C6;}
+    .social ul li .icon-ejecutivo5 {background:#1C79A7;}
+
+ 
+    .social ul li a:hover {
+        background: #01A9DB; <!-- Cambiamos el fondo cuando el usuario pase el mouse -->
+        padding: 10px 180px; <!-- Hacemos mas grande el espacio cuando el usuario pase el mouse -->
+        padding-left: 10px;
+        <!-- text-align: left; -->
+        
+    }
+              
+              </style>
+                  
+        </head>
+      
+      <body >
+           
+
+        
+        
+        <div class="header-wrapper">
+        
+            <figure  class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.bannernuevo)}" alt="Revimex"/></a></figure>
+           <center>
+            <nav id="footer-menu">
+                <div>
+                   <a href="http://revimex.force.com">HOME</a>
+                    
+                    <a href="http://revimex.force.com/CheckIn">PROMOTORES</a>
+                    <a href="http://revimex.force.com/PrecaRegisterPage">SORTEO</a>
+                    <a href="http://revimex.force.com/Contactanos">CONTACTO</a>
+                    
+                    <!--<a href="http://www.revimex.mx/RevimexPrivacidad" target="_blank">AVISO DE PRIVACIDAD</a>
+                    <a href="http://www.revimex.mx/RevimexTerminosCondiciones" target="_blank" >PERMISO DE SEGOB</a>-->
+                    <a href="http://revimex.force.com/MapaBusquedas?estado=Todos&ciudad=Todos&tipo=Todos">PROPIEDADES</a>
+                    <a href="http://revimex.force.com/RevistaRevimex1" class="noborder-right">CATÁLOGO</a>
+                    
+                </div>
+            </nav>
+          </center>
+        </div>
+        
+         <div class="social" style="top: 100px;;">
+         <ul>      
+            <!--<li><a href="tel://5570780704" target="_blank" class="icon-ejecutivo1" alt="descripcion" title="Ejecutivo de ventas Christopher López"> <img src="{!URLFOR($Resource.fotosejecu,'fotoeje1.png')}" style="width: 40px;height:40px; float:left; padding-right: 20px;"/> <div class="us_ count" style="width: 250px;">Christopher López &nbsp;&nbsp;<br/> Tel.55-70-78-07-04 &nbsp;&nbsp;</div></a></li>--> 
+            <li><a href="tel://5544048815" target="_blank" class="icon-ejecutivo1" alt="descripcion" title="Ejecutivo de ventas Anette Hernández"> <img src="{!URLFOR($Resource.fotosejecu,'fotoeje2.png')}" style="width: 40px;height:40px; float:left; padding-right: 20px;"/> <div class="us_ count" style="width: 250px;">Anette Hernández &nbsp;&nbsp;<br/> Tel.55-44-04-88-15 &nbsp;&nbsp;</div></a></li>
+            <li><a href="tel://5569612990" target="_blank" class="icon-ejecutivo2" alt="descripcion" title="Ejecutivo de ventas Maricruz Sanchez"> <img src="{!URLFOR($Resource.fotosejecu,'maricruz.png')}" style="width: 40px;height:40px; float:left; padding-right: 20px;"/> <div class="us_ count" style="width: 250px;">Maricruz Sanchez &nbsp;&nbsp; <br/> Tel.55-69-61-29-90 &nbsp;&nbsp; </div></a></li>
+            
+            <li><a href="tel://5569618762" target="_blank" class="icon-ejecutivo4" alt="descripcion" title="Ejecutivo de ventas Jesús Flores"> <img src="{!URLFOR($Resource.fotosejecu,'jesus.png')}" style="width: 40px;height:40px; float:left; padding-right: 20px;"/> <div class="us_ count" style="width: 250px;">Jesús Flores &nbsp;&nbsp; <br/> Tel.55-69-61-87-62 &nbsp;&nbsp;</div></a></li>
+            <li><a href="tel://5569616110" target="_blank" class="icon-ejecutivo5" alt="descripcion" title="Ejecutivo de ventas Felix García"> <img src="{!URLFOR($Resource.fotosejecu,'felix.png')}" style="width: 40px;height:40px; float:left; padding-right: 20px;"/> <div class="us_ count" style="width: 250px;">Felix García &nbsp;&nbsp; <br/> Tel.55-69-61-61-10 &nbsp;&nbsp;</div></a></li>
+        </ul>
+        </div>
+            
+           
+             <section id="home-statistics">
+                     <div class="main-wrapper clearfix">
+                            <!--<h2><p style=”text-align: justify;”>Somos una empresa que reúne más de 20 años de experiencia y que surge por la necesidad creciente e inherente de los mexicanos por adquirir y formar un patrimonio. Es así como, creamos REVIMEX, 
+                            un fondo de inversión 100% mexicano con profesionales con más de 20 años de experiencia en el sector de bienes adjudicados. Buscamos brindar las mejores opciones de vivienda recuperada para sus clientes, 
+                            con las mayores garantías de servicio y seguridad.</p></h2>-->                           
+
+                            <!--<h2><p>REVIMEX es el mayor fondo de inversión mexicano 100% capital dedicado en exclusiva a los bienes adjudicados. Con más de 1,000MM de pesos en activos, Revimex 
+                            es el líder indiscutible del mercado, con profesionales con 20 años de experiencia en la industria.</p></h2>-->
+                           <h4><p><i>Las casas se construyen para ser habitadas,en REVIMEX rehabilitamos casas para construir hogares.</i></p></h4>
+                           <br></br>
+                           <img   src="{!URLFOR($Resource.encabezados,'filosofia.png')}" style="width: 100%;max-width: 300px;"/>
+                            <h2><p>Somos el único fondo de inversión mexicano de casas adjudicadas, que brinda la oportunidad a las familias de México de adquirir su primer hogar, siendo el aliado, la guía y asesoría que necesitan las familias para encontrar ese lugar que se llenará de 
+                            historias, momentos y experiencias, su propio hogar.</p></h2>
+
+                            <br></br>
+                                <img   src="{!URLFOR($Resource.encabezados,'mision.png')}" style="width: 100%;max-width: 300px;"/>
+                                <!--<h2><p>Principal objetivo de Revimex es primero adquirir y posteriormente operar vivienda adjudicada de instituciones Financieras, Gobierno y Fondos de Inversión.</p></h2>-->
+                                <h2><p>Ofrecer a las familias mexicanas la posibilidad de adquirir un patrimonio digno, apegándonos a las normas establecidas ante el Infonavit, brindando un servicio personalizado en cada una de las etapas del proceso, optimizando los recursos 
+                                económicos de los clientes y poniendo a su alcance propiedades con valor de hasta el 40% menor al precio del mercado.</p></h2>
+                            
+                            <br />
+                                <img  src="{!URLFOR($Resource.encabezados,'vision.png')}" style="width: 100%;max-width: 300px;"/>
+                                <!--<h2><p>Revimex quiere convertirse en el referente nacional en la vivienda adjudicada, creando un puente entre las entidades financieras y los clientes finales.</p></h2>-->
+                                <h2><p>Ser el fondo de inversión mexicano con mayor volumen de venta a nivel nacional, en el cual, los mexicanos depositen su confianza para adquirir un patrimonio digno que supere sus expectativas y enriquezca su calidad de vida.</p></h2>
+                                
+ 
+                                  
+                    </div>
+                    
+                    <div class="main-wrapper clearfix">
+                            <br/>                                                        
+                            <img   src="{!URLFOR($Resource.encabezados,'valores.png')}" style="width: 100%;max-width: 300px;"/> 
+                            <img   src="{!URLFOR($Resource.quienessomospng,'texto.png')}" style="width: 100%;" />  
+                            <!--<table style="width:auto; border:0; background:#0174DF;">
+                            <tbody>
+                            <tr>
+                            <td> 
+                            <h3><p><li>Protección a los intereses de nuestros clientes y trabajadores.</li></p></h3>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h3><p><li>Confianza entre el equipo que conforma la familia REVIMEX y hacia el consumidor.</li></p></h3>  
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h3><p><li>Honestidad en los servicios que ofrecemos y los procesos que implementamos.</li></p></h3> 
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h3><p><li>Respeto hacia nuestros clientes, nuestra competencia y hacia nosotros mismos.</li></p></h3>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h3><p><li>Espíritu de servicio, brindando atención personalizada permanente, amable y eficaz.</li></p></h3> 
+                            </td>
+                            </tr>
+                            </tbody>
+                            </table>--> 
+                    </div>
+                    
+            </section>
+            
+     <section id="home-statistics">
+
+             
+             <div class="main-wrapper clearfix">
+                 <figure class="icon float-left">
+                     <span class="text_encima">
+                        <center>Hemos Ahorrado</center><br />
+
+                        <center><apex:outputText id="homeAhorrado" value="{0, number, ####}">
+                                        <apex:param value="{!homeAhorrado}" />
+                        </apex:outputText></center>
+                        <center><div class="float-left paragraph"><strong><br />MILLONES</strong> <br>A LAS FAMILIAS</br></div></center>
+                     
+                     </span>
+                             <img src="{!URLFOR($Resource.ImagenesNuevaPagina,'Imagenes/PLECAAZUL-08.png')}" alt="hogar"/>
+                  </figure>
+                <!--<article>
+                    <div class="clearfix">
+                        <figure class="icon float-left"><img src="{!URLFOR($Resource.HomeRevimex,'images/home-icon.png')}" alt="hogar"/></figure>
+                        <div class="float-left description">
+                            <div class="paragraph">Hemos Ahorrado</div>
+                            <div class="clearfix">
+                                <div class="float-left"><strong class="big-font">
+                                    $
+                                    <apex:outputText id="homeAhorrado" value="{0, number, ####}">
+                                        <apex:param value="{!homeAhorrado}" />
+                                    </apex:outputText>
+                                    </strong>
+                                 </div>
+                                <div class="float-left paragraph"><strong>MILLONES</strong> <br>A LAS FAMILIAS</br></div>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="fullwidth-picture"><img src="{!URLFOR($Resource.HomeRevimex,'images/statistics-family.jpg')}" alt="familias"/></figure>
+                </article>-->
+                
+                <div class="fixblock-5"></div>
+                <figure class="icon float-left">
+                <span class="text_encima2"><center>Hemos Vendido</center><br />
+                       <center> <apex:outputText id="homePropiedadVendidas" value="{0, number,####}">
+                                        <apex:param value="{!homePropiedadVendidas}" />
+                                    </apex:outputText></center>
+                                <center><div class="float-left paragraph"><strong><br />VIVIENDAS</strong> <br>REHABILITADAS</br></div>
+                            </center>
+                    </span>
+                <img src="{!URLFOR($Resource.ImagenesNuevaPagina,'Imagenes/PLECAGRIS-08.png')}" alt="vivienda"/></figure>
+               
+                    
+                        <!--<figure class="icon float-left">
+                            <img src="{!URLFOR($Resource.HomeRevimex,'images/vivienda-icon.png')}" alt="vivienda"/>
+                        </figure>
+                        
+                        <div class="float-left description">
+                            <div class="paragraph">Hemos Vendido</div>
+                            <div class="clearfix">
+                                <div class="float-left"><strong class="big-font">
+                                    <apex:outputText id="homePropiedadVendidas" value="{0, number,####}">
+                                        <apex:param value="{!homePropiedadVendidas}" />
+                                    </apex:outputText>
+                                    </strong>
+                                </div>
+                                <div class="float-left paragraph"><strong>VIVIENDAS</strong> <br>REHABILITADAS</br></div>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="fullwidth-picture">
+                        <img src="{!URLFOR($Resource.HomeRevimex,'images/statistics-home-2.jpg')}" alt="familias"/>
+                    </figure>
+                 
+                 </article>-->
+             
+                
+                    <div class="fixblock-5"></div>
+                 
+                         <figure class="icon float-left">
+                             <span class="text_encima3"><center>Tenemos</center><br />
+                 
+                                <center><apex:outputText id="homePropiedadDisponibles" value="{0, number, ####}">
+                                        <apex:param value="{!homePropiedadDisponibles}" />
+                                </apex:outputText></center>
+                                
+                           
+                                <div class="float-left paragraph"><br /><center>CASAS <br></br>LISTAS PARA TI
+                     
+                     </center></div>
+
+                            </span>
+                <img src="{!URLFOR($Resource.ImagenesNuevaPagina,'Imagenes/PLECAROJA-08.png')}" alt="casa"/></figure>  
+                   
+
+                 <!--<article>
+                    <div class="clearfix">
+                    
+                    <div class="float-left description">
+                        <div class="paragraph">Tenemos</div>
+                        <div class="clearfix">
+                            <div class="float-left"><strong class="big-font">
+                                <apex:outputText id="homePropiedadDisponibles" value="{0, number, ####}">
+                                        <apex:param value="{!homePropiedadDisponibles}" />
+                                </apex:outputText>
+                                </strong>
+                           </div>
+                                <div class="float-left paragraph"><strong>CASAS</strong> <br></br>LISTAS PARA TI</div>
+                        </div>
+                    </div>
+                    </div>
+                 
+                   <figure class="fullwidth-picture"><img src="{!URLFOR($Resource.HomeRevimex,'images/statistics-home-1.jpg')}" alt="familias"/></figure>
+                </article>-->
+                
+                
+            </div>
+        </section>
+           
+           <footer>
+           
+
+        <div class="main-wrapper" style="width: auto;">
+              <center>  
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            
+            <nav id="footer-menu" style="font-size:12px;">
+                <div>
+                                    <h2>Sugerencias y Comentarios</h2>
+                    
+                    <!--<figure id="footer-logo" class="fullwidth-picture" style="width: 45px;"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /></figure><a href="whatsapp://send?text=ME%20INTERESA!">5554096818</a>-->
+                    <figure id="footer-logo" class="fullwidth-picture" style="width: 45px;"><img id="img2" src="{!URLFOR($Resource.icinollamadas)}" /></figure><a href="tel://018002000440" target="_blank">01-800-200-0440</a>
+                    <a href="http://revimex.force.com/RevimexTerminosCondiciones" target="_blank">PERMISO DE SEGOB</a>
+                            <a href="http://revimex.force.com/SorteoLogin">RECOMENDADORES</a>
+                            <a href="http://revimex.force.com/RTAF">INVITA UN AMIGO</a>
+                            <a href="http://revimex.force.com/RevimexPrivacidad" target="_blank" class="noborder-right">AVISO DE PRIVACIDAD</a>
+                </div>
+            </nav>
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/watch?v=mdauRwA98iw" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+            </center>
+            
+        </div>
+        
+        </footer>
+          
+       <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+        <script>
+              
+               
+         
+
+                            
+        
+       </script>
+       <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PLTTLC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PLTTLC');</script>
+<!-- End Google Tag Manager -->
+        </body>
+     
+  
+      
+
+    </html>
+</apex:page>

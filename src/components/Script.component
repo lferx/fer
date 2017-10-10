@@ -1,0 +1,506 @@
+<apex:component Controller="Controlador_Objeciones">
+    <apex:attribute name="paso" description="nombre del paso en el que va." type="String" assignTo="{!pasoName}" />
+<head>
+
+    <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+    <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+    <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>jQuery UI Tooltip - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/resources/demos/style.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+    <style type="text/css">
+            /* este estilo sirve para ubicar el boton avanzar el la posicion inferior derecha */
+            .botonAvanzar{
+                        right: 10%;
+                        top: 90%;
+                        position: absolute;
+                        
+            }
+            /* este estilo sirve para ubicar el boton avanzar el la posicion inferior derecha */
+            .botonRetroceder{
+                        left: 10%;
+                        top: 90%;
+                        position: absolute;
+            } 
+
+            /* es la posicion y estilo de la palabra o boton que hace visible el texto del script */
+
+            .scriptTitulo:hover{
+                cursor: pointer;
+                background-color: yellow;
+            }
+            /* es el contenedor del alert donde se muestra el script */
+
+            /* lert es el estilo de la caja verde que contiene el script */
+            .alert {
+                    align-content: center;
+                    align-self: center;
+                    bottom: 60px;
+                    left: 40%;
+                    right: 40%;
+                    position: absolute;
+                    width: 30%;
+                    background-color: none;
+                    color: #000000;
+                    border-radius: 20px 20px 20px 20px;
+                    -moz-border-radius: 20px 20px 20px 20px;
+                    -webkit-border-radius: 20px 20px 20px 20px;
+                    }
+            .tituloObjecion{
+                    padding:50px;
+                    background: #FFE933;
+                    color: #FDFEFE;
+                    width: 250px;
+                    align-self: center;
+                    border-radius: 17px 17px 17px 17px;
+                    -moz-border-radius: 17px 17px 17px 17px;
+                    -webkit-border-radius: 17px 17px 17px 17px;
+                    border: 0px solid #000000;
+
+            }
+           .tituloObjecion1{
+                    align-content: center;
+                    align-self: center;
+                    bottom: 30px;
+                    left: 40%;
+                    right: 40%;
+                    position: absolute;
+                    width: 30%;
+                    background: #FFE933;
+                    color: #000000;
+                    width: 200px;
+                    align-self: center;
+                    border-radius: 17px 17px 17px 17px;
+                    -moz-border-radius: 17px 17px 17px 17px;
+                    -webkit-border-radius: 17px 17px 17px 17px;
+                    border: 0px solid #000000;
+
+            }
+                    /* closebtn es la X que cierra el script */
+            .closebtn {
+                        margin-left: 15px;
+                        color: blue;
+                        font-weight: bold;
+                        float: right;
+                        font-size: 22px;
+                        line-height: 20px;
+                        cursor: pointer;
+                        transition: 0.3s;
+                    }
+
+            .closebtn:hover {
+                        font-size: 50px;
+                        color: red;
+                            }
+/*            PANTALLA 1
+                .container_script{
+                border: solid 1px;
+                width: 50%;
+                top: 75%;
+                margin-left: 25%;
+                margin-right: 25%;
+            }
+            .btn1, .btn2, .btn3, .btn4{
+                display: inline-block;
+                background-color: #80A323;
+                margin: 5px 20px 5px 20px;
+                padding: 3px 3px;
+                cursor: pointer;
+                width: 20%;
+                border-radius: 15px;
+                margin-top: 10px;
+            }
+            .btn1:hover, .btn2:hover, .btn3:hover, .btn4:hover{
+                background-color: #88AD24;
+            }
+            .btn1{
+                left: 5%;
+                margin-right: 10px;
+            }
+            .btn2{
+                margin-right: 10px;
+            }
+            .btn3{
+                margin-right: 10px;
+            }
+            .btn4{
+                right: 5%;
+            }
+            .container_script{
+                display: block;
+            }
+            .msg_script1, .msg_script2{
+                left: 10%;
+                right: 10%;
+                margin-bottom: 10px;
+                margin: 5px 5px 15px 5px;
+            }
+            .msg_script3, .msg_script4{
+                left: 10%;
+                right: 10%;
+                margin-bottom: 10px;
+                margin: 5px 5px 15px 5px;
+            }
+          .menuArgumentosObservaciones{
+                         height: 500px;
+                         width:200px;
+                         display:inline;
+                         padding-top: 110px;       
+                        }*/
+
+
+            .container_script{
+            border: solid 1px;
+            width: 50%;
+            top:80%;
+            /*margin-top: 0px;*/
+            margin-left: 25%;
+            margin-right: 25%;
+            display: block;
+            }
+            .btn1, .btn2, .btn3, .btn4, .btn5, .btn6, .btn7{
+                display: inline-block;
+                background-color: #80A323;
+                margin: 5px 20px 5px 20px;
+                padding: 3px 3px;
+                cursor: pointer;
+                width: 20%;
+                border-radius: 15px;
+                margin-top: 10px;
+            }
+            .btn1:hover, .btn2:hover, .btn3:hover, .btn4:hover, .btn5:hover, .btn6:hover, .btn7:hover{
+                background-color: #88AD24;
+            }
+            .btn1, .btn2, .btn3, .btn4, .btn5, .btn6, .btn7{
+                margin-right: 10px;
+            }
+            .btn1{
+                left: 5%;
+            }
+            .btn7{
+                right: 5%;
+            }
+            .msg_script1, .msg_script2, .msg_script3, .msg_script4, .msg_script5, .msg_script6, .msg_script3, .msg_script7{
+                left: 10%;
+                right: 10%;
+                margin-bottom: 10px;
+                margin: 5px 5px 15px 5px;
+                /*position: absolute;*/
+            }
+          .menuArgumentosObservaciones{
+                         height: 500px;
+                         width:200px;
+                         display:inline;
+                         padding-top: 110px;       
+                        }
+    
+</style> 
+</head>
+
+<body>
+  
+<!--         <table class="tituloObjecion1">
+            <td>
+                <div id="divScript" class="tituloObjecion1">
+                    <apex:outputText escape="false" value="{!scripts[paso].Mensaje__c}" rendered="true"/>
+                </div>
+            </td>
+        </table> -->
+        
+</body>
+
+<script type="text/javascript">
+       function mostrar(){
+        document.getElementById("divScript").style.visibility = "visible";
+        $('#idScriptSpace').prop('hidden',false);
+       }
+   </script>
+
+   <script type="text/javascript">
+       function ocultarAlerta(){
+        $('#idScriptSpace').prop('hidden',true);
+
+       }
+   </script>
+
+<!--     <div class="container_script">
+        <section id="sw_scriptbegin" hidden="">
+        Buenos días mi nombre es ____ Me comunico de REVIMEX
+        </section>
+        <div class="msj_srcipts">
+            <section id="sw_script1" class="msg_script1" hidden="true">
+            Me comunico porque nos dejaste tus datos en Origen para brindarte mayor información sobre nuestras casas en venta
+        </section>
+
+            <section id="sw_script2" class="msg_script2" hidden="true">
+            1 En qué estado de la república deseas comprar tu propiedad…<br/>
+            2 En que parte de Nombre de Estado
+        </section>
+
+        <section id="sw_script3" class="msg_script3" hidden="true">
+            Antes de continuar con la llamada es importante mencionarte que todos los datos que nos proporciones están protegidos de acuerdo a nuestro aviso de privacidad, el cual puedes consultar en www.revimex.mx
+            <a href="wwww.revimex.com" target="_blank">wwww.revimex.com</a>
+        </section>
+
+        <section id="sw_script4" class="msg_script4" hidden="true">
+            1.-Me puedes confirmar tu nombre completo<br/>
+            2.-Tu numero telefónico es : Mencionarlo <br/>
+            3.-Es local o es celular?<br/>
+            4.-Cuentas con algún otro numero donde podamos localizarte?<br/>
+            5.-Cual es tu correo electrónico?<br/>
+        </section>
+
+        </div>
+
+        <section class="btn1" id="show_script1" >Motivo de Llamada</section>
+
+        <section class="btn2" id="show_script2">Planes de interes</section>
+
+
+        <section class="btn3" id="show_script3">Aviso de Privacidad</section>
+
+        <section class="btn4" id="show_script4">Datos Adicionales</section>
+    </div> -->
+
+<!--         <div class="container_script">
+        <section id="sw_scriptbegin" hidden="">
+        ¿La propiedad es para ti o es para invertir?
+        </section>
+        <div class="msj_srcipts">
+            <section id="sw_script1" class="msg_script1" hidden="true">
+            ¿Cual sería la forma de pago que vas a utilizar para comprar tu casa, Crédito o Contado?
+        </section>
+
+            <section id="sw_script2" class="msg_script2" hidden="true">
+            Qué tipo de crédito vas a utilizar? <br/>
+            Infonavit, Fovissste, Hipotecario   
+        </section>
+
+        <section id="sw_script3" class="msg_script3" hidden="true">
+            Haz consultado tu precalificación? <br/>
+            SI: Cual es el monto que tienes autorizado? <br/>
+            NO: Si gustas podemos verificarlo/confirmarlo en este momento… <br/>
+            Para realizar la consulta voy a requerir algunos datos <br/>
+        </section>
+
+        <section id="sw_script4" class="msg_script4" hidden="true">
+            Tienes a la mano tu NSS? <br/>
+            SI: Perfecto ¿Cuál es? <br/>
+            NO: No te preocupes podemos consultarlo <br/>
+        </section>
+
+        <section id="sw_script5" class="msg_script5" hidden="true">
+            ¿Cuál es tu fecha de nacimiento?
+        </section>
+
+        <section id="sw_script6" class="msg_script6" hidden="true">
+            El sistema me indica que tu precalificación es de $$$$
+        </section>
+
+        <section id="sw_script7" class="msg_script7" hidden="true">
+            Es importante mencionar que esto es solo un estimado ya que hay gastos administrativos que se descuentan de este monto (escrituración) por lo que el presupuesto que consideraremos es de $$$$ -10k
+        </section>   
+
+        </div>
+
+        <section class="btn1" id="show_script1" >Forma de pago</section>
+
+        <section class="btn2" id="show_script2">Tipo de credito</section>
+
+
+        <section class="btn3" id="show_script3">Infonavit</section>
+
+        <section class="btn4" id="show_script4">NSS</section>
+
+        <section class="btn5" id="show_script5">Fecha de nacimiento</section>
+
+        <section class="btn6" id="show_script6">Estatus de Credito Infonavit</section>
+ 
+        <section class="btn7" id="show_script7">Nota</section>
+    </div> -->
+<script>
+        //PANTALLA 1
+        // $(document).ready(function(){
+        //     //Muestra el mensaje del script 1
+        //     $("#show_script1").click(function(){
+        //         shoowme = false;
+        //         //ct=1;
+        //         //ct++;
+        //         $("#sw_script1").prop('hidden', shoowme);
+        //      if(shoowme == false){
+        //         $('#sw_scriptbegin').prop('hidden',true);
+        //         $('#sw_script2').prop('hidden',true);
+        //         $('#sw_script3').prop('hidden',true);
+        //         $('#sw_script4').prop('hidden',true);
+        //      }
+        //     });
+        // });
+        // $(document).ready(function(){
+        //     //Muestra el mensaje del script 1
+        //     $("#show_script2").click(function(){
+        //         shoowme = false;
+        //         //ct=1;
+        //         //ct++;
+        //         $("#sw_script2").prop('hidden', shoowme);
+        //      if(shoowme == false){
+        //         $('#sw_scriptbegin').prop('hidden',true);
+        //         $('#sw_script1').prop('hidden',true);
+        //         $('#sw_script3').prop('hidden',true);
+        //         $('#sw_script4').prop('hidden',true);
+        //      }
+        //     });
+        // });
+
+        // $(document).ready(function(){
+        //     //Muestra el mensaje del script 1
+        //     $("#show_script3").click(function(){
+        //         shoowme = false;
+        //         //ct=1;
+        //         //ct++;
+        //         $("#sw_script3").prop('hidden', shoowme);
+        //      if(shoowme == false){
+        //         $('#sw_scriptbegin').prop('hidden',true);
+        //         $('#sw_script1').prop('hidden',true);
+        //         $('#sw_script2').prop('hidden',true);
+        //         $('#sw_script4').prop('hidden',true);
+        //      }
+        //     });
+        // });
+
+        // $(document).ready(function(){
+        //     //Muestra el mensaje del script 1
+        //     $("#show_script4").click(function(){
+        //         shoowme = false;
+        //         //ct=1;
+        //         //ct++;
+        //         $("#sw_script4").prop('hidden', shoowme);
+        //      if(shoowme == false){
+        //         $('#sw_scriptbegin').prop('hidden',true);
+        //         $('#sw_script1').prop('hidden',true);
+        //         $('#sw_script2').prop('hidden',true);
+        //         $('#sw_script3').prop('hidden',true);
+        //      }
+        //     });
+        // });
+
+        $(document).ready(function(){
+            $("#show_script1").click(function(){
+                shoowme = false;
+                $("#sw_script1").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+         });
+        $(document).ready(function(){
+            $("#show_script2").click(function(){
+                shoowme = false;
+                $("#sw_script2").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $("#show_script3").click(function(){
+                shoowme = false;
+                $("#sw_script3").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $("#show_script4").click(function(){
+                shoowme = false;
+                $("#sw_script4").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            //Muestra el mensaje del script 1
+            $("#show_script5").click(function(){
+                shoowme = false;
+                $("#sw_script5").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $("#show_script6").click(function(){
+                shoowme = false;
+                $("#sw_script6").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script7').prop('hidden',true);
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $("#show_script7").click(function(){
+                shoowme = false;
+                $("#sw_script7").prop('hidden', shoowme);
+             if(shoowme == false){
+                $('#sw_scriptbegin').prop('hidden',true);
+                $('#sw_script1').prop('hidden',true);
+                $('#sw_script2').prop('hidden',true);
+                $('#sw_script3').prop('hidden',true);
+                $('#sw_script4').prop('hidden',true);
+                $('#sw_script5').prop('hidden',true);
+                $('#sw_script6').prop('hidden',true);
+             }
+            });
+        });
+
+</script>
+
+<!-- Pagina visualforce CreacionCuentaTipoLead -->
+</apex:component>

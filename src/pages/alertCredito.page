@@ -1,0 +1,225 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="Account" 
+         docType="html-5.0">
+    <html class="no-js" lang="es">
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="es"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="es"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="es"> <![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content="Revimex.mx"/>
+        <meta name="description" content="Paguinas Google Ads" />
+        <meta name="keywords" content="Revimex, Incuestas, Sorteo, Locura" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1.0,minimun-scale=1.0"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>   
+        <title>Revimex</title>
+        
+        <style>
+       <!--RJP Pedir modificacion en la hoja de estilos-->
+       
+                h2 {
+                     text-align: left;
+                     color:#ABABAB;
+                     font-family:"Arial", Helvetica, sans-serif;
+                     font-size:;
+                     font-weight:;
+                     line-height:;
+                     text-decoration:;
+                     text-transform:;
+                      }   
+                input {
+                    text-transform: uppercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+              
+
+
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=datetime-local],
+input[type=password],
+input[type=telefono],
+
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+input[type=datetime-local]:focus,
+input[type=password]:focus,
+input[type=telefono]:focus,
+
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #1C79A7;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #1C79A7;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}  
+
+
+        .btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 300px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+        input[type=button].btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 100px !important;
+            border: none;
+            margin: 10px auto;
+            background-color: #1C79A7;
+            text-transform: capitalize;
+        }
+        input[type=button].btn-action.dis {
+            opacity:.4;
+            filter: alpha(opacity=40)
+        }
+        button.btn-action {
+            border: none;
+        }
+        #img2 { 
+                width: 44px; 
+                height: 38px; 
+                }
+                
+                body {
+             
+                    background-image: url("{!URLFOR($Resource.fondonuevo)}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+                
+                }
+                
+                
+            </style>
+            
+            <script>
+                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', 'UA-71967023-1', 'auto');
+                    ga('send', 'pageview');
+             </script> 
+           
+      </head>
+      <body>       
+          
+            <noscript>
+                <iframe src="//www.googletagmanager.com/ns.html?id=GTM-PLTTLC" height="0" width="0" style="display:none;visibility:hidden">
+                </iframe>
+            </noscript>
+            <script>
+                (function(w,d,s,l,i){
+                w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })
+                (window,document,'script','dataLayer','GTM-PLTTLC');
+            </script>
+            
+         <!--El único fondo de inversión que  brinda la oportunidad a las familias mexicanas de  adquirir su primer hogar
+    Nuestras casas se entregan totalmente rehabilitadas
+    Aceptamos crédito Infonavit, Fovissste y Bancarios
+    -->
+        <div class="header-wrapper">
+        
+            <figure  class="fullwidth-picture"><img src="{!URLFOR($Resource.gracias)}" alt="Revimex"/></figure>
+        </div>
+        <center>
+        <apex:form >
+       
+        
+       
+           
+          <!--gracias, tus datos han sido enviados.-->
+                <CENTER>
+                            <!--<button class="btn-action"  ONCLICK="closer();" >Aceptar</button>-->
+                            <input type="button" class="btn-action" value="Aceptar" onClick="window.location = 'http://www.revimex.mx/'" /> 
+                           
+                        </CENTER>
+            </apex:form>
+        </center> 
+             
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+              
+             <script>
+           
+             function direccion(){
+                location.href="http://www.revimex.mx/";
+            }
+
+                  
+        </script>
+        
+       </body>
+       
+            
+    </html>
+</apex:page>

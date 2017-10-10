@@ -1,0 +1,47 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              TABLE {
+                 background-color: #EEEEEE;
+                 border:1px outset black;
+                
+             }
+               TD {
+                font-family:Verdana, Geneva, sans-serif;
+                font-size:12px;
+                text-align: center;
+                background-color: #fff;
+                border-top: 1px outset black;
+                border-left:1px outset black;
+                border-bottom:1px outset black;
+                border-right:1px outset black;
+                BORDER = 10;
+             }
+             
+             h2 {
+                  color:#fb7f05;
+                  
+                }
+            </style>
+            </head>
+ 
+  <body>
+             <center>
+                    <img src="{!URLFOR($Resource.FotoAzucena)}" />
+                 <h2 align="center">Azucena Moreno Guevara</h2>
+     <TABLE>
+        <TR>
+                <TH>Stock Ponderado</TH>
+                <TH>Objetivo Ventas</TH>
+                <TH>Objetivo Ofertas</TH>
+        </TR>
+        <TR>
+            <TD>35</TD> <TD>4</TD> <TD>4</TD>  
+        </TR>
+    
+    </TABLE>
+                </center>
+  </body>
+</html>
+</apex:page>

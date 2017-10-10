@@ -1,0 +1,678 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="Account" 
+       extensions="FormularioControllerbaratas"  docType="html-5.0">
+    <html class="no-js" lang="es">
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="es"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="es"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="es"> <![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content="Revimex.mx"/>
+        <meta name="description" content="Paguinas Google Ads" />
+        <meta name="keywords" content="Revimex, Incuestas, Sorteo, Locura" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,maximum-scale=1.0,minimun-scale=1.0"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>   
+        <title>Revimex</title>
+        
+        <style>
+       <!--RJP Pedir modificacion en la hoja de estilos-->
+                input {
+                    text-transform: uppercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 245px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+    margin:10px auto;
+    max-width: 200px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.messageTable{
+    width: 100%;
+    background-color: blanchedalmond;
+}
+
+#footer-menu a {
+    border-right: 1px solid #686868;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 0 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+#Title-menu a {
+    border-right: 1px solid #686868;
+    color: #000000;
+    font-size: 14px;
+    padding: 0 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=datetime-local],
+input[type=password],
+input[type=telefono],
+
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+input[type=datetime-local]:focus,
+input[type=password]:focus,
+input[type=telefono]:focus,
+
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #1C79A7;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #1C79A7;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}  
+
+          h2 {
+             text-align: left;
+             color:#ABABAB;
+             font-family:"Arial", Helvetica, sans-serif;
+             font-size:;
+             font-weight:;
+             line-height:;
+             text-decoration:;
+             text-transform:;
+              }   
+        .btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 300px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+        input[type=button].btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 100px !important;
+            border: none;
+            margin: 10px auto;
+            background-color: #1C79A7;
+            text-transform: capitalize;
+        }
+        input[type=button].btn-action.dis {
+            opacity:.4;
+            filter: alpha(opacity=40)
+        }
+        button.btn-action {
+            border: none;
+        }
+        #img2 { 
+                width: 44px; 
+                height: 38px; 
+                }
+                
+                body {
+             
+                    background-image: url("{!URLFOR($Resource.fondonuevo)}");
+                   position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+                
+                }
+                
+                #leading-content2 {
+                    background: ;
+                    height: 500px;
+                    /* min-width: 1280px; */
+                    overflow: hidden;
+                    text-align: center;
+                    z-index: 1;
+                }
+                .nss-container {
+        display: none;
+        }
+            </style>
+            <script>
+                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', 'UA-71967023-1', 'auto');
+                    ga('send', 'pageview');
+             </script> 
+             
+             <!-- Google Tag Manager -->
+            <noscript>
+                <iframe src="//www.googletagmanager.com/ns.html?id=GTM-PLTTLC" height="0" width="0" style="display:none;visibility:hidden">
+                </iframe>
+            </noscript>
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PLTTLC');
+            </script>
+            <!-- End Google Tag Manager -->
+             
+      </head>
+      <body>       
+        <div class="header-wrapper">
+            <figure  class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.bannernuevo)}" alt="Revimex"/></a></figure>
+               <center>
+                <nav id="Title-menu">
+                   <!-- <div>
+                        <a href="http://www.revimex.mx/RevimexPrivacidad" target="_blank" >AVISO DE PRIVACIDAD</a>
+                        <a href="http://www.revimex.mx/revistarevimex1" target="_blank" class="noborder-right">REVISTA REVIMEX</a>
+                    </div>-->
+                </nav>
+               </center>
+        </div>    
+        <center>
+        <apex:form >
+        
+  
+    <img src="{!URLFOR($Resource.ImagenesCarrusel,'sorteo1-05.gif')}" WIDTH="25%" HEIGHT="25%"  alt="slide 3" class="slide-picture 3"  />
+  
+ 
+ 
+   
+        
+        <div class="datos-container">
+            <table Border ="0"  style= "margin: auto; width: auto; margin-top: auto; margin-bottom: auto;" >
+                <tr>
+                    <td colspan="2" style="height: 50px;" ><label>Datos generales</label></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Nombre(s) <span class="required">*</span></label>
+                        <apex:input value="{!strNombre}" type="text" styleClass="fname" required="true"/>
+                    </td>
+                    <td>
+                        <label>Apellidos<span class="required">*</span></label>
+                        <apex:input value="{!strApellidoPaterno}" type="text" styleClass="lname" required="true"/>
+                    </td>
+                    
+                </tr>      
+                <tr>
+                    <td>
+                        <label>Email </label>
+                        <apex:input value="{!stremail}" type="email"  styleClass="email_field" style="text-transform: none;"/>
+                    </td>
+                    <td>
+                        <label>Teléfono celular<span class="required">*</span></label>
+                        <apex:input value="{!strtelefono}" type="text" styleClass="numbersOnly phone" required="true"/>
+                    </td>
+                  
+                </tr>
+                <br />
+                <tr>
+                    <td colspan="2">
+                     <center> <apex:commandButton styleClass="btn-action" value="Contáctenme" onclick="myFunction()" action="{!InsertarLead}" rerender="msj,msj2"/></center>
+                     </td>
+                </tr>
+               
+            </table>
+               <br />
+               
+               <br />
+               <br />
+               <br />
+               <br />
+               <br />
+            
+            </div>
+             
+            </apex:form>
+        </center> 
+             <footer>
+                <div class="main-wrapper">
+                    <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+                    <nav id="footer-menu">
+                        <div>
+                        
+                            <h2>Sugerencias y Comentarios</h2>
+                            <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.icinollamadas)}" /><a href="tel://5569716208">5569716208</a></figure>
+                            <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /><a href="whatsapp://send?text=ME%20INTERESA!">5569716208</a></figure>
+                            <figure id="footer-logo" class="fullwidth-picture"><img id="img2" src="{!URLFOR($Resource.iconowhats)}" /><a href="whatsapp://send?text=ME%20INTERESA!">5554096818</a></figure>
+                        </div>
+                    </nav>
+                    <section id="footer-networks" class="clearfix">
+                        <ul class="clearfix">
+                            <li><a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/watch?v=mdauRwA98iw" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a></li>     
+                        </ul>
+                    </section>
+                </div>  
+            </footer>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+                <!--Start of Zopim Live Chat Script-->
+            <script type="text/javascript">
+            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+            d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+            _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?3ihiLjWyaiZHOzH5z1eFEtaAop6zlLTy";z.t=+new Date;$.
+            type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+            </script>
+        <!--End of Zopim Live Chat Script-->
+               <script>
+              var validate = {
+                fname: false,
+                lname: false, 
+                plaza: false, 
+                nss: false, 
+                bdate: false, 
+                phone: false, 
+                phone2: false,               
+                email: false,
+                clabe: false,
+                lada: false,
+                cuenta: false,
+                init: function () {
+                    $('.js-send').attr('disabled',true);
+                    $('.js-send').addClass('.dis');
+                    $(document).on( 'keyup', '.fname', this.validateFname);  
+                    $(document).on( 'change', '.plaza', this.validatePlaza);
+                    $(document).on( 'keyup', '.lname', this.validateLname);  
+                    $(document).on( 'keyup', '.email_field', this.validateEmail);  
+                    $(document).on( 'keyup', '.nss', this.validateNss);  
+                    $(document).on( 'keyup', '.bdate', this.validateBdate);
+                    $(document).on( 'keyup', '.cuenta', this.validateCuenta);
+                    $(document).on( 'click', '.nss-show', this.shownssiframe);
+                    $(document).on( 'keyup', '.phone', this.validatePhone);  
+                    $(document).on( 'keyup', '.phone2', this.validatePhone2);
+                    $(document).on( 'click', '.datos-show', this.showdatostable);
+                
+                
+                   },
+                    validateFname: function () {
+                     this.value = this.value.replace(/[^a-z A-Z\.]/g,'',Ñ);
+                    if ($(this).val().length >=3) {
+                        validate.fname = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.fname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateLname: function () {
+                this.value = this.value.replace(/[^a-z A-Z\.]/g,'',Ñ);
+                    if ($(this).val().length >=3 ) {
+                    
+                        validate.lname = true;
+                        $(this).removeClass('error');
+                    }
+                     else {
+                     
+                        validate.lname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateEmail: function () {
+                    var email = $(".email_field").val();
+                    
+                    
+                    if(email != 0) {
+                        console.log('email value: '+ isValidEmailAddress(email));
+                        
+                        if(validate.isValidEmailAddress(email)) {
+                            
+                            validate.email = true;
+                            $(".email_field").css({
+                                "background-color": "white"
+                            });
+                        }  else {
+                            
+                            validate.email = false;
+                            $(".email_field").css({
+                                "background-color": "red"
+                            });
+                        }
+                    }  else {
+                        validate.email = false;
+                        $(".email_field").css({
+                            "background-color": "white"
+                        });         
+                    }
+                    validate.all();
+                },
+                validateNss: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 11));
+                    if ($(this).val().length == 11 ) {
+                        validate.nss = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.nss = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateClabe: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 18));
+                    if ($(this).val().length == 18 ) {
+                        validate.clabe = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.clabe = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateCuenta: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length == 10 ) {
+                        validate.cuenta = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.cuenta = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateBdate: function () {
+                    if(validate.isDate($(this).val())) {
+                        validate.bdate = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.bdate = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePhone: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length >= 10 || $(this).val().length <= 11 ) {
+                        validate.phone = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.phone = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateLada: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 3));
+                    if ($(this).val().length == 2 || $(this).val().length == 3 ) {
+                        validate.lada = true;
+                        $(this).removeClass('error');
+                    }
+                   
+                    else {
+                        validate.lada = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePlaza: function () {
+                    if ($(this).val() != '') {
+                        validate.plaza = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.plaza = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                isValidEmailAddress: function (emailAddress) {
+                    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!regex.test(emailAddress)) {
+                       return false;
+                    }else{
+                       return true;
+                    }
+                },
+                isDate: function (date) {
+                    console.log(date);
+
+                    var currVal = date;
+                    if(currVal == '')
+                        return false;
+                    //Declare Regex 
+                    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+                    var dtArray = currVal.match(rxDatePattern); // is format OK?
+                    if (dtArray == null)
+                        return false;
+
+                    //Checks for mm/dd/yyyy format.
+                   dtDay= dtArray[1];
+                    dtMonth= dtArray[3];
+                    dtYear = dtArray[5];
+
+                    if (dtMonth < 1 || dtMonth > 12)
+                        return false;
+                    else if (dtDay < 1 || dtDay> 31)
+                        return false;
+                    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31)
+                        return false;
+                    else if (dtMonth == 2)
+                    {
+                        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                        if (dtDay> 29 || (dtDay ==29 && !isleap))
+                            return false;
+                    }
+                    return true;
+                },
+                all: function () {
+                    if (validate.fname && validate.lname && validate.plaza && validate.nss && validate.bdate && validate.phone && validate.email) {
+                        $('.js-send').attr('disabled',false);
+                        $('.js-send').removeClass('dis');
+                        console.log('cloudmobile... true');
+                        console.log(validate);
+                    } else {
+                        $('.js-send').attr('disabled',true);
+                        $('.js-send').addClass('dis');
+                        console.log('cloudmobile... false');
+                        console.log(validate);
+                    }
+                },
+                shownssiframe: function (event) {
+                    event.preventDefault();
+                    $('.nss-container').slideToggle();
+                    
+                },
+                    
+
+                      showdatostable: function (event) {
+                      event.preventDefault();
+                    $('.datos-container').slideToggle();
+   
+                }
+                
+                 
+            }
+
+
+            $(function(){
+                validate.init();
+            });
+            
+            function isValidEmailAddress (emailAddress) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z 0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(!regex.test(emailAddress)) {
+                   return false;
+                }else{
+                   return true;
+                }
+            }
+                
+            $('.onlyNumbers').keyup(function () { 
+                    this.value = this.value.replace(/[^0-9\.]/g,'');
+                }),
+            $('.letras').keyup(function () { 
+                    this.value = this.value.replace(/[^a-zA-Z\ .]/g,'');
+                
+                });
+
+                   function myFunction() {
+                  <!--alert("Gracias por registrarte, en breve nos pondremos en contacto contigo para darte más información de tu próxima casa") ;-->
+                    open('http://www.revimex.mx/alert2','','top=300,left=400,width=400,height=340') ; 
+                   
+        }    
+        </script>
+                
+       </body>
+    </html>
+</apex:page>

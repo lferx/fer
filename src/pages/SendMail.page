@@ -1,0 +1,6 @@
+<apex:page controller="MailerController" showHeader="false" sidebar="false" >
+    <apex:form >
+        <apex:commandLink action="{!sendSeguimientoEmail}">Enviar correo de seguimiento.
+        </apex:commandLink>
+    </apex:form>
+</apex:page>

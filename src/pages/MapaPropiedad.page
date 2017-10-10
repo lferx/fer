@@ -1,0 +1,182 @@
+<apex:page id="MapaPropiedad" controller="PropiedadesController">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:pageBlock title="Propiedades" id="Propiedades">
+        <apex:includeScript value="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwaVxc-0tMfXVjFv_pxcAT1_7rRjF0TnU&sensor=TRUE" />
+        <apex:includeScript value="{!URLFOR($Resource.markerclusterer)}"/>
+            <script type="text/javascript">
+            	var map;
+            	
+	            var markerCluster = null;
+			
+				var timerId = 0;
+				
+	            var regBusqueda = 2000;
+	            var countProp = {!countPropAll};
+	            var numPag = Math.ceil(countProp / regBusqueda);
+	            
+	            var propiedades = [];
+            
+				j$ = jQuery.noConflict();
+				
+				function initialize() {
+					var mapOptions = {
+		                center: new google.maps.LatLng(19.453, -99.260),
+		                zoom: 4,
+		                mapTypeId: google.maps.MapTypeId.ROADMAP
+	            	};
+	            
+		            map = new google.maps.Map(document.getElementById("map_canvas"),
+		                mapOptions);
+		            markerCluster = new MarkerClusterer(map, []);
+		            
+				}
+	              
+	            j$(document).ready(function() {
+	                initialize();
+	                j$('#resultados').html('<br/>Propiedades '+ propiedades.length);
+	            });
+	            
+	            var parametros =  {
+	            	'Plaza__c':String('Todos'),
+	            	'Tipo__c':String('Todos')
+	            };
+	            
+	            function getRegistros(){
+	            	j$('#resultados').html('<br/>Buscando ...');
+	            	geoSi=0;
+	            	geoNo=0;
+	            	if (markerCluster) {
+				    	markerCluster.clearMarkers();
+				    }
+	            	var stringTratar = JSON.stringify(parametros);
+	            	Visualforce.remoting.Manager.invokeAction(
+	                    '{!$RemoteAction.PropiedadesController.buscarAllCount}',stringTratar,
+	                    function(result, event){
+	                    	console.log(event);
+	                        if (event.status) {
+	                        	try{
+	                        		numPag = Math.ceil(result / regBusqueda);
+	                        		j$('#resultados').html('<br/>Propiedades encontradas = '+ result);
+					            	for (var i = 1; i <= numPag; i++) { 
+						            	buscarProp(regBusqueda,i,stringTratar,result);
+						            }
+		                        }catch(e){
+		                        	j$('#resultados').html('<br/>Sin registros');
+		                        	console.log(e);
+		                        }
+	                        }
+	                    }
+	                );
+	            	console.log('getRegistros termina');
+	            }
+	            
+	            function buscarProp(listSize,pageNumber,parametros,total){
+	                Visualforce.remoting.Manager.invokeAction(
+	                    '{!$RemoteAction.PropiedadesController.buscarAll}',listSize,pageNumber,parametros,
+	                    function(result, event){
+	                    	console.log(event);
+	                        if (event.status) {
+	                        	//console.log(result);
+	                        	try{
+		                            j$.each(result,function(i,v){
+										//propiedades.push(valor);
+										//j$.each(propiedades,function(i,v){
+							            	var geo = String(v.Geolocalizada__c);
+							            	if(geo=='undefined' || geo=='No'){
+							            		geoNo++;
+							            	}else{
+							            		geoSi++;
+								            	var punto = new google.maps.LatLng(v.Punto__Latitude__s, v.Punto__Longitude__s);
+								            	var markerOptions = { map:map, position: punto, title:''+v.Id+'' };
+							                    var marker = new google.maps.Marker(markerOptions);
+							                    
+							                    google.maps.event.addListener(marker, 'click', function() {
+												    window.open("/"+this.title);
+												});
+												markerCluster.addMarker(marker);
+							                    markers.push(marker);
+											}
+											
+											//markerCluster = new MarkerClusterer(map, markers);
+											
+						            		j$('#resultados').html(
+						            			'<br/>Propiedad '+(geoSi+geoNo)+' de '+total + '<br/>'+
+						            			'Geolocalizadas '+geoSi+'<br/>'/**+
+						            			'Sin geolocalizar '+geoNo+'<br/>'**/
+						            		);
+							            //});
+		                            });
+		                        }catch(e){
+		                        	console.log(e);
+		                        }
+	                        }
+	                    }
+	                );
+	            }
+	            
+	            var geoSi=0;
+	            var geoNo=0;
+	            
+	            var markers = [];
+	            
+	            function generaMarkers(){
+	            	j$.each(propiedades,function(i,v){
+		            	var geo = String(v.Geolocalizada__c);
+		            	if(geo=='undefined' || geo=='No'){
+		            		geoNo++;
+		            	}else{
+		            		geoSi++;
+			            	var punto = new google.maps.LatLng(v.Punto__Latitude__s, v.Punto__Longitude__s);
+			            	var markerOptions = { map:map, position: punto, title:''+v.Id+'' };
+		                    var marker = new google.maps.Marker(markerOptions);
+		                    
+		                    google.maps.event.addListener(marker, 'click', function() {
+							    window.open("/"+this.title);
+							});
+							markerCluster.addMarker(marker);
+		                    markers.push(marker);
+						}
+						
+						//markerCluster = new MarkerClusterer(map, markers);
+						
+	            		j$('#resultados').html(
+	            			'<br/>Propiedad '+(i+1)+' de '+propiedades.length + '<br/>'+
+	            			'Geolocalizadas '+geoSi+'<br/>'/**+
+	            			'Sin geolocalizar '+geoNo+'<br/>'**/
+	            		);
+		            });
+	            }
+        	</script>
+        	
+        	
+            <table>
+            	<tr>
+            		<td>
+                		<div>
+			            	<span>Plaza:</span> 
+			            	<select id="idPlaza" onchange="parametros.Plaza__c = this.value;">
+			            		<option value="Todos">Todas</option>
+			            	<apex:repeat value="{!plazas}" var="plaza" id="rPlazas">
+						        <option value="{!plaza}">{!plaza}</option>
+						    </apex:repeat>
+						    </select><br/>
+			            	<span>Tipo:</span> 
+			            	<select id="idTipo" onchange="parametros.Tipo__c = this.value;">
+			            		<option value="Todos">Todas</option>
+			            	<apex:repeat value="{!tipos}" var="tipo" id="rTipos">
+						        <option value="{!tipo}">{!tipo}</option>
+						    </apex:repeat>
+						    </select><br/>
+						    
+			            	<input type="button" value="Buscar" onClick="getRegistros()"/><br/>
+			            	<span id="resultados" >Numero de Propiedades {!countPropAll}</span>
+			            </div>
+                	</td>
+                	<td>	
+                		<div id="map_canvas" style="width:800px; height:600px"></div>
+                	</td>
+                </tr>
+            </table>
+    </apex:pageBlock>
+</apex:page>

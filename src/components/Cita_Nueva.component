@@ -1,0 +1,86 @@
+<apex:component >
+        <apex:attribute name="text2" type="String" description="El texto que se desplagara" />
+
+    <head>
+
+
+           
+    </head>
+                               
+    <body> 
+    
+
+<!-- 
+                       <aside class="obj_1" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a1').show();">No contesta Promotor</aside>
+
+ 
+                       <aside class="obj_2" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a2').show(); ">DOCUMENTOS</aside>
+  
+
+                       <aside class="obj_3" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a3').show();">Para que $200?</aside>
+
+ 
+                       <aside class="obj_4" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a4').show();">No asistió a Cita</aside>
+
+  
+                       <aside class="obj_5" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a5').show();">Promotor no asistió a CITA</aside>
+
+
+                       <aside class="obj_6" onclick="$('.tap-target').tapTarget('open'); $('.todo').hide(); $('.a6').show();">Las opciones que vio no le convencen</aside> -->
+
+
+                       
+<!--                      <td colspan="4" align="center">
+
+                        <div  id="panel">   
+
+                          <apex:repeat value="{!objeciones}" var="key">
+
+                                <div class="panel panel-default">
+                                    <div class="tituloObjecion">
+                                        <h7>
+                                            <a data-toggle="collapse" data-parent="#panel" href="#{!objeciones[key].Name}" ><apex:outputText value="{!objeciones[key].Name}" rendered="true"/></a>
+                                        </h7>
+                                    </div>
+                                    <div id="{!objeciones[key].Name}" class="collapse">
+                                        <div class="mensajeObjecion"><apex:outputText escape="false" value="{!objeciones[key].Mensaje__c}" rendered="true"/></div>
+                                    </div>
+                               </div>
+                            </apex:repeat>
+                        </div>
+                    
+                     </td> -->
+             
+
+          
+
+          
+       <div class="collection">
+       
+       <center><p class="labelarg">Argumentos/ Objeciones</p></center> 
+    <a  class="collection-item" onclick="var $argumento = $('<span>En el transcurso de la tarde te confirmo el nombre de la persona que te va a acompañar.</span>');
+   Materialize.toast($argumento, 5000);">No contesta Promotor</a>
+      <a  class="collection-item" onclick="var $argumento = $('<span>Validar INE y consultar RFC<br/> RFC Incorrecto: En este momento acabo de verificar y presentas una inconsistencia en tu RFC (explicar proceso). <br/>INE No Vigente:  Revisando el sistema veo que tu INE no está vigente debes acudir a realizar una actualización a tu módulo de INE más cercano</span>');
+   Materialize.toast($argumento, 7000);">Documentos</a>
+         <a  class="collection-item" onclick="var $argumento = $('<span>Es un deposito significativo considerando que en otras inmobiliarias piden anticipos incluso de hasta 10mil pesos <br/>Esto es sólo para el gasto administrativo de la asignación de promotor, desalojador y rehabilitador. No es reembolsable</span>');
+   Materialize.toast($argumento, 7000);">Para que $200?</a>
+            <a  class="collection-item" onclick="var $argumento = $('<span>¿Cual es el motivo por el que no pudiste acompañarnos? <br/>Con gusto reprogramamos una nueva visita (Crear Nueva Cita)</span>');
+   Materialize.toast($argumento, 7000);">No asistió a Cita</a>
+               <a  class="collection-item" onclick="var $argumento = $('<span>Te pido una disculpa por el inconveniente, revisaré el tema con él para que no vuelva a suceder, <br/> Podemos reagendar tu visita? (Crear nueva cita)</span>');
+   Materialize.toast($argumento, 7000);">Promotor no asistió a Cita</a>
+                  <a  class="collection-item" onclick="var $argumento = $('<span>Revisemos otras opciones (Regresar a Stock)</span>');
+   Materialize.toast($argumento, 7000);">Las opciones que vio no le convencen</a>
+
+
+<!--     <a  class="collection-item" onclick="var $argumento = $('<span>No tengo correo = Algún familiar cercano con correo para hacerle llegar la información <br/>No nombre Completo = Es para tener los datos actualizados</span>');
+   Materialize.toast($argumento, 6500);">No Datos Adicionales</a>
+    <a  class="collection-item" onclick="var $argumento = $('<span>Entiendo la situación…  <br/>Permítame un momento para comunicarlo con el área correspondiente que le tomará datos de su caso<br/>Entiendo la situación… <br/>Tiempo de contacto = Le ofrezco una disculpa permítame brindarle la información<br/>En este momento no se encuentra nadie de nuestra área de servicio y atención al cliente pero le proporciono un correo electrónico para que puedan asignarle un folio de seguimiento….<br/>asesoria@revimex.mx</span>');
+   Materialize.toast($argumento, 9000);">Quejas de Cliente</a> -->
+
+  </div>
+        
+   </body>
+
+
+
+</apex:component>

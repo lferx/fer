@@ -1,0 +1,1160 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" title="Búsqueda de propiedades" controller="MapaBusquedaController" extensions="PropiedadesController">
+<html>
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+<apex:includeScript value="https://malsup.github.io/jquery.blockUI.js"/>
+<apex:includeScript value="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ5zlxrme3mI4Tt0OZDd2hDKzsNIKtY40&sensor=TRUE" />
+<apex:includeScript value="{!URLFOR($Resource.markerclusterer)}"/>
+  
+<!-- SmartMenus jQuery plugin -->
+<apex:includeScript value="{!URLFOR($Resource.smartmenu,'jquery.smartmenus.min.js')}"/>
+<!-- SmartMenus jQuery Keyboard Addon -->
+<apex:includeScript value="{!URLFOR($Resource.smartmenu,'addons/keyboard/jquery.smartmenus.keyboard.min.js')}"/>
+<!-- SmartMenus core CSS (required) -->
+<apex:stylesheet value="{!URLFOR($Resource.smartmenu,'css/sm-core-css.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.smartmenu,'css/sm-simple/sm-simple.css')}"/>
+
+<!-- menu slicknav -->
+<apex:includeScript value="{!URLFOR($Resource.slicknav,'jquery.slicknav.min.js')}" />
+<apex:stylesheet value="{!URLFOR($Resource.slicknav,'slicknav.css')}" />
+
+<!-- Purecss framwork -->
+<apex:stylesheet value="{!URLFOR($Resource.purecss,'pure-min.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.purecss,'grids-responsive-min.css')}"/>
+
+<!-- Purecss framwork -->
+<apex:stylesheet value="{!URLFOR($Resource.font,'css/font-awesome.min.css')}"/>
+<script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-71967023-1', 'auto');
+              ga('send', 'pageview');
+
+            </script>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<meta name="description" content="A layout example that shows off a responsive email layout."></meta>
+<link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+<link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+<style type="text/css">
+    body {
+        margin:0;
+        padding:0;
+        height:100%;
+        font-family: 'Calibri', sans-serif; 
+    }
+    html, button, input, select, textarea,
+    .pure-g [class *= "pure-u"] {
+        /* Set your content font stack here: */
+        font-family: 'Calibri', sans-serif; 
+    }
+    #wrapper {
+        min-height:100%;
+    }
+    #header {
+        position: fixed;
+        height: 50px;
+        line-height: 50px;
+        text-align:center;
+        top: 0;
+        z-index:9000;
+    }
+    #contentMain {
+        min-height:100%;
+        padding-bottom:30px; /* Height of the footer element */
+    }
+    #footer {
+        text-align:center;
+        //background:#2E3335;
+        background: rgb(59,56,56);
+        width:100%;
+        height:30px;
+        position:absolute;
+        bottom:0;
+        left:0;
+        line-height: 30px;
+        color:white;
+    }
+    #footer a{
+        color:white;
+    }
+    #menu-principal{
+        border-bottom:1px solid #1A1B1C;
+    }
+    #menu-filter{
+        border-bottom:1px solid #1A1B1C;
+    }
+    #menu-header{
+        float:left;
+        margin:0px;
+    }
+   .fixed-stage-right {
+        width: 30%;
+        top:128px;
+        bottom:30px; /*Altura del footer*/
+        position: fixed;
+        overflow: auto;
+        right: 0;
+        color: #000;
+    }
+    .fixed-stage-left {
+        width: 70%;
+        position: fixed;
+        overflow: hidden;
+        top: 111px;
+        bottom:30px; /*Altura del footer*/
+        left: 0;
+        background: #0cf;
+        
+    }
+    .scrollable {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    
+    #mapa{
+        min-width: 100%;
+        min-height: 100%;
+    }
+    
+    /*MENUS*/
+
+    .home-menu {
+        padding: 0.5em;
+        text-align: center;
+        box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+    }
+    .home-menu ul {
+                float: right;
+            }
+    .home-menu.pure-menu-open {
+        //background: #0099CC;
+        background: rgb(255,255,255);
+    }
+    .pure-menu.pure-menu-open.pure-menu-fixed {
+        border-bottom: none;
+    }
+    
+    .home-menu .pure-menu-heading {
+    display: inline-block;
+    height: 56px;
+    margin: 10px 0 0 0;
+    vertical-align: top;
+    width: 215px;   
+    }
+    
+    .home-menu .pure-menu-selected a {
+        //color: white;
+        color: rgb(28,121,167);
+    }
+   
+    .home-menu a {
+        color: #6FBEF3;
+    }
+    .home-menu li a:hover,
+    .home-menu li a:focus {
+        background: none;
+        border: none;
+        color: #AECFE5;
+    }
+    
+        /* Menu box
+    ===================*/
+
+    .sm-simple,
+    .sm-simple ul {
+        border:none;
+        /* background:#fff; */
+        -moz-box-shadow:0 1px 1px rgba(0,0,0,0.2);
+        /* -webkit-box-shadow:0 1px 1px rgba(0,0,0,0.2); */
+        /* box-shadow:0 1px 1px rgba(0,0,0,0.2); */
+    }
+    
+    .search-menu{
+        //background:#60B7E1;
+        background:rgb(82,170,206);
+    }
+    
+    .sm-simple li.radio-menu {
+        padding:11px 5px;
+        color:#555;
+        font-size:14px;
+        line-height:17px;
+        text-decoration:none;
+    }
+    
+    .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active,
+    .sm-simple a.highlighted {
+        background:#eee;
+        color:#555;
+        text-decoration:none;
+    }
+    
+    .sm-simple li.radio-menu:hover, .sm-simple li.radio-menu:focus, .sm-simple li.radio-menu:active,
+    .sm-simple li.radio-menu.highlighted {
+        background:#eee;
+        color:#555;
+        text-decoration:none;
+    }
+    
+    .sm-simple a{
+        color:white;
+    }
+    .filter-menu.sm-simple a{
+        color:black;
+    }
+    .spam-radio-img{
+        float:right;
+    }
+    
+    .filter-menu{
+        background-color:#F1F4F9;
+    }
+    
+    .inputSearch{
+        padding: 6px 4px;
+        border: 1px solid #d2d2d2;
+        border-top-color: #aeaeae;
+        width: 90px;
+    }
+    
+    /*
+        Resultados en la lsita
+    */
+    #list-filter{
+        text-align:center;
+        width: 100%;
+        padding: 10px;
+        background-color:#F1F4F9;
+        border-bottom: 2px solid #ddd;
+    }
+    #list-filter h1{
+        font-size: 200%;
+        text-shadow: 1px 1px 0px rgb(255, 255, 255);
+    }
+    h4{
+        color: #02779E;
+        font-size: 110%;
+    }
+    .text-little-orange{
+        font-size: 15px;
+        font-weight: bold;
+        color: #FA4D6E;
+    }
+    #list-footer{
+        margin-top:10px;
+        text-align:center;
+        width: 100%;
+        height: 30px;
+    }
+    .result{
+        width: 100%;
+        min-height: 70px;
+        padding: 7px;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        color: #333333;
+        border-bottom: 1px solid #ccc;
+    }
+    .result:hover{
+       background-color:#F9F7F1;
+       cursor: pointer; 
+       cursor: hand;
+    }
+    .result-img {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-right: 10px;
+    }
+    .result-description {
+        text-align:left;
+        font-size: 0.7em;
+    }
+    .result-description-title {
+        height: 26px;
+        overflow: hidden;
+        font-size: 10px;
+    }
+    .result-description-price{
+        color: #999 !important;
+        font-size: 30px;
+        margin-bottom: 5px !important;
+    }
+    
+    .resul-windowmap{
+        height: 75px;
+        overflow: hidden;
+        width:400px;
+    }
+    
+    /*
+    Paginador
+    */
+    
+    /*.pure-button {
+        background-color: #D8D9D5;
+        color: #02779E;
+        padding: 0.5em 2em;
+        border-radius: 5px;
+    }*/
+    .pure-paginator li {
+        margin: 0px;
+        }
+    .pure-paginator .pure-button {
+         padding: 0.5em 0.5em;
+    }
+    /*
+        Control de asute en el tamaño de la pantalla        
+    */
+    
+    #main-menu {
+        position:relative;
+        z-index:9999;
+    }
+    #main-menu ul {
+        z-index:9999;
+        width:12em; /* fixed width only please - you can use the "supMenusMinWidth"/"supMenusMaxWidth" script options to override this if you like */
+    }
+    .red{
+        color:red;
+        background-color:red;
+    }
+    @media (min-width: 48em) {
+            .home-menu {
+                text-align: left;
+            }
+            
+            .search-menu {
+                text-align: left;
+            }
+            .slicknav_menu {
+                display:none;
+            }
+    }
+    @media (max-width: 38em) {
+        .fixed-stage-right{
+            top:260px;
+        }
+    }
+    
+    @media (max-width: 48em) {
+            .home-menu ul {
+                float: none;
+            }
+            .fixed-stage-right{
+                width: 100%;
+                display:block;
+                bottom: 0;
+            }
+            .fixed-stage-left{
+                width: 0%;
+                display:none;
+            }
+            #footer{
+                display:none;
+            }
+            .slicknav_menu {
+                display:block;
+            }
+            #main-menu-header{
+                display:none;
+            }
+            #menu-header{
+                display:none;
+            }
+            #liSimbologia{
+                display:none;
+            }
+    }
+    .selectnav { display: none; }
+    /*@media screen and (max-width: 600px) {
+      .js #ulNav { display: none; }
+      .js .selectnav { display: block; }
+    }*/
+    
+</style>
+<script>
+    var mapa = null;
+    var markers = [];
+    var mc = null;
+    var maxZoomService = new google.maps.MaxZoomService();
+    var infowindows = [];
+    var latLngList = new Array();
+    var bounds = null;
+    var  iconoCasa =  '{!URLFOR($Resource.mapas,'azul.png')}';
+    var  iconoRojo =  '{!URLFOR($Resource.mapas,'rojo.png')}';
+    var  iconoAmarillo =  '{!URLFOR($Resource.mapas,'amarillo.png')}';
+    var  iconoVerde=  '{!URLFOR($Resource.mapas,'verde.png')}';
+    j$ = jQuery.noConflict();
+   
+    j$(document).ready(function(){
+             blockResults();
+            j$('#idPlaza').val(getURLParameter('plaza'));
+            if(getURLParameter('tipo') != null){
+                j$('#idTipo').val(decodeURI(getURLParameter('tipo').replace('+',' ')));
+            }
+            if(getURLParameter('ciudad') != null){
+                j$('#idCiudad').val(decodeURI(getURLParameter('ciudad').replace('+',' ')));
+            }
+            if(getURLParameter('estado') != null){
+                j$('#idEstado').val(decodeURI(getURLParameter('estado').replace('+',' ')));
+            }
+             j$('#main-menu').smartmenus({
+                supIndicatorsText : '+',
+                hideOnClick:false,
+                showOnClick:true,
+                hideFunction: null,
+                hideDuration:800
+
+             });
+            
+             
+             j$(".inputPrice").change(function() {
+                 j$(this).val(currency(j$(this).val()));
+                 var from = j$('#txtPriceFrom').val().replace(/\,/g, '');
+                 from = from == '0.0' ?  null : from;
+                 var to = j$('#txtPriceTo').val().replace(/\,/g, '');
+                 to = to == '0.0' ?  null : to;
+                 setPrice(from, to);
+                 
+              });
+              
+              j$(".inputM2").change(function() {
+                 j$(this).val(currency(j$(this).val()));
+                 var from = j$('#txtM2From').val().replace(/\,/g, '');
+                 from = from == '0.0' ?  null : from;
+                 var to = j$('#txtM2To').val().replace(/\,/g, '');
+                 to = to == '0.0' ?  null : to;
+                 setM2(from, to);
+              });
+               j$(".inputConstruccionM2").change(function() {
+                 j$(this).val(currency(j$(this).val()));
+                 var from = j$('#txtM2ConstrucionFrom').val().replace(/\,/g, '');
+                 from = from == '0.0' ?  null : from;
+                 var to = j$('#txtM2ConstruccionTo').val().replace(/\,/g, '');
+                 to = to == '0.0' ?  null : to;
+                 setConstruccion(from, to);
+              });
+            
+              
+            
+    });
+    function initialize() {
+        var mapOptions = {
+                //center: new google.maps.LatLng(19.453, -99.260),
+                //zoom: 5,
+                streetViewControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+        mapa = new google.maps.Map(document.getElementById("mapa"),mapOptions);
+        
+        //mc = new MarkerClusterer(mapa);
+        
+         var mcOptions = {styles: [{
+            height: 53,
+            url: "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
+            width: 53
+            },
+            {
+            height: 53,
+            url: "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
+            width: 53
+            },
+            {
+            height: 53,
+            url: "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
+            width: 53
+            },
+            {
+            height: 53,
+            url: "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
+            width: 53
+            },
+            {
+            height: 53,
+            url: "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
+            width: 53
+            }
+        ]};
+        
+        mc = new MarkerClusterer(mapa,null,mcOptions);
+       
+        var strLegend = '<table style="background-color:none;margin:0 5px;">';
+        strLegend += '<tr>';
+        strLegend += '<th colspan="2">Simbología</th>' ;
+        strLegend += '<tr>';
+        strLegend += '<td><img src="' + iconoVerde + '"> En venta </td>';
+        strLegend += '<td><img src="' + iconoAmarillo + '">Próximamente</td>';
+        strLegend += '</tr>';
+        strLegend += '<tr>';
+        strLegend += '<td><img src="' + iconoRojo + '"> Vendida </td>';
+        strLegend += '</tr>';
+        strLegend += '</table>';
+        var legend = j$(strLegend);
+        //mapa.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend[0]);
+        var plaza = '{!plaza}';
+        var tipo = '{!tipo}';
+        var estado = '{!estado}';
+        var ciudad = '{!ciudad}';
+        var pageSize = parseInt('{!pageSize}');
+        var pageNumber = parseInt('{!pageNumber}');
+        var orderBy = '{!orderBy}';
+        var sortOrder = '{!sortOrder}';
+        var priceFrom = '{!priceFrom}';
+        var priceTo = '{!priceTo}';
+        var m2From = '{!m2From}';
+        var m2To = '{!m2To}';
+        var centroPropiedad = '{!centroPropiedad}';
+        var estatusVenta = '{!estatusVenta}';
+        buscarPropiedadesMapa(plaza,tipo,estado,ciudad,priceFrom,priceTo,m2From,m2To,centroPropiedad,estatusVenta);
+    }
+    
+    /*Métodos de paginación de resultados*/
+    function getMarkersVisible(){
+        var ids = '';
+        if(bounds != null && markers != null){
+                    //console.log('hubo cmabio');
+                    for(var i = 0;i < markers.length; i++){
+                        if(mapa.getBounds().contains(markers[i].getPosition())){
+                            ids = ids + ',' + markers[i].id;
+                        }
+                    }
+                    searchVista(ids);
+         }
+    }
+    
+    function toggle(id) {
+        j$("#"+id).toggle();
+    }
+   
+    function blockResults(){
+       j$(".fixed-stage-right").scrollTop(0);
+       j$("#main-menu").block({ message: null }); 
+       j$.SmartMenus.hideAll();
+       j$.blockUI({ message: '<i class="fa fa-spinner fa-spin"></i> Espere un momento' }); 
+    }
+
+    function unblockResults(){
+        //j$("#list-result").unblock();
+        j$.unblockUI();
+        j$("#main-menu").unblock();
+    }
+    
+    /*Funciones de busqueda y el mapa*/
+    var currentOrderBy = 'Name';
+    var sortOrder = 'ASC';
+    
+    /*Se espera el espan con imagen*/
+    var icon
+    function setOrderBy(field, span) {
+        if(currentOrderBy == field) {
+            sortOrder = sortOrder == 'ASC' ? 'DESC' : 'ASC';
+            span.toggleClass('fa-chevron-up fa-chevron-down');
+        } else {
+            sortOrder = 'ASC';
+        }
+        currentOrderBy = field;
+        icon = span;
+        orderBy(currentOrderBy, sortOrder);
+    }
+    
+    function setOrderBySimple(field) {
+        if(currentOrderBy == field) {
+            sortOrder = sortOrder == 'ASC' ? 'DESC' : 'ASC';
+        } else {
+            sortOrder = 'ASC';
+        }
+        currentOrderBy = field;
+        orderBy(currentOrderBy, sortOrder);
+    }
+    function buscarPropiedadesMapa(plaza,tipo,estado,ciudad,priceFrom,priceTo,m2From,m2To,centroPropiedad,estatusVenta){
+        //console.log(plaza +',' + tipo +',' + estado + ',' + ciudad + ',' + priceFrom + ',' + priceTo +',' + m2From +','+ m2To +',' + centroPropiedad + ',' + estatusVenta);
+        var divVentana = '';
+        var infowindow;
+        clearMarkers();
+        bounds = new google.maps.LatLngBounds ()
+        Visualforce.remoting.Manager.invokeAction(
+                   '{!$RemoteAction.MapaBusquedaController.getPropiedades}',plaza,tipo,estado,ciudad,priceFrom,priceTo,m2From,m2To,centroPropiedad,estatusVenta,
+                    function(result, event){
+                         if (event.status) {
+                            var propiedadesExistentes = result.propiedades;
+                            console.log(propiedadesExistentes);
+                            var iteracion = 0;
+                            for(var prop in propiedadesExistentes){
+                                divVentana = '<div class="resul-windowmap">' +
+                                                       '<div class="resultado-img"></div>' +
+                                                       '<div class="resultado-descripcion">' +
+                                                                '<div class="resultado-descripcion-precio"> '+
+                                                                    'Precio: <span style="color: f">$'+ currency(propiedadesExistentes[prop].Oferta_Valor_Referencia__c) +'</span>' +
+                                                                '</div>'+
+                                                                '<div class="resultado-descripcion-title">' +
+                                                                    '<div></div>' +
+                                                                    propiedadesExistentes[prop].Calle__c + ', ' +propiedadesExistentes[prop].Colonia__c + ', ' + propiedadesExistentes[prop].Municipio__c
+                                                                '</div>' +
+                                                        '</div>' +
+                                                         '</div>' +
+                                                      '</div>';
+                                //var propiedadPrice = currency(propiedadesExistentes[prop].Oferta_Valor_Referencia__c);
+                                //j$('.js-propiedad-price-'+propiedadesExistentes[prop].Id).prepend(propiedadPrice);
+                                                      
+                                infowindow = new google.maps.InfoWindow({
+                                        content: divVentana
+                                });
+                                infowindows[propiedadesExistentes[prop].Id] = infowindow;
+                                if(propiedadesExistentes[prop].Punto__Latitude__s != null){ 
+                                        var coordenada = new google.maps.LatLng(propiedadesExistentes[prop].Punto__Latitude__s,propiedadesExistentes[prop].Punto__Longitude__s);
+                                        bounds.extend(coordenada);
+                                        //var icono = iconoCasa;
+                                        if(propiedadesExistentes[prop].EstatusVenta2__c == 'En venta'){
+                                            icono = iconoVerde;
+                                        }else if(propiedadesExistentes[prop].EstatusVenta2__c == 'Potencial'){
+                                            icono = iconoAmarillo;
+                                        }
+                                        else if(propiedadesExistentes[prop].EstatusVenta2__c == 'Vendida'){
+                                            icono = iconoRojo;
+                                        }
+                                        var marker = new google.maps.Marker({
+                                            position: coordenada,
+                                            map: mapa,
+                                            draggable:false,
+                                            title: '',
+                                            icon: icono
+                                        });
+                                        marker.set("id", propiedadesExistentes[prop].Id);
+                                        google.maps.event.addListener(marker, 'mouseover', function(event) {
+                                            infowindows[this.get("id")].open(mapa,this);
+                                        });
+                                        google.maps.event.addListener(marker, 'mouseout', function(event) {
+                                            infowindows [this.get("id")].close();
+                                        });
+                                        google.maps.event.addListener(marker, 'click', function(event) {
+                                           var id = this.get("id");
+                                           var url = document.URL.split('?');
+                                           var retUrl = url.length > 1 ? url[1] : ''; 
+                                           var url = '{!$Site.Domain}/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                                           window.location.replace(url);
+                                        });
+                                        markers[propiedadesExistentes[prop].Id] = marker;
+                                        markers.push(marker);
+                                        iteracion = iteracion + 1;
+                                }
+                            }
+                            google.maps.event.addListener(mapa, 'dragend', function() {
+                                getMarkersVisible();
+                            });
+                            google.maps.event.addListener(mapa, 'zoom_changed', function() {
+                                getMarkersVisible();
+                            });
+                            if(markers.length > 0){
+                                mapa.setCenter(bounds.getCenter());
+                                mapa.fitBounds(bounds);
+                                mc.addMarkers(markers);
+                                google.maps.event.addListener(mc, 'clusterclick', function(event) {
+                                            //console.log('Cluster clik disparado');
+                                });
+                            }
+                            unblockResults();
+                         }else{
+                            console.log('Error: ' +  event.message);
+                         }
+                    }
+        );
+       //Aqui iba el unblock
+    }
+    
+    function clearMarkers() {
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+            markers[i]==null;
+          }
+          markers = [];
+          mc.clearMarkers();
+        }
+        
+   function showMaxZoom(latLng) {
+            maxZoomService.getMaxZoomAtLatLng(latLng, function(response) {
+                if (response.status != google.maps.MaxZoomStatus.OK) {
+                    console.log("Error in MaxZoomService");
+                    return;
+                } else {
+                    mc.setMaxZoom(response.zoom - 1);
+                }
+            });
+        }
+   /* function resultadosMapa(){
+            j$(".result").mouseenter(function() {
+                var i = j$(this).attr("idPropiedad");
+                if(mapa != null && markers[i] != null){
+                    //mapa.setCenter(markers[i].position)
+                    google.maps.event.trigger(markers[i], 'mouseover');
+                }
+             }
+            );
+            
+            j$(".result").mouseleave(function() {
+                var i = j$(this).attr("idPropiedad");
+                google.maps.event.trigger(markers[i], 'mouseout');
+                }
+            );
+    }*/
+    
+    function searchNew(field, value){
+         var queryParameters = {};
+         var queryString = location.search.substring(1);
+         var re = /([^&=]+)=([^&]*)/g;
+         var m;
+         
+         while (m = re.exec(queryString)) {
+            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+         }
+        
+         queryParameters[field] = value;
+         if(field == 'estado'){
+            queryParameters['ciudad'] = 'Todos';
+            queryParameters['tipo'] = 'Todos';
+            queryParameters['centroPropiedad'] = '';
+         }
+         //location.search = j$.param(queryParameters); 
+         window.history.pushState(null,'Mapa','/apex/MapaBusquedas?'+ j$.param(queryParameters));
+        
+    }
+    
+    /*
+        Funciones varias
+    */
+    
+    function colocaEstatusVenta(){
+        var sCadena = '';
+        var valor;
+        var bVisible = false;
+        j$("[name='checkTipo']").each(function( i,element) {
+            valor = j$(element).val();
+            var idImagen = j$(element).attr('id') + 'Imagen';
+            var imagen = j$("img[id$='" + idImagen +"']");
+            if(!j$(element).attr('checked')) {
+                imagen.hide();
+                sCadena =  valor+',' + sCadena;
+            }else{
+                imagen.show();
+            }
+        });
+        sCadena = sCadena.substring(0,sCadena.length -1);
+        //console.log('COLOCA ESTATUS VENTA' + sCadena);
+        setEstatusVenta(sCadena);
+        
+    }
+    
+    function resetValues(ids){
+       var idsArray = ids.split(',');
+       for(i=0; i < idsArray.length; i++){
+            j$('#'+ idsArray[i]).val('');
+            j$('#' + idsArray[i]).attr('placeholder','0.0');
+        }
+    }
+    
+    function getURLParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) 
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) 
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+    
+    function currency(value) {
+        if(value != null && value != ''){
+            return parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }else{
+            return '0.0';
+        }
+    }
+   
+    /*Inicializa el mapa*/
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</head>
+<body>
+<apex:form >
+<div id="wrapper" class="content pure-g">
+    <div id="header" class="pure-u-1">
+                       <div id="menu-principal" class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-u">
+                              <div id="menu-header" class="pure-menu-heading">
+                                  <a href="../apex/HomeRevimex">
+                                  <apex:image id="theImage" value="{!URLFOR($Resource.logoRevimex)}" style="width:100%;height:auto;padding-bottom:0px;"/>
+                                  </a>
+                              </div>
+                              <ul id="main-menu-header">
+                                  <li class="pure-menu-selected"><a href="../apex/HomeRevimex">Inicio</a></li>
+                              </ul>
+                        </div>
+                        <div id="menu-filter" class="search-menu pure-u-1" >
+                           <ul id="main-menu" class="sm sm-simple mega-menu search-menu">
+                           <li>
+                                  <a href="#">
+                                  <apex:outputpanel layout="block" style="" styleClass="" id="selectEstado">
+                                         <select id="idEstado" class="form-control" onchange="setFilter(this.value,'Todos','Todos');searchNew('estado',this.value);" >
+                                            
+                                            <apex:repeat value="{!estadosItems}" var="item">
+                                                <option value="{!item.value}">{!item.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                  </apex:outputpanel>
+                                  </a>
+                            </li>
+                            <li>
+                                  <a href="#">
+                                  <apex:outputpanel layout="block" style="" styleClass="" id="selectCiudad">
+                                        <select id="idCiudad" class="pure-input-1" onchange="setFilterDos(this.value,'Todos');searchNew('ciudad',this.value);" >
+                                            <option value="Todos">Municipio/Ciudad</option>
+                                            <apex:repeat value="{!mapEstadoCiudad[estado]}" var="ciudad" id="rPlazas">
+                                                 <option value="{!ciudad}">{!ciudad}</option>
+                                            </apex:repeat>
+                                        </select>
+                                  </apex:outputpanel>
+                                  </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                <apex:outputpanel layout="block" style="" styleClass="" id="selectTipo">
+                                    <select id="idTipo" class="pure-input-1" onchange="setTipo(this.value);searchNew('tipo',this.value);">
+                                                <option value="Todos">Tipo</option>
+                                                <apex:repeat value="{!tipos}" var="tipo" id="rTipos">
+                                                    <option value="{!tipo}">{!tipo}</option>
+                                                </apex:repeat>
+                                     </select>
+                                </apex:outputpanel>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">Precio</a>
+                                    <ul class="mega-menu">
+                                         <li>
+                                            <div style="width:230px; padding:6px 5px 6px;text-align:center">
+                                            De<input type="text" id="txtPriceFrom" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputPrice"></input> a   
+                                            <input type="text" id="txtPriceTo" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputPrice"></input>
+                                            <button type="button" onclick="resetValues('txtPriceFrom,txtPriceTo');">Limpiar</button>
+                                            </div>
+                                         </li>
+                                    </ul>
+                            </li>
+                            <li>
+                                <a href="#">Terreno m<sup>2</sup></a>
+                                    <ul class="mega-menu">
+                                         <li>
+                                            <div style="width:230px; padding:6px 5px 6px;text-align:center">
+                                            De<input type="text" id="txtM2From" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputM2"></input> a  
+                                            <input type="text" id="txtM2To" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputM2"></input>
+                                            <button type="button" onclick="resetValues('txtM2From,txtM2To');">Limpiar</button>
+                                            </div>
+                                         </li>
+                                    </ul>
+                            </li>
+                            <li>
+                                <a href="#">Construcción m<sup>2</sup></a>
+                                    <ul class="mega-menu">
+                                         <li>
+                                            <div style="width:230px; padding:6px 5px 6px;text-align:center">
+                                            De<input type="text" id="txtM2ConstrucionFrom" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputConstruccionM2"></input> a  
+                                            <input type="text" id="txtM2ConstruccionTo" placeholder="0.0" maxlength="15" size="15" class="inputSearch inputConstruccionM2"></input>
+                                            <button type="button" onclick="resetValues('txtM2ConstrucionFrom,txtM2ConstruccionTo');">Limpiar</button>
+                                            </div>
+                                         </li>
+                                    </ul>
+                            </li>
+                            
+                                  <li>
+                                      <a>
+                                             
+                                             <div class="pure-g">
+                                                    <div class="pure-u-1-3" style="text-align:center;float:right;">
+                                                        <apex:image value="{!URLFOR($Resource.mapas,'verde.png')}" styleClass="pure-img">
+                                                        </apex:image>
+                                                    </div>
+                                                    <div class="pure-u-1-3" style="text-align:left;float:left;padding-top:5px;">
+                                                         <label>
+                                                            <input type="checkbox" name="checkTipo" value="En Venta" id="cbVenta" onclick="colocaEstatusVenta();" checked="checked"/>
+                                                                Venta&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                              </div>
+                                      </a>
+                                  </li>
+                                  
+                                  <li>
+                                      <a>
+                                             
+                                                 <div class="pure-g">
+                                                    <div class="pure-u-1-3" style="text-align:center;float:right;">
+                                                        <apex:image value="{!URLFOR($Resource.mapas,'rojo.png')}"  styleClass="pure-img"/>
+                                                    </div>
+                                                    <div class="pure-u-1-3" style="text-align:left;float:left;padding-top:5px;">
+                                                        <label>
+                                                        <input type="checkbox" name="checkTipo" value="Vendida" id="cbVendida" onclick="colocaEstatusVenta();" checked="checked"/>
+                                                        Vendida&nbsp;&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a>
+                                              <div class="pure-g">
+                                                    <div class="pure-u-1-3" style="text-align:center;float:right;">
+                                                        <apex:image value="{!URLFOR($Resource.mapas,'amarillo.png')}" styleClass="pure-img">
+                                                        </apex:image>
+                                                    </div>
+                                                    <div class="pure-u-1-3" style="text-align:left;float:left;padding-top:5px;">
+                                                        <label>
+                                                            <input type="checkbox" name="checkTipo" value="Potencial" id="cbPotencial" onclick="colocaEstatusVenta();" checked="checked"/>
+                                                                Próximamente
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                      </a>
+                                  </li>
+                            </ul>
+                         </div>
+                                               
+                                     </div>
+    
+    <div id="contentMain" class="pure-u-1">
+        <div id="map-content" class="fixed-stage-left pure-u">
+                <div id="mapa"></div>
+        </div>
+        <div id="list" class="fixed-stage-right pure-u">
+                    
+                    
+                    <apex:outputPanel id="searchResults" styleClass="pure-u-1">
+                    <apex:messages />
+                    <div class="pure-g">
+                        <div id="list-filter" class="pure-u">
+                            <apex:outputpanel style="padding-top:10px;">
+                                <apex:outputpanel styleclass="pure-u-1" id="resultInfo">
+                                    <h1>{!mapEstados[IF(estado != null,estado,'Todos')]},{!ciudad}</h1>  <label class="text-little-orange">{!resultSize} resultados</label> 
+                                </apex:outputpanel>
+                            </apex:outputpanel>
+                            <div>
+                                <ul id="menu-order" class="sm sm-simple mega-menu filter-menu">
+                                <li class="nuevas-order"><a href="#">Nuevas</a></li>
+                                <li><a href="#">Más</a>
+                                    <ul class="mega-menu">
+                                      <li class="radio-menu">
+                                        <input type="radio" name="ordenar" value="Oferta_Valor_Referencia__c" class="radio-value" />
+                                        Precio<span class="spam-radio-img fa fa-chevron-up"/>
+                                       </li>
+                                      <li class="radio-menu">
+                                        <input type="radio" name="ordenar" value="Terreno_m2__c" class="radio-value">
+                                            Terreno<span class="spam-radio-img fa fa-chevron-up"/>
+                                        </input>
+                                      </li>
+                                      <li class="radio-menu">
+                                        <input type="radio" name="ordenar" value="Construccion_m2__c" class="radio-value">
+                                            Construcción<span class="spam-radio-img fa fa-chevron-up"/>
+                                        </input>
+                                      </li>
+                                    </ul>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <apex:actionFunction action="{!searchPropiedades}" name="searchVista" rerender="searchResults,resultFoot" status="pageStatusDos">
+                          <apex:param assignTo="{!idsPropiedades}" name="idsPropiedades" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionStatus id="pageStatusDos" onstart="blockResults();" onstop="unblockResults();"/>
+                    
+                    <apex:actionFunction action="{!searchPropiedades}" name="setFilter"  rerender="resultInfo,searchResults,resultFoot,selectCiudad,selectTipo" status="pageStatus">
+                        <apex:param assignTo="{!estado}" name="estado" value=""/>
+                        <apex:param assignTo="{!ciudad}" name="ciudad" value=""/>
+                        <apex:param assignTo="{!tipo}" name="tipo" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setFilterDos"  rerender="resultInfo,searchResults,resultFoot,selectTipo" status="pageStatus">
+                        <apex:param assignTo="{!ciudad}" name="ciudad" value=""/>
+                        <apex:param assignTo="{!tipo}" name="tipo" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setEstado"  rerender="resultInfo,searchResults,resultFoot,selectCiudad,selectTipo" status="pageStatus">
+                        <apex:param assignTo="{!estado}" name="estado" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setCiudad"  rerender="resultInfo,searchResults,resultFoot,selectTipo" status="pageStatus">
+                        <apex:param assignTo="{!ciudad}" name="ciudad" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setTipo"  rerender="resultInfo,searchResults,resultFoot" status="pageStatus">
+                        <apex:param assignTo="{!tipo}" name="tipo" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setEstatusVenta"  rerender="searchResults,resultFoot,resultInfo" status="pageStatus">
+                        <apex:param assignTo="{!estatusVenta}" name="tipo" value=""/>
+                    </apex:actionFunction>
+                    
+                    <apex:actionFunction action="{!searchPropiedades}" name="orderBy" status="pageStatus" rerender="searchResults,resultFoot">
+                        <apex:param assignTo="{!orderBy}" name="orderBy" value=""/>
+                        <apex:param assignTo="{!sortOrder}" name="sortOrder" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setPageSize" status="pageStatus" rerender="searchResults" >
+                                        <apex:param assignTo="{!pageSize}" name="pageSize" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setPageNumber" status="pageStatusDos" rerender="searchResults,resultFoot" >
+                        <apex:param assignTo="{!pageNumber}" name="pageNumber" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!next}" name="nextPage" status="pageStatus" rerender="searchResults,resultFoot" >
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setPrice" status="pageStatus" rerender="resultInfo,searchResults,resultFoot" >
+                                <apex:param assignTo="{!priceFrom}" name="pageFrom" value=""/>
+                                <apex:param assignTo="{!priceTo}" name="pageTo" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}" name="setM2" status="pageStatus" rerender="resultInfo,searchResults,resultFoot" >
+                                <apex:param assignTo="{!m2From}" name="pageFrom" value=""/>
+                                <apex:param assignTo="{!m2To}" name="pageTo" value=""/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!searchPropiedades}"  name="setConstruccion" status="pageStatus" rerender="resultInfo,searchResults,resultFoot">
+                                <apex:param assignTo="{!m2ConstruccionFrom}" name="pageFrom" value=""/>
+                                <apex:param assignTo="{!m2ConstruccionTo}" name="pageTo" value=""/>
+                    </apex:actionFunction>
+                    
+                    <apex:actionStatus id="pageStatus" onstart="blockResults();" onstop="buscarPropiedadesMapa('{!plaza}','{!tipo}','{!estado}','{!ciudad}','{!priceFrom}','{!priceTo}','{!m2From}','{!m2To}','{!centroPropiedad}','{!estatusVenta}');"/>
+                    <div id="list-result">
+                
+                        <apex:repeat value="{!propiedades2}" var="propiedad" id="repPropiedades">
+                                <div class="result pure-g" idPropiedad="{!propiedad.Id}">
+                                    <div class="result-img  pure-u">
+                                         <apex:image url="{!mapImagenesMini[propiedad.Id]}" width="60" height="60" />
+                                    </div>
+                                    <div class="result-description  pure-u-3-4">
+                                        <div class="resul-description-title">
+                                            <div class="pure-u"> <apex:image value="{!URLFOR($Resource.mapas,'verde.png')}" rendered="{!propiedad.EstatusVenta2__c== 'En venta'}" width="60%" height="60%"/></div>
+                                            <div class="pure-u"><apex:image value="{!URLFOR($Resource.mapas,'amarillo.png')}" rendered="{!propiedad.EstatusVenta2__c == 'Potencial'}" width="60%" height="60%"/></div>
+                                            <div class="pure-u"><apex:image value="{!URLFOR($Resource.mapas,'rojo.png')}" rendered="{!propiedad.EstatusVenta2__c == 'Vendida'}" width="60%" height="60%"/></div>
+                                            <apex:variable var="direccion" value="{!propiedad.Calle__c},{!propiedad.Colonia__c},{!propiedad.Municipio__c}" />
+                                            <h3>{!LEFT(direccion,100)} {!IF(LEN(direccion)>100,'...','')}</h3><br></br>
+                                         <span style="color:Blue">   <div class="pure-u-1-2" style="float:left"></div>
+                                          <H3>  Habs: {!propiedad.N_de_Habitaciones__c}&nbsp;
+                                          baños:<apex:outputText styleClass="myFunction" value="{!propiedad.N_de_Ba_os__c}"></apex:outputText> &nbsp;&nbsp;
+                                           {!propiedad.Construccion_m2__c} m<sup>2</sup><br></br></H3></span>
+                                           
+                                              <div class="pure-u-1-2" style="float:right"> </div>
+                                        </div>
+                                        <div class="result-description-price">
+                                          <span class="js-propiedad-price-{!propiedad.Id}" style="color:red">$<apex:outputText value="{0, number, #,##0}"><apex:param value="{!propiedad.Oferta_Valor_Referencia__c}"/></apex:outputText></span>
+                                       
+                                        </div>
+                                    </div>
+                                </div>
+                        </apex:repeat>
+                     
+                    </div>
+                 </apex:outputPanel>
+                 <apex:outputpanel id="resultFoot">
+                     <div id="list-footer" class= "pure-g">
+                            <ul class="pure-paginator pure-u-1">
+                                <!-- <li><div class="pure-button">&#171;</div></li> -->
+                                <apex:outputPanel rendered="{!pageNumber >= 7}">
+                                    <li><div pagina="1" class="button-paginator pure-button">1</div></li>
+                                    <li><div class="pure-button">...</div></li>
+                                </apex:outputPanel>
+                                <apex:repeat value="{!listpages}" var="pagina" id="pagination">
+                                     <li><div pagina="{!pagina}" class="button-paginator pure-button {!If(pagina == pageNumber ,'pure-button-active','')}">{!pagina}</div></li>
+                                </apex:repeat>
+                                <apex:outputPanel rendered="{!totalPages >7 &&       pageNumber != totalPages}">
+                                    <li><div class="pure-button">...</div></li>
+                                    <li><div pagina="{!totalPages}" class="button-paginator pure-button">{!totalPages}</div></li>
+                                </apex:outputPanel>
+                                 <li><div class="pure-button next">&#187;</div></li>
+                            </ul>
+                     </div>
+                     <script>
+                        var clusterSelected;
+                        var infowindowSelected;
+                        var nuevaCoordenada;
+
+                        j$( ".result" ).click(function() {
+                            var id =  j$(this).attr('idPropiedad');
+                            var url = document.URL.split('?');
+                            var retUrl = url.length > 1 ? url[1] : ''; 
+                            //console.log(url.length);
+                            var url = '{!$Site.Domain}/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                            window.history.pushState(null,'Mapa','/apex/MapaBusquedas?'+ retUrl);
+                            window.location.replace(url);
+                            });
+                         j$( ".button-paginator" ).click(function() {
+                             var i = j$(this).attr("pagina");
+                             setPageNumber(i);
+                        });
+                         j$( ".next" ).click(function() {
+                             nextPage();
+                        });
+                        j$(".result").mouseenter(function() {
+                            var i = j$(this).attr("idPropiedad");
+                            if(mapa != null && markers != null && mc.prevZoom_ > 20){
+                                google.maps.event.trigger(markers[i], 'mouseover');
+                            }else if(mapa != null && markers != null && mc.prevZoom_ <= 20){
+                                //Esto hay que cambiarlo por una función, localizamos el cluster que contiene el market
+                                j$(mc.clusters_).each(function(indice){
+                                    j$(this.markers_).each(function(indice2){
+                                        if (this.id == i){
+                                            clusterSelected = mc.clusters_[indice];
+                                            return false;
+                                        }
+                                    })
+                                });
+                                /*Aqui se abre la ventana*/
+                                nuevaCoordenada = new google.maps.LatLng(clusterSelected.center_.k,clusterSelected.center_.B);
+                                infowindowSelected = infowindows[i];
+                                infowindowSelected.setPosition(nuevaCoordenada);
+                                infowindows[i] = infowindowSelected;
+                                infowindows[i].open(mapa);
+                            }
+                         }
+                        );
+                        j$(".result").mouseleave(function() {
+                            var i = j$(this).attr("idPropiedad");
+                            if(mapa != null && markers != null){
+                                google.maps.event.trigger(markers[i], 'mouseout');
+                                }
+                         });
+                         j$('#menu-order').smartmenus({
+                            supIndicatorsText : '+',
+                            hideOnClick:false
+                         });
+                         j$('.nuevas-order').click(function(){
+                              setOrderBySimple('FechaPublicacionWeb__c');
+                         });
+                        j$('.radio-menu').click(function(){
+                              var radio = j$(this).find('.radio-value');
+                              radio.prop("checked", true);
+                              var span =  j$(this).children(".spam-radio-img");
+                              setOrderBy(radio.val(),span);
+                        });
+                         
+              function myFunction() {
+               
+                  var text = $( this ).text().replace(/baño/gi, "");
+                  $( this ).text(text);
+             
+           }
+                     </script>
+                 </apex:outputpanel>
+        </div>
+        
+    </div>
+    <div id="footer" class="pure-u-1">
+            Powered by <a href="http://www.Revimex.mx" target="_blank">REVIMEX</a>
+    </div>
+
+</div>
+</apex:form>
+</body>
+</html>
+</apex:page>

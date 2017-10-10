@@ -1,0 +1,48 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+
+
+ <h1>Bienvenido</h1>
+  <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.5";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            FB.ui(
+             {
+              method: 'share',
+              href: 'https://developers.facebook.com/docs/'
+            }, function(response){});
+        </script>
+        
+        <form>
+            
+
+            <input id="nombre" type="text" name="nombres">
+                      
+            </input>
+            
+          
+        </form>
+        
+       <!-- <textarea name="comentarios" rows="20" cols="85">Escribe aquí tus comentarios</textarea><br />  a003100000e2hI9AAI   
+        <div class="fb-like" data-href="https://www.facebook.com/REVIMEXOFICIAL/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
+    
+                   
+           <div class="fb-share-button" data-href='fin'  data-layout="button_count"></div>
+
+
+            <script>
+            var fin = paraurl();
+                function paraurl(){
+                  var yourvar= document.getElementById('nombre').value;
+                  var fin1='http://www.revimex.mx/apex/revimex.force.com/apex/PropiedadDetalle?propiedad='+yourvar;
+                    return fin;
+                }
+           </script>
+
+</apex:page>

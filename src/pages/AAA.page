@@ -1,0 +1,98 @@
+<apex:page controller="ReporteVencimientoConsola_controller" contenttype="text/csv#Stock_Ventas.csv">DOCUMENTOS CON RETRAZO
+Propietario,Nombre de Documento,Etapa,Oferta,Fecha de Vencimiento,Dias Retrasados,Dictamen,Comentarios,Proximo Recordatorio
+<apex:repeat value="{!pag1}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag2}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag3}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag4}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag5}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag6}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag7}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag8}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag9}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag10}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag11}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag12}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag13}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag14}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag15}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+
+
+
+DOCUMENTOS CON RECORDATORIO POSTERIOR A LA FECHA COMPROMISO
+Propietario,Nombre de Documento,Etapa,Oferta,Fecha de Vencimiento,Dias Restantes,Dictamen,Comentarios,Proximo Recordatorio
+<apex:repeat value="{!pag16}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag17}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag18}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag19}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag20}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag21}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag22}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag23}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag24}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag25}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag26}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag27}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag28}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag29}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+<apex:repeat value="{!pag30}" var="ven">
+{!ven.responsable},{!ven.nombre},{!ven.etapa},{!ven.oferta},<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!ven.fechaVencimiento}" /></apex:outputText>,{!ven.diasRetrasado * -1},{!ven.dictamen},{!ven.comentarios},<apex:outputText value="{0,date,d'/'MM'/'yyyy hh:mm a}"><apex:param value="{!ven.proximoRecordatorio}" /></apex:outputText>
+</apex:repeat>
+</apex:page>

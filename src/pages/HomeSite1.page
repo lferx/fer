@@ -1,0 +1,570 @@
+<apex:page standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" controller="PropiedadesController" extensions="SitioHomePageController">
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Revimex</title>
+    <link rel="shortcut icon" href="http://revimex.mx/www/wp-content/themes/Revimex/images/favicon.png" type="image/x-icon" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{!URLFOR($Resource.TemplateSite,'css/bootstrap.css')}" rel="stylesheet"/>
+
+    <!-- Add custom CSS here -->
+    <link href="{!URLFOR($Resource.TemplateSite,'css/stylish-portfolio.css')}" rel="stylesheet"/>
+    <link href="{!URLFOR($Resource.TemplateSite,'font-awesome/css/font-awesome.min.css')}" rel="stylesheet"/>
+    <link href="{!URLFOR($Resource.Slider,'css/style1.css')}" rel="stylesheet"/>
+    
+    <style>
+    
+    div.transbox {
+        //background-color: #ffffff;
+        //opacity: 0.4;
+        filter: alpha(opacity=40); /* For IE8 and earlier */
+        background: rgba(255, 255, 255, 0.65);
+    }
+    
+    div.transbox p
+    {
+      margin: 10px 0px 10px 0px;
+      color: #000000;
+    }
+    
+    .services {
+      background: #0099CC;
+      padding: 50px 0;
+      color: #ffffff;
+    }
+    
+    ul,ol,li { 
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    
+    .header {
+      display: table;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      //background: url({!URLFOR($Resource.TemplateSite,'img/bg2.jpg')}) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+    
+    .errorMsg {
+      text-align: right;
+      color: red;
+    }
+    
+    #scrollButton{
+     //position:fixed; right:-40px; top:100px;
+    }
+    #botonContacto {
+        position:fixed; right:-40px; top:100px;
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        /* Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+    
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
+    }
+    .btn-circle.btn-lg {
+      width: 50px;
+      height: 50px;
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.33;
+      border-radius: 25px;
+    }
+    .btn-circle.btn-xl {
+      width: 70px;
+      height: 70px;
+      padding-top: 10px;
+      font-size: 36px;
+      line-height: 1.33;
+      border-radius: 35px;
+    }
+    .l-box{
+    	padding:1em;
+    }
+    
+    .mensajeFondo {
+	  color: #ffffff;
+	  display: table;
+	  height: 400px;
+	  width: 100%;
+	  background: url({!URLFOR($Resource.Slider,'images/7.jpg')}) no-repeat center center; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+
+    </style>
+</head>
+
+<body id="page">
+        
+       
+    <!-- Side Menu -->
+    <a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand"><a href="http://startbootstrap.com">Revimex</a>
+            </li>
+            <li><a href="#top">Búsqueda de propiedades</a>
+            </li>
+            <li><a href="#about">Acerca de nosotros</a>
+            </li>
+            <li><a href="#services">Nuestros servicios</a>
+            </li>
+            <li><a href="#portfolio">Nuestro trabajo</a>
+            </li>
+            <li><a href="/apex/PortalLogin"  >Portal Revimex</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /Side Menu -->
+
+    
+
+    <!-- Full Page Image Header Area -->
+    
+    <div id="top" class="header">
+        <ul class="cb-slideshow">
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+            <li><span></span><div><h3></h3></div></li>
+        </ul>
+        <div class="vert-text text-center">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 transbox">
+            <div class="background">            
+            <br/>
+	            <apex:image value="{!URLFOR($Resource.ImagenesSite,'LogoRevimex1.png')}" width="340px"/>
+	                <p class="lead" style="padding:10px 0 30px 0">
+	                    Te ayudamos adquirir la casa de tus sueños a un excelente precio.
+	                </p>
+	                <div class="col-md-12">
+	                	<div class="form-horizontal">
+	                		<apex:form id="formBusqueda">
+	                		<apex:actionFunction action="{!refresh}" name="cambiaEstado"  rerender="comboMunicipios" status="pageStatus">
+					    		<apex:param assignTo="{!estadoSeleccionado}" name="estado" value=""/>
+							</apex:actionFunction> 
+          					<fieldset>
+            					<div class="form-group">
+	           						<label class="col-sm-3 control-label" for="estado">Estado</label>
+	           						<div class="col-sm-9">
+	                                	<select id="ciudad" class="form-control" onchange="parametros.estado = this.value;cambiaEstado(this.value)" >
+	                                		<option value="">Todos</option>
+    	                        			<apex:repeat value="{!estadosItems}" var="item">
+        	                        			<option value="{!item.value}">{!item.label}</option>
+            	                			</apex:repeat>
+	                            		</select>
+	           						</div>
+	    						</div>
+	    						<div class="form-group">
+	           						<label class="col-sm-3 control-label" for="ciudad">Ciudad</label>
+           							<div class="col-sm-9">
+           								<apex:outputPanel id="comboMunicipios">
+             							<select id="ciudad" class="form-control" onchange="parametros.ciudad = this.value;" >
+	                                		<option value="">Todos</option>
+    	                        			<apex:repeat value="{!mapEstadoCiudad[estadoSeleccionado]}" var="item">
+        	                        			<option value="{!item}">{!item}</option>
+            	                			</apex:repeat>
+	                            		</select>
+	                            		</apex:outputPanel>
+           							</div>
+	    					 	</div>
+	                            
+	                        	<div class="form-group">
+	           						<label class="col-sm-3 control-label" for="tipo">Tipo</label>
+	           						<div class="col-sm-9">
+	             						<select id="tipo" class="form-control" onchange="parametros.tipo = this.value;">
+	                                		<option value="">Todos</option>
+	                            			<apex:repeat value="{!tipos}" var="tipo" id="rTipos">
+	                                			<option value="{!tipo}">{!tipo}</option>
+	                            			</apex:repeat>
+	                            		</select>
+	           						</div>
+	    					 	</div>
+							</fieldset>
+							<div class="col-md-12 text-center">
+								<a  class="btn btn-lg btn-primary" onclick="window.top.location='/apex/MapaBusquedas?estado='+parametros.estado+'&ciudad='+parametros.ciudad+'&tipo='+parametros.tipo" style="background:#0099CC;height:36px;padding:5px 15px 5px 15px">Buscar</a>
+							</div>
+							</apex:form>
+          				</div>
+	        		</div>
+                    <div class="col-md-10 col-md-offset-1 lead" style="padding:40px 0 30px 0">
+                        Utiliza tu crédito Infonavit o bancario.
+                    </div>
+                </div>
+                <div style="padding-top:50px"> <a id="scrollButton" href="#about"><button type="button" class="btn btn-success btn-circle btn-xl"><i class="glyphicon glyphicon-chevron-down"></i></button></a></div>
+                <br/>
+            </div>
+            <div class="col-md-6 col-md-offset-3 text-center">
+            <div class="background">
+            <br/>
+            
+            <br/>
+            <div id="wrap" class="text-center">
+              <!-- Button trigger modal -->
+              <br/>
+            <div id="botonContacto">
+            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#contact">
+              Contáctanos
+            </button>
+            </div>
+            </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Full Page Image Header Area -->
+
+    <!-- Intro -->
+    <div id="about" class="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2>¿Estás buscando la mejor casa, con la mejor ubicación y a un precio inmejorable?</h2>
+                    <p class="lead">En Revimex te ofrecemos la posibilidad de adquirir una casa o departamento con precios por debajo del valor comercial en excelentes ubicaciones.
+
+Somos una empresa sólida que tiene para ti una atractiva oferta de casas  y departamentos en todo el país.</p>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Intro -->
+
+    <!-- Services -->
+    <div id="services" class="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-thumbs-o-up"></i>
+                        <h4>Los mejores precios</h4>
+                        <p>Somos expertos en la regularización, rehabilitación y remodelación de inmuebles, para ofrecerle a usted una casa en perfectas condiciones y a un excelente precio.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-credit-card "></i>
+                        <h4>Soluciones de crédito</h4>
+                        <p>Usted puede contar con todo nuestro apoyo para utilizar su crédito Infonavit o bancario y así obtener la casa de sus sueños.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-bolt"></i>
+                        <h4>Rápida atención</h4>
+                        <p>Registrese ahora mismo y uno de nuestros representantes se contactará lo más pronto posible con usted para asesorarlo y ayudarle a conseguir su casa.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-rocket"></i>
+                        <h4>La mejor experiencia</h4>
+                        <p>Gracias a la tecnología e innovación hemos construido una estructura pensada en usted, donde lo guiaremos paso a paso para conseguir su vivienda de una forma rápida, amigable y transparente, hasta un 60% más rápido que cualquier otra empresa en México.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Services -->
+
+    <!-- Callout -->
+    <div class="mensajeFondo">
+        <div class="vert-text text-center">
+            <h1>La casa de sus sueños hoy.</h1>
+        </div>
+    </div>
+    <!-- /Callout -->
+
+    <!-- Portfolio -->
+    <div id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <h2>Nuestro trabajo en los últimos 30 días:</h2>
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2 text-center">
+                    <div class="portfolio-item">
+                        <h4>{!157} familias han alcanzado su sueño de adquirir una nueva vivienda.</h4>
+                        <a href="#">
+                            <img class="img-portfolio img-responsive" src="{!URLFOR($Resource.ImagenesSite,'fotoFamilia2.jpg')}"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="portfolio-item">
+                        <h4>{!210} viviendas mexicanas rehabilitadas y regularizadas.</h4>
+                        <a href="#">
+                            <img class="img-portfolio img-responsive" src="{!URLFOR($Resource.ImagenesSite,'fotoRehabilitacion.jpg')}"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="portfolio-item">
+                        <h4>En este momento contamos con {!449} propiedades listas para ser habitadas, estamos seguros que encontraremos una perfecta para ti y tu familia.</h4>
+                        <a href="#">
+                            <img class="img-portfolio img-responsive" src="{!URLFOR($Resource.ImagenesSite,'fotoFamCasa.jpg')}"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Portfolio -->
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <ul class="list-inline">
+                        <li><i class="fa fa-facebook fa-3x"></i>
+                        </li>
+                        <li><i class="fa fa-twitter fa-3x"></i>
+                        </li>
+                        <li><i class="fa fa-dribbble fa-3x"></i>
+                        </li>
+                    </ul>
+                    <div class="top-scroll">
+                        <a href="#top"><i class="fa fa-circle-arrow-up scroll fa-4x"></i></a>
+                    </div>
+                    <hr/>
+                    <p>Powered by <a href="http://www.ctconsulting.com.mx">CTConsulting</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /Footer -->
+    
+    <!-- Modal -->
+<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <div class="modal-dialog">
+        
+            <div class="modal-content">
+                <div class="modal-body">
+                        <div class="well well-sm well-md well-lg text-center">
+          <div class="form-horizontal">
+          <apex:outputPanel id="panelForm" >
+          	<legend class="text-center">Contáctanos</legend>
+          	<apex:form id="form" rendered="{!NOT(mensajeEnviado)}">
+              <apex:messages styleClass="alert alert-danger"/>
+              <apex:outputPanel styleClass="alert alert-success" rendered="{!mensajeEnviado}">Mensaje enviado, pronto nos pondremos en contacto.</apex:outputPanel>
+	          <fieldset>
+	    
+	            <!-- Name input-->
+	            <div class="form-group">
+	              <label class="col-md-3 control-label" for="name">Nombre</label>
+	              <div class="col-md-9">
+	                <apex:inputField value="{!prospecto.Nombre__c}" styleClass="form-control" html-placeholder="Tu nombre y apellido" required="true"/>
+	              </div>
+	            </div>
+	    
+	            <!-- Email input-->
+	            <div class="form-group">
+	              <label class="col-md-3 control-label" for="email">E-mail</label>
+	              <div class="col-md-9">
+	                <apex:inputField value="{!prospecto.Email__c}" styleClass="form-control" html-placeholder="Tu correo electrónico" required="true"/>
+	              </div>
+	            </div>
+	            
+	            <!-- Phone input-->
+	            <div class="form-group">
+	              <label class="col-md-3 control-label" for="telefono">Teléfono</label>
+	              <div class="col-md-9">
+	                <apex:inputField value="{!prospecto.Telefono__c}" styleClass="form-control" html-placeholder="Teléfono de contacto" required="true"/>
+	              </div>
+	            </div>
+	            
+	            <!-- plaza input-->
+	            <div class="form-group">
+	              <label class="col-md-3 control-label" style="padding-top:0" for="telefono">¿Dónde quieres tu casa?</label>
+	              <div class="col-md-9">
+	                <apex:inputField value="{!prospecto.PlazaInteres__c}" styleClass="form-control" html-placeholder="Estado/Ciudad" required="true"/>
+	              </div>
+	            </div>
+	    
+	            <!-- Message body -->
+	            <div class="form-group">
+	              <label class="col-md-3 control-label" for="message">Comentario adicional</label>
+	              <div class="col-md-9">
+	                <apex:inputField value="{!prospecto.Comentario__c}" styleClass="form-control" html-placeholder="Algo que nos quieras comentar..." html-rows="3"/>
+	              </div>
+	            </div>
+	    
+	            <!-- Form actions -->
+	            <div class="form-group">
+	              <div class="text-center">
+	                <apex:commandButton action="{!guardaProspecto}" reRender="panelForm" styleClass="btn btn-primary btn-lg" value="Enviar"/>
+	              </div>
+	            </div>
+	          </fieldset>
+          </apex:form>
+          
+          <apex:form id="form2" rendered="{!mensajeEnviado}">
+          	<fieldset>
+          	<div>
+          		<p>
+          			¿Te gustaría seguir adelante y saber si puedes calificar para obtener tu nueva casa y así tener la posibilidad de ganar un descuento del 50%?
+          			<br/>Sólo tienes que responder las siguientes preguntas ahora:
+          		</p>
+          	</div>
+            <div class="form-group">
+              <label class="col-md-7 control-label" for="fechaNacimiento">Fecha de nacimiento</label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.FechaNacimientoTexto__c}"  styleClass="form-control" html-placeholder="DD/MM/AAAA" required="true"/>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label class="col-md-7 control-label" for="RangoInversion">¿Cuánto te gustaría invertir en tu nueva casa? (miles de pesos)</label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.RangoInversion__c}" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-7 control-label" for="FormaPago">¿Cómo te gustaría pagar tu casa? </label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.FormaPago__c}" onChange="cambiaFormularioFormaPago(this.value);" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-7 control-label" style="padding-top:0" for="NSS">Número de seguro social</label>
+              <div class="col-md-5">
+                <apex:inputField id="NSS" value="{!prospecto.NSS__c}" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label class="col-md-7 control-label" style="padding-top:0" for="TiempoCotizandoIMSS">¿Cuánto tiempo tienes cotizando para el IMSS en tu último trabajo?</label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.TiempoCotizandoIMSS__c}" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-7 control-label" style="padding-top:0" for="TiempoCotizandoIMSSTotal">¿Cuánto tiempo tienes cotizando para el IMSS en total de tu vida laboral?</label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.TiempoCotizandoIMSSTotal__c}" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-7 control-label" style="padding-top:0" for="PagoMensual">¿Cuánto quieres pagar mensualmente por tu nueva casa?</label>
+              <div class="col-md-5">
+                <apex:inputField value="{!prospecto.PagoMensual__c}" styleClass="form-control" required="true"/>
+              </div>
+            </div>
+    
+    
+            <!-- Form actions -->
+            <div class="col-md-12 form-group">
+              <div class="col-md-6 ">
+                <apex:commandButton action="{!guardaProspecto}" reRender="form" styleClass="btn btn-success btn-lg" value="Enviar para calificar"/>
+              </div>
+              <div class="col-md-6 ">
+                <apex:commandButton action="{!omitirSegundoPaso}" reRender="form" styleClass="btn btn-danger btn-lg" value="No por el momento"/>
+              </div>
+            </div>
+          </fieldset>
+          </apex:form>
+          </apex:outputPanel>
+          </div>
+        </div>
+                    </div> 
+                </div>
+            </div>
+    </div>
+    <!-- /Modal -->
+    
+    <!-- JavaScript -->
+    <script src="{!URLFOR($Resource.TemplateSite,'js/jquery-1.10.2.js')}"></script>
+    <script src="{!URLFOR($Resource.TemplateSite,'js/bootstrap.js')}"></script>
+
+    <!-- Custom JavaScript for the Side Menu and Smooth Scrolling -->
+    <script>
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    </script>
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    </script>
+    <script>
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    
+    /*$(document).ready(function() {
+    $('#scrollButton').click(function() {
+        $('body').animate({scrollTop: +400}, 1000);
+    })
+});*/
+
+    var parametros =  {
+                    'estado':String('Todos'),
+                    'ciudad':String('Todos'),
+                    'tipo':String('Todos')
+                };
+    </script>
+
+</body>
+
+</html>
+
+</apex:page>

@@ -1,0 +1,86 @@
+<apex:page standardController="Propiedad__c" extensions="CargaFotosController" tabStyle="FotoWeb__c">
+    <style>
+    
+          .dataRow{
+          width:100px;
+          
+       }
+       .EncabezadoTabla{
+           
+          text-align:center;
+       }
+       .BotonBorrar{
+           text-align:center;
+           height:auto;
+           width:auto;
+         
+       }
+       .BotonEstatus{
+           text-align:center;
+       }
+       .imagen{
+           text-align:center;
+       }
+       .nombreFoto{
+           text-align:center;
+       }
+       
+    </style>
+    <apex:sectionHeader title="Propiedad {!Propiedad__c.Name} " subtitle="Carga Fotos"/>
+    <apex:form id="theForm">
+        <apex:pageBlock >
+            <apex:pagemessages id="alerta" />
+            <apex:pageBlockSection >
+            <apex:repeat value="{!archivos}" var="archivo">
+
+      <apex:inputFile value="{!archivo.body}" contentType="{!archivo.ContentType}" fileName="{!archivo.Name}" fileSize="{!archivo.BodyLength}"/>
+
+    </apex:repeat>
+
+                
+               <!-- <apex:inputFile value="{!archivos.body}" contentType="{!archivos[1].ContentType}" fileName="{!archivos[1].Name}" fileSize="{!archivos[1].BodyLength}"/>
+                <apex:inputFile value="{!archivos[2].body}" contentType="{!archivos[2].ContentType}" fileName="{!archivos[2].Name}" fileSize="{!archivos[2].BodyLength}"/>
+                <apex:inputFile value="{!archivos[3].body}" contentType="{!archivos[3].ContentType}" fileName="{!archivos[3].Name}" fileSize="{!archivos[3].BodyLength}"/> 
+                <apex:inputFile value="{!archivos[4].body}" contentType="{!archivos[4].ContentType}" fileName="{!archivos[4].Name}" fileSize="{!archivos[4].BodyLength}"/>
+                             -->
+                <apex:commandButton action="{!guarda}" value="Cargar" id="theButton"/>   
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                
+                <apex:commandButton action="{!Actualizar}" value="Actualizar" id="Actualiza"/>
+              
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection title="Fotos Cargadas" id="FotosCargadas"/>
+                <apex:pageBlockTable value="{!fotos}" var="wrapper" id="Fotos" styleClass="tabla">
+                    <apex:column headerValue="Borrar Foto" headerClass="EncabezadoTabla" >
+                    <div Class="BotonBorrar">
+                        <apex:inputCheckbox value="{!wrapper.borrar}"/>  
+                        </div>
+                    </apex:column>
+                    <apex:column headerValue="Nombre Foto" headerClass="EncabezadoTabla">
+                        <div Class="nombreFoto">
+                        <apex:inputField value="{!wrapper.attach.Name}" required="false"/>
+                        </div>
+                    </apex:column> 
+                    <apex:column headerValue="Vista Previa" headerClass="EncabezadoTabla" >
+                        <div Class="imagen">
+                        <img src="{!$site.prefix}/servlet/servlet.FileDownload?file={!wrapper.attach.Id}" height="100" width="100"/>
+                        </div>
+                    </apex:column> 
+                    
+                    
+                    <apex:column headerValue="Estatus" headerClass="EncabezadoTabla" >
+                    <div Class="BotonEstatus"> 
+                        <apex:inputField value="{!wrapper.fotoWeb.EstatusFoto__c}" required="false" styleClass="BotonEstatus"/>
+                         </div>
+                    </apex:column> 
+                   
+                </apex:pageBlockTable> 
+        </apex:pageBlock>
+    </apex:form>
+
+    <script type='text/javascript' src='/canvas/sdk/js/publisher.js'/>
+    <script type='text/javascript'>
+        Sfdc.canvas.publisher.publish({name : 'publisher.refresh', payload : {feed:true}});.
+    </script>
+</apex:page>

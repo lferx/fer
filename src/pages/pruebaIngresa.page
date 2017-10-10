@@ -1,0 +1,17 @@
+<apex:page controller="pruebaIngresa" showHeader="true" sidebar="true" >
+
+<apex:form >
+	<apex:pageBlock id="limpia">
+		<apex:pageBlockSection >
+			<apex:inputText value="{!a.Firstname}"/>
+			<apex:inputText value="{!a.Lastname}"/>
+
+			<apex:inputField value="{!a.Type}"/>
+			<apex:inputField value="{!a.Industry}"/>
+			
+		</apex:pageBlockSection>	
+		</apex:pageBlock>
+		<apex:commandButton value="Click" action="{!save}" oncomplete="prueba();" />
+		<apex:actionFunction name="prueba" action="{!SaveAndNew}" reRender="limpia"/>
+</apex:form>	
+</apex:page>

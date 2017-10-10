@@ -1,0 +1,3 @@
+<apex:page standardController="Paquete__c" showHeader="false">
+	<c:CargaDocumentos idPadre="{!Paquete__c.Id}" relacionObjeto="Paquete__c" tipoDocumento="Paquete"/>
+</apex:page>

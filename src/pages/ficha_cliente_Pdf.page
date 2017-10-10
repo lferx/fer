@@ -1,0 +1,305 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!guardarFotosComoAdjuntos}" controller="ficha_cliente_Pdf">
+    <head>
+        <style type="text/css">
+            
+            @font-face {
+                font-family:'GothamRounded-Book';
+                /*src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');*/
+                src: url('{!URLFOR($Resource.fichat, 'fichat/GothamRounded-Book_c.woff')}'));
+            }
+            @font-face{
+                font-family:fonttwo;
+                src: url('{!URLFOR($Resource.fichat, 'fichat/GothamRounded-Medium_a.woff')}') format('woff');
+            }
+            body {
+                font-family: 'fonttwo' ,arial;
+                /*Arial Unicode MS;*/
+            }
+            @page:first {
+                size: 12.36in 9.50in;
+                /*margin: -8px;*/
+                padding: 0 0 0 0;
+                margin: -8px 0px 0px -7px;
+            }
+            @page{
+                /*size: letter;*/
+                /*size: 11.69in 8.27in;*/
+                size: 12.36in 9.50in;
+                /*size: landscape;*/
+                margin: -1px 0px 0px -7px;
+                /*margin-left: -10px;*/
+                /*margin-right: -10px;*/
+                /*margin-top: -10px;*/
+                /*margin-bottom: -10px;*/
+                padding: 0 0 0 0;
+                /*@bottom-center {
+                    content: counter(page) "/" counter(pages);
+                    z-index: 22001;
+                }*/
+                /*z-index: 90000000;
+                @top-center {
+                    content: "Sample";
+                    
+                }*/
+                
+                /*@bottom-center {
+                    content: "Page " counter(page) "/" counter(pages);
+                }*/
+                /*@top-center {
+                    content: counter(page) "/" counter(pages);
+                    z-index: 90000000;
+                }*/
+            }
+            p {
+                margin: 0; padding: 0;
+            }
+            /*.first-page{
+                display:block;
+                page-break-after:auto;
+                page-break-after:always;
+            }*/
+            .page-break {
+                display:block;
+                /*page-break-before:always;*/
+                page-break-after: always;
+                width: 1186px;
+                height: 913px;
+                
+
+            }
+            .first-background{
+                background-image:url('{!URLFOR($Resource.fichat, 'fichat/back-ground-page1.png')}');
+                
+            }
+            .background{
+                background-image:url('{!URLFOR($Resource.fichat, 'fichat/back-ground-page2.png')}');
+            }
+            .first-background,.background{
+                background-repeat: no-repeat; 
+                background-size: 100% 100%;
+                background-position: center;
+            }
+            /*.first-page-back-ground,.page-back-ground{
+                width:100%;
+                height:800px;
+                width: 1186px;
+                height: 913px;
+
+            }*/
+            .ftext001{
+                font-size:185px;
+                font-family:Times;
+                color:#061936;
+                
+            }
+            .color1{
+                /*azul fuerte*/
+                color:#062058;
+            }
+            .color2{
+                /*blanco*/
+                color:#ffffff;
+            }
+            .size1{
+                font-size:15px;
+            }
+            .size2{
+                font-size:24px;
+            }
+            .size3{
+                font-size:17px;
+            }
+            .localizador{
+                font-size:18px;
+            }
+            .size4{
+                font-size:27px;
+            }
+            .size5{
+                font-size:21px;
+            }
+            .ft07F{line-height:20px;}/*www.revimex.mx*/
+            
+            p{
+                font-family:sans-serif !important;
+                /*font-weight: bold;*/
+                /*text-transform: uppercase;*/
+                white-space: nowrap;
+                position:relative;
+            }
+            a{
+                color:white;
+            }
+            .contenido{
+                position:relative;
+                /*border:.09px solid red;*/
+            }
+            .prueba{
+                text-align: center;
+            }
+            /*.prueba div{
+                /*width:200px;
+                height:200px;*/
+                /*background-color:#FFD082;*
+                display: inline-table;
+                /*border:4px solid #E7AD47;*
+                padding:10px;
+                margin:10px;
+
+            }*/
+           /* .capitalize:first-letter {
+                text-transform:uppercase;
+            }
+    */
+            .capitalize{
+                text-transform:capitalize;
+
+            }
+            .uppercase{
+                text-transform:uppercase;
+            }
+        </style>
+    </head>
+    
+    <body>
+        
+        <div class="page-break first-background">
+            <div class="contenido" style="top:240px;">
+                <center>
+                    <img width="850" height="400" src="{!URLFOR($Resource.fichat, 'fichat/text-portada.png')}"/>
+                </center>
+            </div>
+            <p style="position:fixed;top:845px;left:47px;" class="ft07F size1 color1"><br/>www.revimex.mx</p>
+            <p style="position:fixed;top:853px;right:50px;" class="size1 color1">Contacto</p>
+            <p style="position:fixed;top:874px;right:50px;" class="size1 color1">01 800 200 0440</p>
+        </div>
+        <apex:repeat value="{!wrappedListaCarro}" var="ficha">
+            <div class="page-break background">
+
+                <!-- <p style="top:32px;left:261px;" class="ft00">FICHA TÉCNICA COMERCIAL</p> -->
+                <div class="contenido" style="top:25px;left: -70px">
+                    <center>
+                        <img width="500" height="35" src="{!URLFOR($Resource.fichat, 'fichat/text-ficha.png')}"/>
+                    </center>
+                </div>
+                <div class="contenido" style="top:170px;left:63px;width: 490px;">
+                    <center>
+                        <p class="size2 color2">
+                            <apex:outputText value="{!ficha.detalle.Oferta__r.Name}"/>
+                        </p>
+                    </center>
+                </div>
+                <p style="top:140px;left:785px;" class="size2 color2">Características</p>
+                
+                <div class="contenido" style="top:190px;left:63px;width: 490px;height: 345px; background-color: blue;">
+                    <!-- foto -->
+                    <img style="height: 100%;width: 100%;object-fit: cover;" src="{!IF(ficha.urls[0].salesforceId != null, '/servlet/servlet.FileDownload?file=' + ficha.urls[0].salesforceId, ficha.urls[0].url)}"/>
+                </div>
+                <div class="contenido" style="width: 83px;top:-80px;left:680px;">
+                    <center>
+                        <p class="size5 color1">
+                            <apex:outputText value="<b>{0,number,###,###}</b>  m<sup>2</sup>" escape="false">
+                                <apex:param value="{!ficha.detalle.Oferta__r.Propiedad__r.Terreno_m2__c}"/> 
+                            </apex:outputText>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 83px;top:-105px;left:836px;">
+                    <center>
+                        <p class="size5 color1">
+                            <apex:outputText value="<b>{0,number,###,###}</b>  m<sup>2</sup>" escape="false">
+                                <apex:param value="{!ficha.detalle.Oferta__r.Propiedad__r.Construccion_m2__c}"/>
+                            </apex:outputText>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 83px;top:-132px;left:993px;">
+                    <center>
+                        <p class="size5 color1">
+                            <!-- habitaciones -->
+                            <apex:outputText value="<b>{!ficha.detalle.Oferta__r.Propiedad__r.N_de_Habitaciones__c}</b>" escape="false"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 83px;top:40px;left:679px;">
+                    <center>
+                        <p class="size5 color1">
+                            <apex:outputText value="<b>{!ficha.detalle.Oferta__r.Propiedad__r.N_de_Ba_os__c}</b>" escape="false"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 83px;top:14px;left:837px;">
+                    <center>
+                        <p class="size5 color1">
+                            <apex:outputText value="<b>{!ficha.detalle.Oferta__r.Propiedad__r.Patios__c}</b>" escape="false"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 83px;top:-11px;left:992px;">
+                    <center>
+                        <p class="size5 color1">
+                            <apex:outputText value="<b>{!ficha.detalle.Oferta__r.Propiedad__r.Estacionamiento__c}</b>" escape="false"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 490px;top:58px;left:62px;">
+                    <center>
+                        <p class="size3 color2 capitalize">
+                            <apex:outputText value="{!ficha.calleynumero}"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 490px;top:62px;left:63px;">
+                    <center>
+                        <p class="size3 color2 capitalize">
+                            <apex:outputText value="{!ficha.coloniaycp}"/> <!-- Col. Rinconadas Hamburgo, C.P. 35018 -->
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 490px;top:89px;left:62px;">
+                    <center>
+                        <p class="size4 color2 capitalize"><!-- Gómez Palacio, DGO.&#160; -->
+                            <apex:outputText value="<b>{!ficha.ciudadyestado}</b>" escape="false"/>
+                        </p>
+                    </center>
+                </div>
+                <div class="contenido" style="width: 160px;top:-7px;left:817px;">
+                    <p class="localizador color2">
+                        <apex:outputLink value="https://maps.google.es/?q={!ficha.detalle.Oferta__r.Propiedad__r.Punto__Latitude__s}%20{!ficha.detalle.Oferta__r.Propiedad__r.Punto__Longitude__s}" target="_blank">Localizador</apex:outputLink>
+                    </p>
+                </div>
+                <div class="contenido" style="width: 400px;top:33px;left:673px;">
+                    <center>
+                        <p class="size4 color2">
+                            <apex:outputText value="<b>$ {0,number,###,###}</b>" escape="false">
+                                <apex:param value="{!ficha.detalle.Oferta__r.Precio_Original__c}"/>
+                            </apex:outputText>
+                        </p>
+                    </center>
+                </div>
+                
+                
+                
+                <!-- <p style="top:375px;left:881px;" class="ft07">m</p>
+                <p style="top:375px;left:897px;" class="ft08">2</p> -->
+                <!-- <p style="top:363px;left:903px;" class="ft09">&#160;</p> -->
+                
+                <!-- <p style="top:375px;left:735px;" class="ft07">m</p>
+                <p style="top:375px;left:751px;" class="ft08">2</p> -->
+                <!-- <p style="top:364px;left:758px;" class="ft09">&#160;</p> -->
+                
+                
+            </div>
+            
+            <apex:outputPanel layout="none" rendered="{!ficha.urls.size > 1}">
+                <div class="page-break prueba first-background">
+                    <apex:repeat first="1" rows="2" value="{!ficha.urls}" var="archivo">
+                        <apex:image style="width: 380px; height: 500px; border: 3px solid #fff; padding: 2px; margin-left: 10px; margin-top: 12%;" value="{!IF(archivo.salesforceId != null, '/servlet/servlet.FileDownload?file=' + archivo.salesforceId, archivo.url)}" />
+                    </apex:repeat>
+                </div>
+            </apex:outputPanel>
+        </apex:repeat>
+        
+        <!-- <div style="page-break-before: avoid;"></div> -->
+    </body>
+</apex:page>

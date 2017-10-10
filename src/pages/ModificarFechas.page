@@ -1,0 +1,50 @@
+<apex:page standardController="Documento__c" extensions="ModificarFechasController">
+    <apex:form id="formaprincipal">
+         <apex:PageMessages id="idMsg"/>
+         
+         <apex:pageBlock id="listblock">
+                <apex:pageBlockButtons >                        
+                      <apex:commandButton value="Cerrar" action="{!cancel}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable var="doc" value="{!ldocup}" id="list">
+                    <apex:column headerValue="" >
+                        <div align="center" >
+                        <apex:commandLink value="Modificar Fecha Cierre" action="{!ModCierre}" style="font-size:8pt;color:blue;" rendered="{!NOT(doc.Cerrado__c) && (doc.Iniciado__c)}">
+                            <apex:param name="idLnSelect" assignTo="{!idLnSelect}" value="{!doc.Id}"/>
+                        </apex:commandLink>                     
+                        </div>
+                    </apex:column>
+                    <apex:column headerValue="">
+                        <div align="center">
+                        <apex:commandLink value="Cerrar Paso" action="{!CerrarPaso}" style="font-size:8pt;color:blue;" rerender="idMsg,listblock">
+                            <apex:param name="idLnSelect" assignTo="{!idLnSelect}" value="{!doc.Id}"/>
+                        </apex:commandLink>                     
+                        </div>
+                    </apex:column>
+                    <apex:column headerValue="">
+                        <div align="center">
+                        <apex:commandLink value="Abrir Paso" action="{!AbrirPaso}" style="font-size:8pt;color:blue;" rerender="idMsg,listblock">
+                            <apex:param name="idLnSelect" assignTo="{!idLnSelect}" value="{!doc.Id}"/>
+                        </apex:commandLink>                     
+                        </div>
+                    </apex:column>
+                    <apex:column headerValue="">
+                        <div align="center">
+                        <apex:commandLink value="Borrar Paso" action="{!BorrarPaso}" style="font-size:8pt;color:blue;" rerender="idMsg,listblock">
+                            <apex:param name="idLnSelect" assignTo="{!idLnSelect}" value="{!doc.Id}"/>
+                        </apex:commandLink>                     
+                        </div>
+                    </apex:column>
+                    <apex:column value="{!doc.EtapaOferta__r.NumEtapa__c}" headervalue="Etapa" />
+                    <apex:column value="{!doc.DocumentoEtapa__r.Orden__c}" headervalue="Orden" />
+                    <apex:column value="{!doc.Name}" headervalue="Documento" />
+                    <apex:column value="{!doc.Iniciado__c}" headervalue="Iniciado" />
+                    <apex:column value="{!doc.Cerrado__c}" headervalue="Cerrado" />
+                    <apex:column value="{!doc.Fecha_Inicio__c}" headervalue="Fecha Inicio" />
+                    <apex:column value="{!doc.Fecha_Com_Controller__c}" headervalue="Fecha Compromiso" />
+                    <apex:column value="{!doc.Tiempo_Restante__c}" headervalue="Tiempo Restante"/>
+                    <apex:column value="{!doc.DocumentoEtapa__r.Obligatorio__c}" headervalue="Obligatorio?"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,529 @@
+<apex:page docType="html-5.0" controller="MapaPropiedadesController" extensions="QuickSearch" sidebar="false">
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <!--<apex:includeScript value="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwaVxc-0tMfXVjFv_pxcAT1_7rRjF0TnU&sensor=TRUE" />-->
+    <apex:includeScript value="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDwV4Pe44LlrObcmDSvVSs8tbTkc9ul1ao&sensor=TRUE&callback=initMap" />
+    <style type="text/css">
+        .ui-autocomplete-loading {
+            background: #FFF url(/img/loading.gif) right center no-repeat;
+        }
+        main {
+            display:block;
+            width:100%;
+            height:auto;
+        }
+        #divColumnaUno{
+            width:70%;
+            float: left;
+            padding: 5px 5px 5px 5px;
+        }
+        #divColumnaDos{
+            width:28%;
+            float: right;
+            padding: 5px 5px 5px 5px;
+        }
+        
+        #divMapa{
+            min-width:200px;
+            min-height:400px;
+        }
+        #divCalle{
+            min-width:200px;
+            min-height:200px;
+        }
+        #divDireccion{
+            padding: opx 10px 0px 5px;
+        }
+        #divPropiedadInformacion{
+            min-width:100px;
+        }
+        #divDireccionesEncotradas{
+            width: 200px;
+            height: 350px;
+            overflow:scroll;
+            border : 1px solid black;
+            background-color: rgba(255, 255, 255, 0.9); 
+        }
+        
+        .idClass{
+            width:0%;
+            visibility: hidden;
+        }
+        .idClassHeade{
+             background-color: #F0F8FF !important;
+             background-image: none !important;
+             width:1px;
+        }
+        .fieldTextLong{
+            width:100%; 
+        }
+        .highlight { background-color: red; }
+    </style>
+    <script>
+        var marker;
+        var mapa;
+        var panorama;
+        var sv = new google.maps.StreetViewService();
+        var geocoder;
+        var resultsGlobal;
+        var idFilaSelected;
+        
+        j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+              initialize();
+        });
+        function initialize() {
+            j$('#divPropiedadInformacion').hide();
+            j$('#divDireccionesEncotradas').hide();
+            geocoder = new google.maps.Geocoder();
+            var mapOptions = {
+                center: new google.maps.LatLng(19.453, -99.260),
+                zoom: 4,
+                scrollwheel: false,
+                streetViewControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+           
+            mapa = new google.maps.Map(document.getElementById("divMapa"),mapOptions);
+            var divDirecciones = j$("#divDireccionesEncotradas");
+            mapa.controls[google.maps.ControlPosition.RIGHT_TOP].push(divDirecciones[0]);
+            
+            panorama = new  google.maps.StreetViewPanorama(document.getElementById('divCalle'));
+           
+            if('Si'=='{!propiedad.Geolocalizada__c}'){
+                ubicarPropiedad();
+            }
+        }
+        
+        function clickFila(idPropiedad){
+            idFilaSelected = idPropiedad;
+            cargarPropiedad(idPropiedad);
+            j$("table[id$='pbtPropiedades'] tr").each(function() {
+                j$(this).css("background","#FFF");
+            });
+            var td = j$("table[id$='pbtPropiedades']").find('.fila-' + idFilaSelected );
+            j$(td).parent().css("background","#CFC");
+        }
+        
+        function removeFila(){
+            //c onsole.log('ALGO ' + idFilaSelected);
+            //c onsole.log(j$("table[id$='pbtPropiedades']"));
+            var td = j$("table[id$='pbtPropiedades']").find('.fila-' + idFilaSelected );
+            //c onsole.log(td);
+            j$(td).remove();
+            
+        }
+        
+        function clearFields(){
+            j$("input[id$='colonia']").val('');
+            j$("input[id$='cp']").val('');
+            j$("input[id$='calle']").val('');
+            j$("input[id$='municipio']").val('');
+            j$("input[id$='estado']").val('');
+            j$("input[id$='latitud']").val('');
+            j$("input[id$='longitud']").val('');
+            j$('#divDireccionesEncotradasContent').empty();
+        }
+        
+        function searchDireccion(){
+            var calle = j$("textarea[id$='calleBusqueda']").val();
+            var colonia = j$("input[id$='coloniaBusqueda']").val();
+            var municipio = j$("input[id$='municipioBusqueda']").val();
+            var estado = j$("input[id$='estadoBusqueda']").val();
+            var cp = j$("input[id$='cpBusqueda']").val();
+            
+            var direccion = calle + ',' + colonia + ','+ municipio+ ',' + estado + ',' + cp;
+            clearFields();
+            if(marker != null){
+                marker.setMap(null);
+            }
+            geocoder.geocode({ 'address': direccion}, geocodeResult);
+        }
+        
+        function geolocalizar(){
+            var calle = j$("textarea[id$='calleBusqueda']").val();
+            var colonia = j$("input[id$='coloniaBusqueda']").val();
+            var municipio = j$("input[id$='municipioBusqueda']").val();
+            var estado = j$("input[id$='estadoBusqueda']").val();
+            var cp = j$("input[id$='cpBusqueda']").val();
+            var interior = j$("input[id$='numInt']").val();
+            var manzana = j$("input[id$='manzana']").val();
+            calle = j$('#checkCalle').is(':checked') ? calle : '';
+            colonia = j$('#checkColonia').is(':checked') ? colonia : '';
+            municipio = j$('#checkMunicipio').is(':checked') ? municipio : '';
+            estado = j$('#checkEstado').is(':checked') ? estado : '';
+            cp = j$('#checkCP').is(':checked') ? cp : '';
+            interior = j$('#checkInt').is(':checked') ? interior : '';
+            manzana = j$('#checkManzana').is(':checked') ? manzana : '';
+            var direccion = interior + ','+ calle +',' +  manzana + ','+ colonia + ','+ municipio+ ',' + estado + ',' + cp;
+            
+            console.log(direccion);
+            clearFields();
+            if(marker != null){
+                marker.setMap(null);
+            }
+            geocoder.geocode({ 'address': direccion}, geocodeResult);
+        }
+        function geocodeResult(results, status){
+            if(status == 'OK'){
+                resultsGlobal = results;
+                if(results[0].formatted_address!='México'){
+                        mapa.setZoom(15);
+                        mapa.setCenter(results[0].geometry.location);
+                        var contentDirecciones = '';
+                        var sChecked = 'checked';
+                        for(var i = 0; i < results.length; i++){
+                            sChecked = i > 0 ? '' : sChecked;
+                            punto = results[i].geometry.location;
+                            direccion = "'" + results[0].geometry.location + "'";
+                            contentDirecciones = contentDirecciones + "<input type='radio' name='direccion' value='"+ results[i].formatted_address + "'"+ sChecked +" onClick='colocarPunto("+ i+ ");' > " + results[i].formatted_address + "<br>";
+                        }
+                        j$('#divDireccionesEncotradas').show();
+                        j$('#divDireccionesEncotradasContent').empty();
+                        j$('#divDireccionesEncotradasContent').html(contentDirecciones);
+                        colocarPunto(0);
+                    }
+            }else{
+                console.log('Error en el servicio');
+                alert('No se encontro ubicación alguna');
+            }
+        }
+        
+        function ubicarPropiedad(){
+            var lat0 = j$("input[id$='latitud']").val();
+            var lng0 = j$("input[id$='longitud']").val();
+            if(marker != null){
+                marker.setMap(null);
+            }
+            var markerOptions = { map: mapa,draggable:true, position: new google.maps.LatLng(lat0,lng0)};
+            marker = new google.maps.Marker(markerOptions);
+            mapa.setZoom(15);
+            mapa.setCenter(new google.maps.LatLng(lat0,lng0));
+        }
+        
+        function colocarPunto(indice){
+            if(marker != null){
+                marker.setMap(null);
+            }
+            var markerOptions = { map: mapa,draggable:true, position: resultsGlobal[indice].geometry.location, title:'' + resultsGlobal[indice].formatted_address + '' };
+            marker = new google.maps.Marker(markerOptions);
+            mapa.setZoom(15);
+            mapa.setCenter(resultsGlobal[indice].geometry.location);
+            
+            
+            contentDireccion = j$('#divPropiedadInformacion').html();
+            infowindow = new google.maps.InfoWindow({
+                 content: contentDireccion
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                 infowindow.open(mapa,marker);
+            });
+            google.maps.event.addListener(marker, 'drag', function() {
+                 j$("input[id$='latitud']").val(marker.getPosition().lat());
+                 j$("input[id$='longitud']").val(marker.getPosition().lng());
+            });
+            google.maps.event.addListener(marker, 'dragend', function() {
+                j$("input[id$='latitud']").val(marker.getPosition().lat());
+                j$("input[id$='longitud']").val(marker.getPosition().lng());
+                var latlng = new google.maps.LatLng(marker.getPosition().lat(),marker.getPosition().lng());
+                geocoder.geocode({'latLng': latlng},geocodeResult);
+            });
+            
+            sv.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
+            
+            parseDireccion(indice);
+        }
+        
+        function parseDireccion(indice){
+            clearDireccion();
+            var tipo = '';
+            var numero = '';
+            j$("input[id$='latitud']").val(resultsGlobal[indice].geometry.location.lat());
+            j$("input[id$='longitud']").val(resultsGlobal[indice].geometry.location.lng());
+            console.log(resultsGlobal[indice].address_components);
+            
+            for(var i = 0; i < resultsGlobal[indice].address_components.length; i++){
+                tipo = resultsGlobal[indice].address_components[i].types[0];
+                if(tipo == 'street_number'){
+                    numero = resultsGlobal[indice].address_components[i].long_name;
+                }
+                if(tipo == 'neighborhood'){
+                    j$("input[id$='colonia']").val(resultsGlobal[indice].address_components[i].long_name);
+                }
+                if(tipo == 'postal_code'){
+                    j$("input[id$='cp']").val(resultsGlobal[indice].address_components[i].long_name);
+                }
+                if(tipo == 'route'){
+                    j$("textarea[id$='calle']").val(resultsGlobal[indice].address_components[i].long_name + ' ' + numero);
+                }
+                if(tipo == 'locality'){
+                    j$("input[id$='municipio']").val(resultsGlobal[indice].address_components[i].long_name);
+                }
+                if(tipo == 'administrative_area_level_1'){
+                    j$("input[id$='estado']").val(resultsGlobal[indice].address_components[i].long_name);
+                }
+            }
+        }
+        
+        function clearDireccion(){
+            j$("input[id$='latitud']").val('');
+            j$("input[id$='longitud']").val('');
+            j$("input[id$='colonia']").val('');
+            j$("input[id$='cp']").val('');
+            j$("textarea[id$='calle']").val('');
+            j$("input[id$='municipio']").val('');
+            j$("input[id$='estado']").val('');
+        }
+        
+        function processSVData(data, status){
+            if (status == google.maps.StreetViewStatus.OK) {
+                 j$("#divCalleMensaje").html('');
+                 panorama.setPosition(data.location.latLng);
+                 panorama.setVisible(true);
+            }else{
+                j$("#divCalleMensaje").html('No se encontro información para esta localización');
+                panorama.setVisible(false);
+                console.log('Street View data not found for this location.');
+            }
+        } 
+        
+        function autoComplete(field) {
+            j$(field).autocomplete({
+                source: function(request, response) {
+                    //c onsole.log(j$(field).val());
+                    QuickSearch.searchCodigoPostal(j$(field).val(),j$("input[id$='estadoBusqueda']").val(), function(result, event) {
+                        if (event.status) {
+                            //c onsole.log(result);
+                            response(result);
+                        } else {
+                            console.log(event);
+                        }
+                    }, {escape:false});
+                },
+                minLength: 3,
+                select: function(event, ui) {
+                    event.preventDefault();
+                    this.value = ui.item.label;
+                    //var id = $(field).attr("id");
+                    j$("input[id$='cpBusqueda']").val(ui.item.label)
+                    //$("input[id='" + id + "_lkid']").val(ui.item.value);
+                    //$("input[id='" + id + "_lkold']").val(ui.item.label);
+                    //$("input[id='" + id + "_mod']").val("1");
+                },
+                focus: function(event, ui) {
+                    event.preventDefault();
+                    this.value = ui.item.label;
+                }
+            });
+        }
+        
+    </script>
+    <style type="text/css">
+    .impLavel {
+        color: #4A4A56;
+        width: 18% !important;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: right;
+        float: left;
+    }
+    .impimp {
+        width: 82%;
+        float: right;
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    </style>
+    <apex:form id="formPrincipal">
+        <apex:actionFunction action="{!cargarPropiedad}"  name="cargarPropiedad" rerender="pbPropiedadSeleccionada,pbPropiedadInformacion,pbsDatosBusqueda"  status="ajaxStatus" onComplete="searchDireccion();">
+            <apex:param name="idProp" assignTo="{!idPropiedad}" value=""/>
+        </apex:actionFunction>
+        <div id="divColumnaUno">
+            <div id="divMapa">Mapa</div>
+            <apex:pageBlock id="pbVistaCalle">
+            <apex:pageBlockSection columns="1" title="Vista de calle" id="pbsVistaCalle">
+                    <div id="divCalleMensaje"></div>
+                    <div id="divCalle"></div>
+            </apex:pageBlockSection>
+            <script> twistSection(document.getElementById('{!$Component.pbVistaCalle.pbsVistaCalle}').getElementsByTagName('img')[0]) </script>
+            </apex:pageBlock>
+            <div id="divDireccion">
+                <apex:pageBlock title="Propiedad seleccionada" id="pbPropiedadSeleccionada">
+                <apex:pageMessages id="mensajes"></apex:pageMessages>
+                <apex:pageBlockSection columns="3">
+                        <apex:pageBlockSection columns="1" id="pbsDatosPropiedad"  title="Dirección propiedad" >
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Calle" for="calleUno"/>
+                                <apex:outputField value="{!propiedad.Calle__c}" id="calleUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Colonia" for="coloniaUno"/>
+                                <apex:outputField value="{!propiedad.Colonia__c}" id="coloniaUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Municipio" for="municipioUno"/>
+                                <apex:outputField value="{!propiedad.Municipio__c}" id="municipioUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Estado" for="estadoUno"/>
+                                <apex:outputField value="{!propiedad.EstadoCompleto__c}" id="estadoUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="C.P." for="cpUno"/>
+                                <apex:outputField value="{!propiedad.CP__c}" id="cpUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Folio propiedad" for="folioUno"/>
+                                <apex:outputField value="{!propiedad.Name}" id="folioUno"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="1" id="pbsDatosBusqueda"  title="Dirección de búsqueda" >
+                            <apex:pageBlockSectionItem >
+                                Calle
+                                <input type="checkbox" id="checkCalle" checked="checked" />
+                                <apex:inputTextarea value="{!calle}" id="calleBusqueda" styleClass="fieldTextLong" rows="2" /> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                Lote
+                                <input type="checkbox" id="checkInt" checked="checked" />
+                                <apex:inputText value="{!lote}" id="numInt" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                Mz.
+                                <input type="checkbox" id="checkManzana" checked="checked" />
+                                <apex:inputText value="{!manzana}" id="manzana" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                Colonia
+                                <input type="checkbox" id="checkColonia" checked="checked" />
+                                <apex:inputText value="{!colonia}" id="coloniaBusqueda" styleClass="fieldTextLong"/>  
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                Municipio
+                                <input type="checkbox" id="checkMunicipio" checked="checked" />
+                                <apex:inputText value="{!municipio}" id="municipioBusqueda" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                Estado
+                                <input type="checkbox" id="checkEstado" checked="checked" />
+                                <apex:inputText value="{!estado}" id="estadoBusqueda" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                C.P.
+                                <input type="checkbox" id="checkCP" checked="checked" />
+                                <apex:inputText value="{!cp}" id="cpBusqueda" styleClass="fieldTextLong" onkeyup="autoComplete(this)" /> 
+                            </apex:pageBlockSectionItem>
+                                 <button type="button" onClick="geolocalizar();">Geolocalizar</button>
+                                 <button type="button" onClick="cargarPropiedad('{!idPropiedad}');">Reiniciar</button>
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="1" id="pbsDatosPropiedadMapa" title="Dirección de google maps">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Calle" for="calle"/>
+                                <apex:inputField value="{!propiedad.Calle2__c}" id="calle" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Colonia" for="colonia"/>
+                                <apex:inputField value="{!propiedad.Colonia2__c}" id="colonia"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Municipio" for="municipio"/>
+                                <apex:inputField value="{!propiedad.Municipio2__c}" id="municipio"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Estado" for="estado"/>
+                                <apex:inputField value="{!propiedad.Estado2__c}" id="estado"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="C.P." for="cp"/>
+                                <apex:inputField value="{!propiedad.CP2__c}" id="cp"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Latitud" for="latitud"/>
+                                <apex:inputField value="{!propiedad.Punto__Latitude__s}" id="latitud"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Longitud" for="longitud"/>
+                                <apex:inputField value="{!propiedad.Punto__Longitude__s}" id="longitud"  styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Calidad manual" for="CalidadManual"/>
+                                <apex:inputField value="{!propiedad.CalidadGeo_Manual__c}" id="CalidadManual" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                             <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Comentario Geo" for="ComentarioGeo"/>
+                                <apex:inputField value="{!propiedad.ComentariosGeo__c}" id="ComentarioGeo" styleClass="fieldTextLong"/> 
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                 <apex:commandButton action="{!guardar}" value="Guardar" rerender="pbPropiedadSeleccionada,pbPropiedades,mensajes" oncomplete="removeFila();"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                </apex:pageBlockSection>
+                </apex:pageBlock>
+            </div>
+        </div>
+        <div id="divColumnaDos">
+            <apex:pageBlock title="Propiedades" id="pbPropiedades">
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!firstPage}" value="|<<" reRender="pbtPropiedades"  status="ajaxStatus" />
+                    <apex:commandButton action="{!prev}" value="<" reRender="pbtPropiedades"  status="ajaxStatus" />
+                    <apex:commandButton action="{!next}" value=">" reRender="pbtPropiedades"  status="ajaxStatus" />
+                    <apex:commandButton action="{!lastPage}" value=">>|" reRender="pbtPropiedades"  status="ajaxStatus" />
+                    <apex:actionStatus id="ajaxStatus" startText="      Cargando..."  stopText=""/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:selectList value="{!propieadFilterId}" size="1" id="filterMenu">
+                                <apex:selectOptions value="{!PropiedadExistingViews}"></apex:selectOptions>
+                                <apex:actionSupport event="onchange"  action="{!resetFilter}" rerender="pbtPropiedades" status="ajaxStatus"/>
+                            </apex:selectList>
+                            <apex:outputLink value="/ui/list/FilterEditPage?ftype=01Ii0000000SwVE&retURL=%2Fapex%2FMapaPropiedades&cancelURL=%2Fapex%2FMapaPropiedades" id="i" >Nueva vista</apex:outputLink>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:pageBlockTable value="{!Propiedades}" var="item" id="pbtPropiedades"  columnsWidth="0">
+                                 <apex:column value="{!item.name}" onClick="clickFila('{!item.Id}');" styleClass="fila-{!item.Id}"/>
+                                 <apex:column value="{!item.Plaza__c}" onClick="clickFila('{!item.Id}');"/>
+                                 <apex:column value="{!item.Geolocalizada__c}" onClick="clickFila('{!item.Id}');"/>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </div>
+        <div id="divPropiedadInformacion">
+            <div id="divPropiedadInformacionContent" style="width: 300px">
+            <apex:pageBlock title="" id="pbPropiedadInformacion" mode="maindetail">
+                <apex:pageBlockSection columns="1" id="pbsDatosPropiedadVentana" >
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Estado" for="estadoUno"/>
+                        <apex:outputField value="{!propiedad.Estado__c}" id="estadoUno"/> 
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Municipio" for="municipioUno"/>
+                        <apex:outputField value="{!propiedad.Municipio__c}" id="municipioUno"/> 
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Colonia" for="coloniaUno"/>
+                        <apex:outputField value="{!propiedad.Colonia__c}" id="coloniaUno"/> 
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Calle" for="calleUno"/>
+                        <apex:outputField value="{!propiedad.Calle__c}" id="calleUno"/> 
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            </div>
+        </div>
+        <div id="divDireccionesEncotradas">
+            <div id="divDireccionesEncotradasContent">
+                    Direcciones encontradas
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

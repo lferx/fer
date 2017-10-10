@@ -1,0 +1,175 @@
+<apex:page standardController="Account" renderAs="pdf" extensions="PropiedadesSearch" applyBodyTag="false">
+<head>
+<style>
+
+@page {
+        size: Letter Portrait;
+        border: 2px dashed #000066;    
+        }
+        
+table {
+    -fs-table-paginate: paginate;
+}
+
+#titulo{
+border-style: dashed; border-width: 2px;
+border-color: black;
+border-collapse: separate;
+border-top-left-radius:     4em;
+border-top-right-radius:    4em;
+border-bottom-right-radius: 4em;
+border-bottom-left-radius:  4em;
+display:table;
+padding: 0px 5px;
+width: 450px;
+min-height: 30px;
+background-color: black;
+float: right;
+color: white;
+font-weight: bold;
+font-size: 16px;
+text-align: center;
+vertical-align: middle;
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-wrap: break-word; /* Internet Explorer 5.5+ */          
+}
+
+#campos{
+border-style: dotted; border-width: 2px;
+border-color: black;
+border-radius: 25px;
+display:table;
+padding: 5px 0px;
+width: 150px;
+min-height: 30px;
+column-width: 150px;
+background-color: #092F70;
+color: white;
+font-weight: bold;
+font-size: 12px;
+text-align: center;
+vertical-align: middle;
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-wrap: break-word; /* Internet Explorer 5.5+ */          
+}
+
+#datos{
+border-style: dashed; border-width: 2px;
+border-color: lime;
+border-radius: 25px;
+display:table;
+padding: 5px 5px;
+width: 150px;
+min-height: 30px;
+max-height: 210px;
+column-width: 150px;
+font-size: 12px;
+color: #000066;
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+text-align: center;
+vertical-align: bottom;
+}
+
+#terceracolumna{
+border-style: dashed; border-width: 2px;
+border-color: black;
+border-radius: 25px;
+display:table;
+padding: 5px 5px;
+width: 350px;
+min-height: 30px;
+background-color: #15B4E4;
+color: white;
+font-weight: bold;
+font-size: 16px;
+/*float: center;*/
+  margin-left: auto ;
+  margin-right: auto ;
+text-align: center;
+vertical-align: middle;
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+word-wrap: break-word; /* Internet Explorer 5.5+ */ 
+    
+}
+
+</style>
+</head>
+<apex:repeat value="{!selectedResults}" var="p">
+
+
+<table style="height: 900px;" width="800px" cellspacing="4" cellpadding="4">
+<tbody>
+<tr>
+<td style="width: 300px;" colspan="1"><apex:image id="RevimexLogo" value="{!$Resource.REVIMEX_LOGO}" width="265" height="76"/></td>
+<!--<td style="width: 300px;" colspan="2"><!--<div id="titulo">VERSIÓN FINAL PARA ENVÍO AL CLIENTE</div></td>-->
+</tr>
+<tr>
+<td style="width: 450px;" colspan="3"><div id="terceracolumna" style="font-family: Arial Unicode MS">ID DE LA PROPIEDAD:&nbsp;<apex:outputText value="{!p.prop.Name }"></apex:outputText></div></td>
+</tr>
+<tr>
+
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">DIRECCIÓN</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS">Calle:&nbsp;<apex:outputText value="{!p.prop.Calle__c}"></apex:outputText> 
+Número Exterior:&nbsp;<apex:outputText value="{!p.prop.NumeroExterior__c}"></apex:outputText> 
+Número Interior:&nbsp;<apex:outputText value="{!p.prop.NumeroInterior__c}"></apex:outputText> 
+Lote:&nbsp;<apex:outputText value="{!p.prop.Lote__c}"></apex:outputText> 
+Manzana:&nbsp;<apex:outputText value="{!p.prop.Manzana__c}"></apex:outputText>
+Colonia:&nbsp;<apex:outputText value="{!p.prop.Colonia__c}"></apex:outputText>
+Código Postal:&nbsp;<apex:outputText value="{!p.prop.CP__c}"></apex:outputText> 
+Municipio:&nbsp;<apex:outputText value="{!p.prop.Municipio__c}"></apex:outputText> 
+Estado:&nbsp;<apex:outputText value="{!p.prop.Estado__c}"></apex:outputText></div></td>
+<td style="width: 210x;" rowspan="6" colspan="2">
+<apex:repeat rows="0"  value="{!p.foto}" var="f"> <apex:image url="{!URLFOR($Action.Attachment.Download, f)}" width="200px" height="140px"/></apex:repeat>
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">TERRENO M2</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.Terreno_m2__c}"></apex:outputText>
+</div></td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">CONSTRUCCIÓN M2</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.Construccion_m2__c}"></apex:outputText> </div></td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">NÚMERO DE HABITACIONES</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.N_de_Habitaciones__c}"></apex:outputText> </div></td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">NÚMERO DE BAÑOS</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.N_de_Ba_os__c}"></apex:outputText></div></td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">ESTACIONAMIENTO</div></td>
+<td style="width: 200px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.Estacionamiento__c}"></apex:outputText></div></td>
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">DESCRIPCIÓN DE LA PROPIEDAD</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.Descripcion_de_la_propiedad__c}"></apex:outputText></div></td>
+<td style="width: 320px;">&nbsp;</td> 
+</tr>
+<tr>
+<td style="width: 150px;"><div id="campos" style="font-family: Arial Unicode MS">INVADIDA</div></td>
+<td style="width: 150px;"> <div id="datos" style="font-family: Arial Unicode MS"><apex:outputText value="{!p.prop.Invadida__c}"></apex:outputText></div></td>
+<td style="width: 320px;">&nbsp;</td>
+</tr><tr>
+<td style="width: 400px;" colspan="3"><div id="terceracolumna" style="font-family: Arial Unicode MS"><span style="color:black">PRECIO:&nbsp;</span>
+<apex:outputText value="{0, Number, Currency}"><apex:param value="{!p.prop.PrecioVenta__c}" /></apex:outputText></div></td>
+</tr>
+</tbody>
+</table>
+</apex:repeat>        
+</apex:page>

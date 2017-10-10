@@ -1,0 +1,16 @@
+<apex:page controller="DetRepEjecutivoController">
+    <apex:form >  
+       <apex:pageBlock >
+               <li> <b>Detalle</b> </li>  
+               <li> <b>{!sEtapa}</b> </li>  
+                            
+               <apex:pageBlockTable id="Det" var="of" value="{!lofertas}" columnsWidth="25%,25%,25%,25%">
+                   <apex:column value="{!of.Owner.Name}" headerValue="Gerente"/>
+                   <apex:column value="{!of.Propiedad__r.Plaza__c}" headerValue="Plaza"/>                    
+                   <apex:column value="{!of.name}" headerValue="Folio Oferta"/>  
+                   <apex:column value="{!of.Dictamen__c}" headerValue="Dictamen"/>                                                      
+               </apex:pageBlockTable>     
+               <li> <b>Total: {!itotal}</b> </li>           
+       </apex:pageBlock>  
+    </apex:form>
+</apex:page>

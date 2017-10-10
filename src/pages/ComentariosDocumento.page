@@ -1,0 +1,42 @@
+<apex:page sidebar="false" showHeader="false" standardcontroller="ComentarioDocumento__c" extensions="ComentariosDocumentoController">
+ 
+ <apex:form >
+ 	<apex:actionFunction name="save" action="{!save}"/>
+ 	
+ 	<apex:pageMessages />
+ 	<apex:pageBlock title="Adjuntar Comentarios" id="multipleBloqueUno">
+			    <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" value="Save"/>
+                </apex:pageBlockButtons>
+			    
+				<apex:pageBlockSection columns="2">
+				   <apex:pageBlockSectionItem >
+						<apex:outputLabel value="Comentario: "/>						 
+						<apex:inputText value="{!ComentarioDocumento__c.Comentario__c}" />
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Fecha: "/>						 
+						<apex:inputfield value="{!ComentarioDocumento__c.Fecha_Comentario__c}"/>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			
+			
+			 
+			
+	</apex:pageBlock>
+	
+ 	<apex:pageBlock title="Comentarios ">
+		<apex:pageBlockTable value="{!listaComentarios}" var="item" rendered="{!NOT(ISNULL(listaComentarios))}" id="tablaComentarios">
+ 		  	<apex:column headerValue="Comentarios">
+ 		  		<apex:outputField value="{!item.Comentario__c}"></apex:outputField>
+ 		  	</apex:column>
+ 		  	<apex:column headerValue="Fecha">
+ 		  		<apex:outputField value="{!item.Fecha_Comentario__c}"></apex:outputField>
+ 		  	</apex:column>
+ 		  	<apex:column headerValue="Usuario">
+ 		  		<apex:outputField value="{!item.CreatedBy.Name}"></apex:outputField>
+ 		  	</apex:column>
+ 		 </apex:pageBlockTable>
+ 	</apex:pageBlock>
+ </apex:form>
+</apex:page>

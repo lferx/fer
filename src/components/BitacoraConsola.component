@@ -1,0 +1,40 @@
+<apex:component controller="BitacoraConsola_controller" access="global" allowDML="true">
+<apex:attribute assignTo="{!docId}" access="global" name="documentoId" type="Id" description="id de documento"  required="true"/>
+
+<style type="text/css">
+			.right {
+				float: right; 
+			}
+	</style>
+	<script>
+		function capturaDatos(){
+			var dictamen = $(".dictamen{!docId}").val();
+			var comentarios = $(".comentarios{!docId}").val();
+			var recordatorio = $(".recordatorio{!docId}").val();
+			guardarBitacora(dictamen,comentarios,recordatorio);
+			$(".dictamen").val("");
+			$(".comentarios").val("");
+			$(".recordatorio").val("");
+		}
+	</script>
+	<apex:form >
+	<apex:pageBlock title="Bitácora">
+		<apex:pageBlockSection >
+				<apex:inputField styleClass="dictamen{!docId}" value="{!bitacora.Dictamen_Consola__c}" />
+				<apex:inputField styleClass="comentarios{!docId}" value="{!bitacora.Comentarios__c}" />
+				<apex:inputField styleClass="recordatorio{!docId}" value="{!bitacora.Recordatorio__c}" />
+				<apex:outputText value="{!docId}" />
+		</apex:pageBlockSection>
+		<apex:pageBlockSection >
+			<apex:pageBlockSectionItem />
+			<button type="button" onclick="capturaDatos();">Guardar</button>
+			<!--apex:commandButton styleClass="right" value="Guardar" action="{!guardar}" /-->
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+		<apex:actionFunction name="guardarBitacora" action="{!guardar}" reRender="tablaPrincipal">
+			<apex:param name="dictamen" assignTo="{!dictamen}" value="" />
+			<apex:param name="comentarios" assignTo="{!comentarios}" value="" />
+			<apex:param name="recordatorio" assignTo="{!recordatorio}" value="" />
+		</apex:actionFunction>
+	</apex:form>
+</apex:component>

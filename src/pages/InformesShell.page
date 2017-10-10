@@ -1,0 +1,70 @@
+<apex:page standardStylesheets="true" standardController="Developer__c" extensions="InformesShellController2" showHeader="false">
+
+<head>
+ <style>
+body {background-image: url("{!URLFOR($Resource.Shellgif)}");
+      position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+     }
+ </style>
+</head>
+<body>
+<apex:form >
+<apex:pageBlock id="tablaPrincipal">
+<apex:pageBlockButtons >
+<apex:commandButton value="Save" action="{!save}"/>
+
+</apex:pageBlockButtons>
+<apex:pageBlock title="Ofertas Revisadas">
+<apex:pageBlockTable value="{!propiedades}" var="Propiedad__c">
+<apex:column value="{!Propiedad__c.Name}"/> 
+<apex:column value="{!Propiedad__c.Revisada__c}"/>
+<apex:column headerValue="Revisado Oferta">
+<apex:inputField value="{!Propiedad__c.Revisado_Oferta__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Ofertas No Revisadas">
+<apex:pageBlockTable value="{!propiedades2}" var="Propiedad__c">
+<apex:column value="{!Propiedad__c.Name}"/> 
+<apex:column value="{!Propiedad__c.Revisado_Oferta__c}"/>
+<apex:column headerValue="Revisado Oferta">
+      <apex:inputField value="{!Propiedad__c.Revisada__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Cargar Oferta">
+<apex:pageBlockTable value="{!CargaOferta3}" var="x">
+<apex:column value="{!x.Oferta__r.Name}"/> 
+<apex:column headerValue="Oferta Cargada">
+      <apex:inputField value="{!x.Oferta__r.Oferta_Cargada__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Oferta Caida ">
+<apex:pageBlockTable value="{!CargaOferta4}" var="y">
+<apex:column value="{!y.Oferta__r.Name}"/> 
+<apex:column headerValue="Oferta Cargada">
+      <apex:inputField value="{!y.Oferta__r.Oferta_Cargada__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Oferton ">
+<apex:pageBlockTable value="{!CargaOferta}" var="a">
+<apex:column value="{!a.Name}"/> 
+<apex:column headerValue="Oferta Cargada">
+      <apex:inputField value="{!a.Oferta_Cargada__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+</apex:pageBlock>
+</apex:form>
+</body>
+
+</apex:page>

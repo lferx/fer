@@ -1,0 +1,265 @@
+<apex:page controller="ConsolaController" extensions="QuickSearch" title="Consola"  action="{!cargaEtapasOferta}">
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <apex:stylesheet value="{!$Resource.progressbar}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    
+<style class="text/css">
+    #pageTools {
+    position: relative; 
+    }
+    #pageTools #pageSizeArrow {
+        background: url(/img/func_icons/util/selectArrow12.gif) 0% 0%;
+        height: 12px;
+        width: 14px;
+        margin: 1px 20px 0 3px;
+        display: block;
+        float: left;
+    }
+    #pageTools #pageSizeSelector {
+        background-color: #DDD;
+        border: #CCC solid 2px;
+        border-collapse: separate;
+        color: #222;
+        cursor: pointer;
+        display: none;
+        height: 90px;
+        width: 214px;
+        margin: 0;
+        position: relative;
+        margin-top:-79px;
+    }
+    #pageTools #pageSizeSelector div {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        width: 100%;
+        height: 15px;
+        text-align: center;
+        display: block;
+    }
+    #pageTools #pageSizeSelector div:hover {
+        background-color: #E1F6FF;
+        color: #000;
+    }
+    #pageTools #pageSizeSelector div div {
+        background-color: #FFF;
+        font-weight: bold;
+        height: 100%;
+        width: 30px;
+        display: inline-block;
+        color: #000;
+    }
+    #pageTools .pageGrid {
+        background: url(/img/alohaSkin/listFooter.png) repeat-x;
+    }
+    #pageTools .pageGridCols {
+        width: 33.3333%;
+    }
+    #pageTools td {
+        vertical-align: middle !important;
+    }
+    #pageTools #pageSizeBlock {
+        height: 18px;
+    }
+    #pageTools #pageStatus {
+        background: url(/img/loading.gif) no-repeat;
+        height: 16px;
+        float: right;
+        display: none;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-top: 2px;
+    }
+    #pageTools .linkGrid {
+        margin: auto;
+    }
+    #pageTools .pageFirst, #pageTools .pagePrevious, #pageTools .pageNext, #pageTools .pageLast {
+        background: url(/img/paginationArrows.gif) no-repeat;
+        width: 9px;
+        height: 10px;
+        margin: 1px 4px;
+        display: block;
+    }
+    #pageTools .pageFirst {
+        background-position: 0px 1px;
+    }
+    #pageTools .pagePrevious {
+        background-position: -10px 1px;
+        float: left;
+    }
+    #pageTools .pageNext {
+        background-position: -17px 1px;
+        float: right;
+    }
+    #pageTools .pageLast {
+        background-position: -27px 1px;
+    }
+    #pageTools .pageLink {
+        text-decoration: none;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    #pageTools #pageSelector {
+        float: right;
+    }
+    #pageTools #pageNumber {
+        text-align: center;
+        width: 23px;
+        margin: 0px;
+        padding: 0px;
+    }
+ </style>
+ <script>
+    $(document).ready(function() {
+            $("#ventanaModal").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargarDos();}
+                    });
+            //document.getElementById('{!$Component.header}').focus();
+    });
+    
+    function showDialog(){
+         $("#modalArchivos").dialog({ 
+                    autoOpen: false, 
+                    modal: true, 
+                    position: 'center' ,
+                    width:'auto',
+                    height:'auto',
+                    show:"blind",
+                    hide:"blind",
+                    close:function(){recargar();}
+                    });
+        $("#ventanaModal").dialog("open");
+    }
+    
+    function closeDialog(mensaje,id){
+        if(mensaje == null || mensaje == '' || mensaje.equals('')){
+            $("#" + id).dialog("close");
+        }
+    }
+    
+    function colocaTransparencia(){
+            $("body").css("cursor", "progress");
+    }
+        
+    function retiraTransparencia(){
+            $("body").css("cursor", "default");
+    }
+    
+    function toggle(id) {
+        $("#"+id).toggle();
+    }
+    
+    function showSizes() {
+        toggle('pageSizeSelector');
+        if($("#pageSizeSelector").css("display") == 'none') {
+            pageSizeArrow.style.backgroundPosition = '0% 0%';
+        } else {
+            pageSizeArrow.style.backgroundPosition = '-15px 0';
+        }
+    }
+    
+    function recargaFromPrincipal(pageSize){
+        console.log('Recarga form' + pageSize);
+    }
+</script>
+    <apex:sectionHeader id="header" title="Ofertas" subtitle="Ofertas por etapa">
+    </apex:sectionHeader>
+    <apex:form id="formPrincipal">
+        <apex:actionStatus id="stCargando" onstart="colocaTransparencia();" onstop="retiraTransparencia();"></apex:actionStatus>
+        <apex:actionFunction action="{!recargarDos}"  name="recargarDos" oncomplete="recargaFromPrincipal({!pageSize});" rerender="formPrincipal"/>
+        <apex:actionFunction action="{!crearComponente}" name="crearComponente" onComplete="showDialog();" reRender="divComponenteDinamico">
+            <apex:param name="uno" assignTo="{!idEtapaOferta}" value="" ></apex:param>
+            <apex:param name="dos" assignTo="{!idOferta}" value="" ></apex:param>
+        </apex:actionFunction>
+        <apex:outputPanel id="searchResults">
+            <apex:pageMessages />
+            <apex:pageBlock id="pgBlock">
+            <apex:pageBlockTable value="{!etapasOferta}" var="p" id="pgTable">
+                <apex:column style="width:150px;text-align:center" headerValue="Oferta">
+                    <apex:facet name="header"><div style="text-align:center">Oferta</div></apex:facet>
+                    <apex:outputField value="{!p.Oferta__c}"></apex:outputField>
+                </apex:column>
+                <apex:column style="width:200px;text-align:left" headerValue="Etapa">
+                    <apex:facet name="header"><div style="text-align:center">Etapa</div></apex:facet>
+                    <apex:outputField value="{!p.Etapa__r.Name}"></apex:outputField>
+                </apex:column>
+                <apex:column style="width:320px" headerValue="Proceso">
+                    <apex:facet name="header"><div style="text-align:center">Procesos</div></apex:facet>
+                    <apex:repeat var="doc" value="{!mapDocumentosEtapa[p.Id]}">
+                        <apex:image id="imagenDocumento" width="15" height="15" value="{!IF(IF(ISNULL(doc.documento.NumFiles__c),0,doc.documento.NumFiles__c)>0, $Resource.paloma, $Resource.tache)}"/><span> </span>
+                        <apex:outputText value="{!doc.documentoEtapa.NombreUsuario__c}"/><br/>
+                    </apex:repeat>
+                    <apex:outputField value="{!p.Etapa__r.Descripcion2__c}" rendered="{!LEN(p.Etapa__r.Descripcion2__c) > 1}"><br/></apex:outputField>
+                </apex:column>
+                <apex:column style="width:100px">
+                    <apex:facet name="header"><div style="text-align:center">% Avance docs obligatorios</div></apex:facet>
+                    <div class="progress-bar {!IF(p.Avance__c = 100, 'green', 'orange stripes')}">
+                                <span style="width: {!p.Avance__c}%"></span>  
+                    </div>
+                    <div style="text-align:center">{!p.Avance__c}</div>
+                </apex:column>
+                <apex:column style="width:180px;text-align:center">
+                    <apex:facet name="header"><div style="text-align:center">Estatus tiempo</div></apex:facet>
+                    <apex:outputField value="{!p.EstatusTiempo__c}"></apex:outputField>
+                </apex:column>
+                <apex:column style="width:180px;text-align:center">
+                    <button type="button" onclick="crearComponente('{!p.Id}','{!p.Oferta__c}');" >Entregables</button>
+                </apex:column>
+                <apex:column style="width:180px;text-align:center">
+                    <apex:facet name="header"><div style="text-align:center">Propietario</div></apex:facet>
+                    <apex:outputText value="{!p.Oferta__r.Owner.FirstName} {!p.Oferta__r.Owner.LastName}"></apex:outputText>
+                </apex:column>
+                <apex:column style="width:80px;text-align:center">
+                <apex:facet name="header"><div style="text-align:center">Estatus final</div></apex:facet>
+                    <apex:outputField value="{!p.EstatusFinal__c}"></apex:outputField>
+                </apex:column>
+            </apex:pageBlockTable>
+            <div id="pageTools">
+                <apex:actionFunction action="{!queryPrincipal}" status="pageStatus" rerender="searchResults" name="setPageSize">
+                     <apex:param assignTo="{!pageSize}" name="pageSize" value=""/>
+                </apex:actionFunction>
+                 <apex:actionFunction action="{!queryPrincipal}" status="pageStatus" rerender="searchResults" name="setPageNumber">
+                    <apex:param assignTo="{!pageNumber}" name="pageNumber" value=""/>
+                 </apex:actionFunction>
+                 <apex:actionStatus id="pageStatus" onstart="toggle('pageStatus')"/>
+                 <div id="pageSizeSelector">
+                    <div onclick="setPageSize('10')">Visualización<div>10</div>registros por página</div>
+                    <div onclick="setPageSize('25')">Visualización<div>25</div>registros por página</div>
+                    <div onclick="setPageSize('50')">Visualización<div>50</div>registros por página</div>
+                    <div onclick="setPageSize('100')">Visualización<div>100</div>registros por página</div>
+                    <div onclick="setPageSize('200')">Visualización<div>200</div>registros por página</div>
+                    <div onclick="setPageSize('400')">Visualización<div>400</div>registros por página</div>
+                </div>
+                <apex:panelGrid columns="3" width="100%" styleClass="pageGrid" columnClasses="pageGridCols">
+                    <div id="pageSizeBlock">
+                      <span>{!pageStart} - {!pageEnd} de {!resultSize}</span>
+                      <div id="pageSizeArrow" onclick="showSizes()"></div>
+                      <div id="pageStatus">Cargando...</div>
+                    </div>
+                    <apex:panelGrid columns="4" styleClass="linkGrid">
+                      <apex:commandLink status="pageStatus" rerender="searchResults" action="{!first}" rendered="{!pageNumber > 1}"><span class="pageFirst"></span></apex:commandlink>
+                      <apex:commandLink status="pageStatus" rerender="searchResults" action="{!previous}" rendered="{!pageNumber > 1}" styleClass="pageLink"><span class="pagePrevious"></span>Anterior</apex:commandlink>
+                      <apex:commandLink status="pageStatus" rerender="searchResults" action="{!next}" rendered="{!pageNumber < totalPages}" styleClass="pageLink">Siguiente<span class="pageNext"></span></apex:commandlink>
+                      <apex:commandLink status="pageStatus" rerender="searchResults" action="{!last}" rendered="{!pageNumber < totalPages}"><span class="pageLast"></span></apex:commandlink>
+                    </apex:panelGrid>
+                    <div id="pageSelector">
+                      <span>Página </span><span> {!pageNumber} de {!totalPages}</span>
+                    </div>
+              </apex:panelGrid>
+            </div>
+        </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+    <div id="ventanaModal" title="Detalles" >
+            <apex:outputPanel id="divComponenteDinamico">
+                <c:etapaEntregable id="entapaComponent"   etapaVal="{!idEtapaOferta}"  zetapa="{!idEtapaOferta}" propiedadVal="{!idOferta}"  rendered="{!idEtapaOferta != null}"/>
+            </apex:outputPanel>
+    </div>
+</apex:page>

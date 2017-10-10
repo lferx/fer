@@ -1,0 +1,234 @@
+<apex:page cache="false" doctype="HTML-5.0" sidebar="false" showHeader="false" standardStylesheets="false" title="Promotor Leads" controller="CheckInController" action="{!getPromotorAccounts}">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Revimex</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <style type="text/css">
+        body {
+            background-color: #eee;
+        }
+
+        a {
+            color: #039AD8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0085BB;
+            text-decoration: none;
+        }
+        header.main {
+            width: 100%;
+            position: fixed;
+            background-color: #fff;
+            border-bottom: 1px solid #09B0F5;
+        }
+
+        header.main .top-menu {
+            width: 80%;
+            float: right;
+            padding: 15px 0;
+        }
+        header.main .logo {
+            width: 20%;
+            float: left;
+            height: 70px;
+            padding: 15px 0;
+            background-image: url(http://www.revimex.mx/resource/1427502949000/HomeRevimex/images/revimex-logo.png);
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .aside {
+            width: 20%;
+            float: left;
+            position: fixed;
+            min-height: 500px;
+            height:100vh;
+            background-color: #039AD8;
+            margin-top: 70px;
+        }
+
+        .aside .links{
+            width: 100%;
+            float: left;
+            height: 50px;
+            background-color: #09B0F5;
+            border-bottom: 1px solid #0079AB;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .aside a{
+            color: #fff;
+        }
+        .aside .links:hover {
+            background-color: #0085BB;
+        }
+
+        .content {
+            width: 80%;
+            float: right;
+            min-height: 300px;
+            margin-top: 70px;
+        }
+
+        .fr {
+            float: right !important;
+            margin: 5px 15px;
+        }
+
+        .btn, .form-control, .panel {
+            border-radius: 0;
+        }
+
+        input[type=submit] {
+            display: inline-block !important;
+            padding: 6px 12px !important;
+            margin-bottom: 0 !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.42857143 !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+            vertical-align: middle !important;
+            -ms-touch-action: manipulation !important;
+            touch-action: manipulation !important;
+            cursor: pointer !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            background-image: none !important;
+            border: 1px solid transparent !important;
+            border-radius: 0px !important;
+        }
+        .btn-primary {
+            color: #fff !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                width: 970px !important;
+            }
+        }
+        @media (min-width: 768px) {
+        }
+        @media (max-width: 420px) {
+            .aside {
+                display: none;
+            }
+            .content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<!-- NAVBAR
+================================================== -->
+<body>
+
+    <header class="main">
+        <div class="logo">
+        </div>
+        <div class="top-menu">
+            <div class="links">
+                <div class="fr">
+                    <a class="btn_logout" href="/CheckIn/Logout">Logout</a>
+                </div>
+                <div class="fr">
+                   {!promotor.Name} 
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="aside">
+        <a href="/CheckIn/CheckInSearch">
+            <div class="links">Buscar</div>
+        </a>
+        <a href="/CheckIn/PromotorLeads">
+            <div class="links">Mis Cuentas</div>
+        </a>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <h1>Mis Cuentas</h1>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Actualizar Cuentas</h3>
+                    </div>
+                    <div class="panel-body"> 
+                        <apex:pageBlock >  
+                            <apex:pageblockTable styleClass="table table-hove" value="{!lista_cuentas}" var="cuenta">
+                                <apex:sectionHeader >Resultados</apex:sectionHeader> 
+                                <apex:column > 
+                                    <apex:facet name="header">Cuenta: </apex:facet>
+                                    <apex:outputText value="{!cuenta.cuenta_wrapper.Name}" />
+                                </apex:column>
+                                <apex:column > 
+                                    <apex:facet name="header">Estatus:</apex:facet>
+                                    <apex:outputText value="Contactado" rendered="{!cuenta.cuenta_wrapper.Contactado__c}" />
+                                    <apex:outputText value="No Contactado" rendered="{!NOT(cuenta.cuenta_wrapper.Contactado__c)}" />
+                                </apex:column> 
+                                <apex:column > 
+                                    <apex:facet name="header">Actualizar:</apex:facet>
+                                    <apex:form styleClass="form-horizontal">
+                                        <apex:commandLink styleClass="btn btn-primary" value="Marcar como 'Contactado'" action="{!updateContacted}">
+                                            <apex:param name="accid" value="{!cuenta.cuenta_wrapper.id}"/>
+                                        </apex:commandLink>
+                                    </apex:form> 
+                                </apex:column>
+                                <apex:column > 
+                                    <apex:facet name="header">Ofertas:</apex:facet>
+                                    <apex:form styleClass="form-horizontal">
+                                        <!--<apex:repeat value="{!cuenta.ofertas}" var="oferta_page">
+                                            <apex:outputText value="{!oferta_page.oferta.Oferta__c}" />
+                                        </apex:repeat>-->
+                                        <apex:outputlink styleClass="btn btn-success" value="{!URLFOR($Site.CurrentSiteUrl,'')}OfertasCuenta?Cuenta={!cuenta.cuenta_wrapper.id}">Ver Ofertas</apex:outputlink>
+                                    </apex:form> 
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlock> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <apex:includeScript value="{!$Resource.jcook}"/>
+    <script>
+        $( ".btn_logout" ).click(function() {
+            console.log('You are out..');
+            Cookies.remove('apex__logged');
+        });
+    </script>
+</body>
+    
+</apex:page>

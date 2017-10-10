@@ -1,0 +1,15 @@
+<apex:page standardController="Documento__c" extensions="ModCierreController">
+    <apex:form id="formaprincipal">
+         <apex:pageBlock >
+                <apex:pageBlockButtons >   
+                      <apex:commandButton value="Guardar" action="{!salvar}" />        		    
+			          <apex:commandButton value="Cerrar" action="{!cancel}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Cambio Fecha Compromiso" columns="2">
+                      <apex:inputField label="Nueva Fecha Compromiso: " value="{!Documento__c.Fecha_Com_Controller__c}" required="true" />
+                      <apex:inputText label="Comentario/Justificación: " value="{!sComentario}" required="true"/>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

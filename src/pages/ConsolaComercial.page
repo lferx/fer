@@ -1,0 +1,1229 @@
+<apex:page showHeader="true" sidebar="false" controller="ConsolaComercialController" action="{!llenadoPaginas}">
+    <head>
+    <style>
+        @font-face {
+            font-family: 'Bebas-Neue';
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+        }
+        @font-face {
+            font-family: 'gotham-rounded-book';
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+        }
+        @font-face {
+            font-family: 'gotham-rounded-medium';
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+        }
+        *{
+            
+            /*font-size: 15px;
+            font-style: normal;
+            font-family: Arial,Helvetica,sans-serif;
+            color: #222;*/
+        }
+        section > div{
+            /*border: 3px solid red;
+            background-color: rgba(226,226,226,1);
+            background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 0%, rgba(219,219,219,1) 24%, rgba(244,244,244,1) 71%, rgba(254,254,254,1) 90%, rgba(254,254,254,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+*/
+        }
+        .stockTable{
+            width: 100%;
+            height: 100vh;
+
+        }
+        .stockTable thead{
+            /*position: fixed;*/
+        }
+        .stockTable tbody{
+            overflow: auto;
+        }
+        .stockTable tr td{
+            word-break: all;
+        }
+        /*section div:first-child{
+            min-height: 300px;
+        }*/
+        img{
+            /*width: 20%;*/
+        }
+        .contenedor005{
+            /*min-height: 600px;*/
+            display: grid;
+            grid-template-columns: 10% auto 15%;
+            grid-template-rows: auto 75vh 10vh;
+            grid-template-areas: 
+            "headerL header headerR"
+            "left stock right" 
+            "footer footer footer";
+        }
+
+        .div1-1{
+            grid-area: headerL;
+        }
+        .div1-2{
+            grid-area: headerR;
+        }
+        .div1{
+            grid-area: header;
+        }
+        
+        .div2{
+            /*AQUI ESTA EL STOCK*/
+            grid-area: stock;
+            overflow: auto;
+            justify-content:center;
+            margin-top: 30px;
+        }
+        .div3{
+            grid-area: left;
+            /*word-break: break-all;*/
+        }
+        .div4{
+            grid-area: right;
+        }
+        .div5{
+            grid-area: footer;
+        }
+        .fila-header{
+            width: 100%;
+            height: auto;
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows:auto;
+            border-bottom:0.5px solid black;
+            background-color: white;
+            position: sticky;
+            top: 0px;
+            z-index: 20;
+            border-top: 1px solid gray;
+        }
+        .fila{
+            width: 100%;
+            height: auto;
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows:auto;
+            border-bottom:0.5px solid black;
+            background-color: rgba(248, 248, 248,.8);
+        }
+        .fila-campos{
+            width: 100%;
+            height: auto;
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            grid-template-rows:auto;
+            margin-top: -10px;
+        }
+        .celda{
+            min-width: 0px; 
+            text-align: center;
+            word-break: break-all;
+            padding-top: 10px;
+        }
+        .celda-espacio{
+            margin-top: 100px;
+        }
+        .myphoto{
+            border-radius: 50%;
+            width: 10%;
+        }
+        .logo{
+            width: 100%;
+        }
+        .argumentos{
+            width: 100% !important;
+        }
+        .sidebarCollapsible {
+            padding: 0 0 0 0 !important;
+        }
+
+        .noSidebarCell, .sidebarCell .fixed {
+            padding: 0 0 0 0 !important;
+        }
+        .noTableFooter {
+            display: none !important;
+        }
+        
+        table.preca tbody:first-child:first-child{
+            padding: 0px;
+            color: red;
+        }
+        .mostrarFiltro img{
+            display: block;
+            margin: auto;
+        }
+        .filtroHidden{
+            display: none;
+            position: absolute;
+            border-radius: 0px 15px 15px 15px;
+            background-color: #D5D5D5;
+            padding: 6px;
+            box-shadow: 0 0px 15px 0px black;
+        }
+        .direccion{
+            font-size: 9px;
+        }
+        .detailsTable{
+        display: none;
+        position: absolute;
+        z-index: 80;
+        border-radius: 15px 0px 15px 15px;
+        background-color: #fff;
+        padding: 12px;
+        box-shadow: 0 0px 15px 0px black;
+        text-align: left;
+        }
+
+    .detailField{
+        display: block;
+        border-bottom: 1px solid gray;
+        padding: 2px;
+    }
+
+    .detailFieldName{
+        display: inline-block;
+        margin-right: 8px;
+    }
+    .feroferta
+    {
+        transition: all .3s ease-in-out;
+        color: #000;
+        text-align: center;
+        background: #f1f1f1;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        border-radius: 15px;
+        border: solid 1.5px #f0f0f3;
+        margin-left: 2%;
+    }
+    .feroferta:focus, .ferofertax:focus,.feroferta:hover, .ferofertax:hover, .ferofertax:active{
+        border-color: #79c4de;
+        outline: none;
+        background: white;
+    }
+    .botonRojo{
+        border-radius: 4px !important;
+        background: #C95A50 !important;
+        box-shadow: none !important;
+        color: #fff !important;
+        outline: none!important;
+            border: none!important;
+    }
+
+    .botonRojo:hover{
+        transform: translate(7%,8%)scale(1.1) !important;
+        background-size: 180% !important;
+        background-position: 60% 0% !important;
+        transition: all .15s ease-out !important; /*color al pasar el mouse*/
+    }
+    .botonAzul{
+        border-radius: 4px !important;
+        background: #00b3de !important;
+        box-shadow: none !important;
+        color: #fff !important;
+        outline: none!important;
+            border: none!important;
+    }
+
+    .botonAzul:hover{
+        transform: translate(7%,8%)scale(1.1) !important;
+        background-size: 180% !important;
+        background-position: 60% 0% !important;
+        transition: all .15s ease-out !important; /*color al pasar el mouse*/
+    }
+    .labelcontador{
+        font-family: "gotham-rounded-book" !important;
+        font-size: 15px  !important;
+        background: #0C326B;
+        border-radius: 60px;
+        padding: 5px 5px 5px 5px;
+        font-size: 16px;
+        color: white;
+    }
+    .vercarroimagen{
+        width: 30px;
+        height: 30px;
+
+    }
+    .vercarroimagen:hover{
+        width: 35px;
+        height: 35px;
+
+    }
+
+    .vercarroimagen:active{
+        width: 30px;
+        height: 30px;
+
+    }
+    .agregacarroimagen{
+        width: 35px;
+        height: 35px;
+    }
+    .agregacarroimagen:hover{
+        width: 40px;
+        height: 40px;
+
+    }
+
+    .agregacarroimagen:active{
+        width: 30px;
+        height: 30px;
+
+    }
+    .opaca  {
+        filter:alpha(opacity=50);
+        -moz-opacity: 0.5;
+        opacity: 0.5;}
+
+    .opaca:hover{
+        filter:alpha(opacity=100)3000;
+        -moz-opacity: 0.5;
+        opacity: 0.5;
+    }
+    .ultima {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .pagination {
+        display: inline-block;
+        background-color: #fff;
+    }
+
+    .pagination a {
+        font-family: "gotham-rounded-book" !important;
+        font-size: 14px  !important;
+        color: black;
+        float: left;
+        padding: 5px 10px;
+        text-decoration: none;
+        transition: background-color .3s;
+    }
+
+    .pagination a.active {
+        background-color: #0c326b;
+        color: white;
+    }
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+
+    .marcado {
+        background-color: #f5f5f5;
+        box-shadow: 0px 0px 20px 0px #777777 inset;
+    }
+    .listaSeleccion{
+        max-height: 40vh;
+        overflow: auto;
+    }
+    .cerrar{
+        text-align: right;
+    }
+    .cerrar img{
+        width: 10px;
+        height: 10px;
+    }
+    @media (min-width: 700px){
+        .cargando{
+            margin-left: 10%;
+            margin-top: 30%; 
+        }
+        body{
+        background-color: red;
+        }
+    }
+    </style>
+    </head>
+    <body>
+    <apex:actionStatus id="loadingFilters">
+        <apex:facet name="start">
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin-left: 40%; margin-top: 19%;">
+                <img src="{!URLFOR($Resource.iconos_stock, 'iconos_stock/loading.gif')}"  width="300px;" height="300px;" />
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <section class="contenedor005">
+        <div class="div1-1">
+            <div class="TaskSearch">
+                <apex:form >
+                    <c:TaskSearch />
+                </apex:form>
+            </div>
+        </div>
+        <div class="div1-2">
+            <img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="logo" />
+        </div>
+        
+        <div class="div1">
+            <apex:form id="formid2">
+            <center>
+                <div class="chip2 cabecera">
+                    <img class="myphoto" src="{!Photolink}" />Bienvenido {!$User.FirstName}
+                    <p class="nombrelead">Nombre Lead: {!nombre}</p>
+                </div>
+                <!--AQUI VA LA FILA DE LOS CAMPOS-->
+                <div class="fila-campos">
+                    <div class="celda">
+                        <apex:outputText value="Buscar ID: "/>
+                        <apex:inputText value="{!folioOferta}" styleClass="feroferta" id="yobusco" />
+                        <apex:image id="imagencilla" value="{!URLFOR($Resource.icof, '/search.png')}" width="18" height="18" title="Buscar" styleClass="searchh">
+                        <apex:actionSupport action="{!buscar}" event="onclick" />
+                        </apex:image>
+                    </div>
+                    <div class="celda">
+                        <apex:commandButton action="{!exportar}" value="Exportar" styleClass="botonAzul" style="margin-right: 10px;"/>
+                        <apex:commandButton action="{!enviarexcel}" value="Enviar Excel" status="sendEmailEdgar" reRender="MisMensajes,areaDeMensajes" styleClass="botonAzul" />
+                        <apex:actionStatus id="sendEmailEdgar">
+                            <apex:facet name="start">
+                                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                                    &nbsp;
+                                </div>
+                                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 20% 42%">
+                                    <img src="{!URLFOR($Resource.consolas, 'recursos/animaciones/email_animacion.gif')}" style="max-width: 200px;max-height: 200px; width: 100%;height:auto;"  />
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputPanel id="camposEmail">
+                            <div style="display: inline-table;">
+                                <apex:inputText value="{!email01}" label="Correo 1" id="correo1" styleClass="etiketacorreo feroferta"/>
+                                <apex:outputPanel rendered="{!aumentarCampo > 1}">
+                                    <br/>
+                                    <apex:inputText value="{!email02}" label="Correo 2" id="correo2" styleClass="etiketacorreo feroferta"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!aumentarCampo > 2}">
+                                    <br/>
+                                    <apex:inputText value="{!email03}" label="Correo 3" id="correo3" styleClass="etiketacorreo feroferta" />
+                                </apex:outputPanel>
+                            </div>
+                            <div style="display: inline-table;">
+                                <apex:commandButton style="height: 25px !important;padding: 0px 3px 0px 3px" value="+" action="{!aumentarcampos}" rendered="{!aumentarCampo<3}" rerender="camposEmail" />
+                            </div>
+                            <apex:commandButton style="margin-left: 5px;" accesskey="l" value="Limpiar Filtros" action="{!Reset}" styleClass="botonRojo"/>
+                        </apex:outputPanel>
+                    </div>
+                    <div class="celda">
+                        <apex:outputLabel styleclass="labelcontador" >Total de registros: {!n}</apex:outputLabel>
+                    </div>
+                </div>
+                <!-- INICIA BOTONES PARA PAGINACION -->
+                            <apex:outputPanel id="paginacion">
+                                <!--apex:outputText rendered="{!!paginasBoolean}">Presiona "Actualizar" para refrescar los registros</apex:outputText-->
+                                <div class="pagination">
+                                    <apex:commandLink accesskey="e" action="{!previous}" rendered="{!IF(AND(npag2 > 1,paginasBoolean),true,false)}" >&laquo; Anterior</apex:commandLink>
+                                    <apex:repeat var="a" value="{!sizelistarray}" rendered="{!IF(paginasBoolean,true,false)}">
+                                        <apex:commandLink value="{!a}" action="{!llenadoPaginas}" styleClass="{!IF(npag2==a,'active','false')}" >
+                                            <apex:param name="pagin" assignTo="{!npag2}" value="{!a}"/>
+                                            <apex:param name="pagin2" assignTo="{!num2}" value="{!(a-1)*300}"/>
+                                        </apex:commandLink>
+                                    </apex:repeat>
+
+                                    <apex:commandLink accesskey="e" action="{!next}" rendered="{!IF(AND(npag2 < sizelist,paginasBoolean),true,false)}">Siguiente &raquo;</apex:commandLink>
+                                </div>
+                            </apex:outputPanel>
+                        <!-- TERMINA BOTONES PARA PAGINACION -->
+            </center>
+            </apex:form>
+        </div>
+        
+        <div class="div2">
+            <apex:form id="formid" >
+                <!--AQUI VA LA FILA DEL HEADER-->
+                <div class="fila-header">
+                    <!-- //////////////////////////// DIV DEL FOLIO /////////////////////// -->
+                    <div class="celda">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/020-price-tag.png')}" />
+                        <div>Folio <br />Oferta</div>
+
+                    </div>
+                    <!-- //////////////////////////// DIV DEL ESTADO /////////////////////// -->
+                    <div class="celda {!IF(AND(NOT(EstadoSelec.empty),EstadoSelec[0]!='Todo'),'marcado','')}">
+                        <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/016-mexican-republic-map-black-shape.png')}" />
+                        Estado
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idestado" html-class="listaSeleccion" value="{!EstadoSelec}"  multiselect="True">
+                            <apex:selectOptions value="{!edoLst}"/>
+                            <apex:actionSupport status="loadingFiltrarEstado" action="{!actualizar}" event="onchange"  reRender="lista,idusuario,idoferta,idescrituras,idprecio,iddias,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid"/>
+                        </apex:selectList>
+                         <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid,formid2"/>
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b1" value="Ordenar a-z" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b2" value="Ordenar z-a" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarEstado">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <!--apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/-->
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE LA CIUDAD/////////////////////// -->
+                    <div class="celda {!IF(AND(NOT(CiudadSelec.empty),CiudadSelec[0]!='Todo'),'marcado','')}">
+                    <!-- <div class="celda {!IF(CiudadSelec[0]!='Todo','marcado','')}"> -->
+                        <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/015-neighborhood.png')}" />
+                        Ciudad
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idciudad" html-class="listaSeleccion" value="{!CiudadSelec}" multiselect="True">
+                            <apex:selectOptions value="{!cdLst}"/>
+                            <apex:actionSupport status="loadingFiltrarCiudad" event="onchange" action="{!actualizar}"  reRender="fl07,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b3" value="Ordenar a-z" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b4" value="Ordenar z-a" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarCiudad">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE LA COLONIA /////////////////////// -->
+                    <div class="celda {!IF(AND(NOT(ColoniaSelec.empty),ColoniaSelec[0]!='Todo'),'marcado','')}">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/014-two-houses.png')}" />
+                        Colonia
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idcolonia" html-class="listaSeleccion" value="{!ColoniaSelec}" multiselect="True">
+                            <apex:selectOptions value="{!colLst}"/>
+                            <apex:actionSupport status="loadingFiltrarColonia" event="onchange" action="{!actualizar}"  reRender="fl08,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b5" value="Ordenar a-z" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b6" value="Ordenar z-a" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarColonia">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE LA DIRECCIÓN /////////////////////// -->
+                    <div class="celda">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/013-placeholder.png')}" /><div>Direccion</div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE LAS ESCRITURAS /////////////////////// -->
+                    <div class="celda {!IF(ess!='Todo','marcado','')}">
+                        <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/008-file.png')}" />
+                        Escrituras<br/>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idescrituras" html-class="listaSeleccion" value="{!ess}">
+                            <apex:selectOptions value="{!eslst}"/>
+                            <apex:actionSupport status="loadingFiltrarEscrituras" event="onchange" action="{!actualizar}"  reRender="fl03,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid,formid2"/>
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b7" value="Ordenar a-z" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b8" value="Ordenar z-a" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarEscrituras">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE ESTATUS DE INVASION /////////////////////// -->
+                    <div class="celda {!IF(AND(NOT(InvasionSelec.empty),InvasionSelec[0]!='Todo'),'marcado','')}" >
+                        <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/007-locked.png')}" />
+                        <div>Estatus de <br/> invasion</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idinvasion" styleClass="listadeseleccion" value="{!InvasionSelec}" multiselect="True">
+                            <apex:selectOptions value="{!inlst}"/>
+                            <apex:actionSupport status="loadingFiltrarInvasion" event="onchange" action="{!actualizar}" reRender="fl09,idescrituras,idestado,idciudad,idcolonia,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b9" value="Ordenar a-z" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b10" value="Ordenar z-a" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarInvasion">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE VALOR DE REFERENCIA /////////////////////// -->
+                    <div class="celda {!IF(prs2!= 0,'marcado','')}">
+                        <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/006-money.png')}" />
+                        <div>Valor de <br/>referencia</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idprecio2" html-class="listaSeleccion"  value="{!prs2}">
+                            <apex:selectOptions value="{!prlst2}"/>
+                            <apex:actionSupport status="loadingFiltrarReferencia" event="onchange" action="{!actualizar}"  reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                            <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+
+                        </apex:selectList>
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b11" value="Ordenar a-z" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b12" value="Ordenar z-a" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarReferencia">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE PRECIO ORIGINAL/////////////////////// -->
+                    <div class="celda {!IF(prs!= 0,'marcado','')}">
+                        <div class="mostrarFiltro">
+                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/006-money.png')}" />
+                    <div>Precio <br/> original</div>
+                    <span class="glyphicon glyphicon-download" id="icono"></span>
+                </div>
+                <div class="filtroHidden"  >
+                    <apex:selectList id="idprecio" html-class="listaSeleccion"  value="{!prs}">
+                        <apex:selectOptions value="{!prlst}"/>
+                        <apex:actionSupport status="loadingFiltrarOriginal" event="onchange" action="{!actualizar}"  reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                    </apex:selectList>
+                    <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                    <br/>
+                    <apex:actionRegion >
+                        <apex:commandButton id="b13" value="Ordenar a-z" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='Precio_Original__c',tipoDeOrden == 'asc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                            <apex:param assignTo="{!campoOrden}" value="Precio_Original__c"/>
+                        </apex:commandButton>
+                        <apex:commandButton id="b14" value="Ordenar z-a" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='Precio_Original__c',tipoDeOrden == 'desc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                            <apex:param assignTo="{!campoOrden}" value="Precio_Original__c" />
+                        </apex:commandButton>
+                    </apex:actionRegion>
+                    <br/>
+                    <apex:actionStatus id="loadingFiltrarOriginal">
+                        <apex:facet name="stop">
+                            <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                        </apex:facet>
+                        <apex:facet name="start">
+                            <apex:outputPanel >
+                                <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                            </apex:outputPanel>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE DIAS EN STOCK /////////////////////// -->
+                    <div class="celda {!IF(dis!= 0,'marcado','')}">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/003-calendar.png')}" />
+                        <div>Días en <br/> stock</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden"  >
+                        <apex:selectList id="iddias" html-class="listaSeleccion" value="{!dis}">
+                            <apex:selectOptions value="{!dilst}"/>
+                            <apex:actionSupport status="loadingFiltrarDiasStock" event="onchange" action="{!actualizar}" reRender="fl05,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo" />
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b15" value="Ordenar a-z" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b16" value="Ordenar z-a" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarDiasStock">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE LA REHABILITACION /////////////////////// -->
+                    <div class="celda {!IF(rehas !='Todo','marcado','')}">
+                        <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/005-construction-1.png')}" />
+                        <div>Rehab.</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden" >
+                        <apex:selectList id="idrehabilitacion" styleClass="listadeseleccion" value="{!rehas}">
+                            <apex:selectOptions value="{!rehalst}"/>
+                            <apex:actionSupport status="loadingFiltrarRehab" event="onchange" action="{!actualizar}" reRender="fl11,idescrituras,idestado,idciudad,idcolonia,idinvasion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                        </apex:selectList>
+                        <br/>
+                        <apex:actionStatus id="loadingFiltrarRehab">
+                            <apex:facet name="stop">
+                                <apex:commandButton value="Buscar" status="loadingFilters" action="{!llenadoPaginas}" reRender="formid,formid2" onclick="hideDiv('filtroHidden')"/>
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel >
+                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </div>
+                    </div>
+                    <!-- //////////////////////////// DIV DE AGREGAR CARRITO/////////////////////// -->
+                    <div class="celda">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/shopping-cart.png')}" />
+                        <div>Agregar al <br/>carrito</div>
+                    </div>
+                </div>
+                <!--REPEAT QUE PINTA LA TABLA-->
+                <div class="container-datos">
+                    <apex:variable value="{!num2}" var="Contador" />
+                <apex:repeat value="{!CASE(npag2,1,pag1,2,pag2,3,pag3,4,pag4,5,pag5,6,pag6,7,pag7,pag1)}" var="oferta">
+                    <div class="fila {!IF(oferta.boleano,'recientes','tds')}">
+                    <!-- //////////////////////////// DIV DE FOLIO /////////////////////// -->
+                        <div class="celda" id="oferta">
+                            <apex:outputLink target="_blank" value="/{!oferta.registro.Id}">{!oferta.registro.Name}</apex:outputLink>
+                            <br />
+                            <apex:image value="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>',URLFOR($Resource.iconos_stock, 'iconos_stock/002-checked.png'), URLFOR($Resource.iconos_stock, 'iconos_stock/001-cancel.png'))}" />
+                            <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos_stock/004-eye-open.png')}" styleClass="vercarroimagen" onclick="openFichaTecnica('{!oferta.registro.Id}')" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Info_icon-72a7cf.svg/2000px-Info_icon-72a7cf.svg.png" width="20px" height="20px" onclick="$('#margenp').hide(); $('.logo').hide(); $('#notifications-bottom-right').fadeOut(300); calculos('{!oferta.registro.name}', '0{!oferta.registro.CosteDesalojo2__c}', '0{!oferta.registro.CosteRehabilitacion__c}',  '0{!oferta.registro.ValorReferencia__c}');  $('#notifications-bottom-right').fadeIn(300);" class="btt2" />
+                        </div>
+                        <!-- //////////////////////////// DIV DE ESTADO /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE CIUDAD /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE COLONIA /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE DIRECCION /////////////////////// -->
+                        <div class="celda direccion">
+                            <apex:outputText value="{!oferta.registro.Direccion2__c}" escape="false"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE ESCRITURAS /////////////////////// -->
+                        <div class="celda">
+                            <apex:image value="{!IF(oferta.registro.Escritu__c == 'Con Escrituras', URLFOR($Resource.iconos_stock, 'iconos_stock/002-checked.png'), URLFOR($Resource.iconos_stock, 'iconos_stock/001-cancel.png'))}"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE ESTATUS DE INVASION /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                        </div>
+                        <!-- //////////////////////////// DIV DE VALOR DE REFERENCIUA /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.ValorReferencia__c}"/>
+                            </apex:outputText>
+                        </div>
+                        <!-- //////////////////////////// DIV DE PRECIO ORIGINAL/////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.Precio_Original__c}"/>
+                            </apex:outputText>
+                        </div>
+                        <!-- //////////////////////////// DIV DE DIAS EN STOCK /////////////////////// -->
+                        <div class="celda">
+                            <apex:outputText value="{0,number}">
+                                <apex:param value="{!oferta.registro.TiempoOferta__c}"/>
+                            </apex:outputText>
+                        </div>
+                        <!-- //////////////////////////// DIV DE REHABILITACION /////////////////////// -->
+                        <div class="celda">
+                            <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.iconos_stock, 'iconos_stock/002-checked.png'),URLFOR($Resource.iconos_stock, 'iconos_stock/001-cancel.png'))}" />
+                        </div>
+                        <!-- //////////////////////////// DIV DE AGREGAR A CARRITO/////////////////////// -->
+                        <div class="celda ultima">
+                            <apex:actionRegion >
+                            <apex:outputPanel layout="block" id="imagenCarrito" rendered="{!!oferta.active}">
+                                <div>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos_stock/shopping-cart.png')}" styleClass="agregacarroimagen" onclick="cambiarimagen(this);agregar('{!oferta.registro.Id}');">
+                                    </apex:image>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos_stock/shoping-cart-full.png')}" style="width: 40px;height: 40px; display: none"/>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="block" rendered="{!oferta.active}">
+                                <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos_stock/shoping-cart-full.png')}" style="width: 40px;height: 40px;"/>
+                            </apex:outputPanel>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton styleClass="botonAzul" style="position: relative; left: -6px; padding: 2px" value="Detalles" onclick=" $('.detailsTable').hide(); showDetails(this, event)" reRender="Object" />
+                        <div class="detailsTable">
+                            <div class="cerrar"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/cancel.png')}" onclick="hideDiv('detailsTable');" /></div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/018-footprints.png')}" />
+                                    <span>Etapa</span>
+                                </div>
+                                <apex:outputText value="{!IF(oferta.registro.Etapa__c == 'Rehabilitación','E 10',IF(oferta.registro.Etapa__c == 'Compilación expediente cliente','E 9',IF(oferta.registro.Etapa__c == 'Escrituras en proceso registro','E 8',IF(oferta.registro.Etapa__c == 'Compra final','E 7',IF(oferta.registro.Etapa__c == 'Compilación expediente compra','E 6',IF(oferta.registro.Etapa__c == 'Aprobada internamente','E 5',IF(oferta.registro.Etapa__c == 'Antecedentes','E 4',oferta.registro.Etapa__c)))))))}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/017-alert.png')}" />
+                                    <span>Oferta Cargada</span>
+                                </div>
+                                <apex:image value="{!IF(oferta.registro.Oferta_Cargada__c,URLFOR($Resource.iconos_stock, 'iconos_stock/002-checked.png'),URLFOR($Resource.iconos_stock, 'iconos_stock/001-cancel.png'))}" styleClass="imagestyle"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/012-school-material.png')}" />
+                                    <span>Terreno m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/011-helmet.png')}" />
+                                    <span>Cons m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/010-open-exit-door.png')}" />
+                                    <span>Habs</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos_stock/009-toilet.png')}" />
+                                    <span>Baños</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </apex:repeat>
+                <apex:actionFunction name="agregar" action="{!agregar}" reRender="/" >
+        <apex:param name="hola" value="" assignTo="{!ofertaId}"/>
+    </apex:actionFunction>
+                </div>
+
+    <script type="text/javascript">
+    // $('.botonAzul').click(function()
+    // {
+
+    // });
+        function cambiarimagen(e){
+            var f= $(e).siblings();
+            console.log(f);
+            f.css("display","block");
+            e.style="display:none";
+        }
+        $(document).ready(function(event){
+            $('.mostrarFiltro').each(function(index){
+                $(this).on('click', function(e){
+                    showFilter(this);
+                });
+            });
+
+            
+
+            //Cuando da enter busque el id
+            $('.message').first().remove();
+            $('[id*="yobusco"]').keydown(function(event){
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    $('[id*="imagencilla"]').click();
+                }
+            });
+        });
+
+        
+
+        function showDetails(element, event){
+            /*console.log('x: ' + event.pageX + 'y: ' + event.pageY);
+            var totalWidth = $(window).width();*/
+            var $detailpanel = $(element).siblings('.detailsTable');
+            var width = $detailpanel.width();
+            var height = $detailpanel.height();
+            $detailpanel.toggle();
+            var der = (event.pageX - (width + (width * .2)));
+            $detailpanel.css({'left':der});
+            var alt = event.pageY-(height * .58);
+            $detailpanel.css({'top': alt});
+            /*console.log('y: '+ event.pageY + ' height: ' + height);
+            console.log(event.pageY +(height * .5));*/
+        }
+
+        function showFilter(element) {
+            console.log(element);
+            var $filtro = $(element).siblings('.filtroHidden');
+                $filtro.toggle();
+        }
+
+        function hideDiv(clase){
+            $( "."+clase+"" ).css( "display", "none" );
+        }
+
+    </script>
+<!-- //////////////////////////////////// ESTE SCRIPT DEBE IR AQUÍ NO MOVER /////////////////////////-->
+        </apex:form>
+        </div>
+        
+        <!--FIN DEL DIV 2 (CONTENEDOR DEL STOCK)-->
+        <div class="div3">
+            <apex:form >
+                <apex:variable value="ConsolaComercial" var="pagina"/>
+                <c:Menu_rapidolead account="{!idReferencia}" visual="{!pagina}" />
+            </apex:form>
+        </div>
+        <div class="div4">
+            <div class="argumentos">
+                <c:Stock />
+            </div>
+
+        </div>
+        <div class="div5">
+            <apex:form >
+
+        <!-- <apex:actionFunction name="enviaancho" reRender="">
+            <apex:param name="ancho" assignTo="{!ancho}" value="" />
+        </apex:actionFunction>
+
+        <apex:actionFunction name="enviaancho2" oncomplete="calcwidth();" reRender="">
+            <apex:param name="newWidth" assignTo="{!newWidth}" value=""/>
+        </apex:actionFunction>
+
+        <apex:actionFunction action="{!reCalcWidths}" name="calcwidth"/> -->
+
+            <div class="foot">
+
+             <div class="izq">
+             <center>
+                <apex:image url="{!URLFOR($Resource.icof, '/left.png')}"   title="Ir a Stock" styleClass="circulo1" >
+                     <apex:actionSupport event="onclick" action="{!precalificacion}"/>
+
+                </apex:image>
+            </center>
+            </div>
+            <div class="medio">
+            <center>
+            <apex:image url="{!URLFOR($Resource.icof, '/cancela.png')}" styleClass="circulo1 modaal-confirm" title="Cancelar" />
+            </center>
+            </div>
+            <div class="derecha">
+            <center>
+                <apex:image url="{!URLFOR($Resource.icof, '/right.png')}" styleClass="circulo1" title="Cita" >
+               <apex:actionSupport event="onclick" action="{!envioficha}"/>
+                </apex:image>
+            </center>
+            </div>
+            </div>
+
+   </apex:form>
+        </div>
+    </section>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"/> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+    function openFichaTecnica(id) {
+                var url = '{!URLFOR("/apex/FichaTecnica?id=")}';
+                console.log(url+id);   
+                $( '<div> </div>').html('<iframe id="iframeContentId" src="' + url +id+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="yes" />')
+                .dialog({
+                    autoOpen: true,
+                    title: 'Ficha Técnica',
+                    resizable: true, 
+                    width: 700, 
+                    height: 840, 
+                    autoResize: true, 
+                    modal: true, 
+                    draggable: true,
+                    show: {
+                        effect: "fade",
+                        duration: 500
+                    },
+                    hide: {
+                        effect:"drop",
+                        duration: 300
+                    },
+                    open: function(){
+                        $('body').addClass('stop-scrolling');
+                    },
+                    close: function(){
+                        $('body').removeClass('stop-scrolling');
+                    }
+                });
+                
+            }
+  </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div id="notifications-bottom-right" hidden="hidden">
+    <div id="notifications-bottom-right-tab" class="animated rotateIn">
+        <div id="notifications-bottom-right-tab-close" class="close">
+        <span class="iconb" onclick="$('#notifications-bottom-right').fadeOut(400); $('.logo').show();">X</span>
+        </div>
+            <div id="notifications-bottom-right-tab-avatar">
+                <img src="http://weeks.com.au/wp-content/themes/weeksbg/assets/svg/footer-home-icon.svg" height="70" width="70"/></div><div id="notifications-bottom-right-tab-right"><div id="notifications-bottom-right-tab-right-title">
+            <span>idoferta</span>
+            </div>
+                <div id="notifications-bottom-right-tab-right-text" ><br/>
+                    <div class="col-3 input-effect">
+                        <input id="ofertado" class="inpx" type="text" placeholder="$"/><button class="btt" onclick="calculos2();">Calcular</button>
+                        </div>
+                        <br/>Coste Desalojo $:<b>
+                        <span id="toc"></span>
+                            </b><br/>Coste Rehabilitación $:<b>
+                        <span id="toc2">
+                        </span>
+                            </b><br/>Valor de Referencia $:<b>
+                        <span id="refe" style="font-size: 13px;">
+                        </span>
+                        </b><br/>
+                            <p id="margenp" hidden="hidden">Margen Referencia:<b>
+                        <span id="margen" data-tooltip-delay="0" data-tooltip="(Precio Venta - (Desalojo + Rehabilitación))/ Valor Referencia" html-data-tooltip-color="black" html-data-tooltip-animate-function="fade"  data-tooltip-stickto="bottom">
+                        </span>
+                        </b>%
+                            </p>
+                    </div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+.btt
+{
+    cursor: pointer;
+    display: inline-block;
+    background: #ed2553;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 3px 4px;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    outline: none;
+    width: 30%;
+    display: inline-block;
+    margin-left: 10px;
+
+}
+    #notifications-bottom-right {
+    position: absolute;
+    width: 22%;
+    right: 1%;
+    bottom: 80%;
+    border: 1px solid #dfdfdf;
+    box-shadow: black;
+    /* margin: 2rem 0 1rem 0; */
+    border: 1px solid #e0e0e0;
+    /* border-radius: 2px; */
+    /* overflow: hidden; */
+    /* position: relative; */
+    -webkit-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    -moz-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    font-size: 1em;
+    background: white;
+    /* text-align: center; */
+}
+#notifications-bottom-right-tab-close {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    color: #cccccc;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    opacity: 1;
+}
+#notifications-bottom-right-tab-close:hover
+{
+        color: black;
+}
+
+#notifications-bottom-right-tab-avatar {
+    float: left;
+    height: 100px;
+    width: 70px;
+    margin-left: 20px;
+}
+#notifications-bottom-right-tab-avatar img {
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+    -khtml-border-radius: 50% 50% 50% 50%;
+    float: left;
+    margin-top: 15px;
+}
+#notifications-bottom-right-tab-right {
+    float: left;
+        width: 60%;
+    margin-bottom: 3%;
+
+}
+#notifications-bottom-right-tab-right-title span {
+    color: #e91e63;
+    font-size: 15px;
+    text-transform: uppercase;
+
+}
+#notifications-bottom-right-tab-right-title {
+    color: #252525;
+    font-weight: 600;
+     padding-top: 4%;
+}
+.collection
+{
+        margin: 3rem 0 1rem 1rem !important;
+}
+
+</style>
+<script type="text/javascript">
+    function calculos(x,y,d,w)
+    {
+        $('#notifications-bottom-right-tab-right-title span').html(x);
+        // alert(x+y+d+w);
+        y=parseInt(y);
+        d=parseInt(d);
+        w=parseInt(w);
+
+        $('#toc').html(y);
+        $('#toc2').html(d);
+        $('#refe').html(w);
+
+    }
+    function calculos2()
+    {
+
+        var ofe=$('#ofertado').val();
+        var des=$('#toc').html();
+        var reh=$('#toc2').html();
+        var refere=$('#refe').html();
+        var r=parseInt(refere);
+        var g=parseInt(des);
+        var o=parseInt(ofe);
+        var rh=parseInt(reh);
+        if (ofe!=null&&ofe!='')
+        {
+        var margen=((o-(g+rh))/r)*100;
+        margen = parseInt(margen);
+        $('#margen').html(margen);
+        $('#margenp').show();
+        }
+        if(ofe==null||ofe=='')
+        {
+            $('#margenp').hide();
+        }
+    }
+
+</script>
+
+    </body>
+</apex:page>

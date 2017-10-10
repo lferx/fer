@@ -1,0 +1,17 @@
+<apex:page sidebar="false" showHeader="false" controller="CockpitDetalleDocController">
+    <apex:form >   
+       <apex:pageBlock >
+           <apex:repeat value="{!mdocplaza}" var="plaza">
+               <li> <b>Plaza: </b> {!plaza}</li>                             
+               <apex:pageBlockTable id="Documents" var="d" value="{!mdocplaza[plaza]}" columnsWidth="20%,20%,15%,15%,15%,15%">
+                   <apex:column value="{!d.Oferta__r.Name}" headerValue="Oferta"/>
+                   <apex:column value="{!d.DocumentoEtapa__r.Name}" headerValue="Documento"/>
+                   <apex:column value="{!d.Oferta__r.OwnerId}" headerValue="Gerente"/>
+                   <apex:column value="{!d.Semaforo__c}" headerValue="Status"/>
+                   <apex:column value="{!d.Tiempo_Restante__c}" headerValue="Tiempo Restante"/>
+                   <apex:column value="{!d.Fecha_Com_Controller__c}" headerValue="Fecha Compromiso"/>
+               </apex:pageBlockTable> 
+           </apex:repeat>
+       </apex:pageBlock> 
+    </apex:form>
+</apex:page>

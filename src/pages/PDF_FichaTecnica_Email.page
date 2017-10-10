@@ -1,0 +1,70 @@
+<apex:page standardController="Account" extensions="PropiedadesSearch" >
+<head>  
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+    <p>
+        Buen día,
+    </p>
+    <p>
+        Se le brinda un cordial saludo.
+    </p>
+    <p>
+        Se le envían las fichas técnicas de las siguientes propiedades:
+    </p>
+    
+    <table>
+        <tr>
+<!--        <th>Foto</th> -->
+        <th>Id Propiedad</th>
+        <th>Plaza</th>
+        <th>Municipio</th>
+        <th>CP</th>
+        <th>Colonia</th>
+
+        </tr>
+
+
+<apex:repeat value="{!selectedResults}" var="p">
+            <tr>
+<!--                 <td><apex:repeat rows="0" value="{!p.foto}" var="f"> <apex:image url="{!URLFOR($Action.Attachment.Download, f)}" width="40px" height="30px"/></apex:repeat></td> -->
+                <td>{!p.prop.Name}</td>
+                <td>{!p.prop.Plaza__c}</td>
+                <td>{!p.prop.Municipio__c}</td>
+                <td>{!p.prop.CP__c}</td>
+                <td>{!p.prop.Colonia__c}</td>
+
+            </tr>
+            
+ </apex:repeat> 
+
+        
+    </table>
+    <p>
+        Saludos
+    </p>
+   
+   <p>
+        
+   </p>
+ </body>
+    
+</apex:page>

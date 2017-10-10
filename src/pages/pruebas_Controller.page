@@ -1,0 +1,163 @@
+<apex:page controller="pruebas_Controller" showHeader="true" sidebar="true">
+<apex:form >
+
+        <apex:selectList id="Estatus" value="{!parametro}" size="1" >
+
+          <apex:selectOptions value="{!Estatus}"/>
+
+        </apex:selectList><p/>
+
+                                
+                                     
+                                
+                                 <!-- <div id="fd010" class="divfiltrolista" onmouseover="ftrue('fd010');">
+                                    <apex:selectList id="idetapa" styleClass="listadeseleccion" value="{!EtapaSelec}" multiselect="True">
+                                         <apex:selectOptions value="{!etlst}"/>
+                                        <apex:actionSupport action="{!actualizar}"/> 
+                                    </apex:selectList>
+                                </div> -->
+                             
+                       
+
+ 
+                                	<apex:commandButton value="regresa" action="{!regresa}" />
+       <apex:commandButton value="Test" action="{!filtroEstatus}" rerender="out" status="status"/>
+<!-- <apex:inputField  value="{!nL.Estatus__c}"/> -->
+    </apex:form>
+
+ 
+
+    <apex:outputPanel id="out">
+
+        <apex:actionstatus id="status" startText="testing...">
+
+            <apex:facet name="stop">
+
+                <apex:outputPanel >
+
+                     <!-- <p>resultado:</p>
+                     <apex:dataList value="{!nL}" var="c">{!c}</apex:dataList>  -->
+                      <table border="1">
+		<thead>
+		<tr>
+			<th>
+				<center>ID</center>
+			</th>
+			<th>
+				ESTATUS
+			</th>
+			<th>
+				name
+			</th>
+			<th>
+				Etapa
+			</th>
+		</tr>
+		</thead>
+		<apex:repeat value="{!nl}" var="x" >
+        <apex:actionRegion >
+		<tr>
+			<td>
+			
+			<apex:outputLink value="/{!x.Id}"> Id de Oferta  </apex:outputLink>
+		
+			</td>
+			<td>
+			<apex:outputText value="{!x.Estatus__c}"/><br/>
+				
+			</td>
+			<td>
+			<apex:outputField value="{!x.Name}"></apex:outputField> <br/>
+				
+			</td>
+			<td>
+			<apex:outputText value="{!x.Etapa__c}"/><br/>
+				
+			</td>
+
+		</tr>
+		</apex:actionRegion>
+		</apex:repeat>
+
+	</table>
+
+ 
+
+                </apex:outputPanel>
+
+            </apex:facet>
+
+        </apex:actionstatus>
+
+    </apex:outputPanel>
+   
+
+</apex:page> 
+
+
+	
+<!-- <div class="group">
+                        <h1>INSTITUCION QUE OTORGA CREDITO:</h1><br/><br/>
+                        
+                        <apex:inputField styleclass="inp datoSemaforo" value="{!nuevoLead.Institucion_que_otorga_credito__c}" html-data-tooltip="Institución que otorga el credito" html-data-tooltip-color="silver" html-data-tooltip-animate-function="scalein" onchange="myactionscriptInstitucionCredito();"/><br/>
+
+                        <apex:selectList value="{!countries}" multiselect="true">
+						<apex:selectOptions value="{!items}"/>
+						</apex:selectList><p/>
+
+                        </div> -->
+
+	<!-- <table border="1">
+		<thead>
+		<tr>
+			<th>
+				<center>ID</center>
+			</th>
+			<th>
+				ESTATUS
+			</th>
+			<th>
+				name
+			</th>
+		</tr>
+		</thead>
+		<apex:repeat value="{!mioferta}" var="x" >
+        <apex:actionRegion >
+		<tr>
+			<td>
+			
+			<apex:outputLink value="/{!x.Id}"> Id de Oferta  </apex:outputLink>
+		
+			</td>
+			<td>
+			<apex:outputText value="{!x.Estatus__c}"/><br/>
+				
+			</td>
+			<td>
+			<apex:outputField value="{!x.Name}"></apex:outputField> <br/>
+				
+			</td>
+		</tr>
+		</apex:actionRegion>
+		</apex:repeat>
+
+	</table>
+	<table>
+		<tr>
+			<td>
+				ingresa estatus<apex:inputText > </apex:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<apex:commandButton action="{!filtroEstatus}" value="click"></apex:commandButton>
+
+			</td>
+		</tr>
+
+	</table> -->
+
+
+<!-- </apex:form>  -->
+<!-- 
+</apex:page>   -->

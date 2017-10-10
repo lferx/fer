@@ -1,0 +1,8 @@
+<apex:page standardController="Oferta__c">
+               <apex:form >
+                    <apex:outputLabel value="Estatus: {!Oferta__c.Valuador__r.Estatus__c}" />
+                    
+                       <apex:outputLabel value="{!$CurrentPage.parameters.id}" />
+            </apex:form>
+           
+</apex:page>

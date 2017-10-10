@@ -1,0 +1,821 @@
+<apex:page cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="Account" 
+       extensions="FormularioAprovecha1"   docType="html-5.0">
+       <!--CAMBIAR EXTENCION-->
+    <html class="no-js" lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="author" content="Revimex.mx"/>
+        <meta name="description" content="Paguinas Google Ads" />
+        <meta name="keywords" content="Revimex, Incuestas, Sorteo, Locura" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=0.33"/>
+        <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+        <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>   
+        <title>Revimex</title>
+        
+        <style>
+       <!--RJP Pedir modificacion en la hoja de estilos-->
+                nsform:;
+                      }  
+                       #home-statistics2 article strong.big-font {
+                font-family: 'CalibriBold', sans-serif;
+                font-size: 27px;
+                line-height: 50px;
+                padding: 0 5px 0 0;
+                aling: center;
+                display: inline-block;
+                
+                } 
+                #home-statistics article strong.big-font {
+                font-family: 'CalibriBold', sans-serif;
+                font-size: 27px;
+                line-height: 50px;
+                padding: 0 5px 0 0;
+                }
+                input {
+                    text-transform: uppercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 245px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                   body {             
+                       position: absolute;
+                       top: 20px;
+                       left: 36%;
+                       <!--margin-top: -550px;-->
+                       margin-left: -675px;
+                   }
+                
+                .form-style-1 {
+                margin:10px auto;
+                max-width: 200px;
+                padding: 20px 12px 10px 20px;
+                font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            }
+            .form-style-1 li {
+                padding: 0;
+                display: block;
+                list-style: none;
+                margin: 10px 0 0 0;
+            }
+            label{
+                margin:0 0 3px 0;
+                padding:0px;
+                display:block;
+                font-weight: bold;
+            }
+                              
+            
+            .messageTable{
+                width: 100%;
+                background-color: blanchedalmond;
+            }
+            
+            #footer-menu a {
+                border-right: 1px solid #686868;
+                color: #FFFFFF;
+                font-size: 14px;
+                padding: 0 12px;
+                text-decoration: none;
+                text-transform: uppercase;
+                text-align:center;
+            }
+            #Title-menu a {
+                border-right: 1px solid #686868;
+                color: #000000;
+                font-size: 14px;
+                padding: 0 12px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            
+             .text_encima{
+              position: absolute;
+              margin-top:;
+              margin-buttom:;
+              margin-left:35px;
+              margin-right:10px;
+              padding-buttom:0px;
+              padding-top:;
+              padding-left:;
+              padding-right:5px;
+              color: #FFFFFF;
+              font-size:;
+              font-family:"Arial", Helvetica, sans-serif;
+              }
+                element.style {
+                    padding-left: 10px;
+                    left: -60;
+                    left: -69;
+                    left: -68;
+                    left: -68px;
+                    width: 1120px;
+                }
+                
+
+            input[type=text],
+            input[type=date],
+            input[type=datetime],
+            input[type=number],
+            input[type=search],
+            input[type=time],
+            input[type=url],
+            input[type=email],
+            input[type=datetime-local],
+            input[type=password],
+            input[type=telefono],
+            
+            textarea,
+            select{
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                border:1px solid #BEBEBE;
+                padding: 7px;
+                margin:0px;
+                -webkit-transition: all 0.30s ease-in-out;
+                -moz-transition: all 0.30s ease-in-out;
+                -ms-transition: all 0.30s ease-in-out;
+                -o-transition: all 0.30s ease-in-out;
+                outline: none;
+                width: 90%; 
+            }
+            input[type=text]:focus,
+            input[type=date]:focus,
+            input[type=datetime]:focus,
+            input[type=number]:focus,
+            input[type=search]:focus,
+            input[type=time]:focus,
+            input[type=url]:focus,
+            input[type=email]:focus,
+            input[type=datetime-local]:focus,
+            input[type=password]:focus,
+            input[type=telefono]:focus,
+            
+            textarea:focus,
+            select:focus{
+                -moz-box-shadow: 0 0 8px #88D5E9;
+                -webkit-box-shadow: 0 0 8px #88D5E9;
+                box-shadow: 0 0 8px #88D5E9;
+                border: 1px solid #88D5E9;
+            }
+            
+            input[type=submit], .form-style-1 input[type=button]{
+                background: #F76244;
+                padding: 8px 15px 8px 15px;
+                border: none;
+                color: #fff;
+            }
+            input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+                background:#F76244;
+                box-shadow:none;
+                -moz-box-shadow:none;
+                -webkit-box-shadow:none;
+            }
+            .required{
+                color:red;
+            }
+            .btn-sortelo-login {width: 250px;margin: 0 auto;
+            margin-top:30px;}
+            .btn-sortelo-login a.btn-action {
+                color: #F76244;
+                padding: 10px;
+                width: 250px;
+                margin: 10px auto; 
+                background: #F76244;
+            }  
+            
+            
+                    .btn-action2 {
+                        color: #F76244;
+                        padding: 10px;
+                        width: 290px;
+                        margin: 10px auto;
+                        background-color: #1C79A7;
+                    } 
+                    input[type=button].btn-action2 {
+                        color: #F76244;
+                        padding: 10px;
+                        width: 100px !important;
+                        border: none;
+                        margin: 10px auto;
+                        background: #F76244;
+                        text-transform: capitalize;
+                    }
+                    input[type=button].btn-action2.dis {
+                        opacity:.4;
+                        filter: alpha(opacity=40)
+                    }
+                    button.btn-action2 {
+                        border: none;
+                    }
+                #img2 { 
+                width: 44px; 
+                height: 38px; 
+                }
+                
+                    #img3 { 
+                    width: 1120px;
+                    margin-left: -58px;
+                    width:100%
+                    margin-left: 2px;
+                    height: auto; 
+                   
+                  }
+                
+                
+                
+                #leading-content4 {
+                      
+                    background: ;
+                    height: 624px;
+                    width:100%;
+                    overflow: hidden;
+                    text-align:;
+                    z-index: 1;
+                    
+                }
+                #leading-content5 {
+                      
+                    background: ;
+                    height: auto;
+                    width:100%;
+                    overflow: hidden;
+                    text-align:;
+                    z-index: 1;
+                    
+                }
+               
+                    
+                     
+                .nss-container {
+                    display: none;
+                    }
+             #slider2 {
+                display: inline-block;
+                height: 368px;
+                margin: 0 -253px 0 0;
+                overflow: hidden;
+                position: relative;
+                vertical-align: top;
+                width: 1000px;
+            }
+            li{
+            text-align: justify;
+            }
+            footer {
+                background: #0F2E77;
+                box-sizing: border-box;
+                height: 100px;
+                padding: 0px 0 0 0;
+            }
+            footer, header, hgroup, main, nav, section, summary {
+                display: block;
+            }
+             footer2 {
+                background: #0F2E77;
+                box-sizing: border-box;
+                height: 60px;
+                padding: 0px 0 0 0;
+            }
+            footer2, header, hgroup, main, nav, section, summary {
+                display: block;
+                
+            }
+                 
+              
+            </style> 
+        <title>¡Aprovecha tu crédito infonavit!</title>
+        
+        </head>
+          <body>
+          
+                <!-- Google Tag Manager -->
+                <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PLTTLC"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+                <script>(function(w,d,s,l,i){
+                w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                j.async=true;j.src=
+                '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })
+                (window,document,'script','dataLayer','GTM-PLTTLC');</script>
+                <!-- End Google Tag Manager -->
+        
+                <section>
+                      <apex:form >
+                      <DIV STYLE="position:absolute; top:40px; left:360px; visibility:visible z-index:1">    
+                              <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_1.png')}" style="height: 1400px;width: 1055px;"/>
+                          </div>
+                          <DIV style="position:absolute; top:180px; left:450px; visibility:visible z-index:1">
+                           <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_2.png')}"/>
+                              </div> <br />
+                          <br />
+                          <DIV style="position:absolute; top:280px; left:400px; visibility:visible z-index:1">               
+                             <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_3.png')}" /> 
+                          </div>   
+                          <DIV style="position:absolute; top:860px; left:1000px; visibility:visible z-index:1">               
+                             <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_6.jpg')}" style="heigth: 200px;"/> 
+                          </div> 
+                          <DIV style="position:absolute; top:1120px; left:420px; visibility:visible z-index:1">               
+                             <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_5.png')}" /> 
+                          </div>  
+                          <DIV style="position:absolute; top:200px; left:1140px; visibility:visible z-index:1">               
+                             <img src="{!URLFOR($Resource.Landing_aprovecha,'LANDING-APROVECHA_7.png')}" /> 
+                          </div>  
+                          <DIV style="position:absolute; top:650px; left:360px; visibility:visible z-index:1">               
+                             <iframe width="650" height="380" src="https://www.youtube.com/embed/H8NVUdiMG-Y?version=3&loop=1&playlist=H8NVUdiMG-Y&rel=0&autoplay=1&showinfo=0&"></iframe> 
+                          </div>        
+                             
+                          <div style="position:absolute; height: auto;top:300px;left:1030px;background:#0F2E77 ;visibility:visible z-index:1"> 
+                  
+                  <center>
+        
+                    <table Border ="0"  style= "margin: 12px;height: 330px;min-height:330px;width: 272px; " >
+                        
+                        <tr>
+                            <td>
+                                <label><font color = "FFFFFF">Nombre(s) </font><span class="required">*</span></label>
+                                <apex:input id="nom" value="{!strNombre}" type="text" styleClass="fname" required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><font color = "FFFFFF">Apellido(s) </font><span class="required">*</span></label>
+                                <apex:input id="pat" value="{!strApellidoPaterno}" type="text" styleClass="Lname" required="true"/>
+                            </td>
+                        </tr>         
+                        <tr>
+                            <td>
+                                <label ><font color = "FFFFFF">Email</font> <span class="required">*</span></label>
+                                <apex:input id="email" value="{!stremail}" type="email"  styleClass="email_field" style="text-transform: none;" required="true"/>
+                            </td>
+                           
+                          
+                        </tr>
+                       
+                       <tr>
+                          <td>
+                           <label><font color = "FFFFFF">Teléfono celular</font><span class="required">*</span></label>
+                                <apex:input value="{!strtelefono}" type="tel" styleClass="onlyNumbers phone" required="true"/>
+                          </td>
+                       </tr>
+                       <tr>                        
+                                <td>
+                                    <label><font color = "FFFFFF">Fecha de nacimiento</font><span class="required">*</span></label>
+                                    <apex:input value="{!fechaNacimiento}" type="text" styleClass="bdate"  required="true"/>
+                                    <span class="help-text" style="color:white">Ejemplo: 20/05/1980 <BR />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Día/Mes/Año)</span>
+                                 </td>
+                       </tr>
+                        <tr>
+                              <td>
+                                <label><font color = "FFFFFF">¿DÓNDE QUIERES COMPRAR TU CASA?</font></label>
+                                <apex:inputField id="pla" value="{!propiedad.Plaza__c}" styleClass="plaza" />
+                                
+                            </td>
+                        </tr> 
+                        
+                        <tr>
+                            
+                              <td>
+                             <label style="color:white">Comentarios</label>
+                                            <apex:inputtextarea value="{!Descripcion}"  />
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td  style="padding-top: 30px;">
+                             <center> <apex:commandButton styleClass="btn-action2 js-send" value="QUIERO RECIBIR ASESORIA" action="{!InsertarLead}" /></center>
+                             
+                             
+                            </td>
+                        </tr>
+                       
+                    </table>
+                          <center>
+                              <div class="nss-container">
+                                  <iframe class="iframe-infonavit" src="//portal.infonavit.org.mx/wps/portal/nss" height="350px" width="100%"></iframe>
+                              </div>
+                          </center>
+            
+           
+              </center>
+          
+         <!-- //////////-->               
+          </div>
+           </apex:form>
+      
+      </section>
+
+       <div style="position:absolute;top: 1325px;left: 370px;visibility:visible z-index:1;width: 1035px;">
+          <center>
+             <footer>
+                <div class="main-wrapper" style="width: auto;">
+                    <nav id="footer-menu">
+                        <div>
+                            <a href="http://www.revimex.mx/privacidad.php" target="_blank" class="noborder-right" ALIGN="left">AVISO DE PRIVACIDAD</a>
+                        </div>
+                    </nav>
+                  <br />
+                    <section id="footer-networks">
+                        <ul>
+                            <li><a href="https://es-la.facebook.com/public/Revimex-Ventas-de-Casas" target="_blank" ><img src="{!URLFOR($Resource.Landing_Negocio,'LANDING-NEGOCIO-INVERTIR_fb.png')}"/></a></li>
+                            <li><a href="https://twitter.com/oficialrevimex"   target="_blank"><img src="{!URLFOR($Resource.Landing_Negocio,'LANDING-NEGOCIO-INVERTIR_tw.png')}"/></a></li>
+                            <li><a href="https://www.youtube.com/channel/UCdn2VMwAvrJ_Te9nJqFYHYg" target="_blank" ><img src="{!URLFOR($Resource.Landing_Negocio,'LANDING-NEGOCIO-INVERTIR_yt.png')}"/></a></li>  
+                            <li><a href="https://www.instagram.com/p/BF1eU6xlRwB/" target="_blank" ><img src="{!URLFOR($Resource.Landing_Negocio,'LANDING-NEGOCIO-INVERTIR_inst.png')}"/></a></li>   
+                        </ul>
+                    </section>
+                 </div>  
+            </footer>
+         </center>
+       </div>    
+            
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+               <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+                
+               <script>
+              var validate = {
+                fname: false,
+                lname: false, 
+                plaza: false, 
+                nss: false, 
+                bdate: false, 
+                phone: false,               
+                email: false,
+                clabe: false,
+                lada: false,
+                cuenta: false,
+                init: function () {
+                    $('.js-send').attr('disabled' false);
+                    $('.js-send').addClass('.dis');
+                    $(document).on( 'keyup', '.fname', this.validateFname);  
+                    $(document).on( 'change', '.plaza', this.validatePlaza);
+                    $(document).on( 'keyup', '.lname', this.validateLname);  
+                    $(document).on( 'keyup', '.email_field', this.validateEmail);  
+                    $(document).on( 'keyup', '.nss', this.validateNss);  
+                    $(document).on( 'keyup', '.bdate', this.validateBdate);
+                    $(document).on( 'keyup', '.cuenta', this.validateCuenta);  
+                    $(document).on( 'keyup', '.phone', this.validatePhone);
+                    $(document).on( 'click', '.nss-show', this.shownssiframe);
+                    $(document).on( 'click', '.datos-show', this.showdatostable);
+                
+                
+                   },
+                    validateFname: function () {
+                     this.value = this.value.replace(/[^a-z A-Z\.]/g);
+                    if ($(this).val().length >=3) {
+                        validate.fname = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.fname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateLname: function () {
+                this.value = this.value.replace(/[^a-z A-Z\.]/g,'');
+                    if ($(this).val().length >=3 ) {
+                    
+                        validate.lname = true;
+                        $(this).removeClass('error');
+                    }
+                     else {
+                     
+                        validate.lname = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validateEmail: function () {
+                    var email = $(".email_field").val();
+                    
+                    
+                    if(email != 0) {
+                        console.log('email value: '+ isValidEmailAddress(email));
+                        
+                        if(validate.isValidEmailAddress(email)) {
+                            
+                            validate.email = true;
+                            $(".email_field").css({
+                                "background-color": "white"
+                            });
+                        }  else {
+                            
+                            validate.email = false;
+                            $(".email_field").css({
+                                "background-color": "black"
+                            });
+                        }
+                    }  else {
+                        validate.email = false;
+                        $(".email_field").css({
+                            "background-color": "white"
+                        });         
+                    }
+                    validate.all();
+                },
+                validateNss: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 11));
+                    if ($(this).val().length == 11 ) {
+                        validate.nss = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.nss = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateClabe: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 18));
+                    if ($(this).val().length == 18 ) {
+                        validate.clabe = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.clabe = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateCuenta: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length == 10 ) {
+                        validate.cuenta = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.cuenta = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateBdate: function () {
+                    if(validate.isDate($(this).val())) {
+                        validate.bdate = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.bdate = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePhone: function () {
+                this.value = this.value.replace(/[^0-9\.]/g);
+                $(this).val($(this).val().substr(0, 13));
+                    if ($(this).val().length == 10 || $(this).val().length == 11 || $(this).val().length == 12 || $(this).val().length == 13) {
+                        validate.phone = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.phone = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateLada: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().substr(0, 3));
+                    if ($(this).val().length == 2 || $(this).val().length == 3 ) {
+                        validate.lada = true;
+                        $(this).removeClass('error');
+                    }
+                   
+                    else {
+                        validate.lada = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                validatePlaza: function () {
+                    if ($(this).val() != '') {
+                        validate.plaza = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.plaza = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                isValidEmailAddress: function (emailAddress) {
+                    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(!regex.test(emailAddress)) {
+                       return false;
+                    }
+                    else{
+                       return true;
+                    }
+                },
+                isDate: function (date) {
+                    console.log(date);
+
+                    var currVal = date;
+                    if(currVal == '')
+                        return false;
+                    //Declare Regex 
+                    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+                    var dtArray = currVal.match(rxDatePattern); // is format OK?
+                    if (dtArray == null)
+                        return false;
+
+                    //Checks for mm/dd/yyyy format.
+                    dtMonth = dtArray[3];
+                    dtDay= dtArray[1];
+                    dtYear = dtArray[5];
+                     var d = new Date();     
+                       var YearToday = d.getFullYear();
+                    
+                    if (dtMonth < 1 || dtMonth > 12)
+                        return false;
+                    else if (dtDay < 1 || dtDay> 31)
+                        return false;
+                    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31)
+                        return false;
+                       
+
+                      else if((YearToday - dtYear) < 18)
+                            return false;
+                             
+                    else if (dtMonth == 2)
+                    {
+                        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                        if (dtDay> 29 || (dtDay ==29 && !isleap))
+                            return false;
+                       
+                     
+                       
+                    }
+                   
+                    return true;
+                },
+                all: function () {
+                    if (validate.fname && validate.phone && validate.email) {
+                        $('.js-send').attr('disabled',false);
+                        $('.js-send').removeClass('dis');
+                        console.log('cloudmobile... true');
+                        console.log(validate);
+                    } else {
+                        $('.js-send').attr('disabled',true);
+                        $('.js-send').addClass('dis');
+                        console.log('cloudmobile... false');
+                        console.log(validate);
+                        
+                    }
+                },
+                shownssiframe: function (event) {
+                    event.preventDefault();
+                    $('.nss-container').slideToggle();
+                    
+                },
+                    
+
+                      showdatostable: function (event) {
+                      event.preventDefault();
+                    $('.datos-container').slideToggle();
+   
+                }
+                
+                 
+            }
+
+
+            $(function(){
+                validate.init();
+            });
+            
+            function isValidEmailAddress (emailAddress) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z 0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(!regex.test(emailAddress)) {
+                   return false;
+                }else{
+                   return true;
+                }
+            }
+                
+            $('.onlyNumbers').keyup(function () { 
+                    this.value = this.value.replace(/[^0-9\.]/g,'');
+                }),
+            $('.letras').keyup(function () { 
+                    this.value = this.value.replace(/[^a-zA-Z\ .]/g,'');
+                
+                });
+
+                
+        </script>
+         
+       </body>
+       
+       <style>
+    #validEmail
+    {
+        margin-top: 4px;
+        margin-left: 9px;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+    }
+    .error {
+        background-color: red;
+    }
+
+    .nss-container {
+        display: none;
+    }
+
+    .text
+    {
+        font-family: Arial, Tahoma, Helvetica;
+    }
+</style>
+    </html>
+</apex:page>

@@ -1,0 +1,140 @@
+<apex:page controller="Actualizar_Paneles_Controller">
+
+  <apex:variable value="{!$User.Id}" var="usuario"/>
+  <apex:variable value="{!IF(OR(usuario == '00531000006So1RAAS',usuario == '00531000007dOl3AAE'),true,false)}" var="activarBoton"/>
+
+        
+  <apex:pageblock title="CONSOLA DE ACTUALIZACION" id="todos">
+      <apex:pageblockSection title="Actualizacion de Oferta Cargada, Escrituras y Fecha prevista Escritura" columns="1">
+          <apex:form >
+              <apex:outputLink value="https://na25.salesforce.com/00O31000006Y0rv">Informe Oferta cargada</apex:outputLink>
+              <apex:variable var="cont" value="{!0}"/>
+              <apex:pageBlockTable title="Para poner Oferta Cargada" value="{!ofertaCargada}" var="cargada">
+                  <apex:column headerValue="#">
+                      <apex:variable var="cont" value="{!cont+1}"/>
+                      <apex:outputText value="{!cont}"/>
+                  </apex:column>
+                  <apex:column headerValue="Oferta">
+                      <apex:outputLink value="/{!cargada.Id}">{!cargada.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!cargada.Oferta_Cargada__c}" headerValue="Oferta Cargada"/>
+              </apex:pageBlockTable>
+              <apex:commandButton action="{!actualizaOferCargada}" value="Activar Oferta Cargada" rendered="{!AND(activarBoton,btnOffOferCargada)}" rerender="todos" />
+              <!-- onclick="this.disabled='disabled';" -->
+              <br/>
+              <br/>
+              <apex:outputLink value="https://na25.salesforce.com/00O31000006Y0s0">Informe Ofertas Caidas</apex:outputLink>
+              <apex:variable var="cont" value="{!0}"/>
+              <apex:pageBlockTable title="Para quitar Oferta Cargada de una Oferta Caida" value="{!ofertasCaidas}" var="caida">
+                  <apex:column headerValue="#">
+                      <apex:variable var="cont" value="{!cont+1}"/>
+                      <apex:outputText value="{!cont}"/>
+                  </apex:column>
+                  <apex:column headerValue="Oferta">
+                      <apex:outputLink value="/{!caida.Id}">{!caida.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!caida.Oferta_Cargada__c}" headerValue="Oferta Cargada"/>
+              </apex:pageBlockTable>
+              <apex:commandButton action="{!actualizaOferCaida}" value="Desactivar Oferta Cargada" rendered="{!AND(activarBoton,btnOffOferCaida)}" rerender="todos" />
+              <br/>
+              <br/>
+              <apex:outputLink value="https://na25.salesforce.com/00O31000006Xr2t">Informe Con o Sin Escritura</apex:outputLink><br/>
+              <apex:outputLink value="https://na25.salesforce.com/00O31000006Xr3X">Informe Fecha Prevista Escritura</apex:outputLink>
+              <apex:variable var="cont" value="{!0}"/>
+              <apex:pageBlockTable title="Para poner Con Escritura" value="{!ofertasConEscritura}" var="escritu">
+                  <apex:column headerValue="#">
+                      <apex:variable var="cont" value="{!cont+1}"/>
+                      <apex:outputText value="{!cont}"/>
+                  </apex:column>
+                  <apex:column headerValue="Oferta">
+                      <apex:outputLink value="/{!escritu.Id}">{!escritu.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!escritu.Escritu__c}" headerValue="Escrituras"/>
+                  <apex:column value="{!escritu.Fecha_Prevista_Desalojo__c}" headerValue="Fecha prevista de escrituras"/>
+              </apex:pageBlockTable>
+              <apex:commandButton action="{!actualizaOferConEscritu}" value="Actualizar Con Escrituras" rendered="{!AND(activarBoton,btnOffConEscrituras)}" rerender="todos" />
+              <br/>
+              <br/>
+              <apex:variable var="cont" value="{!0}"/>
+              <apex:pageBlockTable title="Para borrar Imagenes" value="{!imagenes}" var="imag">
+                  <apex:column headerValue="#">
+                      <apex:variable var="cont" value="{!cont+1}"/>
+                      <apex:outputText value="{!cont}"/>
+                  </apex:column>
+                  <apex:column headerValue="ID">
+                      <apex:outputLink value="/{!imag.Id}">{!imag.id}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!imag.name}" headerValue="Name"/>
+                  <apex:column value="{!imag.CreatedBy.name}" headerValue="CreatedBy(Name)"/>
+              </apex:pageBlockTable>
+              <apex:commandButton action="{!eliminaFotos}" value="Eliminar fotos" rendered="{!AND(activarBoton,btnOffFotos)}" rerender="todos" />
+              <br/>
+              <br/>
+              <!-- <apex:outputLink value="https://na25.salesforce.com/00O31000006Xr3X">Informe Fecha Prevista Escritura</apex:outputLink>
+              <apex:variable var="cont" value="{!0}"/>
+              <apex:pageBlockTable title="Para quitar Fecha Prevista" value="{!ofertasSinFechaPrevEscritu}" var="fecha">
+                  <apex:column headerValue="#">
+                      <apex:variable var="cont" value="{!cont+1}"/>
+                      <apex:outputText value="{!cont}"/>
+                  </apex:column>
+                  <apex:column headerValue="Oferta">
+                      <apex:outputLink value="/{!fecha.Id}">{!fecha.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!fecha.Fecha_Prevista_Desalojo__c}" headerValue="Fecha Prevista Escrituras"/>
+              </apex:pageBlockTable>
+              <apex:commandButton action="{!actualizaOferSinFechaPrev}" value="Remover Fecha Prevista" rendered="{!activarBoton}"/> -->
+              <br/>
+              <br/>
+          </apex:form>
+      </apex:pageblockSection>
+      
+      <apex:pageblockSection title="Actualizaicon de Panel Fijo" columns="1">
+          <apex:form >
+          <apex:outputLink value="https://na25.salesforce.com/00O31000006XuOs">PANEL OFERTA SEMANAL</apex:outputLink>
+          <apex:variable var="cont" value="{!0}"/>
+          <apex:pageBlockTable title="Para Actualizar el Panel Fijo" value="{!ofertasInfonavitConOferta}" var="bono">
+              <apex:column headerValue="#">
+                  <apex:variable var="cont" value="{!cont+1}"/>
+                  <apex:outputText value="{!cont}"/>
+              </apex:column>
+              <apex:column value="{!bono.Etapa__c}" headerValue="Etapa"/>
+              <apex:column headerValue="Oferta">
+                  <apex:outputLink value="/{!bono.Id}">{!bono.Name}</apex:outputLink>
+              </apex:column>
+              <apex:column value="{!bono.Owner.Name}" headerValue="Propietario"/>
+              <apex:column value="{!bono.Plaza__c}" headerValue="Plaza"/>
+              <apex:column value="{!bono.TipoOferta__c}" headerValue="Tipo Oferta"/>
+              <apex:column headerValue="Fecha Cierre">
+              <apex:repeat value="{!bono.Documentos__r}" var="bonoFecha">
+                  <apex:outputField value="{!bonoFecha.Fecha_Cierre__c}"/>
+              </apex:repeat>
+              </apex:column>
+              <apex:column value="{!bono.Escritu__c}" headerValue="Escrituras"/>
+          </apex:pageBlockTable>
+          <apex:commandButton action="{!agregarPanel}" value="Agregar al Panel Fijo" rendered="{!AND(activarBoton,btnOffPanelFijo)}" reRender="panelfijo,todos"/>
+          <br/>
+          <br/>
+          <center>
+              <apex:outputText value="PANEL FIJO" style="font-size: 25px; color: #1D55A4;"/>
+          </center>
+          <apex:outputLink value="https://na25.salesforce.com/00O31000006Xsjt">Panel Fijo</apex:outputLink>
+          <apex:variable var="cont" value="{!0}"/>
+          <apex:pageBlockTable id="panelfijo" title="Panel Fijo" value="{!listaPanelFijo}" var="bono">
+              <apex:column headerValue="#">
+                  <apex:variable var="cont" value="{!cont+1}"/>
+                  <apex:outputText value="{!cont}"/>
+              </apex:column>
+              <apex:column value="{!bono.Plaza__c}" headerValue="Plaza"/>
+              <apex:column value="{!bono.Name}" headerValue="Oferta"/>
+              <apex:column value="{!bono.Gerente__c}" headerValue="Gerente"/>
+              <apex:column value="{!bono.Escrituras__c}" headerValue="Escrituras"/>
+              <apex:column value="{!bono.Tipo_de_Oferta__c}" headerValue="Tipo Oferta"/>
+              <apex:column value="{!bono.Fecha_de_Oferta__c}" headerValue="Fecha de Oferta Cargada"/>
+              <apex:column value="{!bono.Fecha_de_Oferta_Caida__c}" headerValue="Fecha de Oferta Caida"/>
+          </apex:pageBlockTable>
+          
+          </apex:form>
+      </apex:pageblockSection>
+  </apex:pageblock>
+  
+</apex:page>

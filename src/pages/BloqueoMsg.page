@@ -1,0 +1,14 @@
+<apex:page standardcontroller="Oferta__c">  
+                
+    <apex:form >
+        <apex:image width="50" height="50" value="{!$Resource.tache}"/>
+        <br> </br>
+        <h1>Oferta: {!Oferta__c.Name}</h1>
+        <br> </br>
+        <h1>Bloqueada debido a que uno o más pasos tienen Semáforo Rojo o está Descartada</h1>
+        <br> </br>
+        Llame a su supervisor para continuar
+        <br> </br>
+        <apex:commandButton action="{!cancel}" value="Cerrar" id="theButton"/>
+    </apex:form>
+</apex:page>

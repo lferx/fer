@@ -1,0 +1,31 @@
+<apex:page controller="Consola_Tareas_Controller" >
+
+  <table border="1">
+    <thead>
+      <th>Lead</th>
+      <th>Tarea</th>
+      <th>Estatus</th>
+      <th>Tiempo Restante</th>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!listaTareas}" var="tarea">
+        <tr>
+          <td>
+            <apex:outputField value="{!tarea.What.name}" />
+          </td>
+          <td>
+            <apex:outputField value="{!tarea.Comentarios__c}" />
+          </td>
+          <td>
+            <apex:outputField value="{!tarea.Status}" />
+          </td>
+          <td>
+            <apex:outputField value="{!tarea.ActivityDate}" />
+          </td>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+  
+
+</apex:page>

@@ -1,0 +1,630 @@
+<apex:page showHeader="true" sidebar="false" controller="ConsolaComercialController">
+	<style>
+		@font-face {
+	    	font-family: 'Bebas-Neue';
+	    	src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+	    }
+	    @font-face {
+	    	font-family: 'gotham-rounded-book';
+	    	src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+	    }
+	    @font-face {
+	    	font-family: 'gotham-rounded-medium';
+	    	src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+	    }
+		*{
+			
+			/*font-size: 15px;
+		    font-style: normal;
+		    font-family: Arial,Helvetica,sans-serif;
+    		color: #222;*/
+		}
+		section > div{
+			border:3px solid red;
+			/*background-color: rgba(226,226,226,1);
+			background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 0%, rgba(219,219,219,1) 24%, rgba(244,244,244,1) 71%, rgba(254,254,254,1) 90%, rgba(254,254,254,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+*/
+		}
+		.stockTable{
+			width: 100%;
+			height: 100vh;
+
+		}
+		.stockTable thead{
+			/*position: fixed;*/
+		}
+		.stockTable tbody{
+			overflow: auto;
+		}
+		.stockTable tr td{
+			word-break: all;
+		}
+		/*section div:first-child{
+			min-height: 300px;
+		}*/
+		img{
+			/*width: 20%;*/
+		}
+		.contenedor005{
+			display: grid;
+		    grid-template-columns: 10% auto 15%;
+		    grid-template-rows: auto 75vh 13vh;
+		    grid-template-areas: 
+		    "headerL header headerR" 
+		    "left stock right" 
+		    "footer footer footer";
+		}
+		.div1-1{
+			grid-area: headerL;
+		}
+		.div1-2{
+			grid-area: headerR;
+		}
+		.div1{
+			grid-area: header;
+		}
+		.div2{
+			/*AQUI ESTA EL STOCK*/
+			grid-area: stock;
+			max-width: 1000px;
+			overflow: auto;
+		}
+		.div3{
+			grid-area: left;
+			word-break: all;
+		}
+		.div4{
+			grid-area: right;
+		}
+		.div5{
+			grid-area: footer;
+		}
+		
+		.myphoto{
+			border-radius: 50%;
+			width: 10%;
+		}
+		.logo{
+			width: 100%;
+		}
+		.argumentos{
+	        width: 100% !important;
+	    }
+	    .sidebarCollapsible {
+    		padding: 0 0 0 0 !important;
+		}
+
+		.noSidebarCell, .sidebarCell .fixed {
+		    padding: 0 0 0 0 !important;
+		}
+		.noTableFooter {
+		    display: none !important;
+		}
+	</style>
+	<section class="contenedor005">
+		<div class="div1-1">
+			<div class="TaskSearch">
+				<apex:form >
+				 	<c:TaskSearch />
+			 	</apex:form>
+			</div>
+		</div>
+		<div class="div1-2">
+			<img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="logo" />
+		</div>
+		<div class="div1">
+			<center>
+	            
+	            <div class="chip2 cabecera">
+	                <img class="myphoto" src="{!Photolink}" />Bienvenido {!$User.FirstName}
+	                <p class="nombrelead">Nombre Lead: {!nombre}</p>
+	            </div>
+	        </center>
+        </div>
+		<div class="div2">
+		<apex:form >
+			<table class="stockTable" border="1">
+        <thead id="tableHeader">
+            <tr>
+            <!-- ////////////////////////////////////HEADER NÚMERO /////////////////////////-->
+                <th class="mediumColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/020-price-tag.png')}" />
+                <div>Folio <br />Oferta</div>
+                </th>
+                <!-- //////////////////////////////////// HEADER ESTADO /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/016-mexican-republic-map-black-shape.png')}" />
+                        Estado
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idestado" html-class="listaSeleccion" value="{!EstadoSelec}"  multiselect="True">
+                            <apex:selectOptions value="{!edoLst}"/>
+                            <apex:actionSupport action="{!actualizar}" event="onchange" reRender="lista,idusuario,idoferta,idescrituras,idprecio,iddias,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid"/>
+                        </apex:selectList>
+                         <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b1" value="Ordenar a-z" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b2" value="Ordenar z-a" action="{!ordenar}" reRender="b1,b2" disabled="{!IF(AND(campoOrden=='Estado__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estado__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER CIUDAD /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/015-neighborhood.png')}" />
+                        Ciudad
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idciudad" html-class="listaSeleccion" value="{!CiudadSelec}" multiselect="True">
+                            <apex:selectOptions value="{!cdLst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl07,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b3" value="Ordenar a-z" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b4" value="Ordenar z-a" action="{!ordenar}" reRender="b3,b4" disabled="{!IF(AND(campoOrden=='Ciudad_Tabla__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Ciudad_Tabla__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER COLONIA /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/014-two-houses.png')}" />
+                        Colonia
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idcolonia" html-class="listaSeleccion" value="{!ColoniaSelec}" multiselect="True">
+                            <apex:selectOptions value="{!colLst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl08,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b5" value="Ordenar a-z" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b6" value="Ordenar z-a" action="{!ordenar}" reRender="b5,b6" disabled="{!IF(AND(campoOrden=='Colonia_Busqueda__r.Name',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Colonia_Busqueda__r.Name" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// HEADER DIRECCION /////////////////////////-->
+                <th class="largeColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/013-placeholder.png')}" /><div>Direccion</div></th>
+                <!-- //////////////////////////////////// HEADER TERRENO M2 /////////////////////////-->
+                <!--th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/012-school-material.png')}" />
+                        Terr m<sup>2</sup>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idmetros2" html-class="listaSeleccion" value="{!trn}">
+                            <apex:selectOptions value="{!trnlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="idusuario,idmetros2,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                    </div>
+                </th-->
+                <!-- //////////////////////////////////// HEADER CONS M2 /////////////////////////-->
+                <!--th class="mediumColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/011-helmet.png')}" /><div>Cons m<sup>2</sup></div>
+                    <div class="filtroHidden">
+                        filtro
+                    </div>
+                </th-->
+                <!--///////////////////////////////////HABITACIONES//////////////////////////////->
+                <th class="smallColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/010-open-exit-door.png')}" />
+                        Habs<br/>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idhabitaciones" html-class="listaSeleccion" value="{!nhs}">
+                            <apex:selectOptions value="{!nhlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!--BAÑOS////////////////////////////////////////////////////////////////////////////////->
+                <th class="smallColumn"><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/009-toilet.png')}" /><div>Baños</div>
+                    <div class="filtroHidden">
+                        filtro
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// ESCRITURAS /////////////////////////-->
+                <th class="smallColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/008-file.png')}" />
+                        Escrituras<br/>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idescrituras" html-class="listaSeleccion" value="{!ess}">
+                            <apex:selectOptions value="{!eslst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl03,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b7" value="Ordenar a-z" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b8" value="Ordenar z-a" action="{!ordenar}" reRender="b7,b8" disabled="{!IF(AND(campoOrden=='Escritu__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Escritu__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!--////////////////////////////////////// ESTATUS DE INVASIÓN //////////////-->
+                <th class="mediumColumn">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/007-locked.png')}" />
+                        <div>Estatus de <br/> invasion</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idinvasion" styleClass="listadeseleccion" value="{!InvasionSelec}" multiselect="True">
+                            <apex:selectOptions value="{!inlst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl09,idescrituras,idestado,idciudad,idcolonia,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                        </apex:selectList>
+                        <br/>
+                         <apex:actionRegion >
+                            <apex:commandButton id="b9" value="Ordenar a-z" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b10" value="Ordenar z-a" action="{!ordenar}" reRender="b9,b10" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                    
+                </th>
+                <!-- //////////////////////////////////// VALOR DE REFERENCIA /////////////////////////-->
+                <th class="mediumColumn">
+                    <div class="mostrarFiltro" style="font-size: 10px;">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/006-money.png')}" />
+                        <div>Valor de <br/>referencia</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idprecio2" html-class="listaSeleccion"  value="{!prs2}">
+                            <apex:selectOptions value="{!prlst2}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                            <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+
+                        </apex:selectList>
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b11" value="Ordenar a-z" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b12" value="Ordenar z-a" action="{!ordenar}" reRender="b11,b12" disabled="{!IF(AND(campoOrden=='ValorReferencia__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="ValorReferencia__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// PRECIO ORIGINAL /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                <div class="mostrarFiltro">
+                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/006-money.png')}" />
+                    <div>Precio <br/> original</div>
+                    <span class="glyphicon glyphicon-download" id="icono"></span>
+                </div>
+                <div class="filtroHidden">
+                    <apex:selectList id="idprecio" html-class="listaSeleccion"  value="{!prs}">
+                        <apex:selectOptions value="{!prlst}"/>
+                        <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl04,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo"/>
+                    </apex:selectList>
+                    <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                    <br/>
+                    <apex:actionRegion >
+                        <apex:commandButton id="b13" value="Ordenar a-z" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'asc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                            <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c"/>
+                        </apex:commandButton>
+                        <apex:commandButton id="b14" value="Ordenar z-a" action="{!ordenar}" reRender="b13,b14" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'desc'),true,false)}">
+                            <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                            <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c" />
+                        </apex:commandButton>
+                    </apex:actionRegion>
+                    <br/>
+                    <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                </div>
+                </th>
+                <!-- //////////////////////////////////// DÍAS EN STOCK /////////////////////////-->
+                <th class="mediumColumn" onmouseleave="hideDiv('filtroHidden');" onchange="hideDiv('filtroHidden')">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/003-calendar.png')}" />
+                        <div>Días en <br/> stock</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="iddias" html-class="listaSeleccion" value="{!dis}">
+                            <apex:selectOptions value="{!dilst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" oncomplete="llenadoPagina();" reRender="fl05,idusuario,idoferta,idescrituras,idprecio,iddias,idestado,idciudad,idcolonia,idinvasion,idetapa,idrehabilitacion,paginacion,asid,idhabitaciones,idhtipo" />
+                        </apex:selectList>
+                        <!-- <apex:actionFunction name="llenadoPagina" action="{!llenadoPaginas}" reRender="formid"/> -->
+                        <br/>
+                        <apex:actionRegion >
+                            <apex:commandButton id="b15" value="Ordenar a-z" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b16" value="Ordenar z-a" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='TiempoOferta__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="TiempoOferta__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/>
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// DETALLES /////////////////////////-->
+                <th class="smallColumn">
+                    <div class="mostrarFiltro">
+                        <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/005-construction-1.png')}" />
+                        <div>Rehab.</div>
+                        <span class="glyphicon glyphicon-download" id="icono"></span>
+                    </div>
+                    <div class="filtroHidden">
+                        <apex:selectList id="idrehabilitacion" styleClass="listadeseleccion" value="{!rehas}">
+                            <apex:selectOptions value="{!rehalst}"/>
+                            <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl11,idescrituras,idestado,idciudad,idcolonia,idinvasion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                        </apex:selectList>
+                        <br/>
+                         <!-- <apex:actionRegion >
+                            <apex:commandButton id="b15" value="Ordenar a-z" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'asc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="asc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c"/>
+                            </apex:commandButton>
+                            <apex:commandButton id="b16" value="Ordenar z-a" action="{!ordenar}" reRender="b15,b16" disabled="{!IF(AND(campoOrden=='Estatus_de_Invasion__c',tipoDeOrden == 'desc'),true,false)}">
+                                <apex:param assignTo="{!tipoDeOrden}" value="desc"/>
+                                <apex:param assignTo="{!campoOrden}" value="Estatus_de_Invasion__c" />
+                            </apex:commandButton>
+                        </apex:actionRegion>
+                        <br/> -->
+                        <apex:commandButton value="OK" action="{!llenadoPaginas}" reRender="formid"/>
+                    </div>
+                </th>
+                <!-- //////////////////////////////////// AGREGAR AL CARRITO /////////////////////////-->
+                <th class="mediumColumn">
+                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" />
+                    <div>Agregar al <br/>carrito</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tableBod">
+            <apex:variable value="{!num2}" var="Contador" />
+            <apex:repeat value="{!CASE(npag2,1,pag1,2,pag2,3,pag3,4,pag4,5,pag5,6,pag6,7,pag7,pag1)}" var="oferta">
+                <tr class="{!IF(oferta.boleano,'recientes','tds')}">
+                    <td class="mediumColumn">
+                        <apex:outputLink target="_blank" value="/{!oferta.registro.Id}">{!oferta.registro.Name}</apex:outputLink>
+                        <br />
+                        <apex:image value="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>',URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                        <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/004-eye-open.png')}" styleClass="vercarroimagen" onclick="ab('{!oferta.registro.Id}')" />
+                    </td>
+                        <!-- <apex:outputPanel layout="none" rendered="{!!huboReferencia}"> -->
+                    <td class="mediumColumn">
+                            <!-- Columna para Estado ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+                    </td>
+                    <td class="mediumColumn">
+                            <!-- Columna para Ciudad ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+                    </td>
+
+                    <td class="mediumColumn">
+                            <!-- Columna para colonia ////////////////////////////////////////////////////////// -->
+                            <apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/>
+                    </td>
+                    <td class="largeColumn">
+                        <!-- Columna para direccion ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{!oferta.registro.Direccion2__c}" escape="false"/>
+                    </td>
+                    <!--td class="mediumColumn">
+                        <!-- Columna para terreno m2////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{0,number}">
+                                <apex:param value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                        </apex:outputText>
+                    </td-->
+                    <!--td class="mediumColumn">
+                        <!-- Columna para Construcción m2 ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{0,number}">
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                        </apex:outputText>
+                    </td->
+                    <td class="smallColumn">
+                        <!-- Columna para numero de habitaciones ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                    </td>
+                    <td class="smallColumn">
+                        <!-- Columna para numero de baños ////////////////////////////////////////////////////////// ->
+                        <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                    </td-->
+                    <td class="smallColumn">
+                        <!-- Columna para Escrituras ////////////////////////////////////////////////////////// -->
+                        <apex:image value="{!IF(oferta.registro.Escritu__c == 'Con Escrituras', URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}"/>
+                        <!--apex:outputText value="{!oferta.registro.Escritu__c}"/-->
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para Estatus ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.ValorReferencia__c}"/>
+                        </apex:outputText>
+                    </td>
+                    <td class="mediumColumn">
+                        <!-- Columna para Precio original ////////////////////////////////////////////////////////// -->
+                        <apex:outputText value="{0,number,###,###}">
+                                <apex:param value="{!oferta.registro.Precio_Original__c}"/>
+                        </apex:outputText>
+                    </td>
+                    <td class="mediumColumn">
+                    <!-- Columna para dias en stock  ////////////////////////////////////////////////////////// -->
+                    <apex:outputText value="{0,number}">
+                        <apex:param value="{!oferta.registro.TiempoOferta__c}"/>
+                    </apex:outputText>
+                    </td>
+                    <td class="smallColumn">
+                        <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                    </td>
+                    <td class="mediumColumn">
+                        <apex:actionRegion >
+                            <apex:outputPanel id="imagenCarrito" rendered="{!!oferta.active}">
+                                <div>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" styleClass="agregacarroimagen" onclick="cambiarimagen(this);agregar('{!oferta.registro.Id}');">
+                                    </apex:image>
+                                    <apex:image url="{!URLFOR($Resource.iconos_stock, 'iconos24/shopping-cart.png')}" style="width: 40px;height: 40px; display: none" styleClass="opaca"/>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!oferta.active}">
+                                <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+                            </apex:outputPanel>
+                        </apex:actionRegion>
+                        <br/><!--////////////////////////////BOTON DE DETALLES//////////////////////////////////-->
+                        <apex:commandButton styleClass="botonesCorreos" style="position: relative; left: -6px; padding: 2px" value="Detalles" onclick="showDetails(this)" reRender="Object" />
+                        <div class="detailsTable"  onmouseleave="hideDiv('detailsTable');">
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/018-footprints.png')}" />
+                                    <span>Etapa</span>
+                                </div>
+                                <apex:outputText value="{!IF(oferta.registro.Etapa__c == 'Rehabilitación','E 10',IF(oferta.registro.Etapa__c == 'Compilación expediente cliente','E 9',IF(oferta.registro.Etapa__c == 'Escrituras en proceso registro','E 8',IF(oferta.registro.Etapa__c == 'Compra final','E 7',IF(oferta.registro.Etapa__c == 'Compilación expediente compra','E 6',IF(oferta.registro.Etapa__c == 'Aprobada internamente','E 5',IF(oferta.registro.Etapa__c == 'Antecedentes','E 4',oferta.registro.Etapa__c)))))))}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/017-alert.png')}" />
+                                    <span>Oferta Cargada</span>
+                                </div>
+                                <apex:image value="{!IF(oferta.registro.Oferta_Cargada__c,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" styleClass="imagestyle"/>
+                            </div>
+                            <!--div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/007-locked.png')}" />
+                                    <span>Estatus de Invasion</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                            </div>
+                            <!--div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/004-eye-open.png')}" />
+                                    <span>Revisado</span>
+                                </div>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/005-construction-1.png')}" />
+                                    <span>Rehab</span>
+                                </div>
+                                <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                            </div-->
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/012-school-material.png')}" />
+                                    <span>Terreno m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/011-helmet.png')}" />
+                                    <span>Cons m<sup>2</sup></span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/010-open-exit-door.png')}" />
+                                    <span>Habs</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                            </div>
+                            <div class="detailField">
+                                <div class="detailFieldName">
+                                    <apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/009-toilet.png')}" />
+                                    <span>Baños</span>
+                                </div>
+                                <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                            </div>
+                        </div>
+
+                         <!--apex:actionRegion >
+                                                                <apex:outputPanel rendered="{!IF(x.active,false,true)}">
+
+                                                                    <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" styleClass="agregacarroimagen" >
+                                                                        <apex:actionSupport event="onclick" action="{!agregar}" reRender="tablabusca87"> <!-- antes tabladeresultados ->
+                                                                            <apex:param name="hola" value="{!x.oferta.Id}" assignTo="{!ofertaId}"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!x.active}">
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+                                                                </apex:outputPanel>
+                                                            </apex:actionRegion-->
+                    </td>
+                </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+    </apex:form>
+		</div>
+		<div class="div3">
+			<apex:form >
+            	<apex:variable value="ConsolaComercial" var="pagina"/>
+				<c:Menu_rapidolead account="{!idReferencia}" visual="{!pagina}" />
+			</apex:form>
+		</div>
+		<div class="div4">
+			<div class="argumentos">
+				<c:Stock />
+			</div>
+
+		</div>
+		<div class="div5">5</div>
+	</section>
+</apex:page>

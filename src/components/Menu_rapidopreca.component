@@ -1,0 +1,650 @@
+<apex:component Controller="Crear_Lead_controller">
+
+<!-- 
+
+color azul fuerte: #0C326B
+COLOR AZUL CLARO: #4DB1E0 
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+COLOR ROJO: #FF0000
+COLOR AMARILLO: #FFE933
+COLOR VERDE: #1D8348
+color gris:  #cfcfcf
+morado claro: A37DB3;
+morado fuerta: 672183;
+
+--><!-- 
+    <head>
+        
+        <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+        <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>jQuery UI Tooltip - Default functionality</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+        <style type="text/css"> 
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            body{
+                width:99%;
+                background-color: #fff;
+            }
+            h1{
+                font-family: 'Bebas-Neue';
+                font-size: 23px;
+                text-transform:uppercase;
+            }
+            h11{
+                font-family: 'Bebas-Neue';
+                font-size: 18px;
+                text-transform:uppercase;
+            }
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            h3{
+                font-weight: bold;
+                font-size: 11px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 13px;
+                color: #0C326B;
+            }
+            h5{
+                font-size: 10px;
+                color: #fff;
+            }
+            h6{
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                color: #fff;
+            }
+            .header{
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                border-bottom: 25px solid #D1DA28; 
+                height: 800px ;
+            }
+            .table {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable tr td{
+                height: auto;
+                display:inline;
+                padding-top: 20px;
+            }
+            .headertable2 {
+                background-color:#fff;
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable2 tr{
+                background-color:#fff;
+                width: auto;
+                height: auto;
+            }
+            .headertable2 tr td{
+                background-color:#fff;
+                height: auto;
+
+            }
+            .headertable3 {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 600px;
+            }
+            .headertable3 tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable3 tr td{
+                height: auto;
+                padding: 15px 40px 15px 40px;
+            }
+            .detallestabla4 td:first-child{
+                text-align: right;
+
+            }
+            .detallestabla4 td{
+
+                text-align: left;
+            }
+            .botones,.botonesfijar{
+                font-family: 'gotham-rounded-medium' !important;
+                font-size: 10px !important;
+                text-transform:uppercase !important;
+                display:block !important;
+                width:170px !important; 
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 3px 0px 3px 0px !important;
+                margin: 20px !important;
+            }
+            .botones {
+                background: #D1DA28 !important;
+                background-color: #D1DA28 !important;
+                color: #0C326B !important;
+            }
+            .botonesfijar{
+                background: #A37DB3 !important;
+                background-color: #A37DB3 !important;
+                color: #fff !important;
+            }
+            .botones:hover{
+                background: #A6AE1A !important;
+            }
+            .botones:active{
+                background: #C95A50 !important;
+            }
+            .botonesfijar:hover{
+                background:#672183 !important;
+            }
+            .botonesfijar:active{
+                background: #C95A50 !important;
+            } 
+            .botonred{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #17202A !important;
+                display:block !important;
+                width 100px !important; 
+                background: #FF0000 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botonyellow{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #17202A !important;
+                display:block !important;
+                width 100px !important; 
+                background: #FFE933 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botongreen{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #17202A !important;
+                display:block !important;
+                width 100px !important; 
+                background: #1D8348 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }            
+            .botones2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #17202A !important;
+                display:block !important;
+                width 100px !important; 
+                background: #4DB1E0 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones3{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width 100px !important; 
+                background: #6C3483 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones3v2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width 100px !important; 
+                background: #FF0000 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones3v3{
+                    font-family: 'gotham-rounded-book' !important;
+                    font-size: 10px  !important;
+                    text-transform:uppercase !important;
+                    color: #fff !important;
+                    display:block !important;
+                    width 100px !important; 
+                    background: #FFE933 !important;
+                    border-radius: 10px !important;
+                    cursor: pointer !important;
+                    padding: 5px !important;
+                    margin: 20px !important;
+                }
+            .botones3v4{
+                    font-family: 'gotham-rounded-book' !important;
+                    font-size: 10px  !important;
+                    text-transform:uppercase !important;
+                    color: #fff !important;
+                    display:block !important;
+                    width 100px !important; 
+                    background: #1D8348 !important;
+                    border-radius: 10px !important;
+                    cursor: pointer !important;
+                    padding: 5px !important;
+                    margin: 20px !important;
+                } 
+            .botones4{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 10px  !important;
+                text-transform:uppercase !important;
+                color: #4D5656 !important;
+                display:block !important;
+                width 100px !important; 
+                background: #BDC3C7 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones2:hover{
+                background: #2A85AF !important;
+            }
+            .botones2:active{
+                background-color:#D1DA28 !important;
+            }
+            .contenedorfiltros{
+                width:200px; 
+                height:auto;
+            }
+            .divfiltrolabel{
+                cursor:pointer;
+                background: url('{!URLFOR($Resource.consolas, 'recursos/icons/flecha-boton.png')}') top right no-repeat;
+                background-size: 10% 100%;
+                background-color:#cfcfcf;
+                color:#0C326B;
+                position: reltive;
+                width:200px;
+                height:18px;
+                z-index:1000;
+                
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 40px;
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+            }
+            .divfiltrolista{
+                display:none;
+                background-color:red;
+                width:auto;
+                min-width:200px;
+                height:auto;
+                position: absolute;
+                z-index:1000;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;
+                max-height:500px;
+            }
+            .labelcontador{
+                font-family: "gotham-rounded-book" !important;
+                font-size: 20px  !important;
+                background: #0C326B;
+                border-radius: 60px;
+                padding: 10px 10px 10px 10px;
+                font-size: 16px;
+                color: white;
+                margin: 30px 30px !important;
+            }
+            .pagination {
+                display: inline-block;
+                background-color: #fff;
+            }
+            .pagination a {
+                font-family: "gotham-rounded-book" !important;
+                font-size: 14px  !important;
+                color: black;
+                float: left;
+                padding: 5px 10px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+            .pagination a.active {
+                background-color: #5A2A7E;
+                color: white;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }            
+            .tdtrue{
+                background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+            }
+            .tdfalse{
+                background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;                
+            }
+            .imagestyle{
+                width:30px;
+                filter: grayscale(30%);
+            }
+            .styledetalles{
+                display: none;
+                font-size:12px;
+                font-weight: normal;
+                max-width: 600px;               
+            }
+            .imgth{
+                width: 30px;
+                height: 30px;
+            }
+            .sectioncabecera{
+                border-radius: 15px 15px 0px 0px;
+                background-color: #C95A50;
+                height: 40px;
+                padding: 7px 2px 0px 2px;
+                width: auto;
+            }
+            .section{
+                position: relative;
+                border: 1px solid #fff;
+                border-spacing: 2px;
+                padding-top: 90px;
+                background: #fff;
+                border-radius:10px;
+                width:100%;
+                height:100%;          
+            }
+            .container {
+                display:block;
+                min-height: 150px;
+                max-height: calc(100vh - 210px);
+                height: 100%;
+                overflow-y: auto;
+                width:100%;
+            }
+            .table2 {
+                border-spacing: 2px;
+                width:100%;
+            }
+            .table2 td,th {
+                border-bottom:1px solid #eee;
+                background: #fff;
+                color: #000;
+                padding: 3px 10px;
+                max-width:200px;
+                width:auto;
+                text-align: center;
+            }
+            .table2 th {
+                height: 0;
+                line-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                color: transparent;
+                border: none;
+                white-space: nowrap;
+                text-align: center;
+            }
+            .table2 th div{
+                position: absolute;
+                background: transparent;
+                color: #000;
+                padding: 2px 5px;
+                top:0;
+                margin-left: -10px;
+                line-height: normal;
+                border-left: 1px solid #C0C4C5;
+                text-align: center;
+                width: auto;
+            }
+            .table2 th:first-child div{
+                border: none;
+            }
+            .recientes td{
+                background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+            }
+            .imagensistemas{
+                width: 30px;
+                height: 30px;
+                border-radius:50%;
+                transition: 1s;
+                float: centre;
+                position: relative;
+                left: 5px;
+                bottom: -12px;
+            } 
+            .imagensistemas:hover{
+                width: 90px;
+                height: 90px;
+                transition-timing-function: ease;
+                border-radius:0%;
+            }
+            .comentariosbotoneditar{
+                background-color: white;
+                position:relative;
+                padding:2px;
+                border: 1.5px solid #CED0D1;
+                height:21px;
+                width:20px;
+                border-radius:5px;
+                transition:0.2s;
+                box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+                filter: brightness(96.5%);                
+            }
+            .comentariosbotoneditar:hover {
+                background-color: #DBF4FC;
+                color: white;
+                transition-timing-function:ease;
+                height:25px;
+                width:25px;
+            }
+            .comentarioscontainer{
+                background-image: url("{!$Resource.ventana_comentario}");
+                border-radius:20px;
+                position:absolute;
+                z-index:1000;
+                height:200px;
+                width:300px;
+                border: .5px solid #000;
+                top: calc(30% - 100px);
+                left: calc(75% - 150px);
+                filter: opacity(95%);
+            }
+            .comentarioslabel{
+                position:relative; 
+                left: 88px; 
+                top: 45px; 
+            }
+            .comentariostexto{
+                position:relative; 
+                align:center;
+                left: 50px;
+                top: 45px;
+                width:200px;
+                height:70px;
+            }
+            .comentariosbotonguardar{
+                position:relative;
+                background-size:cover;
+                width:85px;
+                top: 50px;
+                float: left;
+                margin: 0px 25px 0px 25px;
+            }
+            .filtrocaja1{
+                position: reltive;
+                width:auto; 
+                height:18px;
+                float:left;
+            }
+            .filtrocaja2{
+                position: reltive;
+                width:auto;
+                height:18px;
+                z-index:1000;
+                background-color:#fff;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;    
+            }
+            .filtrocaja2:hover{
+                height:auto;
+                max-height:500px;
+                overflow: auto;
+                display: inline-block;
+                position: relative;
+            }
+            .filtrolabel{
+                float:left;
+            }
+            .listadeseleccion{
+                cursor:pointer;
+                width:200px;
+            }
+            
+            
+            .menuRapido{
+                         height: 500px;
+                         widht:300px;
+                         display:inline;
+                        }
+                                
+            
+                      
+                                
+        </style>
+           
+    </head>
+                               
+    <body> 
+    
+      <div class="">
+                                
+                <table class="menuRapido" align="left" border="0">
+                      <tr>
+                        <td><h1 style="color: #A9CCE3;">MENÚ RÁPIDO</h1></td>
+                      </tr>   
+                   <td colspan="4" align="center">
+                       <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="top" title="Ir a Datos Lead" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!datoslead}"/>    
+                        </apex:image>
+                        <apex:image id="ButtonLead" url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="top" title="Ir a Precalificaciòn / Forma de pago" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!precalificacion}"/>    
+                        </apex:image>
+                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Stock" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!stock}"/>    
+                        </apex:image>
+                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Envio ficha" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!datoslead}"/>    
+                        </apex:image>
+                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Cita" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!citalead}"/>    
+                        </apex:image>
+                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/home.png')}" html-data-toggle="tooltip" html-data-placement="right" title="Ir a Aut. oferta / cotizador" styleClass="botones3v2">
+                           <apex:actionSupport immediate="true" event="onclick" action="{!datoslead}"/>    
+                        </apex:image><br/><br/>
+                     </td>           
+                </table> 
+             
+        </div>
+                    
+           <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+
+            function checkButtonColor(){
+                var newClass = '';
+                var total = 0;
+                var suma = 0;
+
+                //validaciones
+                $.each($('.validated'),function(index, value){
+                    if($(this)[0].value!=''){
+                        suma += 1;
+                    }
+                    total += 1;
+                });
+
+                // Porcentaje
+                var percent = (suma/total)*100;
+
+                if(percent < 60){
+                    newClass = 'botonred'; 
+                }
+
+                if(percent >= 60){
+                    newClass = 'botonyellow'; 
+                }
+
+                if(percent == 100){
+                    newClass = 'botongreen'; 
+                }
+
+                $('[id*=ButtonLead]').attr('class',newClass);
+
+                console.log('suma:'+suma);
+                console.log('total:'+total);
+                console.log('newClass:'+newClass);
+                console.log('percent:'+percent);
+            }
+
+           </script>
+        
+   </body> -->
+
+</apex:component>

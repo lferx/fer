@@ -1,0 +1,267 @@
+<apex:page controller="panel_compras_controller" showHeader="false" sidebar="true" action="{!panel_oferta_compras}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<apex:form id="form">
+
+	<apex:outputPanel layout="none" id="stylesheet">
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock {
+			    background-color: #fff;
+			    border-bottom: 1px solid #eaeaea;
+			    border-left: 1px solid #eaeaea;
+			    border-top-style: none;
+			    height: 100vh;
+			}
+			.asignar_coordinador{
+				display: flex;
+			    width: 50%;
+			    margin: auto;
+			    min-height: 3vh;
+				box-shadow: inset 0px 0px 65px -1px rgba(53,180,233,0.9);
+				-moz-transition: background-color 0.5s ease-out;
+				-o-transition: background-color 0.5s ease-out;
+				transition: background-color 0.5s ease-out;
+			}
+			.asignar_coordinador:hover{
+				background-color: rgba(53,180,233,1);
+			}
+			.coordinador{
+				margin: auto;
+			    display: flex;
+			    align-items: center;
+			}
+			select{
+				background-color: rgba(3,116,237,0.1);
+				border: 2px solid #fff;
+			}
+			.foto{
+			    border: none;
+			    width: 15%;
+			    height: 4vh;
+			    border-radius: 50%;
+			}
+			.foto:hover{
+				border: 1px solid #fff;
+			}
+			.ctn_gral_desJudicial{
+				display: flex;
+			}
+			.dates_grafica, .datos{
+			    border: none;
+			    border-left: 1px solid;
+			    border-bottom: 1px solid;
+			    border-top: 2px solid rgba(53,180,233,1);
+			    border-right: 2px solid rgba(53,180,233,1);
+			    width: 100%;
+			    display: grid;
+			    grid-auto-columns: 1fr;
+			    /*grid-template-columns: 1fr 1fr 1fr 1fr 1fr;*/
+			}
+			.barra_time{
+				width: 7%;
+				display: inline-table;
+			}
+			.Meses{
+				border: none;
+				border-top: 1px solid;
+				/*border: 1px solid;*/
+				text-align: right;
+				font-size: 110%;
+				width: 100%;
+				height: 7.52vh;
+				word-break: break-all;
+			}
+			.indicador_etapas{
+			    display: grid;
+			    align-content: center;
+				/*background-color: rgba(53,180,233,0.2);*/
+				background-color: rgba(53,180,233,1);
+				color: #fff;
+				box-shadow: inset 0 0 0 1px #FFF;
+			}
+			.indicador_etapas h1{
+				text-align: center;
+			}
+			.indicador_etapas:hover{
+				opacity: 0.8;
+			}
+			.dates_grafica{
+				background-color: rgba(54, 160, 254, 0.01);
+				height: 91vh;
+			}
+			.datos{
+				border-left: none;
+			    border-bottom: none;
+			    border-top: none;
+			    border-right: none;
+			    align-content: flex-start;
+				/*	outline: none;
+					align-content: flex-start;
+					height: 9vh;*/
+			}
+			.mapa_gral{
+			    display: flex;
+			    align-items: flex-end;
+			    /*border: 1px solid;*/
+			}
+			.linea_punteada{
+				/*	border: 2px solid;
+				border-style: dotted;
+				border-top: none;
+				border-left: none;
+				border-bottom: none;*/
+				border-color: #6da1ea;
+				width: 100%;
+			}
+			.datos_mapa{
+			    text-align: center;
+			    display: inline-grid;
+			    word-break: break-all;
+			    margin-right: 0%;
+			    background: rgba(53,180,233,0.2);
+			    border-left: 1px solid #fff;
+			    height: 7.52vh;
+				/*#79c4de*/
+			}
+			.datos_mapa:hover{
+				background-color: rgba(53,180,233,1);
+				color: #fff;
+			}
+			.etapas{
+			    position: relative;
+			    /* opacity: 0.95; */
+			    display: inline-block;
+			    border: none;
+			    width: 20%;
+			    /* height: 20px; */
+			    background-color: #35b4e9;
+			    margin: 0% 0% 0% 1px;
+			    box-shadow: inset 0px 0px 65px -1px rgba(53,180,233,0.9);
+			    -webkit-transition: background-color 0.5s ease-out;
+			    -moz-transition: background-color 0.5s ease-out;
+			    -o-transition: background-color 0.5s ease-out;
+			    transition: background-color 0.5s ease-out;
+			    cursor: pointer;
+			    max-height: 91vh
+			}
+			.etapas:hover{
+				background-color: rgba(53,180,233,1);
+			}
+			.etapas .tooltip_id{
+				visibility: hidden;
+				font-size: 80%;
+				width: 127px;
+			    background-color: rgba(109,161,234,0.7);
+			    color: #fff;
+			    text-align: center;
+			    border-radius: 6px;
+			    padding: 5px 0;
+			    position: absolute;
+			    z-index: 1;
+			    margin-left: 100%;
+			    word-break: break-all;
+			    top: 50%;
+			}
+			.etapas:hover .tooltip_id{
+				visibility: visible;
+			}
+			.tiempo_promedio{
+				display: none;
+			    width: 100%;
+			    margin-left: 0%;
+			    z-index: 1;
+			    border: none;
+			    border-top: 1px solid white;
+			}
+		</style>
+	</apex:outputPanel>
+
+<!-- ASIGNAR COORDINADOR -->
+	<div class="asignar_coordinador">
+		<div class="coordinador">
+			<!-- coordinador_icon -->
+
+<!-- 			<apex:image value="{!URLFOR($Resource.coordinador_icon, 'ic_supervisor_account_white_24dp/web/ic_supervisor_account_white_24dp_1x.png')}"  styleClass="icono_coordinador"/> -->
+
+<!-- FOTO DEL COORDINADOR -->
+			<!-- <apex:image value="{!fotoUsuario}" styleClass="foto" id="foto"/> -->
+			<apex:selectList value="{!asignacion}" size="1">
+					<apex:actionSupport event="onchange" action="{!panel_oferta_compras}" reRender="grafica,etapas,stylesheet,estilos_etps,foto" status="status"/>
+		            <apex:selectOptions value="{!ListaAsignacion}"/>
+			</apex:selectList>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+              <apex:image url="{!$Resource.Loading_paneles}" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; margin: 30% 50%"/>
+            </apex:facet>
+        </apex:actionStatus>
+		</div>
+	</div>
+
+	<apex:pageBlock >
+		<div class="ctn_gral_desJudicial">
+			<div class="barra_time">
+			<!-- BARRA DEL TIEMPO DE DESALOJOS -->
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>12º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>11º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>10º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>9º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>8º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>7º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>6º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>5º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>4º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>3º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>2º Mes</div>
+				<div class="Meses"><div style="border-bottom: 1px dotted red; width: 1450%;"></div>1º Mes</div>
+			</div>
+			<apex:outputPanel id="grafica" layout="block" styleClass="dates_grafica">
+			<!-- SE TRAZA LA GRAFICA DE ACUERDO AL TIEMPO Y A LOS DESALOJOS EXISTENTES -->
+				<apex:repeat value="{!map_aux_etap}" var="etapa">
+					<div class="mapa_gral">
+						<apex:repeat value="{!map_aux_etap[etapa]}" var="ofertas">
+						<div class="etapas" style="height : {!ofertas.porcentajeTotal}vh" onclick="window.open('/apex/OfertaProceso?id={!ofertas.ofertaId}', '_blank')">
+						<!-- https://c.cs17.visual.force.com/apex/OfertaProceso?id=a08g0000009Cq1W&sfdc.override=1 -->
+							<div class="tooltip_id">
+								<apex:outputText value="{!ofertas.ofertaName}"/>
+								<br/><apex:outputText value="{0,date,yyyy'/'MM'/'dd}">
+								<apex:param value="{!ofertas.fechaInicio}"/>
+								</apex:outputText>
+								<br/><apex:outputText value="{!ofertas.diasTotales}"/> Dias
+							</div>
+						</div>
+					</apex:repeat>
+					</div>
+				</apex:repeat>
+			</apex:outputPanel>
+		</div>
+
+		<div class="ctn_gral_desJudicial">
+		<!-- SE DESPLIEGAN LAS ETAPAS EN LAS QUE HAY DESALOJOS EXISTENTES -->
+			<div class="barra_time">
+				<div class="Meses indicador_etapas"><h1>ETAPAS</h1></div>
+			</div>
+				<apex:outputPanel id="etapas" layout="block" styleClass="datos">
+					<apex:repeat value="{!map_aux_etap}" var="etapasoft"> <!-- Ponemos el nombre del mapa -->
+						<div class="datos_mapa">
+							<br/><h1>{!etapasoft} {!mapa_ofertaCompras[etapasoft]}</h1><h1>Etapa {!mapaEtapaNumero[etapasoft]}</h1><!-- Traemos las llaves del mapa -->
+						</div>
+					</apex:repeat>
+				</apex:outputPanel>
+		</div>
+
+		<apex:outputPanel id="estilos_etps">
+			<script>
+			j$ = jQuery.noConflict();
+				j$(".datos").attr("style", "grid-template-areas: '{!gridAreas}'");
+				j$(".dates_grafica").attr("style", "grid-template-areas: '{!gridAreas}'");
+			</script>
+
+		</apex:outputPanel>
+	</apex:pageBlock>	
+</apex:form>
+</apex:page>

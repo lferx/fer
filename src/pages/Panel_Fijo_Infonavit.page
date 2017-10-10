@@ -1,0 +1,1072 @@
+<apex:page controller="Panel_Fijo_Infonavit_Controller" showHeader="true" sidebar="true">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+	<style type="text/css">
+
+	@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+    @font-face {
+        font-family: "Bebas-Neue";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+    }
+    @font-face {
+        font-family: "gotham-rounded-book";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+    }
+    @font-face {
+        font-family: "gotham-rounded-medium";
+        src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+    }
+		
+	.cuerpo{
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.encabezados{
+		font-family: "gotham-rounded-medium";
+		font-size: 22px;
+		color: #8eb9cc;
+	}
+
+	.contenedor{
+		width: 100%;
+		max-height: 500px;
+		border: 1px solid black;
+		border-right: none;
+		border-top: none;
+		box-shadow: 4px -3px 6px -4px #333 inset;
+		background: rgba(247,247,247,1);
+		background: -moz-linear-gradient(top, rgba(247,247,247,1) 0%, rgba(255,255,255,1) 59%, rgba(255,255,255,1) 100%);
+		background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(247,247,247,1)), color-stop(59%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+		background: -webkit-linear-gradient(top, rgba(247,247,247,1) 0%, rgba(255,255,255,1) 59%, rgba(255,255,255,1) 100%);
+		background: -o-linear-gradient(top, rgba(247,247,247,1) 0%, rgba(255,255,255,1) 59%, rgba(255,255,255,1) 100%);
+		background: -ms-linear-gradient(top, rgba(247,247,247,1) 0%, rgba(255,255,255,1) 59%, rgba(255,255,255,1) 100%);
+		background: linear-gradient(to bottom, rgba(247,247,247,1) 0%, rgba(255,255,255,1) 59%, rgba(255,255,255,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#ffffff', GradientType=0 );
+		border-radius: 10px;
+	}
+
+
+	.tabla{
+		width: 100%;
+		height: 600px;
+		overflow-y: scroll;
+	}
+
+
+
+	.tablasSem1{
+		width: 100%;
+		border:1px solid #bdbdbd;
+		border-radius: 10px;
+    	padding: 2px;
+    	-webkit-box-shadow: -12px 19px 27px -20px rgba(0,0,0,0.66);
+		-moz-box-shadow: -12px 19px 27px -20px rgba(0,0,0,0.66);
+		box-shadow: -12px 19px 27px -20px rgba(0,0,0,0.66);
+	}
+	.tablasSem1 tr th{
+		text-align: center;
+		vertical-align: middle;
+		background: rgba(242,246,248,1);
+	    background: -moz-radial-gradient(center, ellipse cover, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(224,239,249,1) 100%);
+	    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(242,246,248,1)), color-stop(27%, rgba(242,246,248,1)), color-stop(100%, rgba(224,239,249,1)));
+	    background: -webkit-radial-gradient(center, ellipse cover, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(224,239,249,1) 100%);
+	    background: -o-radial-gradient(center, ellipse cover, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(224,239,249,1) 100%);
+	    background: -ms-radial-gradient(center, ellipse cover, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(224,239,249,1) 100%);
+	    background: radial-gradient(ellipse at center, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(224,239,249,1) 100%);
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', endColorstr='#e0eff9', GradientType=1 );
+	    padding: 5px;
+	}
+	.tablasSem1 tr td{
+		text-align: center;
+		vertical-align: middle;
+		word-break: break-all;
+		background: rgba(255,255,255,1);
+		background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,1)), color-stop(83%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+		background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+		background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+		background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+		background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 83%, rgba(237,237,237,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+		border-radius: 5px;
+	}
+
+
+
+
+	.barrasRicardo{
+		width: 25%;
+		position: relative;
+		height: 500px;
+		float: left;
+		margin-left: 5%;
+	}
+	.barrasAmira{
+		width: 25%;
+		position: relative;
+		height: 500px;
+		display: inline-block;
+		margin-left: 9%;
+	}
+	.barrasNadia{
+		width: 25%;
+		position: relative;
+		height: 500px;
+		float: right;
+	}
+		
+
+	.barrasSem1Ricardo{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #e1e8e8;
+		border-bottom: 1px solid black;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+	.barrasSem1Ricardo:hover{
+		background: rgba(224,224,224,1);
+		background: -moz-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(224,224,224,1)), color-stop(40%, rgba(242,246,248,1)), color-stop(64%, rgba(242,246,248,1)), color-stop(100%, rgba(219,219,219,1)));
+		background: -webkit-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -o-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -ms-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: linear-gradient(to right, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#dbdbdb', GradientType=1 );
+	}
+	.barrasSem1Ricardo:active{
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+
+
+	.barrasSem1Amira{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #e1e8e8;
+		border-bottom: 1px solid black;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+	.barrasSem1Amira:hover{
+		background: rgba(224,224,224,1);
+		background: -moz-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(224,224,224,1)), color-stop(40%, rgba(242,246,248,1)), color-stop(64%, rgba(242,246,248,1)), color-stop(100%, rgba(219,219,219,1)));
+		background: -webkit-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -o-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -ms-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: linear-gradient(to right, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#dbdbdb', GradientType=1 );
+	}
+	.barrasSem1Amira:active{
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+
+
+	.barrasSem1Nadia{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #e1e8e8;
+		border-bottom: 1px solid black;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+	.barrasSem1Nadia:hover{
+		background: rgba(224,224,224,1);
+		background: -moz-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(224,224,224,1)), color-stop(40%, rgba(242,246,248,1)), color-stop(64%, rgba(242,246,248,1)), color-stop(100%, rgba(219,219,219,1)));
+		background: -webkit-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -o-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: -ms-linear-gradient(left, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		background: linear-gradient(to right, rgba(224,224,224,1) 0%, rgba(242,246,248,1) 40%, rgba(242,246,248,1) 64%, rgba(219,219,219,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#dbdbdb', GradientType=1 );
+	}
+	.barrasSem1Nadia:active{
+		background: rgba(211,217,224,1);
+		background: -moz-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,217,224,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(100%, rgba(211,217,224,1)));
+		background: -webkit-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -o-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: -ms-linear-gradient(left, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		background: linear-gradient(to right, rgba(211,217,224,1) 0%, rgba(255,255,255,1) 49%, rgba(211,217,224,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d9e0', endColorstr='#d3d9e0', GradientType=1 );
+	}
+
+
+
+
+	.barrasSem2Ricardo{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem2Ricardo:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem2Ricardo:active{
+		background-color: #23698F;
+	}
+
+
+	.barrasSem2Amira{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem2Amira:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem2Amira:active{
+		background-color: #23698F;
+	}
+
+
+	.barrasSem2Nadia{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem2Nadia:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem2Nadia:active{
+		background-color: #23698F;
+	}
+
+
+
+
+	.barrasSem3Ricardo{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem3Ricardo:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem3Ricardo:active{
+		background-color: #23698F;
+	}
+
+
+	.barrasSem3Amira{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem3Amira:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem3Amira:active{
+		background-color: #23698F;
+	}
+
+
+	.barrasSem3Nadia{
+		width: 98%;
+		position: relative;
+		max-height: 33%;
+		border: 1px solid #0082C8;
+		border-bottom: 1px solid black;
+		background-color: #0082C8;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		box-shadow: 0px 0px 1px 0px #333;
+	}
+	.barrasSem3Nadia:hover{
+		background-color: #30A2DF;
+	}
+	.barrasSem3Nadia:active{
+		background-color: #23698F;
+	}
+
+	.etiquetaTexto{
+		position: relative;
+	    bottom: 60px;
+	    text-align: center;
+	    font-family: "gotham-rounded-book";
+	    color: #69b2d0;
+    	font-weight: bolder;
+	}
+
+
+	</style>
+
+	
+
+	<div class="cuerpo">
+		<br/>
+		<br/>
+		<br/>
+
+		<div style="width: 30%;float: left;">
+			<apex:outputText value="OFERTAS POR GERENTE ETAPA 10" styleClass="encabezados" />
+			<br/>
+			<br/>
+			<div id="containerEtapa10" class="contenedor">
+
+				<div class="barrasRicardo">
+					<!-- <div id="sem3RicardoE10" class="barrasSem3Ricardo">
+						
+					</div>
+					<div id="sem2RicardoE10" class="barrasSem2Ricardo">
+						
+					</div> -->
+					<div id="sem1RicardoE10" class="barrasSem1Ricardo">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Ricardo Hernandez Bárcena" />
+							<br/>
+							{!tamanoRic10Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1RicardoE10").click(function(){
+	                            	$("#tablaNadiaSem1E10").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E10").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E10").removeAttr('class');
+									$("#tablaRicardoSem1E10").attr('class', 'tablasSem1');
+	                            	$("#tablaRicardoSem1E10").addClass("RicardoSem1E10");
+	                                $(".RicardoSem1E10").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasAmira">
+					<!-- <div id="sem3AmiraE10" class="barrasSem3Amira">
+					
+					</div>
+					<div id="sem2AmiraE10" class="barrasSem2Amira">
+					
+					</div> -->
+					<div id="sem1AmiraE10" class="barrasSem1Amira">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Amira Haide Trejo Aranda" />
+							<br/>
+							{!tamanoAmi10Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1AmiraE10").click(function(){
+	                            	$("#tablaNadiaSem1E10").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E10").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E10").removeAttr('class');
+									$("#tablaAmiraSem1E10").attr('class', 'tablasSem1');
+	                            	$("#tablaAmiraSem1E10").addClass("AmiraSem1E10");
+	                                $(".AmiraSem1E10").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasNadia">
+					<!-- <div id="sem3NadiaE10" class="barrasSem3Nadia">
+					
+					</div>
+					<div id="sem2NadiaE10" class="barrasSem2Nadia">
+					
+					</div> -->
+					<div id="sem1NadiaE10" class="barrasSem1Nadia">
+					<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Nadia Veronica Rosas Torres" />
+							<br/>
+							{!tamanoNad10Sem1/5} Ofertas
+					</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1NadiaE10").click(function(){
+	                            	$("#tablaRicardoSem1E10").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E10").css({'display': 'none'});
+	                            	$("#tablaNadiaSem1E10").removeAttr('class');
+									$("#tablaNadiaSem1E10").attr('class', 'tablasSem1');
+	                            	$("#tablaNadiaSem1E10").addClass("NadiaSem1E10");
+	                                $(".NadiaSem1E10").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+				
+			</div>
+			<br/>
+			<br/>
+			<br/>
+
+
+			<apex:outputText value="OFERTAS POR GERENTE ETAPA 11" styleClass="encabezados" />
+			<br/>
+			<br/>
+			<div id="containerEtapa11" class="contenedor">
+
+				<div class="barrasRicardo">
+					<!-- <div id="sem3RicardoE11" class="barrasSem3Ricardo">
+						
+					</div>
+					<div id="sem2RicardoE11" class="barrasSem2Ricardo">
+						
+					</div> -->
+					<div id="sem1RicardoE11" class="barrasSem1Ricardo">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Ricardo Hernandez Bárcena" />
+							<br/>
+							{!tamanoRic11Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1RicardoE11").click(function(){
+	                            	$("#tablaNadiaSem1E11").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E11").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E11").removeAttr('class');
+									$("#tablaRicardoSem1E11").attr('class', 'tablasSem1');
+	                            	$("#tablaRicardoSem1E11").addClass("RicardoSem1E11");
+	                                $(".RicardoSem1E11").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasAmira">
+					<!-- <div id="sem3AmiraE11" class="barrasSem3Amira">
+					
+					</div>
+					<div id="sem2AmiraE11" class="barrasSem2Amira">
+					
+					</div> -->
+					<div id="sem1AmiraE11" class="barrasSem1Amira">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Amira Haide Trejo Aranda" />
+							<br/>
+							{!tamanoAmi11Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1AmiraE11").click(function(){
+	                            	$("#tablaNadiaSem1E11").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E11").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E11").removeAttr('class');
+									$("#tablaAmiraSem1E11").attr('class', 'tablasSem1');
+	                            	$("#tablaAmiraSem1E11").addClass("AmiraSem1E11");
+	                                $(".AmiraSem1E11").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasNadia">
+					<!-- <div id="sem3NadiaE11" class="barrasSem3Nadia">
+					
+					</div>
+					<div id="sem2NadiaE11" class="barrasSem2Nadia">
+					
+					</div> -->
+					<div id="sem1NadiaE11" class="barrasSem1Nadia">
+					<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Nadia Veronica Rosas Torres" />
+							<br/>
+							{!tamanoNad11Sem1/5} Ofertas
+					</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1NadiaE11").click(function(){
+	                            	$("#tablaRicardoSem1E11").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E11").css({'display': 'none'});
+	                            	$("#tablaNadiaSem1E11").removeAttr('class');
+									$("#tablaNadiaSem1E11").attr('class', 'tablasSem1');
+	                            	$("#tablaNadiaSem1E11").addClass("NadiaSem1E11");
+	                                $(".NadiaSem1E11").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+				
+			</div>
+			<br/>
+			<br/>
+			<br/>
+
+
+			<apex:outputText value="OFERTAS POR GERENTE ETAPA 12" styleClass="encabezados" />
+			<br/>
+			<br/>
+			<div id="containerEtapa12" class="contenedor">
+
+				<div class="barrasRicardo">
+					<!-- <div id="sem3RicardoE12" class="barrasSem3Ricardo">
+						
+					</div>
+					<div id="sem2RicardoE12" class="barrasSem2Ricardo">
+						
+					</div> -->
+					<div id="sem1RicardoE12" class="barrasSem1Ricardo">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Ricardo Hernandez Bárcena" />
+							<br/>
+							{!tamanoRic12Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1RicardoE12").click(function(){
+	                            	$("#tablaNadiaSem1E12").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E12").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E12").removeAttr('class');
+									$("#tablaRicardoSem1E12").attr('class', 'tablasSem1');
+	                            	$("#tablaRicardoSem1E12").addClass("RicardoSem1E12");
+	                                $(".RicardoSem1E12").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasAmira">
+					<!-- <div id="sem3AmiraE12" class="barrasSem3Amira">
+					
+					</div>
+					<div id="sem2AmiraE12" class="barrasSem2Amira">
+					
+					</div> -->
+					<div id="sem1AmiraE12" class="barrasSem1Amira">
+						<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Amira Haide Trejo Aranda" />
+							<br/>
+							{!tamanoAmi12Sem1/5} Ofertas
+						</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1AmiraE12").click(function(){
+	                            	$("#tablaNadiaSem1E12").css({'display': 'none'});
+	                            	$("#tablaRicardoSem1E12").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E12").removeAttr('class');
+									$("#tablaAmiraSem1E12").attr('class', 'tablasSem1');
+	                            	$("#tablaAmiraSem1E12").addClass("AmiraSem1E12");
+	                                $(".AmiraSem1E12").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+
+				<div class="barrasNadia">
+					<!-- <div id="sem3NadiaE12" class="barrasSem3Nadia">
+					
+					</div>
+					<div id="sem2NadiaE12" class="barrasSem2Nadia">
+					
+					</div> -->
+					<div id="sem1NadiaE12" class="barrasSem1Nadia">
+					<apex:form styleClass="etiquetaTexto">
+							<apex:outputText value="Nadia Veronica Rosas Torres" />
+							<br/>
+							{!tamanoNad12Sem1/5} Ofertas
+					</apex:form>
+						<script>
+	                        $(document).ready(function(){
+	                            $("#sem1NadiaE12").click(function(){
+	                            	$("#tablaRicardoSem1E12").css({'display': 'none'});
+	                            	$("#tablaAmiraSem1E12").css({'display': 'none'});
+	                            	$("#tablaNadiaSem1E12").removeAttr('class');
+									$("#tablaNadiaSem1E12").attr('class', 'tablasSem1');
+	                            	$("#tablaNadiaSem1E12").addClass("NadiaSem1E12");
+	                                $(".NadiaSem1E12").fadeIn(800);
+	                            });
+	                        });
+	                    </script>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+		</div>
+
+
+		<div style="overflow-y: hidden;">
+			<div class="tabla">
+				<table id="tablaRicardoSem1E10" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Ricardo Hernandez Bárcena en Etapa de Rehabilitacion</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasRicardo10sem1}" var="rich">
+							<tr>
+								<td><apex:outputField value="{!rich.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!rich.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!rich.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!rich.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaAmiraSem1E10" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Amira Haide Trejo Aranda en Etapa de Rehabilitacion</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasAmira10sem1}" var="ami">
+							<tr>
+								<td><apex:outputField value="{!ami.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!ami.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!ami.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!ami.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaNadiaSem1E10" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Nadia Veronica Rosas Torres en Etapa de Rehabilitacion</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasNadia10sem1}" var="nad">
+							<tr>
+								<td><apex:outputField value="{!nad.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!nad.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!nad.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!nad.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+			</div>
+			<div class="tabla">
+				<table id="tablaRicardoSem1E11" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Ricardo Hernandez Bárcena en Etapa de Compilación expediente crediticio</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasRicardo11sem1}" var="rich">
+							<tr>
+								<td><apex:outputField value="{!rich.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!rich.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!rich.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!rich.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaAmiraSem1E11" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Amira Haide Trejo Aranda en Etapa de Compilación expediente crediticio</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasAmira11sem1}" var="ami">
+							<tr>
+								<td><apex:outputField value="{!ami.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!ami.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!ami.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!ami.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaNadiaSem1E11" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Nadia Veronica Rosas Torres en Etapa de Compilación expediente crediticio</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasNadia11sem1}" var="nad">
+							<tr>
+								<td><apex:outputField value="{!nad.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!nad.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!nad.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!nad.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+			</div>
+			<div class="tabla">
+				<table id="tablaRicardoSem1E12" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Ricardo Hernandez Bárcena en Etapa de Expediente aprobado</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasRicardo12sem1}" var="rich">
+							<tr>
+								<td><apex:outputField value="{!rich.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!rich.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!rich.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!rich.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!rich.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaAmiraSem1E12" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Amira Haide Trejo Aranda en Etapa de Expediente aprobado</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasAmira12sem1}" var="ami">
+							<tr>
+								<td><apex:outputField value="{!ami.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!ami.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!ami.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!ami.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!ami.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+
+				<table id="tablaNadiaSem1E12" class="" style="display: none;">
+					<thead>
+						<tr>
+							<th colspan="12" style="font-size: 19px;">Ofertas de Nadia Veronica Rosas Torres en Etapa de Expediente aprobado</th>
+						</tr>
+						<tr>
+							<th>Gerente Operativo</th>
+							<th>Oferta</th>
+							<th>Plaza</th>
+							<th>Direccion</th>
+							<th>Tipo de Oferta</th>
+							<th>Cliente Final</th>
+							<th>Promotor</th>
+							<th>Subsidio</th>
+							<th>Hora Inicial</th>
+							<th>Fecha Prevista</th>
+							<th>Documentos Faltantes</th>
+							<th>Comentarios Infonavit</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!ofertasNadia12sem1}" var="nad">
+							<tr>
+								<td><apex:outputField value="{!nad.Oferta__r.Gerente_Operativo__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Plaza__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Direccion__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.TipoOferta__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.ClienteFinal__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Promotor__r.name}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Subsidio__c}"/></td>
+								<td><apex:outputField value="{!nad.HoraInicial__c}"/></td>
+								<td><apex:outputField value="{!nad.Fecha_Prevista__c}"/></td>
+								<td><apex:outputField value="{!nad.DocumentosFaltantes__c}"/></td>
+								<td><apex:outputField value="{!nad.Oferta__r.Comentarios_del_Gerente__c}"/></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+	<script>
+
+		$(document).ready(function(){
+
+			var alturaTotal10 = $('#containerEtapa10').height();
+
+			$( '#sem1RicardoE10' ).css({'height': {!tamanoRic10Sem1} });
+			$( '#sem1AmiraE10' ).css({'height': {!tamanoAmi10Sem1} });
+			$( '#sem1NadiaE10' ).css({'height': {!tamanoNad10Sem1} });
+
+
+			$( '#sem1RicardoE10' ).css({'margin-top': alturaTotal10-($('#sem1RicardoE10').height())-1});
+			$( '#sem1AmiraE10' ).css({'margin-top': alturaTotal10-($('#sem1AmiraE10').height())-1});
+			$( '#sem1NadiaE10' ).css({'margin-top': alturaTotal10-($('#sem1NadiaE10').height())-1});
+
+			var alturaTotal11 = $('#containerEtapa11').height();
+
+			$( '#sem1RicardoE11' ).css({'height': {!tamanoRic11Sem1} });
+			$( '#sem1AmiraE11' ).css({'height': {!tamanoAmi11Sem1} });
+			$( '#sem1NadiaE11' ).css({'height': {!tamanoNad11Sem1} });
+
+
+			$( '#sem1RicardoE11' ).css({'margin-top': alturaTotal11-($('#sem1RicardoE11').height())-1});
+			$( '#sem1AmiraE11' ).css({'margin-top': alturaTotal11-($('#sem1AmiraE11').height())-1});
+			$( '#sem1NadiaE11' ).css({'margin-top': alturaTotal11-($('#sem1NadiaE11').height())-1});
+
+			var alturaTotal12 = $('#containerEtapa12').height();
+
+			$( '#sem1RicardoE12' ).css({'height': {!tamanoRic12Sem1} });
+			$( '#sem1AmiraE12' ).css({'height': {!tamanoAmi12Sem1} });
+			$( '#sem1NadiaE12' ).css({'height': {!tamanoNad12Sem1} });
+
+
+			$( '#sem1RicardoE12' ).css({'margin-top': alturaTotal12-($('#sem1RicardoE12').height())-1});
+			$( '#sem1AmiraE12' ).css({'margin-top': alturaTotal12-($('#sem1AmiraE12').height())-1});
+			$( '#sem1NadiaE12' ).css({'margin-top': alturaTotal12-($('#sem1NadiaE12').height())-1});
+		});
+
+
+	</script>
+
+</apex:page>

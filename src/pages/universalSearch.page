@@ -1,0 +1,232 @@
+<apex:page doctype="HTML-5.0"  sidebar="false" showHeader="false" standardStylesheets="false" title="Precalificación" controller="universalSearchCtrl">
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="/resource/calendario/flatpickr-master/dist/flatpickr.min.css"/>
+    <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+
+    <style>
+      body{
+        margin: 0px;
+        padding: 0px;
+
+      }
+      .panel{
+        margin-bottom: 0;
+        display: none;
+        max-height: 800px;
+        overflow-y: auto;
+      }
+      .contenedor-de-tareas{
+        position: absolute;
+        max-width: 40%;
+        z-index: 1000 !important;
+      }
+      .contenedor-boton{
+        text-align: center;
+      }
+      .button {
+        border-radius: 0px 0px 100% 100%;
+        background-color: #1797C0;
+        border-left: 10px solid #1797C0;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 15px;
+        padding-top: -10px;
+        width: 100px;
+        height: 30px;
+        transition: all 0.5s;
+        cursor: pointer;
+      }
+
+      .button span {
+        cursor: pointer;
+        display: inline-block;
+        font-size: 12px;
+        padding-left: 10px;
+      }
+
+      .panel-body{
+          padding-bottom: 0;
+          padding-top: 0;
+      }
+
+      .medcol {
+        width: 150px;
+        max-width: 150px;
+      }
+
+
+      td{
+        cursor: pointer;
+      }
+      .icon{
+        background-image: url("{!URLFOR($Resource.icof, '/search.png')}");
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: 17px;
+      }
+      .borde{
+        height: 20px;
+        width: 92px;
+        border-radius: 3px 3px 3px 3px;
+        -moz-border-radius: 3px 3px 3px 3px;
+        -webkit-border-radius: 3px 3px 3px 3px;
+        border: 0px solid #000000;
+        text-indent: 5px;
+        font-size: 12px;
+        vertical-align: center;
+      }
+      .container {
+        max-width: 40%;
+        position: relative;
+      }
+      .srch
+      {
+        position: relative;
+        float: right;
+      }
+    </style>
+    <body id="body">
+  <!--CONTAINER-->
+<apex:form >
+<apex:actionFunction action="{!getTasks}" name="getTasks" reRender="contactTable"/>
+</apex:form>
+    <div class="contenedor-de-tareas col-sm-6 col-sm-offset-3 col-xs-12 col-md-offset-3" id="flip">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center"><div>
+            <apex:form >
+                Tareas
+                 <div class="srch">
+                <span>Buscar</span>&nbsp;&nbsp;
+                <apex:inputText value="{!dataTask.Fecha__c}"   html-placeholder="Fecha..." style="color: black" styleClass="TaskCalendar borde icon" >
+                  <apex:actionSupport event="onchange" action="{!inicio}" reRender="contactTable"/>
+                </apex:inputText>
+                <span>Busqueda Universal</span>&nbsp;&nbsp;
+                <apex:inputText value="{!busqueda}"   html-placeholder="Fecha..." style="color: black" styleClass="borde icon" >
+                  <apex:actionSupport event="onchange" action="{!inicio}" reRender="contactTable"/>
+                </apex:inputText>
+                </div>
+                </apex:form>
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <apex:outputPanel id="contactTable">
+                    <table class="table table-hover table-condensed" id="tablaTareas">
+                        <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Nombre lead</th>
+                              <th>Dictamen</th>
+                              <th>Descripción</th>
+                              <th>Fecha</th>
+                              <th>Hora</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <apex:repeat value="{!Tareas}" var="t">
+                              <tr class="envia" data-link="{!t.link}">
+                                <!--Nombre del lead-->
+                                <td>
+                                  <apex:outputText value="{!t.numero}" />
+                                </td>
+                                <td class="medcol">
+                                  <apex:outputText value="{!t.leadName}" />
+                                </td>
+                                <!--Dictamen-->
+                                <td class="medcol">
+                                  <apex:outputField value="{!t.tarea.Comentarios__c}" />
+                                </td>
+                                <!--Descipción-->
+                                <td class="medcol">
+                                  <apex:outputText value="{!t.descripcion}" />
+                                </td>
+                                <td class="medcol">
+                                  <apex:outputField value="{!t.tarea.Fecha__c}" />
+                                </td>
+                                <td class="medcol">
+                                  <apex:outputField value="{!t.tarea.Hora_de_vencimiento__c}" />
+                                </td>
+                              </tr>
+                          </apex:repeat>
+
+
+                        </tbody>
+                    </table>
+                     <div class="container">
+                      <apex:outputPanel id="paginacion" styleClass="Buttons" >
+                <apex:form >
+                       
+                          <apex:commandButton action="{!Inicio}" title="Inicio" value="<<" disabled="{!anularPrevio}" reRender="contactTable,paginacion"/>
+                          <apex:commandButton action="{!Previo}" title="Previo" value="<" disabled="{!anularPrevio}" reRender="contactTable,paginacion"/>        
+                          <apex:commandButton action="{!Siguiente}" title="Sigueinte" value=">" disabled="{!anularSiguiente}" reRender="contactTable,paginacion"/>
+                          <apex:commandButton action="{!Fin}" title="Fin" value=">>" disabled="{!anularSiguiente}" reRender="contactTable,paginacion"/>   &nbsp;&nbsp;
+                          
+                      <apex:outputText >{!pageNumber}/{!totalPages}</apex:outputText>
+                </apex:form>
+
+                      </apex:outputPanel>
+                    </div>
+                    <script type="text/javascript">
+                      $('.envia').click(function(event){
+                        window.location.replace($(this).attr('data-link'));//openUrl($(this).attr('data-link'));
+                        $('.button').trigger('click');
+                      });
+                    </script>
+                </apex:outputPanel>
+            </div>
+        </div>
+        <div class="contenedor-boton text-center col-md-3 col-md-offset-4" >
+          <button class="button">Tareas</button>
+        </div>
+      </div>
+      <!--CONTAINER-->
+      <!--N O   M O V E R   L O S   S C R I P T S-->
+      <script type="text/javascript">
+        (function(){
+            var boton = $('.button'),
+                panel = $('.panel');
+            boton.on('click', function(e) {
+                e.preventDefault();
+                //var botonText = boton.text();
+                panel.slideToggle("fast", function(){
+                    //botonText == "Tareas" ? boton.text("Tareas") : boton.text("Tareas");
+                    //Este código ^ es para cambbiar el texto que muestra el botón
+                    /*panel.parent().bind('mouseleave',function(){
+                      hideDiv();
+                    });*/
+                });
+            });
+        })();
+      </script>
+      <script type="text/javascript">
+
+        $(document).ready(function(){
+          $("button").click(function(){
+            $("#icon").toggleClass("glyphicon-upload");
+          });
+
+           var  request = setInterval(getTasks,10000);
+        });
+
+        function hideDiv(){
+          $( ".panel" ).slideUp( "fast" );
+          $( ".panel" ).parent().unbind( "mouseleave" );
+        };
+
+      </script>
+      <script src="/resource/calendario/flatpickr-master/dist/flatpickr.js"></script>
+      <script type="text/javascript">
+        $(".TaskCalendar").flatpickr({
+          dateFormat: "d/m/Y",allowInput:true
+        });
+      </script>
+</body>
+
+</head>
+
+
+</apex:page>

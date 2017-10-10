@@ -1,0 +1,261 @@
+<!--
+    
+    Visualforce Development Cookbook Recipe 4_10
+
+    Form-based searching
+     
+ -->
+<apex:page standardController="Account"  extensions="PropiedadesSearch">
+<apex:outputPanel >
+
+  <!-- <script> function enableDisable(p)
+    {
+      $("input:checkbox[id*=looped]").removeAttr('checked');
+      $(p).attr('checked', 'checked');
+    
+    
+    } -->
+    
+       <!-- $("input:checkbox[id*=looped"].change(function()  -->
+      <!-- function enableDisable(p)
+     {
+            var max= 3;
+            if( $("input:checkbox[id*=looped]:checked").length == max ){
+                $("input:checkbox[id*=looped]").attr('disabled', 'disabled');
+                $("input:checkbox[id*=looped]:checked").removeAttr('disabled');
+            }else{
+                 $("input:checkbox[id*=looped]").removeAttr('disabled');
+            }
+        }  -->
+        <!-- ) -->
+   <!--  function enableDisable(a)
+    {
+      $("input:checkbox[id*=looped]").removeAttr('checked');
+      $(a).attr('checked', 'checked');
+    }   -->
+        
+     <!--                   function toggle(checkboxElement) {
+                            var toggleDisableCheckboxes = checkboxElement.checked;
+                            var input = document.getElementsByTagName('input'); 
+                            var i = input.length; 
+                        
+                            while (i--) { 
+                                if (input[i].type === 'checkbox' && !input[i].checked && toggleDisableCheckboxes) {
+                                    input[i].setAttribute('disabled', 'disabled'); 
+                                }else{
+                                    input[i].removeAttribute('disabled'); 
+                                }
+                            } 
+                        } 
+        
+</script> -->
+
+</apex:outputPanel>
+
+
+<apex:form >
+  
+  
+    <apex:pageBlock title="Buscar Propiedades" id="Formato">
+ 
+    <apex:messages />
+    
+      <!-- search criteria -->
+      <apex:pageBlockSection >
+        <apex:inputField value="{!searchProp.Name}" required="false">
+          <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+          </apex:inputField>
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Plaza"/>
+          <apex:selectList value="{!plazas}" size="5" multiselect="true">
+            <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+
+            <apex:selectOptions value="{!plazasOptions}"/>
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+          <apex:inputField value="{!searchProp.CP__c}" required="false">
+          <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+          </apex:inputField>
+
+          <apex:inputField value="{!searchProp.Colonia__c}" required="false">
+          <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+          </apex:inputField>
+
+          <apex:inputField value="{!searchProp.Municipio__c}" required="false">
+          <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+          </apex:inputField>
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Número de habitaciones"/>
+          <apex:selectList value="{!habitaciones}" size="4" multiselect="true">
+            <apex:selectOptions value="{!habitacionesOptions}"/>
+                                <!-- pass variables -->
+            <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Número de Baños"/>
+          <apex:selectList value="{!banos}" size="4" multiselect="true">
+            <apex:selectOptions value="{!banosOptions}"/>
+                                <!-- pass variables -->
+            <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Tipo de Propiedad"/>
+          <apex:selectList value="{!tipoProp}" size="2" multiselect="true">
+            <apex:selectOptions value="{!tipoPropOptions}"/>
+                                <!-- pass variables -->
+            <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Niveles de la Propiedad"/>
+          <apex:selectList value="{!nivProp}" size="5" multiselect="true">
+            <apex:selectOptions value="{!nivPropOptions}"/>
+                                <!-- pass variables -->
+            <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+      <apex:pageBlockButtons >        <apex:commandButton value="Buscar" action="{!executeSearch}" />
+                <apex:commandButton value="Limpiar" action="{!reset}" rerender="resultsBlock, Formato"/>
+
+                <apex:commandButton action="{!sendPdf}" value="Enviar Ficha técnica"/>
+        </apex:pageBlockButtons>
+
+      
+      <!-- results -->
+     <!-- <apex:pageBlockTable value="{!PropiedadesShow}" var="acc" id="resultados">
+        <apex:column value="{!acc.Name}"/>
+        <apex:column value="{!acc.Plaza__c}"/>
+        <apex:column value="{!acc.CP__c}"/>
+        <apex:column value="{!acc.Colonia__c}"/>
+        <apex:column value="{!acc.Municipio__c}"/>
+        <apex:column value="{!acc.N_de_Habitaciones__c}"/>
+        <apex:column value="{!acc.N_de_Ba_os__c}"/>
+        <apex:column value="{!acc.Tipo__c}"/>        
+        <apex:column value="{!acc.Niveles_Plantas__c}"/>
+      </apex:pageBlockTable>-->
+      
+    
+          <apex:actionStatus id="status" startText="Searching... please wait..."/>
+            <apex:pageBlock title="Resultados de búsqueda" id="resultsBlock" >
+            
+                <!-- botones -->
+                <apex:pageBlockButtons >              
+                <apex:commandButton value="<<" action="{!inicio}" disabled="{!DisablePrevious}"/>
+              <apex:commandButton value="<" action="{!anterior}" disabled="{!DisablePrevious}"/>
+              <apex:commandButton value=">" action="{!siguiente}" disabled="{!DisableNext}"/>
+              <apex:commandButton value=">>" action="{!ultimo}" disabled="{!DisableNext}"/>           
+               </apex:pageBlockButtons> 
+               <!-- botones -->
+              
+              
+                <apex:pageBlockTable value="{!PropiedadesShow}" var="p" rendered="{!NOT(ISNULL(PropiedadesShow))}" style="width:100%">
+                   <apex:column width="25px">
+                       <!-- <apex:inputCheckbox value="{!p.checked}" id="looped"> --> 
+                       <apex:inputCheckbox value="{!p.checked}" > 
+                       <!-- <apex:inputCheckbox value="{!p.checked}" id="looped" onclick="limit_checkbox('looped',this,5)" > -->
+                       
+                        <apex:actionSupport action="{!DummyAction}" reRender="PBS1" event="onchange"/>
+                        </apex:inputCheckbox>
+                    </apex:column>
+                    <apex:column headerValue="Folio Propiedad">
+                        <apex:outputLink value="/{!p.prop.id}" target="_blank">{!p.prop.Name}
+                    <!-- <apex:column value="{!p.prop.N_de_Habitaciones__c}" headerValue="Número de Habitaciones" style="width:5%"/> -->
+                        </apex:outputLink>
+                    </apex:column>
+                    
+                    <apex:column >
+                    <apex:facet name="header">
+                        Número de<br/>habitaciones
+                    </apex:facet>
+                    <apex:outputText value="{!p.prop.N_de_Habitaciones__c}">
+                        <apex:param value=""/>
+                    </apex:outputText>
+                    </apex:column>
+                    
+                    
+                    
+                    <apex:column value="{!p.prop.Plaza__c}" headerValue="Plaza"/>
+                    <!-- <apex:column value="{!p.prop.Niveles_Plantas__c}" headerValue="Niveles de la Propiedad" />  -->
+                    
+                    
+                    <apex:column >
+                    <apex:facet name="header">
+                        Niveles de<br/>la Propiedad
+                    </apex:facet>
+                    <apex:outputText value="{!p.prop.Niveles_Plantas__c}">
+                        <apex:param value=""/>
+                    </apex:outputText>
+                    </apex:column>
+                    
+                    
+                    <!-- <apex:column value="{!p.prop.Tipo__c}" headerValue="Tipo de <br/> Propiedad"/> -->
+                    
+                    
+                    <apex:column >
+                    <apex:facet name="header">
+                        Tipo de<br/>Propiedad
+                    </apex:facet>
+                    <apex:outputText value="{!p.prop.Tipo__c}">
+                        <apex:param value=""/>
+                    </apex:outputText>
+                    </apex:column>
+                    
+                    
+                    <apex:column value="{!p.prop.N_de_Ba_os__c}" headerValue="Baños" style="width:10%" /> 
+                    <apex:column value="{!p.prop.Colonia__c}" headerValue="Colonia" style="width:10%" />
+                    <apex:column value="{!p.prop.Municipio__c}" headerValue="Municipio" style="width:10%"/>
+                    <apex:column value="{!p.prop.CP__c}" headerValue="Código Postal"/>
+                    <apex:column headerValue="Ficha Técnica">
+                        <apex:commandLink value="Ver Ficha Técnica" action="{buscarid()}" styleClass="start" target="_blank" onclick="window.open('/apex/PDF_FichaTecnica2?id={!p.prop.Id}','newwindow','width=500, height=600'); return false;"/>
+                    </apex:column> 
+                    <apex:outputText rendered="false">{!account.Email__c}</apex:outputText>
+                    
+                    
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            
+            
+    </apex:pageBlock>
+
+    
+  </apex:form>
+
+<!--- sendemail --->
+<!--  <apex:form >
+    <apex:pageMessages />
+    <apex:pageBlock title="PDF Input">
+
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!sendPdf}" value="Enviar Ficha técnica"/>
+      </apex:pageBlockButtons>
+
+      <apex:pageBlockSection >
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email to send to" for="email"/>
+          <apex:outputText value=" {!account.Email__c}" id="email"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Account" for="account"/>
+            <apex:outputText > value="{!account.Name}" id="account" size="1">
+           </apex:outputText>
+        </apex:pageBlockSectionItem>
+
+      </apex:pageBlockSection>
+
+    </apex:pageBlock>
+  </apex:form>
+  
+  -->
+  
+</apex:page>

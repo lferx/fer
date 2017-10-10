@@ -1,0 +1,8 @@
+<apex:page controller="PublicacionPropiedadController" >
+    <apex:repeat value="{!listaAttachments}" var="item">
+        <span style="padding:10px">
+            <apex:image value="/servlet/servlet.FileDownload?file={!item.attach.Id}" width="500"/>
+        </span>
+        
+    </apex:repeat>
+</apex:page>

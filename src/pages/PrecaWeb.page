@@ -1,0 +1,60 @@
+<apex:page doctype="HTML-5.0"  sidebar="false" showHeader="false" standardStylesheets="false" title="Precalificación" controller="PrecaWebController">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//www.revimex.mx/resource/1427502949000/HomeRevimex/css/template.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <style type="text/css">
+        body {
+            background-color: #98D6FF !important;
+        }
+        .header {
+            background-color: rgba(255,255,255,0.8);
+            -webkit-box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            height: 80px;
+            color: #52AACE;
+        }
+        .main {
+            margin-top: 100px;
+        }
+        .error {
+            color: red;
+        }
+        select[multiple], select[size] {
+            height: 34px;
+        }
+    </style>
+    <header>
+        <div class="header-wrapper">
+            <a href="#" id="header-showmenu-btn"><img alt="menú" src="/resource/1427502949000/HomeRevimex/images/menu-vertical-btn.png"/></a>
+            <figure class="fullwidth-picture" id="main-logo"><a href="#"><img alt="Revimex" src="/resource/1427502949000/HomeRevimex/images/revimex-logo.png"/></a></figure>
+            <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div> <div class="font-size-40">hoy</div></div>
+        </div>
+        <div id="header-phone"><span class="phone-icon"><a href="tel:0180058560920">01800 5856 0920</a></span></div>
+    </header>
+    <div class="container main">
+        <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Busqueda de precas</h3>
+            </div>
+            <div class="panel-body">
+                <apex:form styleClass="form-horizontal">  
+                    <apex:inputText value="{!searchstring}" label="Input"/> &nbsp;
+                    <apex:commandButton value="Buscar Precas" action="{!search}"/>  &nbsp;
+                    <apex:commandButton value="Limpiar busqueda" action="{!clear}"/>  &nbsp;
+                    <apex:pageBlock title="Resultados de la busqueda">  
+                        <apex:pageblockTable value="{!precs}" var="a">  
+                            <apex:column >  
+                                <apex:outputlink value="{!URLFOR($Site.CurrentSiteUrl,'')}UpdatePreca?precaId={!a.id}">{!a.Nombre__c} {!a.Apellido__c}</apex:outputlink>  
+                            </apex:column> 
+                        </apex:pageBlockTable>
+                        <apex:outputlink value="{!URLFOR($Site.CurrentSiteUrl,'')}CreatePreca">Crear Preca</apex:outputlink>
+                    </apex:pageBlock> 
+                </apex:form>  
+            </div>
+        </div>
+        </div>
+    </div>
+</apex:page>

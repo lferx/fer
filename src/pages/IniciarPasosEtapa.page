@@ -1,0 +1,20 @@
+<apex:page standardController="DocumentoEtapa__c" extensions="IniciarPasosEtapaController">
+    <apex:form id="formaprincipal">
+         <apex:pageBlock >
+                <apex:pageBlockButtons >            		    
+			          <apex:commandButton value="Cerrar" action="{!cancel}" />
+                          		    
+			          <apex:commandButton value="Iniciar" action="{!IniciarEtapa}" />
+                </apex:pageBlockButtons>
+                <li> <b> {!sOferta} </b></li>
+                
+                <li> <b> {!sEtapa} </b> </li>
+                     
+                <apex:pageBlockTable title="Documentos a Iniciar" var="doc" value="{!ldocup}" id="list">
+                    <apex:column value="{!doc.Orden__c}" headervalue="Orden" />
+                    <apex:column value="{!doc.Name}" headervalue="Documento" />
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

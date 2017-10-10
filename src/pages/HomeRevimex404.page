@@ -1,0 +1,43 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" title="Error 404">
+	<head>
+	    <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+		<style type="text/css">
+			body{
+				background-color: black;
+			}
+			.text-blue{
+				color:rgb(149,198,221);
+			}
+			#mensajePrincipal{
+				width: 250px;
+				height: 200px;
+
+				position: absolute;
+				top:0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				
+				margin: auto;
+
+				color:white;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		
+			<div id="mensajePrincipal">
+				 <h2>
+				 	Algo salió mal. Estamos trabajando para ti.
+				 </h2>
+				 <figure id="main-logo" class="fullwidth-picture"><a href="../apex/HomeRevimex"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+				 <div class="text-blue">
+					  <h2>
+					 	404
+					 </h2>
+				 </div>
+			</div>
+		
+	</body>
+</apex:page>

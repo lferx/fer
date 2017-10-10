@@ -1,0 +1,35 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+   <html>
+        <head>
+            <style>
+              body {
+             
+                    background-image: url("{!URLFOR($Resource.imagen_contados2)}");
+                    position:absolute; z-index:1; width:100%; height:100%;
+                    background-size:100% 100%;
+                    background-attachment:fixed;
+             }
+             
+               
+            </style>
+            </head>
+ 
+            <body>
+               <DIV STYLE="position:relative; top:120px;left:150px;">    
+                <img src="{!URLFOR($Resource.Foto_Marisol)}" style="height:27%;width:27%;"/>
+              </div>
+              <DIV STYLE="position:relative; top:140px;left:150px;">    
+                <img src="{!URLFOR($Resource.Foto_Iran)}" style="height:27%;width:27%;"/>
+              </div>
+            <DIV STYLE="position:relative; top:160px;left:150px;">    
+                <img src="{!URLFOR($Resource.Foto_Trinidad)}" style="height:27%;width:27%;"/>
+              </div>
+            <DIV STYLE="position:relative; top:180px;left:150px;">    
+                <img src="{!URLFOR($Resource.Foto_Ana)}" style="height:27%;width:27%;"/>
+              </div>
+              <!--<DIV STYLE="position:relative; top:220px;left:150px;">    
+                <img src="{!URLFOR($Resource.Foto_Diego_contado)}" style="height:27%;width:27%;"/>
+              </div>-->
+            </body>
+            </html>
+            </apex:page>

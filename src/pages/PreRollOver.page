@@ -1,0 +1,39 @@
+<apex:page standardStylesheets="false">
+<head>
+	<!-- <apex:stylesheet value="{!URLFOR($Resource.estilosCT)}"/> -->
+<style type="text/css">
+
+.title{
+	width: 80%;
+	border: 1px solid;
+	display: inline-block;
+
+}
+.title h1{
+	color: #1973DA;
+	font-size: 20px;
+	
+}
+.logo{
+	width: 19%;
+	border: 1px solid;
+	display: inline-block;
+	vertical-align: middle;
+}
+.img_logo{
+	max-width: 100%;
+}
+
+</style>
+</head>
+<!--   ENCABEZADO -->
+<body>
+  <div class="title">
+  	<h1>ROLL OVER CREACION DE LEADS</h1>
+  </div>
+  <div class="logo">
+  	<apex:image value="{!URLFOR($Resource.logoRevimex)}" styleClass="img_logo"/>
+  </div>
+
+</body>
+</apex:page>

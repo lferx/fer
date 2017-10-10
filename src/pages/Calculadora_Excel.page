@@ -1,0 +1,7 @@
+<apex:page standardController="Calculadora__c" extensions="CalculadoraController" contenttype="text/csv#Paquete_Calculado.csv">"#","Folio","Valor de Referencia %","Valor de Referencia Oferta","Costo Total Oferta","Precio Minimo","Gastos de Escrituracion","Desalojo","Gastos de Venta","Comision Broker","Comision en Pesos","Costo Total Neto","Beneficio","Margen"
+<apex:repeat value="{!listaRegistros}" var="registro">
+"{!registro.pos}","{!registro.folioLista}","{!registro.vrPorcentaje}","{!registro.vr}","{!registro.ctCamp}","{!registro.pm}","{!registro.ge}","{!registro.des}","{!registro.gastoVenta}","{!registro.comPorcentaje}","{!registro.com}","{!registro.ct}","{!registro.ben}","{!registro.marg}"
+</apex:repeat>
+"","","","","","","","","","","","","",""
+"Total","","{!promvrPorcentaje}","{!sumaVr}","{!sumaCt1}","{!sumaPm}","{!sumaGe}","{!sumaDes}","{!sumagastoVenta}","{!promcomPorcentaje}","{!sumaCom}","{!sumaCt}","{!sumaBen}","{!prommarg}"
+</apex:page>

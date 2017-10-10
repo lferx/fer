@@ -1,0 +1,36 @@
+<apex:page StandardController="Etapa__c" extensions="EtapaRC" recordSetVar="varetset"> 
+  <apex:form id="theForm">
+      <apex:pageBlock id="Etapas" rendered="{!NOT(ISNULL(lwetapas))}"> 
+       <apex:pageBlockButtons >
+				<apex:commandButton value="Generar" action="{!calculaRC}"/>
+				<apex:commandButton value="Cerrar" action="{!cancel}" />
+	   </apex:pageBlockButtons>
+       
+        <apex:outputPanel id="panelTable">
+        <div align="left" style="width:1100px;height:300px;overflow-x:scroll;overflow-y:scroll;white-space: nowrap;" id="divTable">
+        <apex:pageblocktable value="{!lwetapas}" var="etsel" rendered="{!NOT(ISNULL(lwetapas))}">
+          <apex:column headerValue="Seleccionar">
+              <apex:inputCheckBox value="{!etsel.etapaselect}"/>
+          </apex:column> 
+          <apex:column headerValue="Proceso">
+              <apex:outputField value="{!etsel.etapa.EstatusOferta__c}"/>
+          </apex:column>
+          <apex:column headerValue="Etapa">
+              <apex:outputField value="{!etsel.etapa.Name}"/>
+          </apex:column>
+          
+          
+        </apex:pageblocktable> 
+        </div>
+        </apex:outputPanel>
+       
+      
+      </apex:pageBlock> 
+      <apex:pageBlock id="RC" rendered="{!NOT(ISNULL(lrutac))}"> 
+         <apex:outputpanel >
+            Ruta Crítica
+            {!sRutaC} 
+         </apex:outputpanel>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

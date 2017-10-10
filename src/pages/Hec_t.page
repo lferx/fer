@@ -1,0 +1,30 @@
+<apex:page controller="Hec_t_Controller">
+  <!-- Begin Default Content REMOVE THIS -->
+  
+  <h1>{!hoyString}</h1>  
+  
+  <apex:form > <apex:commandButton value="CLICK"  />   
+  
+  
+
+ <!-- .botonPrueba{
+            height: 35px; 
+            border: 0.5px solid #3EB2D2; 
+            border-radius: 5px;
+            position: relative; 
+            left: 0px; 
+            top:1px;"
+        }-->
+  
+  
+  
+   
+  
+  </apex:form>
+ <!-- <br>{!z} </br> -->  
+  <!-- End Default Content REMOVE THIS -->
+   
+   
+   
+   
+  </apex:page>

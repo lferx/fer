@@ -1,0 +1,208 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!guardarFotosComoAdjuntos}" controller="ficha_cliente_Pdf">
+	<head>
+		<style type="text/css">
+			
+			@font-face {
+                font-family:'GothamRounded-Book';
+                /*src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');*/
+                src: url('{!URLFOR($Resource.fichat, 'fichat/GothamRounded-Book_c.woff')}'));
+            }
+            @font-face{
+            	font-family:fonttwo;
+            	src: url('{!URLFOR($Resource.fichat, 'fichat/GothamRounded-Medium_a.woff')}') format('woff');
+            }
+			body {
+                font-family: 'fonttwo' ,arial;
+                /*Arial Unicode MS;*/
+            }
+            @page:first {
+			  	size: 12.36in 9.50in;
+			  	/*margin: -8px;*/
+			  	padding: 0 0 0 0;
+			  	margin: -8px 0px 0px -7px;
+			}
+			@page{
+                /*size: letter;*/
+                /*size: 11.69in 8.27in;*/
+                size: 12.36in 9.50in;
+				/*size: landscape;*/
+                margin: -1px 0px 0px -7px;
+                /*margin-left: -10px;*/
+              	/*margin-right: -10px;*/
+              	/*margin-top: -10px;*/
+                /*margin-bottom: -10px;*/
+                padding: 0 0 0 0;
+                /*@bottom-center {
+                    content: counter(page) "/" counter(pages);
+                    z-index: 22001;
+                }*/
+                /*z-index: 90000000;
+                @top-center {
+                    content: "Sample";
+                    
+                }*/
+                
+                /*@bottom-center {
+                    content: "Page " counter(page) "/" counter(pages);
+                }*/
+                /*@top-center {
+                    content: counter(page) "/" counter(pages);
+                    z-index: 90000000;
+                }*/
+            }
+            p {margin: 0; padding: 0;}
+            /*.first-page{
+            	display:block;
+                page-break-after:auto;
+                page-break-after:always;
+            }*/
+            .page-break {
+                display:block;
+                /*page-break-before:always;*/
+                page-break-after: auto;
+                width: 1186px;
+            	height: 913px;
+            	
+
+            }
+            .first-background{
+            	background-image:url('{!URLFOR($Resource.fichat, 'fichat/back-ground-page1.png')}');
+            	
+            }
+            .background{
+				background-image:url('{!URLFOR($Resource.fichat, 'fichat/back-ground-page2.png')}');
+            }
+            .first-background,.background{
+            	background-repeat: no-repeat; 
+            	background-size: 100% 100%;
+            	background-position: center;
+            }
+            .first-page-back-ground,.page-back-ground{
+            	/*width:100%;
+            	height:800px;*/
+            	width: 1186px;
+            	height: 913px;
+
+            }
+			.ftext001{
+				font-size:185px;
+				font-family:Times;
+				color:#061936;
+				
+			}
+			.ft01F{font-size:177px;font-family:Times;color:#032346;}
+				.ft02F{font-size:105px;font-family:Times;color:#061936;}
+				.ft03F{font-size:15px;font-family:Times;color:#062058;}
+				.ft04F{font-size:9px;font-family:Times;color:#062058;}
+				.ft05F{font-size:48px;font-family:Times;color:#000000;}
+				.ft06F{font-size:48px;font-family:Times;color:#061936;}
+				.ft07F{font-size:15px;line-height:20px;font-family:Times;color:#062058;}
+
+			.ft00{font-size:33px;font-family:Times;color:#061936;}
+				.ft01{font-size:15px;font-family:Times;color:#032346;}
+				.ft02{font-size:15px;font-family:Times;color:#062058;}
+				.ft03{font-size:9px;font-family:Times;color:#062058;}
+				.ft04{font-size:27px;font-family:Times;color:#ffffff;}
+				.ft05{font-size:21px;font-family:Times;color:#062058;}
+				.ft06{font-size:24px;font-family:Times;color:#ffffff;}
+				.ft07{font-size:14px;font-family:Times;color:#022e6b;}
+				.ft08{font-size:8px;font-family:Times;color:#022e6b;}
+				.ft09{font-size:17px;font-family:Times;color:#022e6b;}
+				.ft010{font-size:20px;font-family:Times;color:#ffffff;}
+				.ft011{font-size:15px;line-height:20px;font-family:Times;color:#062058;}
+            
+            
+		</style>
+	</head>
+	
+	<body>
+		
+	
+		<div class="page-break first-background"><!-- 
+			<p style="font-size:35PX;font-family:fontone"> REVIMEX letra 1</p><br/>
+			<p style="font-size:35PX;font-family:Arial Unicode MS"> REVIMEX letra 2</p><br/>
+			<p style="font-size:35PX;font-family:sans-serif"> REVIMEX letra 3</p><br/>
+			<p style="font-size:35PX;font-family:SansSerif"> REVIMEX letra 4</p><br/>
+			<p style="font-size:35PX;font-family:Dialog"> REVIMEX letra 5</p><br/>
+			<p style="font-size:35PX;font-family:serif"> REVIMEX letra 6</p><br/>
+			<p style="font-size:35PX;font-family:Times"> REVIMEX letra 7</p><br/>
+			<p style="font-size:35PX;font-family:monospace"> REVIMEX letra 8</p><br/>
+			<p style="font-size:35PX;font-family:Courier"> REVIMEX letra 9</p><br/>
+			<p style="font-size:35PX;font-family:Monospaced"> REVIMEX letra 10</p><br/>
+			<p style="font-size:35PX;font-family:DialogInput"> REVIMEX letra 11</p><br/> -->
+
+			<p style="font-family:fontone, sans-serif;position:relative;top:243px;left:154px;white-space:nowrap" class="ftext001">REVIMEX</p>
+			<!-- <p style="position:relative;top:249px;left:1033px;white-space:nowrap" class="ft01F">&#160;</p> -->
+			<p style="position:relative; top:243px;left:162px;white-space:nowrap" class="ft02F">tu mejor opción&#160;</p>
+			<!-- 
+			<p style="position:relative;top:271px;left:1139px;white-space:nowrap" class="ft04F">&#160;</p>
+			
+			<p style="position:relative;top:871px;left:198px;white-space:nowrap" class="ft04F">&#160;</p> -->
+			<p style="position:relative;top:243px;left:176px;white-space:nowrap" class="ft05F">Esta podría ser tu próxima casa...</p>
+
+
+			<p style="position:fixed;top:845px;left:47px;white-space:nowrap" class="ft07F"><br/>www.revimex.mx</p>
+			<p style="position:fixed;top:845px;left:1057px;white-space:nowrap" class="ft03F">Contacto</p>
+			<p style="position:fixed;top:866px;left:1000px;white-space:nowrap" class="ft03F">01 800 200 0440</p>
+		</div>
+		<div class="page-break background">
+			<!-- <p style="font-size:35PX;font-family:fontone"> REVIMEX letra 1</p><br/>
+			<p style="font-size:35PX;font-family:Arial Unicode MS"> REVIMEX letra 2</p><br/>
+			<p style="font-size:35PX;font-family:sans-serif"> REVIMEX letra 3</p><br/>
+			<p style="font-size:35PX;font-family:SansSerif"> REVIMEX letra 4</p><br/>
+			<p style="font-size:35PX;font-family:Dialog"> REVIMEX letra 5</p><br/>
+			<p style="font-size:35PX;font-family:Dialog"> <b>REVIMEX letra 5</b></p><br/>
+			<p style="font-size:35PX;font-family:serif"> REVIMEX letra 6</p><br/>
+			<p style="font-size:35PX;font-family:Times"> REVIMEX letra 7</p><br/>
+			<p style="font-size:35PX;font-family:monospace"> REVIMEX letra 8</p><br/>
+			<p style="font-size:35PX;font-family:Courier"> REVIMEX letra 9</p><br/>
+			<p style="font-size:35PX;font-family:Monospaced"> REVIMEX letra 10</p><br/>
+			<p style="font-size:35PX;font-family:DialogInput"> REVIMEX letra 11</p><br/> -->
+
+
+
+			<p style="position:relative;top:32px;left:261px;white-space:nowrap" class="ft00">FICHA TÉCNICA COMERCIAL</p>
+			<p style="position:relative;top:170px;left:191px;white-space:nowrap" class="ft06">IF-10100053703</p>
+			<p style="position:relative;top:140px;left:785px;white-space:nowrap" class="ft06">Características</p>
+			<!-- <p style="position:relative;top:46px;left:793px;white-space:nowrap" class="ft01">&#160;</p> -->
+			<!-- <p style="position:relative;top:845px;left:1057px;white-space:nowrap" class="ft02">Contacto&#160;</p> -->
+			<!-- <p style="position:relative;top:866px;left:981px;white-space:nowrap" class="ft02">01 800 200 0440</p> -->
+			<!-- <p style="position:relative;top:871px;left:1139px;white-space:nowrap" class="ft03">&#160;</p> -->
+			<!-- <p style="position:relative;top:845px;left:47px;white-space:nowrap" class="ft011">&#160;<br/>www.revimex.mx</p> -->
+			<!-- <p style="position:relative;top:871px;left:198px;white-space:nowrap" class="ft03">&#160;</p> -->
+			<div style="position:relative;top:194px;left:63px;white-space:nowrap;width: 490px;height: 345px; background-color: blue;">foto</div>
+
+			<p style="position:relative;top:-70px;left:685px;white-space:nowrap" class="ft05">246 m<sup>2</sup></p>
+			<p style="position:relative;top:-100px;left:845px;white-space:nowrap" class="ft05">66 m<sup>2</sup></p>
+			<p style="position:relative;top:-120px;left:1020px;white-space:nowrap" class="ft05">2</p>
+
+			<p style="position:relative;top:50px;left:714px;white-space:nowrap" class="ft05">1</p>
+			<p style="position:relative;top:35px;left:868px;white-space:nowrap" class="ft05">1</p>
+			<p style="position:relative;top:10px;left:1020px;white-space:nowrap" class="ft05">1</p>
+
+			<p style="position:relative;top:649px;left:84px;white-space:nowrap" class="ft010">Calle Rinconada de las Gardenias #329</p>
+			<p style="position:relative;top:676px;left:88px;white-space:nowrap" class="ft010">Col. Rinconadas Hamburgo, C.P. 35018</p>
+			
+			<p style="position:relative;top:724px;left:171px;white-space:nowrap" class="ft06">Gómez Palacio, DGO.&#160;</p>
+
+			<p style="position:relative;top:661px;left:820px;white-space:nowrap" class="ft010">Localizador</p>
+
+			
+
+			<p style="position:relative;top:722px;left:808px;white-space:nowrap" class="ft04">$391,661</p>
+			
+			
+			
+			<!-- <p style="position:relative;top:375px;left:881px;white-space:nowrap" class="ft07">m</p>
+			<p style="position:relative;top:375px;left:897px;white-space:nowrap" class="ft08">2</p> -->
+			<!-- <p style="position:relative;top:363px;left:903px;white-space:nowrap" class="ft09">&#160;</p> -->
+			
+			<!-- <p style="position:relative;top:375px;left:735px;white-space:nowrap" class="ft07">m</p>
+			<p style="position:relative;top:375px;left:751px;white-space:nowrap" class="ft08">2</p> -->
+			<!-- <p style="position:relative;top:364px;left:758px;white-space:nowrap" class="ft09">&#160;</p> -->
+			
+			
+		</div>
+		<!-- <div style="page-break-before: avoid;"></div> -->
+	</body>
+</apex:page>

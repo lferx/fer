@@ -1,0 +1,52 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" standardController="User">
+   <html>
+        <head>
+            <style>
+              .outBorder {
+                 background-color: #EEEEEE;
+                 border:1px outset black;
+                
+             }
+               .inBorder{
+                font-family:Verdana, Geneva, sans-serif;
+                font-size:12px;
+                text-align: center;
+                background-color: #fff;
+                border-top: 1px outset black;
+                border-left:1px outset black;
+                border-bottom:1px outset black;
+                border-right:1px outset black;
+             }
+             
+             h2 {
+                  color:#fb7f05;
+                  
+                }
+            </style>
+            </head>
+ 
+  <body>
+            <center>
+             <apex:form >
+                    
+                 <h2 align="center">Carlos Alberto Hernandez Flores</h2>
+                 <apex:image value="{!URLFOR($Resource.imgInformes,'Imagenes/IMG_0576.jpg')}" width="100%" height="100%"/>
+                <apex:dataTable value="{!User}" var="user" cellPadding="4" border="1" styleClass="outBorder">
+                      <apex:column styleClass="inBorder">
+                           <apex:facet name="header">Stock Ponderado</apex:facet>
+                           11
+                     </apex:column>
+                      <apex:column styleClass="inBorder">
+                           <apex:facet name="header">Objetivo Ventas</apex:facet>
+                           3
+                     </apex:column>
+                         <apex:column styleClass="inBorder">
+                           <apex:facet name="header">Objetivo Ofertas</apex:facet>
+                           6
+                     </apex:column>
+                </apex:dataTable>
+                </apex:form>
+         </center>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,96 @@
+<apex:page controller="ResnotariaController" showHeader="false" sidebar="false" standardStylesheets="false">
+
+<style type="text/css">
+html {
+	height: 100%;
+	position: relative;
+}
+.legend {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	margin-top: -50px;
+	text-align: center;
+}
+.promptForm {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -26px;
+	margin-left: -132px;
+}
+.promptForm a {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	text-shadow: -0.1em -0.1em -0.1em #999;
+	text-decoration: none;
+	color: #FFF;
+	padding: 7px 20px;
+	border: 1px solid;
+	display: inline-block;
+	width: auto;
+	margin: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	opacity: 0.99;
+}
+.promptForm a.acc {
+	border-color: rgb(110, 155, 40);
+	background: rgb(168,204,102);
+	background: -moz-linear-gradient(top, rgba(168,204,102,1) 0%, rgba(135,186,54,1) 6%, rgba(101,160,28,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(168,204,102,1)), color-stop(6%,rgba(135,186,54,1)), color-stop(100%,rgba(101,160,28,1)));
+	background: -webkit-linear-gradient(top, rgba(168,204,102,1) 0%,rgba(135,186,54,1) 6%,rgba(101,160,28,1) 100%);
+	background: -o-linear-gradient(top, rgba(168,204,102,1) 0%,rgba(135,186,54,1) 6%,rgba(101,160,28,1) 100%);
+	background: -ms-linear-gradient(top, rgba(168,204,102,1) 0%,rgba(135,186,54,1) 6%,rgba(101,160,28,1) 100%);
+	background: linear-gradient(to bottom, rgba(168,204,102,1) 0%,rgba(135,186,54,1) 6%,rgba(101,160,28,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a8cc66', endColorstr='#65a01c',GradientType=0);
+}
+.promptForm a.dec {
+	border-color: rgb(196, 87, 77);
+	background: rgb(244,153,146);
+	background: -moz-linear-gradient(top, rgba(244,153,146,1) 0%, rgba(222,96,62,1) 6%, rgba(208,53,62,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(244,153,146,1)), color-stop(6%,rgba(222,96,62,1)), color-stop(100%,rgba(208,53,62,1)));
+	background: -webkit-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+	background: -o-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+	background: -ms-linear-gradient(top, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+	background: linear-gradient(to bottom, rgba(244,153,146,1) 0%,rgba(222,96,62,1) 6%,rgba(208,53,62,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f49992', endColorstr='#d0353e',GradientType=0);
+}
+.promptForm a:hover {
+	opacity: 0.8;
+}
+
+.gracias {
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    text-align:center;
+    width:100%;
+}
+
+</style>
+
+<script type="text/javascript">
+function reload() {
+	window.top.location.href = "/{!oferta.Id}";
+}
+</script>
+
+<apex:outputPanel rendered="{!oferta.EstatusCorreoNotaria__c == 'Pendiente'}">
+<div class="legend">Favor de aprobar el trámite de la propiedad: <b>{!oferta.Name}</b></div>
+
+<apex:form styleClass="promptForm" >
+  <apex:actionFunction name="aceptar" action="{!accept}" oncomplete="reload()"/>
+  <apex:commandLink onclick="aceptar();" value="Aceptar ✔" styleClass="acc" />
+  <apex:commandLink action="{!decline}" value="Declinar ✘" styleClass="dec" oncomplete="reload()"/>
+</apex:form>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!oferta.EstatusCorreoNotaria__c == 'Aprobado' || oferta.EstatusCorreoNotaria__c == 'Rechazado'}" styleClass="gracias"><span >Gracias, su respuesta ya fue recibida.</span></apex:outputPanel>
+
+</apex:page>

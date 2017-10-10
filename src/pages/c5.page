@@ -1,0 +1,53 @@
+<apex:page controller="c5" showHeader="true" sidebar="true">
+<apex:form >
+	
+	<apex:pageBlock title="Redireccion con Registros">
+		<apex:pageBlockTable value="{!tetrahidrocannabinol}" var="verde" id="nepe">
+			<apex:column value="{!verde.Name}"/>
+			<apex:column value="{!verde.Type}"/>
+			<apex:column value="{!verde.Phone}"/>
+		</apex:pageBlockTable>
+			
+				<apex:commandButton value="click Lead Cliente" action="{!cogollo}" reRender="nepe,caca" />
+				<apex:commandButton value="click Matriz" action="{!hash}" reRender="nepe,caca" />
+		<apex:detail relatedList="false"/>
+	
+	</apex:pageBlock>
+	
+		
+	<apex:outputPanel id="caca">
+	<table border="1px" id="caca2">
+		<thead>
+			<tr>
+				<td>
+					Name
+				</td>
+
+				<td>
+					Type
+				</td>
+
+				<td>
+					Phone
+				</td>
+			</tr>
+		</thead>
+		<apex:repeat var="verde" value="{!tetrahidrocannabinol}" id="out">
+		<apex:actionRegion >
+		<tr>
+			<td>
+				<apex:outputText value="{!verde.Name}"/> 
+			</td>
+			<td>
+				<apex:outputText value="{!verde.Type}"/>
+			</td>
+			<td>
+				<apex:outputText value="{!verde.Phone}"/>
+			</td>
+		</tr>
+		</apex:actionRegion>
+		</apex:repeat>
+	</table>
+</apex:outputPanel>
+</apex:form>
+</apex:page>

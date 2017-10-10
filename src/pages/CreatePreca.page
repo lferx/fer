@@ -1,0 +1,178 @@
+<apex:page doctype="HTML-5.0"  sidebar="false" showHeader="false" standardStylesheets="false" title="Precalificación" controller="PrecaWebController">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//www.revimex.mx/resource/1427502949000/HomeRevimex/css/template.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <style type="text/css">
+        body {
+            background-color: #98D6FF !important;
+        }
+        .header {
+            background-color: rgba(255,255,255,0.8);
+            -webkit-box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.2);
+            height: 80px;
+            color: #52AACE;
+        }
+        .main {
+            margin-top: 100px;
+        }
+        .error {
+            color: red;
+        }
+        select[multiple], select[size] {
+            height: 34px;
+        }
+    </style>
+    <header>
+        <div class="header-wrapper">
+            <a href="#" id="header-showmenu-btn"><img alt="menú" src="/resource/1427502949000/HomeRevimex/images/menu-vertical-btn.png"/></a>
+            <figure class="fullwidth-picture" id="main-logo"><a href="#"><img alt="Revimex" src="/resource/1427502949000/HomeRevimex/images/revimex-logo.png"/></a></figure>
+            <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div> <div class="font-size-40">hoy</div></div>
+        </div>
+        <div id="header-phone"><span class="phone-icon"><a href="tel:0180058560920">01800 5856 0920</a></span></div>
+    </header>
+    <div class="container main">
+        <div class="row">
+        
+            <apex:form styleClass="form-horizontal precalificacion">
+                <div class="form-group">
+                    <label for="fname" class="col-sm-2 control-label">Nombre</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control nombre" id="fname" value="{!fname}"/>
+                        <div class="nombre-error error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lname" class="col-sm-2 control-label">Apellido</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control apellido" id="lname" value="{!lname}"/>
+                        <div class="apellido-error error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nss" class="col-sm-2 control-label">Número de seguro social</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control nss" id="nss" value="{!nss}"/>
+                        <div class="nss-error error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Correo</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control email" id="email" value="{!email}"/>
+                        <div class="email-error error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bday" class="col-sm-2 control-label">Fecha de nacimiento</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control bday" id="bday" value="{!bday}"/>
+                        <div class="bday-error error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="credito" class="col-sm-2 control-label">Credito</label>
+                    <div class="col-sm-10">
+                        <apex:inputText styleClass="form-control" id="credito" value="{!credito}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Plaza</label>
+                    <div class="col-sm-10">
+                        <apex:selectList value="{!plaza}" multiselect="false" size="1" styleClass="form-control">
+                            <apex:selectOptions value="{!plazaOptions}"/>
+                        </apex:selectList>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <apex:commandButton styleClass="btn btn-default check" action="{!createPreca}" value="Crear" />
+                    </div>           
+                </div>
+            </apex:form>
+        </div>
+    </div>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+    var validar = {
+        init: function () {
+            var year = new Date().getFullYear();
+            var sy = year - 50;
+            var ey = year - 18;
+            $( ".bday" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: sy+':'+ey,
+            });
+            //$(document).on( 'click', '.check', this.validate); 
+        },
+        validate: function (e) {
+            e.preventDefault();
+            var nombrev = validar.nombre();
+            var apellidov = validar.apellido();
+            var nssv = validar.nss();
+            var emailv = validar.email();
+            var bdv = validar.bd();
+            if (nombrev && apellidov && nssv && emailv && bdv) {
+                $('.precalificacion').submit();
+            };
+        },
+        nombre: function () {
+            if ($('.nombre').val() == '') {
+                $('.nombre-error').html('<p>Ingese un nombre</p>');
+                return false;
+            } else {
+                $('.nombre-error').html('')
+                return true;
+            }
+        },
+        apellido: function () {
+            if ($('.apellido').val() == '') {
+                $('.apellido-error').html('<p>Ingrese un apellido</p>');
+                return false;
+            } else {
+                $('.apellido-error').html('')
+                return true;
+            }
+        },
+        nss: function () {
+            var nss = $('.nss').val().replace(/[^0-9\.]/g,'');
+            $('.nss').val(nss);
+            nss = $('.nss').val();
+            if (nss.length != 11){
+                $('.nss-error').html('<p>El NSS es incorrecto</p>');
+                return false;
+            } else {
+                $('.nss-error').html('');
+                return true;
+            }
+        },
+        email: function () {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var pass = regex.test($('.email').val());
+            if (pass) {
+                $('.email-error').html('');
+            } else {
+                $('.email-error').html('<p>El correo es invalido</p>');
+            }
+            return regex.test($('.email').val());
+        },
+        bd: function () {
+            if ($('.bday').val() == '') {
+                $('.bday-error').html('<p>Ingrese fecha</p>');
+                return false;
+            } else {
+                $('.bday-error').html('');
+                return true;
+            }
+        }
+    }
+    $(function(){
+        validar.init();
+    });
+    </script>
+</apex:page>

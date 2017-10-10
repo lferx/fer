@@ -1,0 +1,228 @@
+<apex:component >
+        <apex:attribute name="text2" type="String" description="El texto que se desplagara" />
+<!-- 
+
+color azul fuerte: #0C326B
+ΩCOLOR AZUL CLARO: #4DB1E0 
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+COLOR ROJO: #FF0000
+COLOR AMARILLO: #FFE933
+COLOR VERDE: #1D8348
+color gris:  #cfcfcf
+morado claro: A37DB3;
+morado fuerta: 672183;
+
+-->
+    <head>
+      
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+        <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>jQuery UI Tooltip - Default functionality</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+        <style type="text/css"> 
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            body{
+                width:99%;
+                background-color: #fff;
+            }
+            h1{
+                font-family: 'Bebas-Neue';
+                font-size: 23px;
+                text-transform:uppercase;
+            }
+            h11{
+                font-family: 'Bebas-Neue';
+                font-size: 18px;
+                text-transform:uppercase;
+            }
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            h3{
+                font-weight: bold;
+                font-size: 11px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 13px;
+                color: #0C326B;
+            }
+            h5{
+                font-size: 10px;
+                color: #fff;
+            }
+            h6{
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                color: #fff;
+            }
+            h7{
+               font-size: 23px;
+               font-family: 'Bebas-Neue';
+            }
+
+            .msg_obj_1, .msg_obj_2{
+                    font-family: "gotham-rounded-medium";
+                    font-size: 13px;
+                    color: #5A2A7E;
+                    height: 40%;
+                    text-align: center;
+                    align-self: center;
+                    border-radius: 0px 0px 17px 17px;
+                    -moz-border-radius: 0px 0px 17px 17px;
+                    -webkit-border-radius: 0px 0px 17px 17px;
+                    border: 1px solid #4DB1E0;
+                    border-color: #5A2A7E;
+                    border-top: none;
+                    padding: 7px 15px 7px 15px;
+                    width: 100%;
+                    margin-bottom: 30px;
+                   }
+            .obj_1, .obj_2{
+                    font-family: 'Bebas-Neue';
+                    font-size: 20px;
+                    padding: 27px 15px 27px 15px;
+                    background: #5A2A7E;
+                    color: white;
+                    height: 70px;
+                    align-self: center;
+                    border-radius: 20px 20px 20px 20px;
+                    -moz-border-radius: 20px 20px 20px 20px;
+                    -webkit-border-radius: 20px 20px 20px 20px;
+                    border: 1px solid #4DB1E0;
+                    border-top: none; 
+                    border-color: #4DB1E0;
+                    cursor: pointer;
+                    min-width: 90%;
+                    margin-bottom: 30px;
+            }
+            .tituloObjecion2{    
+             padding: 10px;
+            }
+            .menuArgumentosObservaciones2{
+                         height: 590px;
+                         width: 12%;
+                         display:inline;
+                         align-content: center;
+                         margin-right: 50px;
+                         /*background-color: gray;*/
+                         
+                        }
+                     
+        </style>
+           
+    </head>
+                               
+    <body> 
+    
+      <div class="ctn_gral">
+                
+                <table align="center">
+                       
+                       <tr>
+                           <td align="center "><h1  style="color: #0C326B;">ARGUMENTOS / OBJECIONES</h1><br/><br/></td>
+                       </tr>
+                       </table>
+
+                           <aside class="obj_1">Devolución</aside>
+                               <div class="msg_obj_1" id="msg_obj_1" hidden="true">Si el avaluo de la propiedad es mayor al precio de venta y tu credito lo cubre, te regresamos la diferencia  que resulte en efectivo
+                               </div> 
+ 
+                       <aside class="obj_2">Promociones</aside>
+                       <div class="msg_obj_2" hidden="true">Aplicables en el Mes
+                       </div>
+
+                       
+<!--                      <td colspan="4" align="center">
+
+                        <div  id="panel">   
+
+                          <apex:repeat value="{!objeciones}" var="key">
+
+                                <div class="panel panel-default">
+                                    <div class="tituloObjecion">
+                                        <h7>
+                                            <a data-toggle="collapse" data-parent="#panel" href="#{!objeciones[key].Name}" ><apex:outputText value="{!objeciones[key].Name}" rendered="true"/></a>
+                                        </h7>
+                                    </div>
+                                    <div id="{!objeciones[key].Name}" class="collapse">
+                                        <div class="mensajeObjecion"><apex:outputText escape="false" value="{!objeciones[key].Mensaje__c}" rendered="true"/></div>
+                                    </div>
+                               </div>
+                            </apex:repeat>
+                        </div>
+                    
+                     </td> -->
+             
+        </div>
+          
+        
+   </body>
+   <script>
+
+        $(document).ready(function(){
+            $(".obj_1").click(function(){
+                shoowme = false;
+                $(".msg_obj_1").prop('hidden', shoowme);
+             if(shoowme == false){
+                // $(".obj_1").css("max-width", "40%");
+                $(".menuArgumentosObservaciones").css("width", "25%");
+                $(".obj_1").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $('.msg_obj_2').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+
+             }
+            });
+        });
+
+        $(document).ready(function(){
+            $(".obj_2").click(function(){
+                shoowme = false;
+                $(".msg_obj_2").prop('hidden', shoowme);
+             if(shoowme == false){
+                $(".obj_2").css("margin-bottom", "0px");
+                $(".obj_2").css("margin-top", "30px");
+                $('.msg_obj_1').prop('hidden',true);
+                $('.msg_obj_3').prop('hidden',true);
+             }
+            });
+        });
+
+   </script>
+
+</apex:component>

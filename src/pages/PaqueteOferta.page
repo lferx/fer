@@ -1,0 +1,332 @@
+<apex:page standardController="Paquete__c" extensions="PaqueteOfertaController" showHeader="false" >
+
+<head>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui,'css/smoothness/jquery-ui-1.8.23.custom.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-1.8.0.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'js/jquery-ui-1.8.23.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui,'postmessage/jquery.ba-postmessage.js')}"/>
+    
+    <style class="text/css">
+    #queryOfertasLoading {
+        display: none;
+        vertical-align: middle;
+    }
+    .addOfertaHeader, .delOfertaHeader {
+        width: 10px;
+    }
+    .addOferta, .delOferta {
+        background: url(data:image/png;base64,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) no-repeat;
+        width: 14px;
+        height: 14px;
+        margin-left: -2px;
+    }
+    .addOferta { background-position: 0% 0%; }
+    .delOferta { background-position: -14px 0%; }
+    .addOferta:hover { background-position: -28px 0%; }
+    .delOferta:hover { background-position: -42px 0%; }
+    #pageTools {
+        position: relative;
+    }
+    #pageTools #pageSizeArrow {
+        background: url(/img/func_icons/util/selectArrow12.gif) 0% 0%;
+        height: 12px;
+        width: 14px;
+        margin: 1px 20px 0 3px;
+        display: block;
+        float: left;
+    }
+    #pageTools #pageSizeSelector {
+        background-color: #DDD;
+        border: #CCC solid 2px;
+        border-collapse: separate;
+        color: #222;
+        cursor: pointer;
+        display: none;
+        height: 75px;
+        width: 214px;
+        margin: 0;
+        position: relative;
+        margin-top:-79px;
+    }
+    #pageTools #pageSizeSelector div {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        width: 100%;
+        height: 15px;
+        text-align: center;
+        display: block;
+    }
+    #pageTools #pageSizeSelector div:hover {
+        background-color: #E1F6FF;
+        color: #000;
+    }
+    #pageTools #pageSizeSelector div div {
+        background-color: #FFF;
+        font-weight: bold;
+        height: 100%;
+        width: 30px;
+        display: inline-block;
+        color: #000;
+    }
+    #pageTools .pageGrid {
+        background: url(/img/alohaSkin/listFooter.png) repeat-x;
+    }
+    #pageTools .pageGridCols {
+        width: 33.3333%;
+    }
+    #pageTools td {
+        vertical-align: middle !important;
+    }
+    #pageTools #pageSizeBlock {
+        height: 18px;
+    }
+    #pageTools #pageStatus {
+        background: url(/img/loading.gif) no-repeat;
+        height: 16px;
+        float: right;
+        display: none;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-top: 2px;
+    }
+    #pageTools .linkGrid {
+        margin: auto;
+    }
+    #pageTools .pageFirst, #pageTools .pagePrevious, #pageTools .pageNext, #pageTools .pageLast {
+        background: url(/img/paginationArrows.gif) no-repeat;
+        width: 9px;
+        height: 10px;
+        margin: 1px 4px;
+        display: block;
+    }
+    #pageTools .pageFirst {
+        background-position: 0px 1px;
+    }
+    #pageTools .pagePrevious {
+        background-position: -10px 1px;
+        float: left;
+    }
+    #pageTools .pageNext {
+        background-position: -17px 1px;
+        float: right;
+    }
+    #pageTools .pageLast {
+        background-position: -27px 1px;
+    }
+    #pageTools .pageLink {
+        text-decoration: none;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    #pageTools #pageSelector {
+        float: right;
+    }
+    #pageTools #pageNumber {
+        text-align: center;
+        width: 23px;
+        margin: 0px;
+        padding: 0px;
+    }
+    </style>
+    <script type="text/javascript">
+        function cancel() {
+            return confirm("¿Está seguro que desea cancelar?");
+        }
+        
+        function toggle(id) {
+            $("#"+id).toggle();
+        }
+        
+        function autoComplete(field) {
+            $(field).autocomplete({
+                source: function(request, response) {
+                    PaqueteOfertaController.search($(field).val(), function(result, event) {
+                        if (event.status) {
+                            response(result);
+                        } else {
+                            console.log(event);
+                        }
+                    }, {escape:false});
+                },
+                minLength: 3,
+                select: function(event, ui) {
+                    event.preventDefault();
+                    this.value = ui.item.value;
+                    search();
+                },
+                focus: function(event, ui) {
+                    event.preventDefault();
+                    this.value = ui.item.value;
+                }
+            });
+        }
+        
+        function search() {
+            queryOfertas($("#searchText").val());
+        }
+        
+        function showSizes() {
+            toggle('pageSizeSelector');
+            if($("#pageSizeSelector").css("display") == 'none') {
+                pageSizeArrow.style.backgroundPosition = '0% 0%';
+            } else {
+                pageSizeArrow.style.backgroundPosition = '-15px 0';
+            }
+        }
+        
+        var currentOrderBy;
+        var sortOrder = 'ASC';
+        function setOrderBy(field) {
+            if(currentOrderBy == field) {
+                sortOrder = sortOrder == 'ASC' ? 'DESC' : 'ASC';
+            } else {
+                sortOrder = 'ASC';
+            }
+            currentOrderBy = field;
+            orderBy(currentOrderBy, sortOrder);
+        }
+        
+        function setRowColor() {
+            $("input[type='hidden'][name='paquete']").each(function() {
+                if($(this).val() == "") {
+                    $(this).parent().parent().css("background","#CFC");
+                }
+            });
+        }
+        
+         
+        
+        function closeModalDialog() {
+            var j$ = jQuery.noConflict();
+            var parent_domain = '{!$CurrentPage.parameters.parent_domain}';
+            var cross_result = new Object();
+            cross_result.action = 'close_modal_dialog';
+        
+            j$.postMessage(
+                cross_result,
+                parent_domain,
+                parent
+            );
+        }
+        
+        $(document).ready(function() {
+            $("#searchText").keypress(function(event) {
+                if(event.keyCode == 13) {
+                    search();
+                    return !(window.event && window.event.keyCode == 13);
+                }
+            });
+        });
+        </script>
+</head>
+<apex:form >
+    <apex:actionStatus id="queryOfertasStatus" onstart="toggle('queryOfertasLoading')" onstop="toggle('queryOfertasLoading')"/>
+    <apex:actionStatus id="pageStatus" onstart="toggle('pageStatus')"/>
+    <apex:actionFunction action="{!queryOfertas}" name="queryOfertas" status="queryOfertasStatus" rerender="searchResults">
+        <apex:param assignTo="{!ofertaName}" name="OfertaName" value=""/>
+    </apex:actionFunction>
+    <apex:actionFunction action="{!queryOfertas}" name="orderBy" status="pageStatus" rerender="searchResults">
+        <apex:param assignTo="{!orderBy}" name="orderBy" value=""/>
+        <apex:param assignTo="{!sortOrder}" name="sortOrder" value=""/>
+    </apex:actionFunction>
+    <apex:actionFunction action="{!addOferta}" name="addOferta" status="queryOfertasStatus" rerender="searchResults, pbOfertas">
+        <apex:param name="addOfertaId" value=""/>
+    </apex:actionFunction>
+    <apex:actionFunction action="{!delOferta}" name="delOferta" status="queryOfertasStatus" rerender="searchResults, pbOfertas">
+         <apex:param name="delOfertaId" value=""/>
+    </apex:actionFunction>
+    <apex:pageBlock id="pbBusquedaOfertas">
+         <apex:tabPanel switchType="client">
+            <apex:tab label="Búsqueda de ofertas">
+            <div>
+              <span>Por palabra clave:</span><br/>
+              <input type="text" size="20" title="Buscar" onkeyup="return autoComplete(this)" id="searchText"/>
+              <input type="button" value="Buscar" onclick="search()"/>
+              <img id="queryOfertasLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///xeXwMfl71Ox0BeXwHC+143L35vS4yH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+            </div>
+            <br/>
+            <apex:outputPanel id="searchResults">
+                <apex:pageMessages />
+                <apex:outputText value="No hay resultados que mostrar" rendered="{!ofertas.size == 0}"/>
+                <apex:outputPanel rendered="{!ofertas.size > 0}">
+                        <apex:pageBlockTable value="{!ofertas}" var="item">
+                         <apex:column styleClass="addOfertaHeader">
+                                <div class="addOferta" onclick="addOferta('{!item.Id}')"></div>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                              <div onclick="setOrderBy('Name')">Oferta</div>
+                            </apex:facet>
+                            <apex:outputField value="{!item.Name}"/>
+                       </apex:column>
+                       <apex:column >
+                            <apex:facet name="header">
+                              <div onclick="setOrderBy('Direccion__c')">Dirección</div>
+                            </apex:facet>
+                            <apex:outputField value="{!item.Direccion__c}"/>
+                       </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                              <div onclick="setOrderBy('Colonia__c')">Colonia</div>
+                            </apex:facet>
+                            <apex:outputField value="{!item.Colonia__c}"/>
+                       </apex:column>
+                    </apex:pageBlockTable>
+                    <div id="pageTools">
+                        <apex:actionFunction action="{!queryOfertas}" status="pageStatus" rerender="searchResults" name="setPageSize">
+                            <apex:param assignTo="{!pageSize}" name="pageSize" value=""/>
+                         </apex:actionFunction>
+                         <apex:actionFunction action="{!queryOfertas}" status="pageStatus" rerender="searchResults" name="setPageNumber">
+                            <apex:param assignTo="{!pageNumber}" name="pageNumber" value=""/>
+                         </apex:actionFunction>
+                         <apex:actionStatus id="pageStatus" onstart="toggle('pageStatus')"/>
+                         <div id="pageSizeSelector">
+                            <div onclick="setPageSize('10')">Visualización<div>10</div>registros por página</div>
+                            <div onclick="setPageSize('25')">Visualización<div>25</div>registros por página</div>
+                            <div onclick="setPageSize('50')">Visualización<div>50</div>registros por página</div>
+                            <div onclick="setPageSize('100')">Visualización<div>100</div>registros por página</div>
+                            <div onclick="setPageSize('200')">Visualización<div>200</div>registros por página</div>
+                        </div>
+                         <apex:panelGrid columns="3" width="100%" styleClass="pageGrid" columnClasses="pageGridCols">
+                            <div id="pageSizeBlock">
+                              <span>{!pageStart} - {!pageEnd} de {!resultSize}</span>
+                              <div id="pageSizeArrow" onclick="showSizes()"></div>
+                              <div id="pageStatus">Cargando...</div>
+                            </div>
+                            <apex:panelGrid columns="4" styleClass="linkGrid">
+                              <apex:commandLink status="pageStatus" rerender="searchResults" action="{!first}" rendered="{!pageNumber > 1}"><span class="pageFirst"></span></apex:commandlink>
+                              <apex:commandLink status="pageStatus" rerender="searchResults" action="{!previous}" rendered="{!pageNumber > 1}" styleClass="pageLink"><span class="pagePrevious"></span>Anterior</apex:commandlink>
+                              <apex:commandLink status="pageStatus" rerender="searchResults" action="{!next}" rendered="{!pageNumber < totalPages}" styleClass="pageLink">Siguiente<span class="pageNext"></span></apex:commandlink>
+                              <apex:commandLink status="pageStatus" rerender="searchResults" action="{!last}" rendered="{!pageNumber < totalPages}"><span class="pageLast"></span></apex:commandlink>
+                            </apex:panelGrid>
+                            <div id="pageSelector">
+                              <span>Página </span><input type="text" value="{!pageNumber}" onkeydown="setPageNumber(this.value)" onchange="setPageNumber(this.value)" id="pageNumber"/><span> de {!totalPages}</span>
+                            </div>
+                      </apex:panelGrid>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            </apex:tab>
+         </apex:tabPanel>
+    </apex:pageBlock>
+    <apex:pageBlock id="pbOfertas" title="Ofertas del paquete">
+    <apex:outputText value="No hay Ofertas" rendered="{!OfertasAdded.size == 0}"/>
+    <apex:pageBlockTable value="{!OfertasAdded}" var="item" rendered="{!OfertasAdded.size > 0}">
+      <apex:column styleClass="delOfertaHeader">
+        <div class="delOferta" onclick="delOferta('{!item.Id}')"></div>
+        <input type="hidden" value="{!item.Paquete__c}" name="paquete"/>
+      </apex:column>
+      <apex:column headerValue="Nombre oferta"><apex:outputField value="{!item.Name}"/></apex:column>
+      <apex:column headerValue="Etapa oferta"><apex:outputField value="{!item.Etapa__c}"/></apex:column>
+      <apex:column headerValue="Calle"><apex:outputField value="{!item.Direccion__c}"/></apex:column>
+      <apex:column headerValue="Colonia"><apex:outputField value="{!item.Colonia__c}"/></apex:column>
+    </apex:pageBlockTable>
+    <script type="text/javascript">setRowColor();</script>
+    <apex:pageBlockButtons location="bottom">
+      <apex:commandButton action="{!save}" value="Guardar" rerender="searchResults, pbOfertas" oncomplete="closeModalDialog();"/>
+      <apex:commandButton action="{!cancel}" value="Cancelar" onclick="closeModalDialog();"/>
+    </apex:pageBlockButtons>
+    </apex:pageBlock>
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,497 @@
+<apex:page standardController="Preca_Web__c" cache="false" extensions="RecomendadorController" standardStylesheets="false" sidebar="false" showHeader="false" docType="html-5.0">
+
+    <html class="no-js" lang="es">
+    
+        <head>
+        
+            <meta charset="utf-8"/>
+            <meta name="author" content=""/>
+            <meta name="description" content="" />
+            <meta name="keywords" content="" />
+            <meta name="robots" content="index, follow" />
+            <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+            
+            <link rel="shortcut icon" href="{!URLFOR($Resource.HomeRevimex,'images/favicon.ico')}" type="img/ico" />
+            <link href="{!URLFOR($Resource.HomeRevimex,'css/template.css')}" rel="stylesheet" type="text/css" media="screen" />
+            
+            <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/modernizr-2.6.2.min.js')}"></script>
+            
+            <title>Revimex</title>
+            
+             <!--Start of Zopim Live Chat Script-->
+            <script type="text/javascript">
+            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+            d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+            _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+            $.src="//v2.zopim.com/?3ihiLjWyaiZHOzH5z1eFEtaAop6zlLTy";z.t=+new Date;$.
+            type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+            </script>
+        <!--End of Zopim Live Chat Script-->
+            
+            <style>
+            
+                <!--RJP Pedir modificacion en la hoja de estilos-->
+                input {
+                    text-transform: uppercase;
+                }
+                
+                .boleto:hover{
+                    border: 1px solid black;
+                }
+                
+                /* Tiny Carousel */
+                .suggestion {
+                    cursor: pointer;
+                }
+                
+                .slider-wrapper {
+                    padding: 0 15px;
+                }
+                
+                #slider1 {
+                    height: 1%;
+                    margin: 30px 0 0;
+                    overflow: hidden;
+                    position: relative;
+                    padding: 10px 50px 10px;
+                }
+                
+                #slider1 .viewport {
+                    height: 240px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                #slider1 .buttons {
+                    background: #1C79A7;
+                    border-radius: 35px;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 35px;
+                    height: 35px;
+                    color: #fff;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 35px;
+                    text-decoration: none;
+                    font-size: 22px;
+                }
+                
+                #slider1 .next {
+                    right: 0;
+                    left: auto;
+                    top: 50%;
+                }
+                
+                #slider1 .buttons:hover {
+                    color: #1C79A7;
+                    background: #fff;
+                    border: 1px solid #1C79A7;
+                }
+                
+                #slider1 .disable {
+                    visibility: hidden;
+                }
+                
+                #slider1 .overview {
+                    list-style: none;
+                    position: absolute;
+                    padding: 5px;
+                    margin: 0;
+                    width: 240px;
+                    left: 0;
+                    top: 0;
+                }
+                
+                #slider1 .overview li {
+                    float: left;
+                    margin: 0 20px 0 0;
+                    padding: 1px;
+                    height: 245px;
+                    width: 236px;
+                    border: 1px solid #dcdcdc;
+                    background-color: #fff;
+                }
+                
+                #slider1 .overview li:hover {
+                    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow:    0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                    box-shadow:         0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+                }
+                
+                .form-style-1 {
+    margin:10px auto;
+    max-width: 200px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.messageTable{
+    width: 100%;
+    background-color: blanchedalmond;
+}
+
+input[type=text],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+
+input[type=datetime-local],
+
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 90%; 
+}
+input[type=text]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=url]:focus,
+input[type=datetime-local]:focus,
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+input[type=submit], .form-style-1 input[type=button]{
+    background: #1C79A7;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+    background: #1C79A7;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.required{
+    color:red;
+}
+.btn-sortelo-login {width: 250px;margin: 0 auto;
+margin-top:30px;}
+.btn-sortelo-login a.btn-action {
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    margin: 10px auto; 
+    background-color: #1C79A7;
+}  
+a.btn-action {
+            color: #fff;
+            padding: 10px;
+            width: 250px;
+            margin: 10px auto;
+            background-color: #1C79A7;
+        } 
+            </style>
+            
+        </head>
+        
+        <body>
+        
+            <header>
+                <div class="header-wrapper">
+                    
+                    <a href="#" id="header-showmenu-btn">
+                        <img src="{!URLFOR($Resource.HomeRevimex,'images/menu-vertical-btn.png')}" alt="menú"/>
+                    </a>
+                    <figure id="main-logo" class="fullwidth-picture">
+                        <a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo.png')}" alt="Revimex"/></a>
+                    </figure>
+                    <div id="main-slogan">La casa de <div class="font-size-30">tus sueños</div> <div class="font-size-40">hoy</div></div>
+                </div>
+                <div id="header-phone">
+                    <span class="phone-icon" style="margin-top: -13px;">
+                        <a href="tel:015541706600">0155 4170 6600</a>
+                        <br/>
+                        <a href="tel:015541610030">0155 4161 0030</a>
+                    </span>
+                </div>
+            </header> 
+            
+        <section id="leading-content" class="clearfix" style="height: 400px;">
+            <div id="slider" style="width: 1090px;">
+                <div id="slider-mask">
+                    <div id="slides">                                    
+                        <a href="#" target="_self">
+                            <figure><img src="{!$Resource.loogo}" alt="slide 1" class="slide-picture 1" style="height: 420px; width: 1000px;"/></figure>
+                        </a>      
+                    </div>
+                </div>
+            </div>
+        </section>
+                
+        <section id="home-intro">
+            <div class="main-wrapper">
+                <h1>Términos y condiciones .</h1>
+                
+                 <br></br>
+                <H2>¿Qué harán los Recomendadores?</H2>
+                
+                <li>El trabajo de los recomendadores será precalificar a sus conocidos para lograr convencerlos de adquirir una propiedad con nosotros y estar al pendiente del proceso de las ventas. </li>
+                        
+                <h2>¿Quiénes pueden ser recomendadores?</h2>
+                <li>Cualquier persona puede ser recomendador siempre y cuando el recomendador no sea recomendado por si mismo. </li>
+                
+                <h2>¿Qué ganan los recomendadores?</h2>
+                <li>Cada vez que un recomendador logre traer un cliente y éste adquiera una casa con nosotros él ganara $2,000, los cuales se le depositarán a una cuenta bancaria en un lapso no mayor a 15 días a partir de la fecha de cobro de la propiedad.</li>
+                
+                <h2>¿Qué requisitos necesitan cubrir los recomendadores?</h2>
+                <li>Ser mayor de 18 años</li>
+                <li>Tener una cuenta bancaria</li> 
+                <li>Estar registrados </li>
+
+                
+                <BR></BR>
+                <h1>IMPORTANTE</h1>
+                <li>
+                    Los recomendadores no pueden recomendarse a si mismos.
+                    </li><li>Para hacerse acreedor a los $2,000 pesos el recomendado debe completar el proceso de compra de la propiedad.
+                    </li><li>Para que un recomendado sea válido éste no debe tener algún proceso de adquisición de vivienda vigente con Revimex , de lo contrario será descartado.</li>
+                    <li>Es importante que registre a su recomendado mínimo 12 horas antes de que él inicie el proceso de adquisición de alguna propiedad de lo contrario no será considerado y no se hará acreedor de los $2,000 pesos.
+                </li><li>DE NO INGRESAR CORRECTAMENTE SUS DATOS LA TRANSFERENCIA BANCARIA NO SERÁ APROBADA</li>
+                
+                <center><a href="http://revimex.force.com/Aviso_de_Privacidad_Recomendadores" target="_blank">Aviso de Privacidad de sus datos personales</a>
+</center>
+
+
+            </div>
+            
+            <apex:form >
+                <apex:pageMessages />
+            
+                <table style="margin-left: 320px;width: 60%;margin-top: 50px;margin-bottom: 100px;">
+                    
+                    
+                    
+                    <tr>
+                        <td colspan="2" style="height: 50px;"><label>Cuenta</label></td>
+                    </tr>
+                                        
+                 
+                  <!--modificado-->
+                    <tr>
+                        <td>
+                        <label>Banco<span class='required'>*</span></label>
+                            <apex:input value="{!strBanco}" type="text" required="true"/>
+                        </td>
+                                                
+                        <td>
+                            <label>Clabe interbancaria<span class="required">*</span></label>
+                            <apex:input value="{!strClabe}" type="text" styleClass="clabe" required="true"/>
+                        </td>
+                        
+                     
+                    </tr> 
+                      <!--modificado-->
+                     <tr>
+                                                
+                        <td>
+                            <label>No. de Cuenta Bancaria<span class="required">*</span></label>
+                            <apex:input value="{!strCuenta}" type="text" styleClass="cuenta" required="true"/>
+                        </td>
+                    
+                     </tr>
+                     
+                    
+                    
+                    <center>
+                    <BR></br>
+
+                    <BR></br>
+
+
+
+                <!----uhjhjhjh  arriva de <td style="padding-top: 30px;">---->
+                <form name="formulario">
+                
+                    <input type="checkbox" id="campo" name="option1" >Acepto los términos y condiciones establecidos.</input>
+                    
+                   
+                           
+                        
+                      
+                    </form> 
+
+                    </center>
+                             
+                    <tr>
+                        
+                        <td style="padding-top: 30px;">
+                            <a class="btn-action" href="http://www.revimex.mx/">Regresa al sitio</a>
+                        </td>
+                                      
+                   <td style="padding-top: 30px;">
+                  
+                    <apex:commandLink styleClass="btn-action" type="submit" id="boton2" value="Guardar" action="{!ingresaCuentaRecomendador}" rerender="msj,msj2"/>
+                        
+                   
+                        
+                        
+                    </td>
+                    </tr>
+                    
+                </table>
+                
+                <apex:pageMessages id="msj2"/>
+                </apex:form>
+        </section> 
+        
+       
+        
+       
+        <footer>
+
+
+
+        <div class="main-wrapper">
+            <figure id="footer-logo" class="fullwidth-picture"><a href="http://www.revimex.mx"><img src="{!URLFOR($Resource.HomeRevimex,'images/revimex-logo-white.png')}" alt="Revimex"/></a></figure>
+            <nav id="footer-menu">
+                <div>
+                    <a href="http://revimex.force.com">home</a>
+                    <a href="http://revimex.force.com/RevimexPrivacidad" >aviso de privacidad</a>
+                    <a href="http://revimex.force.com/RevimexTerminosCondiciones"  class="noborder-right">Permiso de SEGOB</a>
+                </div>
+            </nav>
+            <section id="footer-networks" class="clearfix">
+                    <ul class="clearfix">
+                        <li>
+                            <a href="https://www.facebook.com/REVIMEXOFICIAL/" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/facebook-sprite.png')}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/OficialRevimex"   target="_blank"><img src="{!URLFOR($Resource.HomeRevimex,'images/twitter-sprite.png')}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.youtube.com/Revimex.oficial" target="_blank" ><img src="{!URLFOR($Resource.HomeRevimex,'images/gplus-sprite.png')}" alt="Google plus"/></a>
+                        </li>
+                    </ul>
+            </section>
+        </div>
+    </footer>
+       
+           <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery-1.10.2.min.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/jquery.placeholder.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/vendor/fancybox/jquery.fancybox.js')}"></script>
+        <script src="{!URLFOR($Resource.HomeRevimex,'js/main.js')}"></script>
+        <script>
+              var validate = {
+                clabe: false,
+                cuenta: false,
+                init: function () {
+                    $('.js-send').attr('disabled',true);
+                    $('.js-send').addClass('.dis');  
+                    $(document).on( 'keyup', '.cuenta', this.validateCuenta);  
+                    $(document).on( 'keyup', '.clabe', this.validateClabe);
+                
+                
+                   },
+                validateClabe: function () {
+                     this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 18));
+                    if ($(this).val().length == 18 ) {
+                        validate.clabe = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.clabe = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                },
+                
+                validateCuenta: function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+                    $(this).val($(this).val().substr(0, 10));
+                    if ($(this).val().length == 10 ) {
+                        validate.cuenta = true;
+                        $(this).removeClass('error');
+                    } else {
+                        validate.cuenta = false;
+                        $(this).addClass('error');
+                    }
+                    validate.all();
+                }
+                
+                  }  
+
+                     
+
+
+            $(function(){
+                validate.init();
+            });
+            
+                
+            $('.onlyNumbers').keyup(function () { 
+                    this.value = this.value.replace(/[^0-9\.]/g,'');
+                }),
+            $('.letras').keyup(function () { 
+                    this.value = this.value.replace(/[^a-zA-Z\ .]/g,'');
+                
+                });
+
+                         
+                
+         
+            
+          
+
+
+
+        </script>
+    </body>
+    
+    <style>
+            #validEmail
+        {
+        margin-top: 4px;
+        margin-left: 9px;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        }
+        .error {
+        background-color: red;
+        }
+
+        .nss-container {
+        display: none;
+        }
+        
+        .datos-container {
+        display: none;
+        }
+        .text
+        {
+        font-family: Arial, Tahoma, Helvetica;
+        }
+       </style>
+     
+
+       
+    </html>
+</apex:page>

@@ -1,0 +1,23 @@
+<apex:page controller="ConsolaComercialController" showHeader="false" applyBodyTag="false" applyHtmlTag="false" action="{!llenadoPaginas}" contentType="text/csv#Stock_Cliente.csv">"Folio Oferta","Estado","Ciudad","Colonia","Direccion","Terr m2","Cons m2","Habs","Banios","Escrituras","Estatus de Invasion","Precio Original","Rehabilitacion"
+<apex:repeat value="{!pag1}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag2}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag3}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag4}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag5}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag6}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+<apex:repeat value="{!pag7}" var="x">
+"{!x.registro.Name}","{!x.registro.Estado__r.Name}","{!x.registro.Ciudad_Tabla__r.Name}","{!x.registro.Colonia_Busqueda__r.Name}","{!x.registro.Direccion2__c}","{!x.registro.Propiedad__r.Terreno_m2__c}","{!x.registro.Propiedad__r.Construccion_m2__c}","{!x.registro.Propiedad__r.N_de_Habitaciones__c}","{!x.registro.Propiedad__r.N_de_Ba_os__c}","{!x.registro.Escritu__c}","{!x.registro.Estatus_de_Invasion__c}","{!x.registro.Precio_Original__c}",{!IF(x.rehabilitada,"Rehabilitada","No Rehabilitada")}
+</apex:repeat>
+</apex:page>

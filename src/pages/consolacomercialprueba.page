@@ -1,0 +1,1959 @@
+<apex:page controller="ConsolaComercialController" sidebar="false" action="{!llenadoPaginas}" showChat="false">
+
+<!-- 
+color azul fuerte: #0C326B
+COLOR AZUL CLARO: #4DB1E0
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+color gris:  #cfcfcf
+mnmorado claro: A37DB3;
+morado fuerta: 672183;
+COLOR AZUL CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(77,177,244,1),rgba(77,177,224,0));
+COLOR VERDE CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0));
+COLOR NARANJA DEGRADADO: background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+
+-->
+
+    <head>
+
+     <!--  <apex:includeScript value = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></apex:includeScript>
+     <apex:includeScript value = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></apex:includeScript>
+    <link rel="stylesheet" type="text/css" href="CSS/GridviewScroll.css"/>
+     <apex:includeScript value ="JS/gridviewScroll.min.js"></apex:includeScript>  -->
+    <apex:stylesheet value="{!$Resource.ConsolasStyle}"/>
+
+        
+
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+            font-family: "Bebas-Neue";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+            font-family: "gotham-rounded-book";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+            font-family: "gotham-rounded-medium";
+            src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            body{
+            width:99%;
+            background-color: #fff;
+            height: 100vh;
+            }
+            a{
+                color: #fff;
+            }
+            h1{
+                font-family: 'Bebas-Neue';
+                font-size: 24px;
+                text-transform:uppercase;
+            }
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px !important;
+                text-transform:uppercase;
+                color: white !important;
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                /*     text-transform:uppercase;*/
+            }
+            h3{
+                font-weight: bold;
+                font-size: 13px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 13px;
+                color: #000;
+                }
+            h5{
+                font-size: 11px;
+                color: #fff !important;
+            }
+            .header{
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                height: 100%;
+
+
+            }
+            .header11{
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                height: 100%;
+                border: #0C326B 5px solid;
+
+
+            }
+            .header2{
+                /*background: url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-der.png')}") top right no-repeat,
+                url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-izq.png')}") top left no-repeat;*/
+                background-color: #fff;
+                width: 100%;
+                height: 800px; 
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                border-bottom: 25px solid #D1DA28;
+
+            }
+            .headertable {
+width: 100%;
+    position: relative;
+    margin-top: 7%;
+            }
+            .headertable tr{
+                width: auto;
+                height: auto;
+            }
+            
+            .headertable2 {
+                background-color:#fff;
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+            }
+            .headertable2 tr{
+                background-color:#fff;
+                width: auto;
+                height: auto;
+            }
+            .headertable2 tr td{
+                background-color:#fff;
+                height: auto;
+
+      
+            }
+            .headertable3 tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable3 tr td{
+                height: auto;
+             /*   padding: 15px 60px 15px 60px;*/
+            }
+.headertable3 td {
+    padding: 1%;
+}
+
+            .botones,.botonesfijar{
+                font-family: 'gotham-rounded-medium' !important;
+                font-size: 10px !important;
+                text-transform:uppercase !important;
+                display:block !important;
+                width:170px !important; 
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 3px 0px 3px 0px !important;
+                margin: 20px !important;
+            }
+            .botones {
+                background: #D1DA28 !important;
+                background-color: #D1DA28 !important;
+                color: #0C326B !important;
+            }
+            .botonesfijar{
+                background: #A37DB3 !important;
+                background-color: #A37DB3 !important;
+                color: #fff !important;
+            }
+            .botones:hover{
+                background: #A6AE1A !important;
+            }
+            .botones:active{
+                background: #C95A50 !important;
+            }
+            .botonesfijar:hover{
+                background:#672183 !important;
+            }
+            .botonesfijar:active{
+                background: #C95A50 !important;
+            }
+
+            /*.botones2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 11px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width:100px !important; 
+                background: #4DB1E0 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones2:hover{
+                background: #2A85AF !important;
+            }
+                .botones2:active{
+                background-color:#D1DA28 !important;
+            }*/
+
+            .divfiltrolabel{
+                cursor:pointer;
+                background: url('{!URLFOR($Resource.consolas, 'recursos/icons/flecha-boton.png')}') top right no-repeat;
+                background-size: 15% 100%;
+                background-color:#cfcfcf;
+                color:#0C326B;
+                position: relative;
+               width: 120px;
+                max-width: 120px;
+                height:20px;
+                z-index:1000;
+
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 40px;
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+                margin-top: 6%;
+            }
+            .divfiltrolista{
+                display:none;
+                background-color:red;
+                width:auto;
+                min-width:200px;
+                height:auto;
+                position: absolute;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;
+                max-height:500px;
+                z-index: 10000;
+            }
+            .labelcontador{
+                font-family: "gotham-rounded-book" !important;
+                font-size: 20px  !important;
+                background: #0C326B;
+                border-radius: 60px;
+                padding: 10px 10px 10px 10px;
+                font-size: 16px;
+                color: white;
+                margin: 30px 30px !important;
+            }
+
+            .pagination {
+                display: inline-block;
+                background-color: #fff;
+            }
+
+            .pagination a {
+                font-family: "gotham-rounded-book" !important;
+                font-size: 14px  !important;
+                color: black;
+                float: left;
+                padding: 5px 10px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+            .pagination a.active {
+                background-color: #5A2A7E;
+                color: white;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+            .tdtrue{
+                background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+            }
+            .tdfalse{
+                background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;                
+            }
+            .imagestyle{
+                width:30px;
+                filter: grayscale(30%);
+            }
+            .styledetalles{
+                display: none;
+                font-size:12px;
+                font-weight: normal;
+                max-width: 600px;
+
+            }
+            .imgth{
+                width: 30px;
+                height: 30px;
+            }
+            .sectioncabecera{
+                border-radius: 15px 15px 0px 0px;
+                background-color: #C95A50;
+                height: 40px;
+                padding: 7px 2px 0px 2px;
+                width: auto;
+
+            }
+            .section{
+                position: relative;
+                border: 1px solid #fff;
+                border-spacing: 2px;
+                padding-top: 90px;
+                background: #fff;
+                border-radius:10px;
+                width:100%;
+                height:100%;
+
+            }
+            .containercentro {
+                margin-right: none !important;
+                margin-left: none !important;
+                padding-left: none !important;
+                padding-right: none !important;
+
+                position: relative;
+                display:block;
+                min-height: 150px;
+                max-height: calc(100vh - 520px);
+                /*height: 100%;*/
+                overflow-y: auto;
+                width:auto;
+                left: 50px;
+            }
+            .table2 {
+                border-spacing: 2px;
+                width:100%;
+            }
+            .table2 td,th {
+                border-bottom:1px solid #eee;
+                background: #fff;
+                color: #000;
+                padding: 3px 10px;
+                max-width:200px;
+                width:auto;
+                text-align: center;
+            }
+            .table2 th {
+                height: 0;
+                line-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                color: transparent;
+                border: none;
+                white-space: nowrap;
+                text-align: center;
+            }
+            .table2 th div{
+                position: absolute;
+                background: transparent;
+                color: #000;
+                padding: 2px 5px;
+                top:0;
+                margin-left: -10px;
+                line-height: normal;
+                border-left: 1px solid #C0C4C5;
+                text-align: center;
+                width: auto;
+            }
+            .table2 th:first-child div{
+                border: none;
+            }
+            .recientes td{
+                background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+            }
+            .imagensistemas{
+                width: 30px;
+                height: 30px;
+                border-radius:50%;
+                transition: 1s;
+                float: centre;
+                position: relative;
+                left: 5px;
+                bottom: -12px;
+            } 
+            .imagensistemas:hover{
+                width: 90px;
+                height: 90px;
+                transition-timing-function: ease;
+                border-radius:0%;
+            }
+            .comentariosbotoneditar{
+                background-color: white;
+                position:relative;
+                padding:2px;
+                border: 1.5px solid #CED0D1;
+                height:21px;
+                width:20px;
+                border-radius:5px;
+                transition:0.2s;
+                box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+                filter: brightness(96.5%);
+
+            }
+            .comentariosbotoneditar:hover {
+                background-color: #DBF4FC;
+                color: white;
+                transition-timing-function:ease;
+                height:25px;
+                width:25px;
+            }
+            .comentarioscontainer{
+                background-image: url("{!$Resource.ventana_comentario}");
+                border-radius:20px;
+                position:absolute;
+                z-index:1000;
+                height:200px;
+                width:300px;
+                border: .5px solid #000;
+                top: calc(30% - 100px);
+                left: calc(75% - 150px);
+                filter: opacity(95%);
+            }
+            .comentarioslabel{
+                position:relative; 
+                left: 88px; 
+                top: 45px; 
+            }
+            .comentariostexto{
+                position:relative; 
+                align:center;
+                left: 50px;
+                top: 45px;
+                width:200px;
+                height:70px;
+            }
+            .comentariosbotonguardar{
+                position:relative;
+                background-size:cover;
+                width:85px;
+                top: 50px;
+                float: left;
+                margin: 0px 25px 0px 25px;
+            }
+            .filtrocaja1{
+                position: reltive;
+                width:auto; 
+                height:18px;
+                float:left;
+            }
+            .filtrocaja2{
+                position: reltive;
+                width:auto;
+                height:18px;
+                z-index:1000;
+                background-color:#fff;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;    
+            }
+            .filtrocaja2:hover{
+                height:auto;
+                max-height:500px;
+                overflow: auto;
+                display: inline-block;
+                position: relative;
+            }
+            .filtrolabel{
+                float:left;
+            }
+            .listadeseleccion{
+                cursor:pointer;
+                width:200px;
+            }
+
+            .iframe-infonavit{
+                position: relative;
+                top: -150px;
+            }
+
+            .infona{
+                background: #3498db;
+                background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+                background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+                background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+                background-image: -o-linear-gradient(top, #3498db, #2980b9);
+                background-image: linear-gradient(to bottom, #3498db, #2980b9);
+                -webkit-border-radius: 14;
+                -moz-border-radius: 14;
+                border-radius: 14px;
+                font-family: Arial;
+                color: #ffffff;
+                font-size: 20px;
+                padding: 10px 20px 10px 20px;
+                text-decoration: none;
+
+            }
+
+            /* estilo para el boton del carrito*/
+            .botonCarro{
+                position: relative;
+
+
+
+            }
+            .botonCarro{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 11px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width:180px !important; 
+                background: #4DB1E0 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                /*padding: 5px !important;
+                margin: 20px !important;*/
+            }
+            .botonCarro:hover{
+                background: #2A85AF !important;
+            }
+            .botonCarro:active{
+                background-color:#D1DA28 !important;
+            }
+
+
+            .listadeseleccion{
+                cursor:pointer;
+                width:200px;
+            }
+            .ajustarIzquierda{
+                display:inline;
+                width:auto;
+                margin: 50px auto;
+                padding: 50px;
+                text-align:left;              
+            }
+            .ajustarDerecha{
+                display:inline;
+                width:auto;
+                margin: 50px auto;
+                padding: 50px;
+                text-align:right;
+            }
+
+            .menuRapido{
+                height: 500px;
+                width:300px;
+                padding:1px 50px;
+                display:inline;
+            }
+
+
+            .botonPreca {
+                background-color:#44c767;
+                -moz-border-radius:28px;
+                -webkit-border-radius:28px;
+                border-radius:28px;
+                border:1px solid #18ab29;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                padding:10px 20px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #2f6627;
+            } 
+            .botonPreca:hover {
+                background-color:#5cbf2a;
+            }
+            .botonPreca:active {
+                position:relative;
+                top:1px;
+            }
+            .botonNSS {
+                background-color:#f24537;
+                -moz-border-radius:28px;
+                -webkit-border-radius:28px;
+                border-radius:28px;
+                border:1px solid #d02718;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                padding:10px 20px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #810e05;
+            } 
+            .botonNSS:hover {
+                background-color:#c62d1f;
+            }
+            .botonNSS:active {
+                position:relative;
+                top:1px;
+            }
+            .headertable tr td{
+                height: auto;
+                display:inline;
+                padding-top: 20px;
+            }
+            .cajafolio{
+                width: 150px;
+            }
+            .cajas{
+                width: 55px;
+
+            }
+            .tablastyle{
+                width:30%;
+            }
+            .carrin tr th{
+                min-width:20px;
+                background-color:#C7E4E1;
+                color: #070010;
+                text-align:center;
+                border-radius: 5px;
+                letter-spacing: 3px;
+                padding: 0 22px;
+                border: 2px solid #001210;
+
+            }
+            .carrin tr th#c01{
+                min-width:15px;
+                width:auto;
+                background-color:#efefef;
+                text-align:center;
+                border-radius: 5px;
+            }
+            .carrin tr td{
+                background-color: #FFEAC1;
+                text-align:center;
+                width:80px;
+            }
+            .botonEliminar{
+                width: 15px;
+            }
+            .botonEliminar:hover{
+                width: 18px;
+            }
+            .botonEliminar:active{
+                width: 15px;
+            }
+            .divtam{
+                width: 2px;
+            }
+            .headertable tr td{
+                height: auto;
+                display:inline;
+                padding-top: 20px;
+            }
+            /*cancelar*/
+            .botonRetroceder1{
+                left: 48%;
+                bottom:25px;
+                position: absolute;
+            }
+            /*precalificacion*/
+            .botonAvanzar2{
+                left: 20%;
+                bottom:25px;
+                position: absolute;
+            } 
+        /*  envio ficha*/
+            .botonAvanzar1{
+                right: 20%;
+                bottom:25px;
+                position: absolute;
+            }
+            /*estilo para la tabla de propiedades */
+            .tablabusca{
+                    position: relative;
+
+            }
+            .tablabusca thead{
+
+            }
+            .tablabusca tr th{
+
+                background-color: #4DB1E0;
+                border-radius: 16px 16px 0px 0px;
+                -moz-border-radius: 16px 16px 0px 0px;
+                -webkit-border-radius: 16px 16px 0px 0px;
+                border: 1px solid white;
+                height: 35px;
+                width: 40px;
+
+
+            }
+            .tablabusca tr td{
+                background-color: #0C326B;
+                border-width: 1px;
+                border: 2px solid white;
+
+
+            }
+            
+            .vercarroimagen{
+                width: 30px;
+                height: 30px;
+
+            }
+            .vercarroimagen:hover{
+                width: 35px;
+                height: 35px;
+
+            }
+
+            .vercarroimagen:active{
+                width: 30px;
+                height: 30px;
+
+            }
+            .agregacarroimagen{
+                width: 30px;
+                height: 30px;
+
+
+            }
+            .agregacarroimagen:hover{
+                width: 35px;
+                height: 35px;
+
+            }
+
+            .agregacarroimagen:active{
+                width: 30px;
+                height: 30px;
+
+            }
+            .opaca  {
+                filter:alpha(opacity=50);
+                -moz-opacity: 0.5;
+                opacity: 0.5;}
+
+            .opaca:hover{
+                filter:alpha(opacity=100)3000;
+                -moz-opacity: 0.5;
+                opacity: 0.5;
+            }
+            #carri thead {
+                display:block;
+            }
+            #carri tbody {
+                display:block;
+                height:10em; /* 5 times the equivalent of a text "size". */
+                overflow-y:scroll;
+            }
+
+            #carri thead tr th:nth-child(1) { /* column 1 ! */
+                width:20em;
+            }
+            #carri thead tr th:nth-child(2) { /* column 2 */
+                width:20em;
+            }
+            #carri tbody tr:first-child td:nth-child(1) { /* column 1 ! */
+                width:20em;
+            }
+            #carri tbody tr:first-child td:nth-child(2) { /* column 2 */
+                width:20em;
+            }
+
+            #tdBoton{
+                background-color:white ;
+            }
+
+
+            .botonesEnvioFicha{
+         font-family: 'gotham-rounded-book';
+    font-size: 11px ;
+    text-transform: uppercase;
+    color: #fff ;
+    display: block ;
+    width: 109px;
+    background: #C95A50;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px;
+    outline: none;
+            }
+            .botonesEnvioFicha:hover, .searchh:hover{
+                transform: translate(7%,8%)scale(1.2);
+                background-size: 180%;
+                background-position: 60% 0%;
+                transition: all .15s ease-out; /*color al pasar el mouse*/
+            }
+            .botonesEnvioFicha:active{
+                background-color:#C95A50; /*color al dar click*/
+            }
+            .colorRecomendado td{
+                background-color: #C95A50;
+            }
+                        .inpx               {
+    font-size: 16px;
+    padding: 15px 0px 0px 5px;
+    display: inline-block;
+    width: 60%;
+    border: none;
+    border-bottom: 2px solid #79c4de;
+    outline: none;
+}      
+       
+                    /*.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  z-index: 1;
+  transition: .3s ease-out;
+}
+.waves-effect.waves-light .waves-ripple {
+  background-color: rgba(255, 255, 255, 0.45);
+}
+.tap-target-wrapper {
+  width: 1100px;
+  height: 1100px;
+  position: absolute;
+  z-index: 1000;
+  visibility: hidden;
+  transition: visibility 0s .3s;
+}
+
+.tap-target-wrapper.open {
+  visibility: visible;
+  transition: visibility 0s;
+}
+
+.tap-target-wrapper.open .tap-target {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: .95;
+  transition: opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), -webkit-transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), -webkit-transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.tap-target-wrapper.open .tap-target-wave::before {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.tap-target-wrapper.open .tap-target-wave::after {
+  visibility: visible;
+  -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+          animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, visibility 0s 1s;
+  transition: opacity .3s, transform .3s, visibility 0s 1s, -webkit-transform .3s;
+}
+
+.tap-target {
+  position: absolute;
+  font-size: 1rem;
+  border-radius: 50%;
+  background-color:#0C326B;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.14), 0 10px 50px 0 rgba(0, 0, 0, 0.12), 0 30px 10px -20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  transition: opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), -webkit-transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), -webkit-transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+
+}
+
+.tap-target-content {
+  position: relative;
+  display: table-cell;
+}
+
+.tap-target-wave {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 10001;
+}
+
+.tap-target-wave::before, .tap-target-wave::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.tap-target-wave::before {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+
+.tap-target-wave::after {
+  visibility: hidden;
+  transition: opacity .3s, visibility 0s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, visibility 0s;
+  transition: opacity .3s, transform .3s, visibility 0s, -webkit-transform .3s;
+  z-index: -1;
+}
+
+.tap-target-origin {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10002;
+  position: absolute !important;
+}
+
+.tap-target-origin:not(.btn):not(.btn-large), .tap-target-origin:not(.btn):not(.btn-large):hover {
+  background: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .tap-target, .tap-target-wrapper {
+    width: 600px;
+    height: 600px;
+  }
+}
+.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-floating:hover {
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+.btn, .btn-large,
+.btn-flat {
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 2rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.btn, .btn-large,
+.btn-floating,
+.btn-large,
+.btn-flat {
+  font-size: 1rem;
+  outline: 0;
+}
+
+.btn i, .btn-large i,
+.btn-floating i,
+.btn-large i,
+.btn-flat i {
+  font-size: 1.3rem;
+  line-height: inherit;
+}
+
+.btn:focus, .btn-large:focus,
+.btn-floating:focus {
+  background-color: #1d7d74;
+}
+
+.btn, .btn-large {
+  text-decoration: none;
+  color: #fff;
+  background-color: #26a69a;
+  text-align: center;
+  letter-spacing: .5px;
+  transition: .2s ease-out;
+  cursor: pointer;
+}
+.cyan {
+  background-color: #00bcd4 !important;
+}
+.btn:hover, .btn-large:hover {
+  background-color: #2bbbad;
+}
+.material-icons {
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: 'liga';
+     -moz-font-feature-settings: 'liga';
+          font-feature-settings: 'liga';
+}
+.breadcrumb i,
+.breadcrumb [class^="mdi-"], .breadcrumb [class*="mdi-"],
+.breadcrumb i.material-icons {
+  display: inline-block;
+  float: left;
+  font-size: 24px;
+}
+.fixed-action-btn {
+    position: fixed;
+    right: 23px;
+    bottom: 23px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    z-index: 998;
+}
+.white-text {
+  color: #FFFFFF !important;
+}
+.fixed-action-btn {
+  position: fixed;
+  right: 23px;
+  bottom: 23px;
+  padding-top: 15px;
+  margin-bottom: 0;
+  z-index: 998;
+}
+
+.fixed-action-btn.active ul {
+  visibility: visible;
+}
+
+.fixed-action-btn.horizontal {
+  padding: 0 0 0 15px;
+}
+
+.fixed-action-btn.horizontal ul {
+  text-align: right;
+  right: 64px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  height: 100%;
+  left: auto;
+  width: 500px;
+  /*width 100% only goes to width of button container 
+}
+
+.fixed-action-btn.horizontal ul li {
+  display: inline-block;
+  margin: 15px 15px 0 0;
+}
+
+.fixed-action-btn.toolbar {
+  padding: 0;
+  height: 56px;
+}
+
+.fixed-action-btn.toolbar.active > a i {
+  opacity: 0;
+}
+
+.fixed-action-btn.toolbar ul {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  top: 0;
+  bottom: 0;
+}
+
+.fixed-action-btn.toolbar ul li {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: inline-block;
+  margin: 0;
+  height: 100%;
+  transition: none;
+}
+
+.fixed-action-btn.toolbar ul li a {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  box-shadow: none;
+  color: #fff;
+  line-height: 56px;
+  z-index: 1;
+}
+
+.fixed-action-btn.toolbar ul li a i {
+  line-height: inherit;
+}
+
+.fixed-action-btn ul {
+  left: 0;
+  right: 0;
+  text-align: center;
+  position: absolute;
+  bottom: 64px;
+  margin: 0;
+  visibility: hidden;
+}
+
+.fixed-action-btn ul li {
+  margin-bottom: 15px;
+}
+
+.fixed-action-btn ul a.btn-floating {
+  opacity: 0;
+}
+
+.fixed-action-btn .fab-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 40px;
+  height: 40px;
+  background-color: #26a69a;
+  border-radius: 50%;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+.btn-floating {
+  display: inline-block;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  background-color: #26a69a;
+  border-radius: 50%;
+  transition: .3s;
+  cursor: pointer;
+  vertical-align: middle;
+}*/
+.args
+{
+    font-size: 13px;
+    text-align: left;
+    padding-top: 21%;
+    margin-left: 20%;
+    margin-bottom: -20%;
+}
+.argsc
+{
+font-size: 15px;
+    margin-top: 32%;
+    text-align: left;
+    margin-left: 13%;
+}
+.argsr
+{
+  font-size: 16px;margin-top: 40%; text-align: left; margin-left: 2%;     margin-top: -40%;
+}
+.argsc2
+{
+  font-size: 14px;margin-top: 45%; text-align: left; margin-left: 2%;
+}     
+.feroferta
+{
+    transition: all .3s ease-in-out;
+    color: #000;
+    text-align: center;
+    background: #f1f1f1;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    border-radius: 15px;
+    border: solid 1.5px #f0f0f3;  
+        margin-left: 2%;   
+}
+.feroferta:focus, .ferofertax:focus,.feroferta:hover, .ferofertax:hover, .ferofertax:active{
+    border-color: #79c4de;
+    outline: none;
+    background: white;
+}
+.headertable3 h2
+{
+    color: black !important;
+}
+#contenedorfiltros
+{
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+        </style>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> 
+        <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <apex:stylesheet value="https://code.jquery.com/ui/1.12.4/themes/base/jquery-ui.css"/>    
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>jQuery UI Tooltip - Default functionality</title>    
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/> -->
+
+
+
+        <script type="text/javascript">
+            function ftrue(z){
+                document.getElementById(z).style.display = 'block';
+            }
+            function ffalse(y){
+                document.getElementById(y).style.display = 'none';
+            }
+            function deslizar(varid){
+              var objeto = document.getElementById(varid);
+              
+              objeto.style.display = 'block';
+          }
+        </script>
+
+        <script type="text/javascript">
+        
+            function ab(h) {
+                var x = '{!URLFOR("/apex/FichaTecnica?id=")}';     
+                $( '<div> </div>' ).html('<iframe id="iframeContentId" src="' + x +h+ '" frameborder="0" height="100%" width="100%" marginheight="0" marginwidth="0" scrolling="yes" />')
+                .dialog({
+                    title:'Ficha Tecnica',
+                    autoOpen: true,
+                    resizable: false, 
+                    width: 700, 
+                    height: 600, 
+                    autoResize: true, 
+                    modal: true, 
+                    draggable: true,
+                    show: {
+                        effect: "fade",
+                        duration: 500
+                    },
+                    hide: {
+                        effect:"drop",
+                        duration: 600
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            $('#myButton').on('click', function () {
+                var $btn = $(this).button('dissabled')
+                // business logic...
+                $btn.button('reset')
+            })
+        </script>
+
+                            
+
+    </head>
+   
+    <body>
+<!--  <div class="fixed-action-btn" style="     width: 0%;
+    height: 0%;">
+          <a id="menu" class="btn-floating btn-large cyan"><i class="material-icons">menu</i></a>
+        </div>
+
+<div class="tap-target-wrapper" style="top: 100%;
+    right: -20%;"><div class="tap-target cyan" data-activates="menu">
+          <div class="tap-target-content white-text">
+           <br/>
+           <section class="a1 todo">
+           <p class="white-text args" >Por el momento todas las casas de ese municipio han sido vendidas…<br/>
+           En cuanto tengamos disponible nos ponemos en contacto contigo<br/>
+                              Ubicación<br/>
+                               Elige la problemática que argumenta el prospecto
+                               <br/>Es una zona insegura
+                               <br/>1.- Habla de Clientes que han comprado en la zona
+                               <br/>2.- Ofrece protecciones para Puerta y Ventanas
+                               <br/>Distancia
+                               <br/>1.- Conozca la Propiedad y estime sus tiempos de traslado
+                               <br/>2.- Invierta en su Casa Propia e incremente su condición economica
+                               <br/>3.- Invierta en su casa y puede alquilarla
+                               <br/>Entorno (Despoblado, Sin Drenaje, en cerro)
+                               <br/>1.-Invita a que conozca la casa y podrá negociar precio
+                               <br/>2.- Habla de la expansión de los municipios que genera plusvalía en el futuro
+                               </p>
+            <p class="white-text argsc"></p>
+</section>
+<section class="a2 todo" hidden="hidden">
+<p class="white-text args" >Elige la problemática que argumenta el prospecto<br/>
+           Invadida <br/>
+                             1.- REVIMEX se encarga de negociar con el invasor de forma pacífica<br/>
+                               2.-Es un proceso 100% legal debido a que tenemos escrituras
+                            de la propiedad
+                               <br/>3.-  En compras a crédito es requisito entregar la casa desalojada y Rehabilitada
+                               <br/>4.- En compras de contado se entrega en tal condición ó puede contratar el desalojo con REVIMEX
+                        
+                               <br/>Sin Escrituras
+                               <br/> 1.-Las Propiedades en proceso de escrituración solo se venden de contado. Puede pagar de contado?
+                               <br/>2.-Estaremos en contacto contigo en cuanto la propiedad cuente con escrituras
+                               <br/>Malas Condiciones
+                               <br/> 1.-En compras a crédito es requisito entregar la casa  Rehabilitada
+                               <br/>2.-Incluso puedes elegir el color de tu casa
+                               <br/>3.-En compras de contado se entrega en tal condición, lo que mejora aun más el precio
+                               </p>
+            <p class="white-text argsc"></p>
+</section>
+<section class="a3 todo" hidden="hidden">
+<p class="white-text argsc" >Elige la problemática que argumenta el prospecto<br/>
+           Preca No Suficiente <br/>
+                            1.- Ofrecer Credito Mancomunado<br/>
+                               2.-Es un proceso 100% legal debido a que tenemos escrituras <br/>
+                           3.- Si la diferencia no es mucha se puede solicitar ajuste de precio
+                               <br/>Esta muy caro
+                               <br/> 1.-Nuestros precios 40% mas bajos que el mercado
+                        
+                               <br/>2.-Compara, evidencía y mejoramos nuestro precio
+                               <br/>Fuera de Presupuesto
+                               <br/> 1.-Ofrecer pasar la autorización por un mínimo, si autorizan se debe pagar en la misma semana
+                    
+                               </p>
+            <p class="white-text argsc"></p>
+</section>
+          </div>
+        </div><div class="tap-target-wave"><a class="btn btn-floating btn-large cyan " style="display: none;"><i class="material-icons">menu</i></a></div></div>
+ -->
+
+<!-- <div id="contee" hidden="hidden">
+<div id="result" ><br/>
+</div>
+<button id="bf" onclick="localStorage.removeItem('nombre'); $('#contee').hide(); ">Entendido</button>
+
+</div> -->
+
+            <apex:form >
+                    <div class="TaskSearch">
+    <!--       <c:TaskSearch /> -->
+        </div>
+
+                <apex:outputPanel id="primervista" > <!-- rendered="{!IF(algo==false,true,false)}" -->
+            
+                    <!-- //////////////////    COMIENZA DIV HERDAR   ////////////////////////// -->
+          
+                    
+                   <center>
+<img src="{!URLFOR($Resource.consolas, 'recursos/logos_revimex/revimex1.png')}" class="revimex" />
+                      <div class="chip2 cabecera">
+    <img class="fotito" src="{!Photolink}" />
+    Bienvenido {!$User.FirstName}
+<center><p class="nombrelead">Nombre Lead: {!nombre}</p></center>
+  </div> 
+</center>
+<div class="nave">
+                        <apex:variable value="ConsolaComercial" var="pagina"/>
+                      <c:Menu_rapidolead account="{!idReferencia}" visual="{!pagina}" />
+                </div>
+<div class="argumentos">
+                <c:Stock />
+                </div>
+                    <apex:actionFunction immediate="true" action="{!cancelarlead}" name="cancelarlead"/>
+
+      
+                    <!-- <div class="containercentro"> -->
+<div class="contenedor">
+                        <div id="contenedorfiltros">         
+                       <center>     <apex:outputText value="Buscar ID: " />
+                            <apex:inputText value="{!folioOferta}" styleClass="feroferta" id="yobusco"/>
+                            <apex:image id="imagencilla" value="{!URLFOR($Resource.icof, '/search.png')}" width="22" height="22" title="Buscar" style="margin-left: 1%;" styleClass="searchh">
+  <apex:actionSupport action="{!buscar}" event="onclick">  
+  </apex:actionSupport>
+  </apex:image>
+                        <!--     <apex:commandButton value="Buscar" action="{!buscar}" style="height: 25px !important;padding: 0px 11px 0px 12px"/> -->
+                        </center>
+                            <!-- <div style="max-width: 300px; position: fixed; text-align: justify;top:50%;left:40%; z-index: 1000;"> -->
+                                <br/><br/>
+                            <!-- </div> -->
+                            <!-- <apex:actionPoller id="ac" reRender="MisMensajes" interval="5" oncomplete="this.disabled=true"/> -->
+
+                            <table class="headertable3" align="center">
+             
+                                <tr ALIGN="CENTER">
+                                    <!-- <td colspan="2"><h2>Estado</h2><br/>
+                                        <div onmouseout="ffalse('fd006')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl06">
+                                                <div id="fd06" class="divfiltrolabel" onclick="ftrue('fd006');">
+                                                    {!EstadoSelec}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd006" class="divfiltrolista" onmouseover="ftrue('fd006');">
+                                                <apex:selectList id="idestado" styleClass="listadeseleccion" value="{!EstadoSelec}" multiselect="True">
+                                                    <apex:selectOptions value="{!edoLst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onclick" action="{!actualizar}" reRender="fl06,idprecio,idciudad,idcolonia,idescrituras,idinvasion,idrehabilitacion,total1,total2,total3,total4,total5,total6,total7,total8,total9 "/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </td> -->
+
+                                    <td colspan="2" align="center"><h2>Ciudad</h2><br/>
+                                        <div onmouseout="ffalse('fd007')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl07">
+                                                <div id="fd07" class="divfiltrolabel" onclick="ftrue('fd007');">
+                                                    {!CiudadSelec}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd007" class="divfiltrolista " onmouseover="ftrue('fd007');">
+                                                <apex:selectList id="idciudad" styleClass="listadeseleccion" value="{!CiudadSelec}" multiselect="True">
+                                                    <apex:selectOptions value="{!cdLst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl07,idprecio,idestado,idcolonia,idescrituras,idinvasion,idrehabilitacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td colspan="2"><h2>Colonia</h2><br/>
+                                        <div onmouseout="ffalse('fd008')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl08">
+                                                <div id="fd08" class="divfiltrolabel" onclick="ftrue('fd008');">
+                                                    {!ColoniaSelec}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd008" class="divfiltrolista " onmouseover="ftrue('fd008');">
+                                                <apex:selectList id="idcolonia" styleClass="listadeseleccion" value="{!ColoniaSelec}" multiselect="True">
+                                                    <apex:selectOptions value="{!colLst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl08,idprecio,idestado,idciudad,idescrituras,idinvasion,idrehabilitacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td colspan="2"><h2>Habitaciones</h2><br/>
+                                        <div onmouseout="ffalse('fd013')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl13">
+                                                <div id="fd13" class="divfiltrolabel" onclick="ftrue('fd013');">
+                                                    {!nhs}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd013" class="divfiltrolista " onmouseover="ftrue('fd013');">
+                                                <apex:selectList id="idhabitaciones" styleClass="listadeseleccion" value="{!nhs}">
+                                                    <apex:selectOptions value="{!nhlst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl13,idescrituras,idestado,idciudad,idcolonia,idetapa,idrehabilitacion2,paginacion,asid,tabladeresultados,idinvasion2"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr ALIGN="CENTER">
+                                    <td colspan="2"><h2>Escrituras</h2><br/>
+                                        <div onmouseout="ffalse('fd003')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl03">
+                                                <div id="fd03" class="divfiltrolabel" onclick="ftrue('fd003');">
+                                                    {!ess}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd003" class="divfiltrolista " onmouseover="ftrue('fd003');">
+                                                <apex:selectList id="idescrituras" styleClass="listadeseleccion" value="{!ess}">
+                                                    <apex:selectOptions value="{!eslst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl03,idestado,idciudad,idcolonia,idinvasion,idrehabilitacion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                                                </apex:selectList> 
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td colspan="2"><h2>Invasion</h2><br/>
+                                        <div onmouseout="ffalse('fd009')" class="contenedorfiltros" >
+                                            <apex:outputPanel id="fl09">
+                                                <div id="fd09" class="divfiltrolabel" onclick="ftrue('fd009');">
+                                                    {!InvasionSelec}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <CENTER><div id="fd009" class="divfiltrolista " onmouseover="ftrue('fd009');">
+                                                <apex:selectList id="idinvasion" styleClass="listadeseleccion" value="{!InvasionSelec}" multiselect="True">
+                                                    <apex:selectOptions value="{!inlst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl09,idescrituras,idestado,idciudad,idcolonia,idrehabilitacion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                                                </apex:selectList>
+                                            </div></CENTER>
+                                        </div>
+                                    </td>
+                                    <td colspan="2"><h2>Rehabilitacion</h2><br/>
+                                        <div onmouseout="ffalse('fd011')" class="contenedorfiltros">
+                                            <apex:outputPanel id="fl11">
+                                                <div id="fd11" class="divfiltrolabel" onclick="ftrue('fd011');">
+                                                    {!IF(rehas=='True','Rehabilitadas',IF(rehas=='False','No Rehabilitadas','Todo'))}
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div id="fd011" class="divfiltrolista " onmouseover="ftrue('fd011');">
+                                                <apex:selectList id="idrehabilitacion" styleClass="listadeseleccion" value="{!rehas}">
+                                                    <apex:selectOptions value="{!rehalst}"/>
+                                                    <apex:actionSupport status="mySaveStatus1" event="onchange" action="{!actualizar}" reRender="fl11,idescrituras,idestado,idciudad,idcolonia,idinvasion,paginacion,total1,total2,total3,total4,total5,total6,total7,total8,total9"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                
+                                
+                                
+                                <tr>
+                                    <td colspan="6" ALIGN="CENTER"><apex:outputLabel styleclass="labelcontador" >Total de registros: {!n}</apex:outputLabel></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" ALIGN="RIGHT">
+                                        <apex:commandButton accesskey="l" value="Limpiar" action="{!Reset}" styleClass="botonesEnvioFicha"/>
+                                    </td>
+                                    <td colspan="3" ALIGN="LEFT">
+                                        <apex:actionStatus id="mySaveStatus1">
+                                            <apex:facet name="stop">
+                                            
+                                                <apex:commandButton status="mySaveStatus1" accesskey="e" value="Buscar" action="{!llenadoPaginas}"  styleClass="botonesEnvioFicha" id="myButton" />
+
+                                            </apex:facet>
+                                            <apex:facet name="start">
+                                                <apex:outputPanel >
+                                                    <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                                                    <apex:commandButton status="mySaveStatus1" value="Processing..." disabled="true" styleClass="botonesEnvioFicha" style="background-color: red"/>
+                                                </apex:outputPanel>
+                                            </apex:facet>
+                                        </apex:actionStatus>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <center><apex:pageMessages id="MisMensajes"  escape="false" /></center>
+                    
+
+
+                        <div id="muestrame">
+                            <apex:outputPanel id="tablabusca87" ><br/>
+                                <center>
+                                <div style="max-height: 200px; width: auto; overflow-y: auto; overflow-x: none;">
+                                    <table class="tablabusca"  id="tablabusca847" align="center">
+                                    
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <center><h5>CIUDAD</h5></center>
+                                                </th>
+                                                <th>
+                                                    <center><h5>COLONIA</h5></center>
+                                                </th>
+                                                <th>
+                                                    <center><h5>DIRECCION</h5></center>
+                                                </th>
+                                                <th>
+                                                    <center><h5>FOLIO</h5></center>
+                                                </th>
+                                                <th>
+                                                    <center><h5>$ VENTA</h5></center>
+                                                </th>
+                                                <th style="max-width: 30px;">
+                                                    <center><h5>HABS.</h5></center>
+                                                </th>
+                                                <th style="max-width: 50px;">
+                                                    <center><h5>FICHA <br/>TECNICA</h5></center>
+                                                </th>
+                                                <th style="max-width: 50px;">
+                                                    <center><h5>AÑADIR <br/>AL CARRITO</h5></center>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    
+                                    
+                                        <!-- <tbody>
+                                            <apex:repeat value="{!ofertaslist}" var="x" >
+                                                <apex:actionRegion >
+                                                    <tr class="{!IF(x.recomendacion,'colorRecomendado','')}">
+                                                        <td align="center" >
+                                                            <span style="color:red; font-weight: bold">
+
+                                                            <h5><apex:outputField value="{!x.oferta.Ciudad_Tabla__c}"/></h5> <br/>
+                                                            </span>
+                                                        </td>
+                                                        <td align="center">
+                                                            <div >
+                                                                <h5><apex:outputField value="{!x.oferta.Colonia_busqueda__c}"/></h5> <br/>
+                                                            </div>
+                                                        </td>              <!--  <div style=" position: relative;" > --
+                                                        <td align="center">
+                                                            <h5><apex:outputText value=" {!x.direccionCompleta}"/></h5><br/>
+
+                                                        </td>
+                                                        <td align="center">
+                                                            <h5><apex:outputLink target="_blank" value="/{!x.oferta.Id}"> {!x.oferta.Name}</apex:outputLink></h5><br/>         
+                                                        </td>
+                                                                                <!-- <apex:outputText value="Direccion: {!x.Direccion2__c}" escape="false"/>     <br/>  --
+                                                        <td align="center">
+                                                            <h5><apex:outputText value="$ {0,number,###,###}"> <apex:param value="{!x.oferta.PrecioVenta__c}"/></apex:outputText> </h5>     
+                                                        </td>
+                                                                                <!-- <apex:outputText value="Construccion: {!x.Propiedad__r.Construccion_m2__c}"/>   <br/>   --
+                                                        <td align="center">
+                                                            <h5><apex:outputText value="{!x.oferta.Propiedad__r.N_de_Habitaciones__c}"/></h5>     <br/> 
+                                                        </td>
+                                                                                <!-- <apex:outputText value="Baños: {!x.Propiedad__r.N_de_Ba_os__c}"/>   <br/> 
+                                                                                <apex:outputText value="Plaza: {!x.Plaza__c}"/>     <br/> 
+                                                                                <apex:outputText value="Estado: {!x.Estado__r.Name}"/> -->  <!-- Propiedad__r.Tipo__c,Name,,,  Ciudad_Tabla__r.Name,Colonia_Busqueda__r.Name,Direccion2__c,Propiedad__r.Terreno_m2__c,, -->
+
+                                                                <!-- <td>
+                                                                                <apex:outputLink target="_blank" value="/apex/FichaTecnica?id={!x.Id}"> ver ficha  </apex:outputLink>
+                                                                </td> --
+                                                        <td align="center">
+                                                            <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-OJO.png')}" styleClass="vercarroimagen" onclick="ab('{!x.oferta.Id}')" />
+                                                                                <apex:actionSupport onclick="ab('{!x.oferta.Id}')" reRender="/"/>
+                                                                                </apex:image>
+                                                        </td>
+
+                                                        <td align="center">
+                                                            <apex:actionRegion >
+                                                                <apex:outputPanel id="imagenCarrito" rendered="{!!x.active}">
+                                                                    <div>
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" styleClass="agregacarroimagen" onclick="cambiarimagen(this);agregar('{!x.oferta.Id}');">
+                                                                            <!-- <apex:actionSupport event="onclick" action="{!agregar}" reRender="tablabusca87"> <!-- antes tabladeresultados --
+                                                                                <apex:param name="hola" value="{!x.oferta.Id}" assignTo="{!ofertaId}"/>
+                                                                            </apex:actionSupport> --
+                                                                        </apex:image>
+
+                                                                        
+
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca" html-hidden="hidden"/>
+
+                                                                    </div>
+                                                                
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel rendered="{!x.active}">
+                                                                        <apex:image url="{!URLFOR($Resource.consolas, 'recursos/imagenes/TABLA-CARRITO.png')}" style="width: 40px;height: 40px;" styleClass="opaca"/>
+                                                                </apex:outputPanel>
+                                                            </apex:actionRegion>
+                                                                        <!--  <apex:commandButton value="Añadir al carrito" action="" reRender="carrito" onClick="this.disabled=true" oncomplete="checkButtonColor();" disabled="{!x.active}"> --> <!-- onClick="this.disabled=true" -->
+                                                                            <!-- <apex:param name="hola" value="{!x.oferta.Id}" assignTo="{!ofertaId}"/>  
+                                                                        </apex:commandButton>
+                        function cambiarimagen(e){e.toogle();  var f= $(e).parent(); f.style="display:block"; console.log(f);}
+                                                                        --
+                                                        </td>
+                                                        <td align="center" style="background: #fff; width: 2%;">
+                                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Info_icon-72a7cf.svg/2000px-Info_icon-72a7cf.svg.png" width="20px" height="20px" onclick="$('#margenp').hide(); $('#notifications-bottom-right').fadeOut(300); calculos('{!x.oferta.name}', '0{!x.oferta.CosteDesalojo2__c}', '0{!x.oferta.CosteRehabilitacion__c}',  '0{!x.oferta.ValorReferencia__c}');  $('#notifications-bottom-right').fadeIn(300);" class="btt2" />
+                                                        </td>
+                                                
+                                              
+                                                    </tr>
+                                                </apex:actionRegion>
+                                            </apex:repeat>
+                                        </tbody> -->
+                                    </table>
+                                    <apex:actionFunction name="agregar" action="{!agregar}" reRender="/" >
+                                                                            <apex:param name="hola" value="" assignTo="{!ofertaId}"/>
+                                                                        </apex:actionFunction>
+                                </div>
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" align="center" id="tdBoton">
+                                                <apex:commandButton action="{!exportar}" value="Exportar" styleClass="botonesEnvioFicha"/>
+                                            </td>
+                                            <td colspan="2" align="right" id="tdBoton">
+                                                <apex:commandButton action="{!enviarexcel}" value="Enviar Excel" styleClass="botonesEnvioFicha" status="sendEmailEdgar" reRender="MisMensajes"/>
+
+                                                <apex:actionStatus id="sendEmailEdgar">
+                                                    <apex:facet name="start">
+                                                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                                                            &nbsp;
+                                                        </div>
+                                                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 20% 42%">
+                                                            <img src="{!URLFOR($Resource.consolas, 'recursos/animaciones/email_animacion.gif')}" style="max-width: 200px;max-height: 200px; width: 100%;height:auto;"  />
+                                                        </div>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </td>
+                                            <td colspan="1" align="right" id="tdBoton">
+                                                <apex:outputLabel value="Email:" for="email"/>
+                                            </td>
+                                            
+                                            <td colspan="1" align="left" id="tdBoton">
+                                                <apex:outputPanel id="camposEmail">
+                                                <div style="display: inline-table;">
+                                                    <apex:inputText value="{!email01}" label="Correo 1" styleClass="etiketacorreo feroferta"/>
+
+                                                    <apex:outputPanel rendered="{!aumentarCampo > 1}">
+                                                        <br/>
+                                                        <apex:inputText value="{!email02}" label="Correo 2" styleClass="etiketacorreo feroferta"/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!aumentarCampo > 2}">
+                                                        <br/>
+                                                        <apex:inputText value="{!email03}" label="Correo 3" styleClass="etiketacorreo feroferta" />
+                                                    </apex:outputPanel>
+                                                </div>
+                                                <div style="display: inline-table;">
+                                                    <apex:commandButton style="height: 25px !important;padding: 0px 3px 0px 3px" value="+" action="{!aumentarcampos}" rendered="{!aumentarCampo<3}" rerender="camposEmail" />
+                                                </div>
+                                                </apex:outputPanel>
+
+                                            </td>
+                                            <td colspan="1" id="tdBoton">
+                                                 
+                                            </td>
+                                            
+                                        </tr>
+                                    </table>
+                                </center>
+                            </apex:outputPanel>
+                        </div>
+                    <!-- </div> -->
+                
+
+                        
+
+                    
+                
+                </div>
+                </apex:outputPanel>
+
+                <script type="text/javascript">
+                    function cambiarimagen(e){
+                        var f= $(e).siblings();
+                        console.log(f);
+                        f.css("display","block"); 
+                        e.style="display:none";
+                    }
+                </script>
+                    <script>
+    
+        $( document ).ready(function() {
+            $("input").removeClass('btn');
+            $('.message').first().remove();
+ $('[id*="yobusco"]').keydown(function(event){
+    if(event.keyCode == 13) {
+        
+      event.preventDefault();
+$('[id*="imagencilla"]').click();
+      return false;
+    }
+  });
+    
+        })
+
+
+
+    </script>
+
+            </apex:form>
+   <apex:form >
+                      <div class="foot">
+          
+                         <div class="izq">
+                         <center>
+                            <apex:image url="{!URLFOR($Resource.icof, '/left.png')}"   title="Ir a Stock" styleClass="circulo1" >
+                                 <apex:actionSupport event="onclick" action="{!precalificacion}"/>
+
+                            </apex:image>
+                        </center> 
+                        </div>
+                        <div class="medio">
+                        <center>
+                        <apex:image url="{!URLFOR($Resource.icof, '/cancela.png')}" styleClass="circulo1 modaal-confirm" title="Cancelar" />
+                        </center>
+                        </div>
+                        <div class="derecha">
+                        <center>
+                            <apex:image url="{!URLFOR($Resource.icof, '/right.png')}" styleClass="circulo1" title="Cita" >
+                           <apex:actionSupport event="onclick" action="{!envioficha}"/>
+                            </apex:image>
+                        </center>
+                        </div>
+                                
+                 
+              
+</div>
+
+   </apex:form>
+                       
+                <script src="/resource/modal/Modaal-master/source/js/modaal.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $('.modaal-confirm').modaal({
+            type: 'confirm',
+            accessible_title: 'Cancelar',
+            confirm_button_text: 'Confirmar',
+            confirm_cancel_button_text: 'Cancelar',
+            confirm_title: 'Confirma',
+            confirm_content: '<p>Cancelar Creación e Ir a Inicio</p>',
+            confirm_callback: function() {
+                cancelarlead();
+                
+            },
+            confirm_cancel_callback: function() {
+            }
+        });
+</script>
+                        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+                        <script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+<script src="/resource/materialize/materialize/js/materialize.js"></script>
+
+<!--                           <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div id="notifications-bottom-right" hidden="hidden"><div id="notifications-bottom-right-tab" class="animated rotateIn"><div id="notifications-bottom-right-tab-close" class="close"><span class="iconb" onclick="$('#notifications-bottom-right').fadeOut(400);">X</span></div><div id="notifications-bottom-right-tab-avatar"><img src="http://weeks.com.au/wp-content/themes/weeksbg/assets/svg/footer-home-icon.svg" height="70" width="70"/></div><div id="notifications-bottom-right-tab-right"><div id="notifications-bottom-right-tab-right-title"><span>idoferta</span> </div><div id="notifications-bottom-right-tab-right-text" > <br/><div class="col-3 input-effect">
+            <input id="ofertado" class="inpx" type="text" placeholder="$"/><button class="btt" onclick="calculos2();">Calcular</button>
+        </div><br/>Coste Desalojo $:<b><span id="toc"></span></b><br/>Coste Rehabilitación $:<b><span id="toc2"></span></b><br/>Valor de Referencia $:<b><span id="refe" style="font-size: 13px;"></span></b><br/><p id="margenp" hidden="hidden">Margen Referencia:<b><span id="margen" data-tooltip-delay="0" data-tooltip="(Precio Venta - (Desalojo + Rehabilitación))/ Valor Referencia" html-data-tooltip-color="black" html-data-tooltip-animate-function="fade"  data-tooltip-stickto="bottom"></span></b>%</p></div></div></div></div>
+
+
+<style type="text/css">
+.btt
+{
+    cursor: pointer;
+    display: inline-block;
+    background: #ed2553;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 3px 4px;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    outline: none;
+    width: 30%;
+    display: inline-block;
+    margin-left: 10px;
+}
+    #notifications-bottom-right {
+    position: absolute;
+    width: 18%;
+    right: 1%;
+    bottom: 20%;
+    border: 1px solid #dfdfdf;
+    box-shadow: black;
+    /* margin: 2rem 0 1rem 0; */
+    border: 1px solid #e0e0e0;
+    /* border-radius: 2px; */
+    /* overflow: hidden; */
+    /* position: relative; */
+    -webkit-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    -moz-box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    box-shadow: 4px 4px 13px 3px rgba(0,0,0,0.19);
+    font-size: 1em;
+
+    /* text-align: center; */
+}
+#notifications-bottom-right-tab-close {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    color: #cccccc;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    opacity: 1;
+}
+#notifications-bottom-right-tab-close:hover
+{
+        color: black;
+}
+
+#notifications-bottom-right-tab-avatar {
+    float: left;
+    height: 100px;
+    width: 70px;
+    margin-left: 20px;
+}
+#notifications-bottom-right-tab-avatar img {
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+    -khtml-border-radius: 50% 50% 50% 50%;
+    float: left;
+    margin-top: 15px;
+}
+#notifications-bottom-right-tab-right {
+    float: left;
+        width: 60%;
+    margin-bottom: 3%;
+
+}
+#notifications-bottom-right-tab-right-title span {
+    color: #e91e63;
+    font-size: 15px;
+    text-transform: uppercase;
+
+}
+#notifications-bottom-right-tab-right-title {
+    color: #252525;
+    font-weight: 600;
+     padding-top: 4%;
+}
+
+
+</style>
+
+    </body> 
+<script type="text/javascript">
+    function calculos(x,y,d,w)
+    {
+        $('#notifications-bottom-right-tab-right-title span').html(x);
+        // alert(x+y+d+w);
+        y=parseInt(y);
+        d=parseInt(d);
+        w=parseInt(w);
+
+        $('#toc').html(y);
+        $('#toc2').html(d);
+        $('#refe').html(w);
+
+    }
+    function calculos2()
+    {
+
+        var ofe=$('#ofertado').val();
+        var des=$('#toc').html();
+        var reh=$('#toc2').html();
+        var refere=$('#refe').html();
+        var r=parseInt(refere);
+        var g=parseInt(des);
+        var o=parseInt(ofe);
+        var rh=parseInt(reh);
+        if (ofe!=null&&ofe!='')
+        {
+        var margen=((o-(g+rh))/r)*100;
+        margen = parseInt(margen);
+        $('#margen').html(margen);
+        $('#margenp').show();
+        }
+        if(ofe==null||ofe=='')
+        {
+            $('#margenp').hide();
+        }
+    }
+
+</script>
+
+    
+    <script type="text/javascript">
+        function ocultar(e){
+        
+            var a=document.getElementById(e);
+            var b=document.getElementById('boton');
+            
+            if(a.style.display == 'none'){
+                a.style.display = 'block';
+                b.value = 'Ocultar filtros';
+            }else{
+                a.style.display = 'none';
+                b.value = 'Mostrar filtros';
+            }
+            
+        
+        }
+        
+    </script>
+    
+
+    <script>
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+    // Store
+    localStorage.setItem("nombre", "Fer");
+    // Retrieve
+    var x=localStorage.getItem("nombre");
+    if (x!=null)
+    {
+        $('#result').html('Hola '+x+' hemos mejorado todo');
+        $('#contee').show();
+    }
+    
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+</script>
+    
+
+    
+    
+</apex:page>

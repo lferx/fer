@@ -1,0 +1,49 @@
+<apex:page standardController="Account" extensions="CuentaArchivosController" showHeader="false">
+     <style type="text/css">
+     .obligatorio{
+        border-left: medium solid #ff0000;
+     }
+     </style>
+     <apex:form enctype="multipart/form-data">
+         <apex:actionFunction name="addArchivo" action="{!addArchivo}"/>
+         <apex:actionFunction name="delArchivo" action="{!delArchivo}"/>
+         <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:outputPanel rendered="{!bRedirect}">
+                <script type="text/javascript">
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputPanel>
+            <apex:pageBlockSection title="Adjuntar" columns="1">
+                <apex:pageBlockTable var="key" value="{!mapDocumentoPrincipal}" columnsWidth="20%,35%,15%,20%">
+                    <apex:column headerValue="Nombre documento">
+                        <apex:outputText value="{!mapDocumentoPrincipal[key].tipoDocumento}" styleClass="{!IF(mapDocumentoPrincipal[key].obligatorio,'obligatorio','')}"></apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Documentos actuales">
+                        <apex:pageBlockTable value="{!mapDocumentoPrincipal[key].adjuntos}" var="wa" rendered="{!mapDocumentoPrincipal[key].adjuntos.size > 0}">
+                            <apex:column headerValue="Acciones">
+                                 <apex:inputCheckbox value="{!wa.selected}"/>
+                            </apex:column>
+                            <apex:column headerValue="Archivo">
+                                <apex:outputLink value="../servlet/servlet.FileDownload?file={!wa.attachment.Id}" target="_blank">
+                                    <apex:outputField value="{!wa.attachment.Name}"/>
+                                </apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Descripción">
+                                <apex:outputField value="{!wa.attachment.Description}"></apex:outputField>
+                            </apex:column>  
+                        </apex:pageBlockTable>
+                    </apex:column>
+                    <apex:column headerValue="Seleccionar archivo nuevo">
+                        <apex:inputFile value="{!mapDocumentoPrincipal[key].adjunto.body}" filename="{!mapDocumentoPrincipal[key].adjunto.name}" style="width:200px"/>
+                    </apex:column>
+                    <apex:column headerValue="Descripción">
+                        <apex:inputTextArea value="{!mapDocumentoPrincipal[key].adjunto.Description}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <button id="btnGuardar" type="button" onclick="addArchivo();this.disabled=true;">Agregar archivos</button>
+                <button id="btnEliminar" type="button" onclick="delArchivo();this.disabled=true;">Eliminar archivos</button>
+            </apex:pageBlockSection>
+         </apex:pageBlock>
+     </apex:form>
+</apex:page>

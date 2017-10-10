@@ -1,0 +1,58 @@
+<apex:component controller="Historico_Bitacora_Controller" access="global" allowDML="true">
+<apex:attribute assignTo="{!docId}" access="global" name="documentoId" type="Id" description="id de documento" required="true"/>
+<apex:attribute assignTo="{!oferId}" access="global" name="ofertaId" type="Id" description="id de oferta" required="true"/>
+
+<style type="text/css">
+
+  @font-face {
+    font-family: "gotham-rounded-book";
+    src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+  }
+
+  .historial{
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    border-radius: 15px;
+    background: white;
+    -webkit-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    -moz-box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    box-shadow: -7px 7px 5px 0px rgba(12,50,107,1);
+    font-family: 'gotham-rounded-book', cursive;
+    text-align: center;
+    padding: 10px;
+  }
+  .historial th{
+    border-radius: 15px;
+    background: #0C326B;
+    color: white;
+    text-align: center;
+    font-family: 'gotham-rounded-book', cursive;
+  }
+  .historial tr td{
+    border-radius: 15px;
+    background: #4DB1E0;
+    color: white;
+    font-family: 'gotham-rounded-book', cursive;
+  }
+</style>
+  
+  <table class="historial">
+    <thead>
+      <th>FOLIO</th>
+      <th>NOTAS</th>
+      <th>FECHA DE CREACION</th>
+      <th>DICTAMEN</th>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!listaBitacoras}" var="bitacora" rows="25">
+        <tr>
+          <td><apex:outputLink target="_blank" value="https://cs17.salesforce.com/{!bitacora.ID}">{!bitacora.Name}</apex:outputLink></td>
+          <td><apex:outputField value="{!bitacora.Comentarios__c}" rendered="{!bitacora.Comentarios__c != NULL}"/> <apex:outputField value="{!bitacora.Notas__c}" rendered="{!bitacora.Notas__c != NULL}"/></td>
+          <td><apex:outputField value="{!bitacora.CreatedDate}"/></td>
+          <td><apex:outputField value="{!bitacora.Dictamen_Consola__c}" rendered="{!bitacora.Dictamen_Consola__c != NULL}"/> <apex:outputField value="{!bitacora.Dictamen__c}" rendered="{!bitacora.Dictamen__c != NULL}"/></td>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+  
+</apex:component>

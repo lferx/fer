@@ -1,0 +1,10 @@
+<apex:page controller="MaestroController2">
+   <!-- <apex:image value="{!$Resource.AAAA}" width="100%"/> -->
+   <apex:form >
+   <apex:actionFunction action="{!doQuery}" name="apexDoQuery" reRender="myData"/>
+   <div class="filterDiv">
+     <label>Filter by Last Name:</label>
+     <apex:inputText value="{!searchString}" onkeyup="apexDoQuery()"/>
+     </div>
+   </apex:form>
+</apex:page>

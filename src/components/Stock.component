@@ -1,0 +1,33 @@
+<apex:component >
+        <apex:attribute name="text" type="String" description="El texto que se desplagara" />
+
+
+           
+           
+
+                               
+    <body> 
+       <div class="collection">
+       <center><p class="labelarg">Argumentos/ Objeciones</p></center> 
+    <a  class="collection-item" onclick="var $argumento = $('<span><center>Por el momento todas las casas de ese municipio han sido vendidas… En cuanto tengamos disponible nos ponemos en contacto contigo</center>Elige la problemática que argumenta el prospecto<br/><center>Ubicación</center>Es una zona insegura<br/>1.- Habla de Clientes que han comprado en la zona<br/>2.- Ofrece protecciones para Puerta y Ventanas<br/><center>Distancia</center>1.- Conozca la Propiedad y estime sus tiempos de traslado<br/>2.- Invierta en su Casa Propia e incremente su condición economica<br/>3.- Invierta en su casa y puede alquilarla<br/><center>Entorno (Despoblado, Sin Drenaje, en cerro)</center>1.-Invita a que conozca la casa y podrá negociar precio<br/>2.- Habla de la expansión de los municipios que genera plusvalía en el futuro</span>');
+   Materialize.toast($argumento, 10000);">Sin Stock en Ciudad</a>
+      <a  class="collection-item" onclick="var $argumento = $('<span><center>Elige la problemática que argumenta el prospecto</center><center>Invadida</center>1.- REVIMEX se encarga de negociar con el invasor de forma pacífica<br/>2.-Es un proceso 100% legal debido a que tenemos escriturasde la propiedad<br/>3.-  En compras a crédito es requisito entregar la casa desalojada y Rehabilitada<br/>4.- En compras de contado se entrega en tal condición ó puede contratar el desalojo con REVIMEX<br/><center>Sin Escrituras</center> 1.-Las Propiedades en proceso de escrituración solo se venden de contado. Puede pagar de contado?<br/>2.-Estaremos en contacto contigo en cuanto la propiedad cuente con escrituras<br/><center>Malas Condiciones</center> 1.-En compras a crédito es requisito entregar la casa  Rehabilitada<br/>2.-Incluso puedes elegir el color de tu casa<br/>3.-En compras de contado se entrega en tal condición, lo que mejora aun más el precio</span>');
+   Materialize.toast($argumento, 10000);">Problema Propiedad</a>
+         <a  class="collection-item" onclick="var $argumento = $('<span><center>Elige la problemática que argumenta el prospecto</center><center>Preca No Suficiente</center>1.- Ofrecer Credito Mancomunado<br/>2.-Es un proceso 100% legal debido a que tenemos escrituras <br/>3.- Si la diferencia no es mucha se puede solicitar ajuste de precio<br/><center>Esta muy caro</center>1.-Nuestros precios 40% mas bajos que el mercado<br/>2.-Compara, evidencía y mejoramos nuestro precio<br/><center>Fuera de Presupuesto</center>1.-Ofrecer pasar la autorización por un mínimo, si autorizan se debe pagar en la misma semana</span>');
+   Materialize.toast($argumento, 10000);" >Precio</a>
+
+
+
+  </div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+                        <script src="/resource/materialize/materialize/js/materialize.min.js"></script>
+<script src="/resource/materialize/materialize/js/materialize.js"></script>
+
+   </body>
+
+
+</apex:component>

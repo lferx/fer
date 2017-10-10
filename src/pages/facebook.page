@@ -1,0 +1,75 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+
+
+ <h1>Bienvenido</h1>
+  <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.5";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            
+            
+            FB.ui(
+             {
+                  method: 'share',
+                  href: 'https://developers.facebook.com/docs/'
+                }, function(response){});
+         
+
+           </script>
+            
+            
+                
+        <form>
+              
+            <input id="nombre" type="text" name="nombres">
+                      
+            </input>
+                
+        </form>     
+                                                                                                                                                                                                                                                                                                            
+      
+        <div class="fb-share-button" data-href="http://www.revimex.mx/apex/revimex.force.com/apex/PropiedadDetalle=+nombre" data-layout="button_count">
+        
+        </div>
+    
+           
+       <!-- 
+       <script>
+                function test(){
+                  var yourvar= document.getElementById('nombre').value;
+                  nueva= window.open('http://www.revimex.mx/apex/revimex.force.com/apex/PropiedadDetalle?propiedad='+yourvar);
+                }
+            </script>
+            
+        $(function(){
+                $('#slider1').tinycarousel();
+                $( ".suggestion" ).click(function() {
+                    var id =  $(this).attr('id');
+                    var url = document.URL.split('?');
+                    var retUrl = url.length > 1 ? url[1] : ''; 
+                    //console.log(url.length);
+                    var url = '/apex/PropiedadDetalle?propiedad=' + id +'&' +  retUrl;
+                    window.location.replace(url);
+                });
+                $( ".validacomas" ).each(function( index ) {
+                  var text = $( this ).text().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                  $( this ).text(text);
+                });
+            });
+        
+       
+       <textarea name="comentarios" rows="20" cols="85">Escribe aquí tus comentarios</textarea><br />  
+       http://www.revimex.mx/apex/revimex.force.com/apex/PropiedadDetalle?propiedad=a003100000f0NtRAAU 
+       (getElementById('nombre').value=nombre)"
+       data-href='http://www.revimex.mx/apex/revimex.force.com/apex/PropiedadDetalle?propiedad='
+       document.getElementById( "my_anchor" ).href = 'http://localhost/' + id;
+        <div class="fb-like" data-href="https://www.facebook.com/REVIMEXOFICIAL/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
+    
+         
+          
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page controller="prueba2" showHeader="true" sidebar="true">
+
+	<apex:pageBlock >
+	<apex:tabPanel switchType="ajax">
+		<apex:tab label="click Lead Cliente" labelWidth="300">
+		<apex:pageBlockTable value="{!cuenta1}" var="a">
+			<apex:column value="{!a.Name}"/>
+			<apex:column value="{!a.Type}"/>
+			<apex:column value="{!a.Phone}"/>
+		</apex:pageBlockTable>
+		</apex:tab>
+
+		<apex:tab label="click Matriz" labelWidth="300">
+			 <apex:pageBlockTable value="{!cuenta2}" var="a"> 
+			 	<apex:column value="{!a.Name}"/>
+				<apex:column value="{!a.Type}"/>
+				<apex:column value="{!a.Phone}"/>
+			</apex:pageBlockTable> 
+		</apex:tab>
+	</apex:tabPanel>
+	</apex:pageBlock>
+</apex:page>

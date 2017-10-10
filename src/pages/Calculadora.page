@@ -1,0 +1,359 @@
+<apex:page standardController="Calculadora__c" extensions="CalculadoraController" >
+
+    <style type="text/css">
+        .cajafolio{
+            width: 150px;
+        }
+        .cajas{
+            width: 55px;
+         
+        }
+        .tablastyle{
+            width:100%;
+        }
+        .tablastyle tr th{
+            min-width:80px;
+            background-color:#C7E4E1;
+            color: #070010;
+            text-align:center;
+            border-radius: 5px;
+            letter-spacing: 3px;
+            padding: 0 22px;
+            border: 2px solid #001210;
+            
+        }
+        .tablastyle tr th#c01{
+            min-width:15px;
+            width:auto;
+            background-color:#efefef;
+            text-align:center;
+            border-radius: 5px;
+        }
+        .tablastyle tr td{
+            background-color: #FFEAC1;
+            text-align:center;
+            width:auto;
+        }
+        
+        
+        
+    </style>
+    <apex:form >
+            <apex:PageBlock id="campos" title="Inserta el folio de la oferta para buscar valores: " >
+       
+            <b>Folio:</b> &nbsp;&nbsp;<apex:inputText styleClass="cajafolio" value="{!folio}">
+                <apex:actionSupport action="{!llenaLista}" event="e.keyCode" oncomplete="validateOferta()"/>
+            </apex:inputText>
+           
+            <br/><br/>
+           
+            <apex:commandButton value="Agregar" action="{!llenaLista}" onComplete="validateOferta()" reRender="tabla,campos"/> 
+            <script>
+                function validateOferta(){
+                    if('{!mostrarDialogo}' == 'true'){
+                        alert('              No se encontro la oferta, verifique el ID \n(Si selecciona "evitar que esta pagina cree dialogos adicionales"\n              esta advertencia no se mostrara mas...)');
+                        return true;
+                    }
+                }
+            </script>
+            <apex:commandButton value="Limpiar" action="{!limpiar}" reRender="tabla,campos"/> <br/><br/>
+    
+        </apex:PageBlock>
+    </apex:form>
+    
+    <apex:form >
+        <apex:commandButton value="Exportar paquete" action="{!exportarPaquete}"/> 
+    </apex:form>
+    
+    <apex:form >
+    <apex:PageBlock ID="tabla" >
+        <table class="tablastyle">
+            <thead>
+                <tr>
+                    <th id="c01"></th>
+                    <th id="c01"></th>
+                    <th id="c01">#</th>
+                    <th>Folio</th>
+                    <th>%</th>
+                    <th>Valor Referencia</th>
+                    <th>Costo Total</th>
+                    <th>Precio Minimo</th>
+                    <th>Gastos de Escrituracion</th>
+                    <th>Desalojo</th>
+                    <th>Gastos de venta</th>
+                    <th>Comision Broker %</th>
+                    <th>Comision</th>
+                    <th>Costo Total Neto</th>
+                    <th>Beneficio</th>
+                    <th>Margen</th>
+                </tr>
+            </thead>
+            <apex:actionRegion >
+            <tbody>
+                <apex:repeat value="{!listaRegistros}" var="registro" >
+                    <tr>
+                        <td>
+                            <div align="center">
+                                <apex:commandLink value="✘" action="{!eliminaRegistro}" reRender="tabla" Style="font-size:12pt; color:red;">
+                                    <apex:param name="idLnSelect" assignTo="{!del}" value="{!registro.pos}"/>
+                                </apex:commandLink>                     
+                            </div>
+                        </td>
+                        <td >
+                            <div align="center">
+                                <apex:commandLink value="Actualizar" action="{!actualizar}" reRender="tabla" style="font-size:8pt;color:blue;">
+                                    <apex:param name="idLnSelect" assignTo="{!del}" value="{!registro.pos}"/>
+                                </apex:commandLink>                     
+                            </div>
+                        </td>
+                        <td>
+                            <apex:outputText value="{!registro.pos}"/>
+                        </td>
+                        <td >
+                            <apex:outputLink target="_blank" value="https://cs17.salesforce.com/{!registro.idoferta}">{!registro.folioLista}</apex:outputLink>
+                        </td>
+                        <td >
+                            <apex:outputText value="{0,number,####.##}%">
+                                <apex:param value="{!registro.vrPorcentaje}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="$ {0,number}">
+                                <apex:param value="{!registro.vr}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="$ {0,number}">
+                                <apex:param value="{!registro.ctCamp}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            $<apex:inputText value="{!registro.pm}" styleClass="cajas"/>
+                        </td>
+                        <td>
+                            $<apex:inputText value="{!registro.ge}" styleClass="cajas"/>  
+                        </td>
+                        <td>
+                            $<apex:inputText value="{!registro.des}" StyleClass="cajas"/>
+                        </td>
+                        <td>
+                            $<apex:inputText value="{!registro.gastoVenta}" StyleClass="cajas"/>
+                        </td>
+                        <td> 
+                            <apex:inputText value="{!registro.comPorcentaje}" styleClass="cajas"/>%
+                        </td>
+                        <td>
+                            <apex:outputText value="$ {0,number}">
+                                <apex:param value="{!registro.com}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="$ {0,number}">
+                                <apex:param value="{!registro.ct}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                             <apex:outputText value="$ {0,number}">
+                                <apex:param value="{!registro.ben}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,####.##}%">
+                                <apex:param value="{!registro.marg}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                   
+                </apex:repeat>
+                
+                    <tr style="height:5px;">
+                        <td colspan="16" style="background-color: #efefef;"></td>
+                    </tr>
+                    
+                    <tr style="font-size:14px">
+                        <td colspan="4" style="font-size:18px">
+                        <b>Total:</b></td>
+                        
+                        <td>
+                            <apex:outputText value="{0,number,####.##}%">
+                                <apex:param value="{!promvrPorcentaje}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaVr}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaCt1}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaPm}"/>
+                            </apex:outputText>
+                        </td>
+                        
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaGe}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaDes}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumagastoVenta}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,####.##}%">
+                                <apex:param value="{!promcomPorcentaje}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaCom}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaCt}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,currency}">
+                                <apex:param value="{!sumaBen}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number,####.##}%">
+                                <apex:param value="{!prommarg}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+            </tbody>
+            </apex:actionRegion>
+        </table>
+        
+<pre style="font-size:14px;">
+Ayuda en formulas:
+
+X:                     Elimina el registro introducido
+Actualizar:            Refresca los valores introducidos
+#:                     Contador
+Folio:                 Es insertado por el usuario para buscar valores de la oferta
+%:                     Valor referencia en porcentaje (precio minimo / valor referencia)
+Valor referencia:      Campo proveniente de la oferta
+Costo total:           Campo proveniente de la oferta
+Precio minimo:         Input(precio calculado mentalmente dependiendo si es de contado o credito; depende del campo%, 80% de contado y 120% credito)
+Gastos Escrituras:     Input(el gasto es promedio a 10,000)
+Desalojo:              Input(gastos del desalojo promedio es 1,500)
+Gastos de venta:       Input(gastos adicionales)
+Comision broker:       Input(la comision en porcentaje que se asigna, el promedio es el 5%)
+Comision:              La comision del broker se mustra en $ pesos (precio minimo * comision broker / 100)
+Costo tolal neto:      Suma de todos los gasto de la propiedad (costo total + gastos de escrituracion + desalojo + gastos de venta + comision broker)
+Beneficio:             Ganancia de la propiedad(Precio minimo - costo total neto)
+Margen:                Beneficio / Costo Total Neto
+</pre>
+        
+        
+              
+      
+      
+        
+            <!--<apex:pageBlockTable value="{!listaRegistros}" var="registro" >
+               
+                <apex:column headerValue="">
+                    <div align="center">
+                        <apex:commandLink value="Eliminar" action="{!eliminaRegistro}" reRender="tabla" style="font-size:8pt;color:blue; width:25px;">
+                            <apex:param name="idLnSelect" assignTo="{!del}" value="{!registro.pos}"/>
+                        </apex:commandLink>                     
+                    </div>
+                </apex:column>
+                
+                <apex:column headerValue="">
+                    <div align="center">
+                        <apex:commandLink value="Actualizar" action="{!actualizar}" reRender="tabla" style="font-size:8pt;color:blue; width:25px;">
+                            <apex:param name="idLnSelect" assignTo="{!del}" value="{!registro.pos}"/>
+                        </apex:commandLink>                     
+                    </div>
+                </apex:column>
+               
+                <apex:column headerValue="#" value="{!registro.pos}"/>
+                
+                <apex:column headerValue="Folio">
+                    <apex:outputLink target="_blank" value="https://cs17.salesforce.com/{!registro.idoferta}">{!registro.folioLista}</apex:outputLink>
+                </apex:column>
+                
+                <apex:column headerValue="%" >
+                    <apex:outputText value="{0,number,percent}">
+                        <apex:param value="{!registro.vrPorcentaje}"/>
+                    </apex:outputText>
+                </apex:column>
+           
+                <apex:column headerValue="Valor Referencia">
+                    <apex:outputText value="$ {0,number}">
+                        <apex:param value="{!registro.vr}"/>
+                    </apex:outputText>
+                </apex:column>
+                
+                <apex:column headerValue="Costo Total" >
+                    <apex:outputText value="$ {0,number}">
+                        <apex:param value="{!registro.ctCamp}"/>
+                    </apex:outputText>
+                </apex:column>
+                
+                <apex:column headerValue="Comision %">
+                    <apex:inputText value="{!registro.comPorcentaje}">
+                        <apex:param value="$ {0,number}"/>
+                    </apex:inputText>
+                
+                </apex:column>
+                <apex:column headerValue="Precio Minimo">
+                    <apex:inputText value="{!registro.pm}"/>          
+                </apex:column>
+           
+                <apex:column headerValue="Gastos de Escrituracion" > 
+                    <apex:inputText value="{!registro.ge}"/>  
+                </apex:column>
+           
+                <apex:column headerValue="Desalojo">
+                    <apex:inputText value="{!registro.des}"/>                 
+                </apex:column>
+           
+                <apex:column headerValue="Comision" >
+                    <apex:outputText value="$ {0,number}">
+                        <apex:param value="{!registro.com}"/>
+                    </apex:outputText>
+                </apex:column>
+                
+                <apex:column headerValue="Costo Total" >
+                    <apex:outputText value="$ {0,number}">
+                        <apex:param value="{!registro.ct}"/>
+                    </apex:outputText>
+                </apex:column>
+                
+                <apex:column headerValue="Beneficio" >
+                    <apex:outputText value="$ {0,number}">
+                        <apex:param value="{!registro.ben}"/>
+                    </apex:outputText>
+                </apex:column>
+                
+                <apex:column headerValue="Margen" >
+                    <apex:outputText value="{0,number,percent}">
+                        <apex:param value="{!registro.marg}"/>
+                    </apex:outputText>
+                </apex:column>
+                <apex:outputField >
+                    <apex:outputText >holegsdfhsdgfsghgsfhgsfdgsafa</apex:outputText>
+                </apex:outputField>
+            </apex:pageBlockTable> -->
+            
+        </apex:PageBlock>
+    </apex:form>
+</apex:page>

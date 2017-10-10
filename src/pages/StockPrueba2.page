@@ -1,0 +1,942 @@
+<apex:page Controller="AAEFiltraOfertasController" sidebar="false">
+<!--
+color azul fuerte: #0C326B
+COLOR AZUL CLARO: #4DB1E0
+COLOR VERDE:    #D1DA28
+COLOR NARANJA: #C95A50
+COLOR MORADO: 5A2A7E
+color gris:  #cfcfcf
+mnmorado claro: A37DB3;
+morado fuerta: 672183;
+
+COLOR AZUL CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(77,177,244,1),rgba(77,177,224,0));
+COLOR VERDE CLARO DEGRADADO: background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0));
+COLOR NARANJA DEGRADADO: background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0));
+
+-->
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"/>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+
+
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Kumar+One|Molle:400i');
+            @font-face {
+                font-family: "Bebas-Neue";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/BebasNeue.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-book";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-book.otf')}');
+            }
+            @font-face {
+                font-family: "gotham-rounded-medium";
+                src: url('{!URLFOR($Resource.consolas, 'recursos/fonts/gotham-rounded-medium.otf')}');
+            }
+            body{
+                width:99%;
+                background-color: #fff;
+            }
+            h1{
+                font-family: 'Bebas-Neue';
+                font-size: 24px;
+                text-transform:uppercase;
+            }
+            h2{
+                font-family: 'gotham-rounded-medium';
+                font-weight: bold;
+                font-size: 13px;
+                text-transform:uppercase;
+                color: #0C326B;
+
+            }
+            h3, h4 , h5{
+                font-family: 'gotham-rounded-book';
+                text-transform:uppercase;
+            }
+            h3{
+                font-weight: bold;
+                font-size: 13px;
+                color: #0C326B;
+                text-align:right;
+            }
+            h4{
+                font-size: 13px;
+                color: #000;
+            }
+            h5{
+                font-size: 11px;
+            }
+            .header{
+                background: url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-der.png')}") top right no-repeat,
+                            url("{!URLFOR($Resource.consolas, 'recursos/imagenes/background-izq.png')}") top left no-repeat;
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                align-content: center;
+                align-items: center;
+                border-bottom: 25px solid #D1DA28;
+
+            }
+            .headertable {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable tr td{
+                height: auto;
+            }
+            .headertable2 {
+                background-color:#fff;
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 500px;
+            }
+            .headertable2 tr{
+                background-color:#fff;
+                width: auto;
+                height: auto;
+            }
+            .headertable2 tr td{
+                background-color:#fff;
+                height: auto;
+
+            }
+            .headertable3 {
+                vertical-align: center;
+                align-content: center;
+                text-align: center;
+                max-width: 600px;
+            }
+            .headertable3 tr{
+                width: auto;
+                height: auto;
+            }
+            .headertable3 tr td{
+                height: auto;
+                padding: 15px 40px 15px 40px;
+            }
+            .detallestabla4 td:first-child{
+                text-align: right;
+
+            }
+            .detallestabla4 td{
+
+                text-align: left;
+            }
+
+            .botones,.botonesfijar{
+                font-family: 'gotham-rounded-medium' !important;
+                font-size: 10px !important;
+                text-transform:uppercase !important;
+                display:block !important;
+                width:170px !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 3px 0px 3px 0px !important;
+                margin: 20px !important;
+            }
+            .botones {
+                background: #D1DA28 !important;
+                background-color: #D1DA28 !important;
+                color: #0C326B !important;
+            }
+            .botonesfijar{
+                background: #A37DB3 !important;
+                background-color: #A37DB3 !important;
+                color: #fff !important;
+            }
+            .botones:hover{
+                background: #A6AE1A !important;
+            }
+            .botones:active{
+                background: #C95A50 !important;
+            }
+            .botonesfijar:hover{
+                background:#672183 !important;
+            }
+            .botonesfijar:active{
+                background: #C95A50 !important;
+            }
+
+            .botones2{
+                font-family: 'gotham-rounded-book' !important;
+                font-size: 11px  !important;
+                text-transform:uppercase !important;
+                color: #fff !important;
+                display:block !important;
+                width:100px !important;
+                background: #4DB1E0 !important;
+                border-radius: 10px !important;
+                cursor: pointer !important;
+                padding: 5px !important;
+                margin: 20px !important;
+            }
+            .botones2:hover{
+                background: #2A85AF !important;
+            }
+            .botones2:active{
+                background-color:#D1DA28 !important;
+            }
+            .contenedorfiltros{
+                width:200px;
+                height:auto;
+            }
+            .divfiltrolabel{
+                cursor:pointer;
+                background: url('{!URLFOR($Resource.consolas, 'recursos/icons/flecha-boton.png')}') top right no-repeat;
+                background-size: 10% 100%;
+                background-color:#cfcfcf;
+                color:#0C326B;
+                position: reltive;
+                width:200px;
+                height:18px;
+                z-index:1000;
+
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 40px;
+                font-family: 'gotham-rounded-book';
+                font-size: 12px;
+            }
+            .divfiltrolista{
+                display:none;
+                background-color:red;
+                width:auto;
+                min-width:200px;
+                height:auto;
+                position: absolute;
+                z-index:1000;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;
+                max-height:500px;
+            }
+            .labelcontador{
+                font-family: "gotham-rounded-book" !important;
+                font-size: 20px  !important;
+                background: #0C326B;
+                border-radius: 60px;
+                padding: 10px 10px 10px 10px;
+                font-size: 16px;
+                color: white;
+                margin: 30px 30px !important;
+            }
+
+
+
+
+
+
+            .pagination {
+                display: inline-block;
+                background-color: #fff;
+            }
+
+            .pagination a {
+                font-family: "gotham-rounded-book" !important;
+                font-size: 14px  !important;
+                color: black;
+                float: left;
+                padding: 5px 10px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+            .pagination a.active {
+                background-color: #5A2A7E;
+                color: white;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+
+            .tdtrue{
+                background: linear-gradient(to bottom, rgba(209,218,40,1),rgba(209,218,40,0)) !important;
+            }
+            .tdfalse{
+                background: linear-gradient(to bottom, rgba(201,90,80,1),rgba(201,90,80,0)) !important;
+            }
+            .imagestyle{
+                width:30px;
+                filter: grayscale(30%);
+            }
+            .styledetalles{
+                display: none;
+                font-size:12px;
+                font-weight: normal;
+                max-width: 600px;
+
+            }
+            .imgth{
+                width: 30px;
+                height: 30px;
+            }
+            .sectioncabecera{
+                border-radius: 15px 15px 0px 0px;
+                background-color: #C95A50;
+                height: 40px;
+                padding: 7px 2px 0px 2px;
+                width: auto;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            .section{
+                position: relative;
+                border: 1px solid #fff;
+                border-spacing: 2px;
+                padding-top: 90px;
+                background: #fff;
+                border-radius:10px;
+                width:100%;
+                height:100%;
+            }
+            .container {
+                display:block;
+                min-height: 150px;
+                max-height: calc(100vh - 210px);
+                height: 100%;
+                overflow-y: auto;
+                width:100%;
+            }
+            .table2 {
+                border-spacing: 2px;
+                width:100%;
+            }
+            .table2 td,th {
+                border-bottom:1px solid #eee;
+                background: #fff;
+                color: #000;
+                padding: 3px 10px;
+                max-width:200px;
+                width:auto;
+                text-align: center;
+            }
+            .table2 th {
+                height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                border: none;
+                white-space: nowrap;
+                text-align: center;
+            }
+            .table2 th div{
+                position: absolute;
+                background: transparent;
+                color: #000;
+                padding: 2px 5px;
+                top:0;
+                margin-left: -10px;
+                line-height: normal;
+                border-left: 1px solid #C0C4C5;
+                text-align: center;
+                width: auto;
+            }
+            .table2 th:first-child div{
+                border: none;
+            }
+            .recientes td{
+                background: linear-gradient(to bottom, rgba(53,191,229,1),rgba(53,191,229,0));
+            }
+            .imagensistemas{
+                width: 30px;
+                height: 30px;
+                border-radius:50%;
+                transition: 1s;
+                float: centre;
+                position: relative;
+                left: 5px;
+                bottom: -12px;
+            }
+            .imagensistemas:hover{
+                width: 90px;
+                height: 90px;
+                transition-timing-function: ease;
+                border-radius:0%;
+            }
+            .comentariosbotoneditar{
+                background-color: white;
+                position:relative;
+                padding:2px;
+                border: 1.5px solid #CED0D1;
+                height:21px;
+                width:20px;
+                border-radius:5px;
+                transition:0.2s;
+                box-shadow: rgba(0,0,0,1) 0 1.5px 0;
+                filter: brightness(96.5%);
+
+            }
+            .comentariosbotoneditar:hover {
+                background-color: #DBF4FC;
+                color: white;
+                transition-timing-function:ease;
+                height:25px;
+                width:25px;
+            }
+            .comentarioscontainer{
+                background-image: url("{!$Resource.ventana_comentario}");
+                border-radius:20px;
+                position:absolute;
+                z-index:1000;
+                height:200px;
+                width:300px;
+                border: .5px solid #000;
+                top: calc(30% - 100px);
+                left: calc(75% - 150px);
+                filter: opacity(95%);
+            }
+            .comentarioslabel{
+                position:relative;
+                left: 88px;
+                top: 45px;
+            }
+            .comentariostexto{
+                position:relative;
+                align:center;
+                left: 50px;
+                top: 45px;
+                width:200px;
+                height:70px;
+            }
+            .comentariosbotonguardar{
+                position:relative;
+                background-size:cover;
+                width:85px;
+                top: 50px;
+                float: left;
+                margin: 0px 25px 0px 25px;
+            }
+            .filtrocaja1{
+                position: reltive;
+                width:auto;
+                height:18px;
+                float:left;
+            }
+            .filtrocaja2{
+                position: reltive;
+                width:auto;
+                height:18px;
+                z-index:1000;
+                background-color:#fff;
+                border:1px solid #000;
+                overflow-wrap: break-word;
+                overflow: auto;
+                border-radius: 7px;
+            }
+            .filtrocaja2:hover{
+                height:auto;
+                max-height:500px;
+                overflow: auto;
+                display: inline-block;
+                position: relative;
+            }
+            .filtrolabel{
+                float:left;
+            }
+            .listadeseleccion{
+                cursor:pointer;
+                width:200px;
+            }
+
+
+
+
+        </style>
+
+        <!--
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>
+            window.onmousedown = function (e) {
+                var el = e.target;
+                if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                    e.preventDefault();
+
+                    // toggle selection
+                    if (el.hasAttribute('selected')) el.removeAttribute('selected');
+                    else el.setAttribute('selected', '');
+
+                    // hack to correct buggy behavior
+                    var select = el.parentNode.cloneNode(true);
+                    el.parentNode.parentNode.replaceChild(select, el.parentNode);
+                }
+
+            }
+        </script>
+        -->
+        <script type="text/javascript">
+            function ftrue(z){
+                document.getElementById(z).style.display = 'block';
+            }
+            function ffalse(y){
+                document.getElementById(y).style.display = 'none';
+            }
+        </script>
+
+        <script>
+            $( function() {
+                $( "#dialog" ).dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    width: 700,
+                    height: 600,
+                    autoResize: true,
+                    modal: true,
+                    draggable: true,
+                    show: {
+                        effect: "fade",
+                        duration: 500
+                    },
+                    hide: {
+                        effect:"explode", duration: 600
+                    }
+
+                });
+
+                $( ".comentariosbotoneditar" ).on( "click", function() {
+                    $( "#dialog" ).dialog( "open" );
+                });
+            });
+        </script>
+
+
+    </head>
+
+
+    <body >
+
+<apex:variable var="num" value="{!num2}"/> <!-- /////////////////// variable /////////////////////// -->
+
+
+        <apex:outputPanel >
+
+            <apex:form >
+
+
+                <div>
+                    <!-- Inicio tabla html -->
+                    <section class="section">
+                        <apex:actionRegion >
+                            <apex:outputPanel id="tablaregistros">
+                                <!--<div id="carga" style="position: absolute; ">
+                                    <img src="http://www.arsenal.com/assets/images/player/loading.gif"/>
+                                </div>-->
+
+
+                                <div id="tablaregistros" class="container">
+                                    <table class="table2">
+                                        <thead>
+                                            <tr class="">
+                                                <th>
+                                                        <div><apex:image value="{!URLFOR($Resource.iconos_stock, 'iconos24/021-social.png')}"/></div>
+                                                </th>
+                                                <th>
+                                                  <div>Folio <br/> oferta</div>
+                                                </th>
+                                                <th>
+                                                  <div>Plaza</div>
+                                                </th>
+                                                <th>
+                                                  <div>Etapa</div>
+                                                </th>
+                                                <th>
+                                                  <div>Oferta <br/> cargada</div>
+                                                </th>
+                                                <th>
+                                                  <div>Estado</div>
+                                                </th>
+                                                <th>
+                                                  <div>Ciudad</div>
+                                                </th>
+                                                <th>
+                                                  <div>Colonia</div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                      Direccion
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                      Terr. m<sup>2</sup>
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                      Cons. m<sup>2</sup>
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Habs
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Baños
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Escrituras
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Estatus <br/> invasión
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                  Valor <br/> de <br/> referencia
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Precio <br/> de <br/> venta
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                        Rehabilitación
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Revisado
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Dias en <br/> stock
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div>
+                                                        Inversor
+                                                    </div>
+                                                </th>
+                                                <!-- <th data-campo='Campanas'>Campañas <br/> comerciales<div>Campañas <br/> comerciales</div></th> -->
+                                                <th>
+                                                    <div>
+                                                        Comentario en <br/> revisón
+                                                    </div>
+                                                </th>
+                                                <!-- <th data-campo='Gerente'>Comentarios Gerente<div>Comentarios Gerente</div></th>
+                                                <th data-campo='Ejecutivo'>Comentarios Ejecutivo<div>Comentarios Ejecutivo</div></th> -->
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <!-- <apex:repeat value="{!pag1}" rows="{!sizelist}">
+                                                <apex:variable var="npag2" value="{!npag2+1}"/><!-- aumenta 1 a la variable npag2 -->
+
+                                                <apex:repeat value="{!CASE(npag2,1,pag1,2,pag2,3,pag3,4,pag4,5,pag5,6,pag6,7,pag7,pag1)}" var="oferta">
+                                                    <tr class="{!IF(oferta.boleano,'recientes','tds')}">
+                                                        <td>
+                                                            <!-- Columna para # ////////////////////////////////////////////////////////// -->
+                                                            <apex:variable var="num" value="{!num+1}"/><!-- aumenta 1 a la variable npag-->
+                                                            <apex:outputText value="{!num}"/>
+
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para folio Oferta ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputLink target="_blank" value="/{!oferta.registro.Id}">{!oferta.registro.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para plaza ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Plaza__c}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para etapa ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!IF(oferta.registro.Etapa__c == 'Rehabilitación','E 10',IF(oferta.registro.Etapa__c == 'Compilación expediente cliente','E 9',IF(oferta.registro.Etapa__c == 'Escrituras en proceso registro','E 8',IF(oferta.registro.Etapa__c == 'Compra final','E 7',IF(oferta.registro.Etapa__c == 'Compilación expediente compra','E 6',IF(oferta.registro.Etapa__c == 'Aprobada internamente','E 5',IF(oferta.registro.Etapa__c == 'Antecedentes','E 4',oferta.registro.Etapa__c)))))))}"/>
+                                                            <!-- <apex:outputText value="E 10" rendered="{!oferta.registro.Etapa__c == 'Rehabilitación'}"/>
+                                                            <apex:outputText value="E 9" rendered="{!oferta.registro.Etapa__c == 'Compilación expediente cliente'}"/>
+                                                            <apex:outputText value="E 8" rendered="{!oferta.registro.Etapa__c == 'Escrituras en proceso registro'}"/>
+                                                            <apex:outputText value="E 7" rendered="{!oferta.registro.Etapa__c == 'Compra final'}"/>
+                                                            <apex:outputText value="E 6" rendered="{!oferta.registro.Etapa__c == 'Compilación expediente compra'}"/>
+                                                            <apex:outputText value="E 5" rendered="{!oferta.registro.Etapa__c == 'Aprobada internamente'}"/>
+                                                            <apex:outputText value="E 4" rendered="{!oferta.registro.Etapa__c == 'Antecedentes'}"/>
+                                                            <apex:outputText value="Descartada" rendered="{!oferta.registro.Etapa__c == 'Descartada'}"/> -->
+                                                        </td>
+
+                                                        <td class="{!IF(oferta.registro.Oferta_Cargada__c,'tdtrue','tdfalse')}">
+                                                            <!-- Columna para Oferta Cargada ////////////////////////////////////////////////////////// -->
+                                                            <!-- <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/tache.png')}" styleClass="imagestyle" rendered="{!oferta.registro.Oferta_Cargada__c == false}"/>
+                                                            <apex:image value="{!URLFOR($Resource.consolas, 'recursos/icons/paloma.png')}" styleClass="imagestyle" rendered="{!oferta.registro.Oferta_Cargada__c == true}"/> -->
+                                                            <apex:image value="{!IF(oferta.registro.Oferta_Cargada__c,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" styleClass="imagestyle"/>
+
+                                                        </td>
+
+                                                        <td>
+                                                            <!-- Columna para Estado ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Estado__r.Name}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para ciudad ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Ciudad_Tabla__r.Name}"/>
+                                                        </td>
+
+                                                        <td>
+                                                            <!-- Columna para colonia ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Colonia_Busqueda__r.Name}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para direccion ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Direccion2__c}" escape="false"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para terreno m2////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{0,number}">
+                                                                <apex:param value="{!oferta.registro.Propiedad__r.Terreno_m2__c}"/>
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{0,number}">
+                                                                <apex:param value="{!oferta.registro.Propiedad__r.Construccion_m2__c}"/>
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para numero de habitaciones ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Habitaciones__c}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para numero de baños ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Propiedad__r.N_de_Ba_os__c}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para Escrituras ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Escritu__c}"/>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para Invadida ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Estatus_de_Invasion__c}"/>
+                                                            <!--<<apex:image value="{!$Resource.Fallo}" styleClass="imagestyle" rendered="{!oferta.registro.Estatus_de_Invasion__c != 'Invadida'}"/>
+                                                            <apex:image value="{!$Resource.Acierto}" styleClass="imagestyle" rendered="{!oferta.registro.Estatus_de_Invasion__c == 'Invadida'}"/>-->
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para valor referencia ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{0,number}">
+                                                                <apex:param value="{!oferta.registro.ValorReferencia__c}"/>
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para Precio venta ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{0,number}">
+                                                                <apex:param value="{!oferta.registro.PrecioVenta__c}"/>
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td class="{!IF(oferta.rehabilitada,'tdtrue','tdfalse')}">
+                                                        <!-- Columna para rehabilitada ////////////////////////////////////////////////////////// -->
+                                                            <apex:image value="{!IF(oferta.rehabilitada,URLFOR($Resource.consolas, 'recursos/icons/paloma.png'),URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                                                        </td>
+                                                        <td class="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>','tdtrue','tdfalse')}">
+                                                            <!-- Columna para revisado ////////////////////////////////////////////////////////// -->
+                                                            <apex:image value="{!IF(oferta.registro.Revisada__c == '<img src=\"/resource/1475704088000/Revisada\" alt=\"Rating\" border=\"0\"/>',URLFOR($Resource.consolas, 'recursos/icons/paloma.png'), URLFOR($Resource.consolas, 'recursos/icons/tache.png'))}" />
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para Dias en stock ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{0,number}">
+                                                                <apex:param value="{!oferta.registro.TiempoOferta__c}"/>
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para inversor ////////////////////////////////////////////////////////// -->
+                                                            <apex:outputText value="{!oferta.registro.Inversor2__c}"/>
+                                                        </td>
+
+                                                        <!-- <td>
+                                                            <!-- Columna para campaña comercial ////////////////////////////////////////////////////////// --
+                                                            <apex:outputText value="{!oferta.registro.Campa__c}"/>
+                                                        </td> -->
+                                                        <td>
+                                                            <!-- Columna para comentarios en revision ////////////////////////////////////////////////////////// -->
+
+                                                            <div style="max-height: 100px; overflow:auto;">
+                                                            <apex:outputText value="{!oferta.registro.Comentarios_en_revision__c}"/>
+                                                            </div>
+                                                            <center>
+                                                            <div>
+                                                                <apex:actionRegion >
+                                                                    <apex:image url="{!$Resource.Comentarios_Gerente}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Gerentes">
+                                                                        <apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+                                                                            <apex:param name="registroid" assignTo="{!idRegistro}" value="{!oferta.registro.id}" />
+                                                                            <apex:param name="comentarios1" assignTo="{!comentarios}" value="1"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+                                                                </apex:actionRegion>
+
+                                                                &nbsp; &nbsp;
+                                                                <apex:actionRegion >
+                                                                    <apex:image url="{!$Resource.Comentarios_Ejecutivo}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Ejecutivos">
+                                                                        <apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+                                                                            <apex:param name="registroid" assignTo="{!idRegistro}" value="{!oferta.registro.id}" />
+                                                                            <apex:param name="comentarios2" assignTo="{!comentarios}" value="2"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+                                                                </apex:actionRegion>
+                                                            </div>
+                                                            </center>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <!-- Columna para Comentarios gerente ////////////////////////////////////////////////////////// --
+                                                            <center>
+                                                                <div style="border:1px solid black;width:80%;max-height:90px;min-height:20px;padding:5px;border-radius:5px;text-align:left;overflow:auto;">
+                                                                    <apex:outputText value="{!oferta.registro.Comentarios_Gerente__c}"/>
+                                                                </div>
+                                                            </center>
+                                                            <br/>
+                                                            <center>
+                                                                <apex:actionRegion >
+                                                                    <apex:image url="{!$Resource.Editar}" alt="Editar" styleClass="comentariosbotoneditar" title="Comentarios Gerente">
+                                                                        <apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+                                                                            <apex:param name="registroid" assignTo="{!idRegistro}" value="{!oferta.registro.id}" />
+                                                                            <apex:param name="comentarios1" assignTo="{!comentarios}" value="1"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+                                                                </apex:actionRegion>
+                                                            </center>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Columna para Comentarios Ejecutivo ////////////////////////////////////////////////////////// --
+                                                            <center>
+                                                                <div style="border:1px solid black;width:80%;max-height:90px;min-height:20px;padding:5px;border-radius:5px;text-align:left;overflow:auto;">
+                                                                    <apex:outputText value="{!oferta.registro.Comentarios_Ejecutivos__c}" id="comentsEjecutivos"/>
+                                                                </div>
+                                                            </center>
+                                                            <br/>
+                                                            <center>
+                                                                <apex:actionRegion >
+                                                                    <apex:image url="{!$Resource.Editar}" alt="Editar" styleClass="comentariosbotoneditar" >
+                                                                        <apex:actionSupport event="onclick" action="{!editarComentarios}" rerender="commentsContainer">
+                                                                            <apex:param name="registroid" assignTo="{!idRegistro}" value="{!oferta.registro.id}" />
+                                                                            <apex:param name="comentarios2" assignTo="{!comentarios}" value="2"/>
+                                                                        </apex:actionSupport>
+                                                                    </apex:image>
+                                                                </apex:actionRegion>
+                                                            </center>
+                                                        </td> -->
+                                                    </tr>
+                                                </apex:repeat>
+                                            <!-- </apex:repeat> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </apex:outputPanel>
+                        </apex:actionRegion>
+                    </section>
+                    <!--Termina tabla html -->
+
+                </div>
+
+                <div id="dialog">
+                    <apex:actionRegion >
+                        <apex:outputPanel id="commentsContainer">
+                        <!--  styleClass="comentarioscontainer" -->
+                            <apex:outputPanel id="coments" style="vertical-align:top;" rendered="{!mostrarDialogoComentarios}">
+                                <apex:repeat value="{!comentariosq}" var="comentario">
+                                    <apex:outputText value="Folio oferta: {!comentario.Name}" styleclass="comentarioslabel" />
+                                    <br/>
+                                    <div>
+                                        <apex:outputText value="<b>Comentarios Gerentes</b><br/>" rendered="{!comentarios==1}" styleclass="comentarioslabel" escape="false"/>
+                                        <apex:outputText value="<b>Comentarios Ejecutivos</b><br/>" rendered="{!comentarios==2}" styleclass="comentarioslabel" escape="false"/>
+                                        <br/>
+                                        <apex:inputTextarea value="{!comentario.Comentarios_Gerente__c}" rendered="{!comentarios==1}" styleClass="comentariostexto"/>
+                                        <apex:inputTextarea value="{!comentario.Comentarios_Ejecutivos__c}" rendered="{!comentarios==2}" styleClass="comentariostexto"/>
+                                    </div>
+                                </apex:repeat>
+                                <center>
+                                    <apex:image url="{!$Resource.boton_guardar}" alt="Guardar" styleClass="comentariosbotonguardar">
+                                        <apex:actionSupport event="onclick" action="{!guardarComentarios}" />
+                                    </apex:image>
+
+                                    <apex:image url="{!$Resource.boton_cancelar}" alt="Cancelar" styleClass="comentariosbotonguardar">
+                                        <apex:actionSupport event="onclick" action="{!cancelarComentarios}" rerender="commentsContainer"/>
+                                    </apex:image>
+                                </center>
+                                <br/>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:actionRegion>
+                </div>
+
+            </apex:form>
+
+        </apex:outputPanel>
+
+    </body>
+
+
+
+
+
+
+    <b>Created by:</b>
+    <apex:image value="{!$Resource.logo_sistemas}" styleClass="imagensistemas"/>
+
+    <script type="text/javascript">
+        function ocultar(e){
+
+            var a=document.getElementById(e);
+            var b=document.getElementById('boton');
+
+            if(a.style.display == 'none'){
+                a.style.display = 'block';
+                b.value = 'Ocultar filtros';
+            }else{
+                a.style.display = 'none';
+                b.value = 'Mostrar filtros';
+            }
+        }
+
+    </script>
+    <script type="text/javascript">
+        function detalles(obj){
+
+            var c=document.getElementById(obj);
+
+            if(c.style.display == 'none'){
+                c.style.display = 'block';
+            }else{
+                c.style.display = 'none';
+            }
+
+
+        }
+    </script>
+</apex:page>

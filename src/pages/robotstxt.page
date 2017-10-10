@@ -1,0 +1,5 @@
+<apex:page contentType="text/plain" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" >
+User-agent: *
+Disallow: /www/wp-admin/
+Disallow: /www/wp-includes/
+</apex:page>
